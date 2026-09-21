@@ -78,7 +78,14 @@ const KidSpeechService = {
 
   startListening({ onStart, onResult, onError, onEnd } = {}) {
     this.stopSpeaking();
-    this.isListening = true;
+
+    // SpeechRecognition.start() must run in the original tap call stack on
+    // iOS. Do not await getUserMedia before it: doing so loses the user gesture
+    // and iOS reports NotAllowedError even when the browser has mic access.
+    if (!window.isSecureContext) {
+      if (onError) onError("insecure-context");
+      return false;
+    }
 
     if (!this.recognition) {
       this.initSpeechRecognition();
@@ -92,11 +99,12 @@ const KidSpeechService = {
 
     if (!this.recognition) {
       if (onError) onError("speech-api-unavailable");
-      return;
+      return false;
     }
 
     this.recognition.onstart = () => {
       this.isListening = true;
+      if (onStart) onStart();
     };
 
     this.recognition.onresult = (event) => {
@@ -124,6 +132,7 @@ const KidSpeechService = {
 
     this.recognition.onerror = (event) => {
       console.warn("SpeechRecognition event note:", event.error);
+      this.isListening = false;
       if (onError) onError(event.error);
     };
 
@@ -134,8 +143,13 @@ const KidSpeechService = {
 
     try {
       this.recognition.start();
+      return true;
     } catch (err) {
       console.warn("Recognition start exception:", err);
+      this.isListening = false;
+      if (onError) onError("recognition-start-failed");
+      if (onEnd) onEnd();
+      return false;
     }
   },
 

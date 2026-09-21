@@ -62,8 +62,11 @@ Tamil-Translate-Kids/
 
 ## 🚀 How to Run Locally
 
-1. Open `index.html` directly in any modern browser (Google Chrome or Microsoft Edge recommended for microphone support).
-2. Or run a lightweight local server:
+Microphone access only works from a secure context: the deployed **HTTPS** site or
+`localhost` during development. Do not open `index.html` directly as a `file://`
+URL.
+
+1. Run a lightweight local server:
    ```bash
    npx serve .
    ```
@@ -71,6 +74,14 @@ Tamil-Translate-Kids/
    ```bash
    python -m http.server 8080
    ```
+2. On an iPhone, open the deployed GitHub Pages HTTPS URL. When the app asks for
+   microphone access, choose **Allow**. If access was previously denied, enable
+   the browser under **Settings > Privacy & Security > Microphone**, reload the
+   page, and try again.
+3. Speech recognition support itself varies by iOS version and browser state.
+   The app keeps its **Type manually** option available whenever speech-to-text
+   is unavailable. For Tamil dictation, enable Tamil in **Settings > General >
+   Keyboard > Dictation**.
 
 ---
 

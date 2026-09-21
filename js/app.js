@@ -465,10 +465,16 @@ const App = {
         onError: (err) => {
           console.warn("Speech recognition note:", err);
           if (window.KidAppLogger) KidAppLogger.log("VOICE", `Speech error: ${err}`);
-          if (err === "not-allowed" || err === "service-not-allowed") {
-            alert("Microphone Note:\nMicrophone permission was denied. Please allow microphone access in your iOS / browser settings.");
+          if (err === "not-allowed") {
+            alert("Microphone access is off. On iPhone, enable Chrome (or Safari) in Settings > Privacy & Security > Microphone, then reload this page and try again.");
+          } else if (err === "insecure-context") {
+            alert("Microphone access requires the secure HTTPS version of this website. Please open the published GitHub Pages link, not a local file.");
+          } else if (err === "microphone-api-unavailable" || err === "microphone-unavailable") {
+            alert("This browser cannot access the microphone right now. Check iPhone microphone access, close any app using the mic, then try again.");
           } else if (err === "speech-api-unavailable") {
-            alert("Microphone Note:\nWeb Speech API is not supported in this browser. Safari or Chrome is recommended.");
+            alert("Speech-to-text is not available in this browser. You can use the Type manually option below; on iPhone, also make sure Tamil Dictation is enabled in Settings > General > Keyboard.");
+          } else if (err === "network" || err === "service-not-allowed" || err === "recognition-start-failed") {
+            alert("Speech recognition could not start. Check your internet connection, then try again. You can also use Type manually below.");
           }
         },
         onEnd: () => {
