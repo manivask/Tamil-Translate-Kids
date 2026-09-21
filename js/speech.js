@@ -1,7 +1,7 @@
 /**
  * Tamil-Translate-Kids - Voice Recognition & Soft Tamil Voice Synthesis
- * Cross-platform speech engine for Android, iOS Safari, and Desktop.
- * Mimics and matches the robust Apple/iPhone Speech Recognition architecture from Chatbot.
+ * Cross-platform speech engine for Android, iOS, and Desktop.
+ * Uses the same recognition lifecycle as the working Chatbot app.
  */
 
 const KidSpeechService = {
@@ -15,6 +15,10 @@ const KidSpeechService = {
 
   init() {
     this.audioPlayer = new Audio();
+    // Keep one recognizer ready, just like Chatbot. In particular, do not
+    // replace it immediately before start(): that can make iOS discard the
+    // microphone gesture or throw a generic start error.
+    this.initSpeechRecognition();
     this.setupVoices();
     if (window.speechSynthesis && "onvoiceschanged" in window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = () => this.setupVoices();
@@ -42,27 +46,11 @@ const KidSpeechService = {
     return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   },
 
-  // iOS Chrome exposes webkitSpeechRecognition but WebKit does not enable the
-  // speech-recognition service for Chrome and other third-party iOS browsers.
-  // Treat that as unsupported instead of sending children to a dead mic button.
-  isUnsupportedIOSBrowser() {
-    const ua = navigator.userAgent || "";
-    const isIOS = /iPad|iPhone|iPod/.test(ua) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-    return isIOS && /CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(ua);
-  },
-
   initSpeechRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
 
     try {
-      // Safari requires construction as well as start() to occur in the tap
-      // that asks to listen. Reusing an object created during page load can
-      // fail with a generic start exception on iPhone.
-      if (this.recognition) {
-        try { this.recognition.abort(); } catch (_) {}
-      }
       this.recognition = new SpeechRecognition();
       this.recognition.continuous = false;
       this.recognition.interimResults = true;
@@ -114,24 +102,17 @@ const KidSpeechService = {
     this.stopSpeaking();
     this.logDiagnostic("Speech recognition requested", this.errorDetails(null));
 
-    // SpeechRecognition.start() must run in the original tap call stack on
-    // iOS. Do not await getUserMedia before it: doing so loses the user gesture
-    // and iOS reports NotAllowedError even when the browser has mic access.
+    // This runs directly from the microphone button's click handler. Keep it
+    // synchronous so iOS retains the user's microphone gesture.
     if (!window.isSecureContext) {
       this.logDiagnostic("Speech recognition blocked: insecure context");
       if (onError) onError("insecure-context");
       return false;
     }
 
-    if (this.isUnsupportedIOSBrowser()) {
-      this.logDiagnostic("Speech recognition unavailable: unsupported iOS browser");
-      if (onError) onError("ios-browser-speech-unavailable");
-      return false;
-    }
-
-    // Always create a fresh instance here. This method is called directly by
-    // the mic button's click handler, preserving Safari's required gesture.
-    this.initSpeechRecognition();
+    // Match Chatbot: reuse the ready recognizer and only construct one if the
+    // browser did not provide it during initialization.
+    if (!this.recognition) this.initSpeechRecognition();
 
     if (this.recognition) {
       this.recognition.lang = this.currentLanguage;
@@ -143,10 +124,14 @@ const KidSpeechService = {
       return false;
     }
 
+    // Reflect the active state before calling start(), as Chatbot does. This
+    // prevents a second tap while iOS is opening the permission sheet.
+    this.isListening = true;
+    if (onStart) onStart();
+
     this.recognition.onstart = () => {
       this.isListening = true;
       this.logDiagnostic("Speech recognition started");
-      if (onStart) onStart();
     };
 
     this.recognition.onresult = (event) => {
