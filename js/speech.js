@@ -1,6 +1,6 @@
 /**
- * Tamil-Translate-Kids - Mobile & iOS Optimized Speech Service
- * Reliable SpeechRecognition (ta-IN) & Natural Soft Tamil Voice Synthesis.
+ * Tamil-Translate-Kids - Voice Recognition & Soft Tamil Voice Synthesis
+ * Cross-platform speech engine for Android, iOS Safari/Chrome, and Desktop.
  */
 
 const KidSpeechService = {
@@ -25,7 +25,6 @@ const KidSpeechService = {
     const voices = window.speechSynthesis.getVoices();
     if (!voices || voices.length === 0) return;
 
-    // Preference list for sweet, soft, natural Tamil voices:
     this.tamilVoice = 
       voices.find(v => v.lang.startsWith("ta") && (v.name.toLowerCase().includes("kani") || v.name.toLowerCase().includes("female") || v.name.toLowerCase().includes("natural"))) ||
       voices.find(v => v.lang.startsWith("ta") || v.name.toLowerCase().includes("tamil")) ||
@@ -42,7 +41,6 @@ const KidSpeechService = {
     return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   },
 
-  // Synchronous recognition starter for iOS Safari / Mobile
   startListening(onTranscript, onStateChange) {
     this.onTranscriptCallback = onTranscript;
     this.onStateChangeCallback = onStateChange;
@@ -53,7 +51,7 @@ const KidSpeechService = {
       return;
     }
 
-    // Abort any existing recognition instance
+    // Stop any existing instance
     if (this.recognition) {
       try {
         this.recognition.abort();
@@ -74,7 +72,7 @@ const KidSpeechService = {
       };
 
       rec.onaudiostart = () => {
-        if (this.onStateChangeCallback) this.onStateChangeCallback(true, "recording_audio");
+        if (this.onStateChangeCallback) this.onStateChangeCallback(true, "speech_detected");
       };
 
       rec.onspeechstart = () => {
@@ -98,7 +96,7 @@ const KidSpeechService = {
       };
 
       rec.onerror = (event) => {
-        console.warn("Speech recognition error:", event.error);
+        console.warn("Speech Recognition Error:", event.error);
         this.isListening = false;
         if (this.onStateChangeCallback) {
           this.onStateChangeCallback(false, event.error);
@@ -113,14 +111,13 @@ const KidSpeechService = {
       };
 
       this.recognition = rec;
-      // Start synchronously within user gesture callstack
       rec.start();
 
     } catch (err) {
-      console.warn("Start recognition error:", err);
+      console.warn("Speech start failed:", err);
       this.isListening = false;
       if (this.onStateChangeCallback) {
-        this.onStateChangeCallback(false, err.name || "start_error");
+        this.onStateChangeCallback(false, err.name || "start_failed");
       }
     }
   },
@@ -139,22 +136,21 @@ const KidSpeechService = {
   },
 
   /**
-   * Speak Tamil with sweet, gentle kid-friendly voice modulation.
+   * Speak Tamil answer with soft, sweet, kid-friendly voice modulation.
    */
   speakTamil(tamilText) {
     if (!tamilText) return;
     const cleanText = tamilText.replace(/[()]/g, "").trim();
 
-    // Natural online audio stream player (plays immediately on mobile)
     const playAudioFallback = () => {
       try {
         if (!this.audioPlayer) this.audioPlayer = new Audio();
         const encoded = encodeURIComponent(cleanText);
         this.audioPlayer.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ta&client=tw-ob&q=${encoded}`;
         this.audioPlayer.playbackRate = 0.9;
-        this.audioPlayer.play().catch(e => console.warn("Audio play notice:", e));
+        this.audioPlayer.play().catch(e => console.warn("Audio notice:", e));
       } catch (err) {
-        console.warn("Fallback audio error:", err);
+        console.warn("Audio error:", err);
       }
     };
 
@@ -163,28 +159,26 @@ const KidSpeechService = {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = "ta-IN";
-        utterance.rate = 0.85; // Sweet, clear pace
-        utterance.pitch = 1.25; // Gentle, high-toned kid pitch
+        utterance.rate = 0.85;
+        utterance.pitch = 1.25; // Sweet, high-toned kid pitch
         utterance.volume = 1.0;
 
         if (this.tamilVoice) {
           utterance.voice = this.tamilVoice;
         }
 
-        let didStart = false;
+        let started = false;
         utterance.onstart = () => {
-          didStart = true;
+          started = true;
         };
-
         utterance.onerror = () => {
           playAudioFallback();
         };
 
         window.speechSynthesis.speak(utterance);
 
-        // If synthesis is not supported on this mobile device, fallback to natural audio
         setTimeout(() => {
-          if (!didStart && (!window.speechSynthesis.speaking)) {
+          if (!started && (!window.speechSynthesis.speaking)) {
             playAudioFallback();
           }
         }, 350);
