@@ -1,0 +1,855 @@
+/**
+ * Tamil-Translate-Kids - Sentence Dataset
+ * Tailored for kids ages 7-9 (Grades 1, 2, 3)
+ * Maximum 5 words per English statement
+ * Multiple Tamil variations for flexible matching & scoring
+ */
+
+const SENTENCE_DATA = [
+  // ================= GRADE 1 (Age 6-7) =================
+  {
+    id: "g1_01",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "daily",
+    categoryLabel: "Daily Habits",
+    categoryTamil: "அன்றாட பழக்கங்கள்",
+    categoryIcon: "🌅",
+    english: "Good morning, Amma.",
+    wordCount: 3,
+    tamilPrimary: "காலை வணக்கம், அம்மா.",
+    transliteration: "Kaalai vanakkam, Amma.",
+    variations: [
+      "காலை வணக்கம் அம்மா",
+      "அம்மா காலை வணக்கம்",
+      "இனிய காலை வணக்கம் அம்மா",
+      "காலை வணக்கம் என் அம்மா",
+      "அம்மாவுக்கு காலை வணக்கம்"
+    ],
+    keywords: ["காலை", "வணக்கம்", "அம்மா"],
+    hint: "காலை + வணக்கம் + அம்மா"
+  },
+  {
+    id: "g1_02",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "daily",
+    categoryLabel: "Daily Habits",
+    categoryTamil: "அன்றாட பழக்கங்கள்",
+    categoryIcon: "🌅",
+    english: "Please give me water.",
+    wordCount: 4,
+    tamilPrimary: "எனக்கு தண்ணீர் கொடுங்கள்.",
+    transliteration: "Enakku thanneer kodungal.",
+    variations: [
+      "எனக்கு தண்ணீர் கொடுங்கள்",
+      "எனக்கு தண்ணி கொடுங்க",
+      "தயவுசெய்து எனக்கு தண்ணீர் கொடுங்கள்",
+      "எனக்கு கொஞ்சம் தண்ணி தாங்க",
+      "தண்ணீர் கொடுங்கள் எனக்கு",
+      "எனக்கு தண்ணி குடுங்கம்மா",
+      "தயவுசெய்து தண்ணி தாங்க"
+    ],
+    keywords: ["எனக்கு", "தண்ணீர்", "தண்ணி", "கொடுங்கள்", "தாங்க"],
+    hint: "எனக்கு + தண்ணீர் + கொடுங்கள்"
+  },
+  {
+    id: "g1_03",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "daily",
+    categoryLabel: "Daily Habits",
+    categoryTamil: "அன்றாட பழக்கங்கள்",
+    categoryIcon: "🌅",
+    english: "I brushed my teeth.",
+    wordCount: 4,
+    tamilPrimary: "நான் பல் துலக்கினேன்.",
+    transliteration: "Naan pal thulakkinean.",
+    variations: [
+      "நான் பல் துலக்கினேன்",
+      "நான் பல்லு விளக்கினேன்",
+      "நான் பல் தேய்த்தேன்",
+      "நான் பல்லு தேச்சிட்டேன்",
+      "என் பல் துலக்கினேன்",
+      "பல் துலக்கினேன் நான்",
+      "பல்லு தேய்த்தேன்"
+    ],
+    keywords: ["நான்", "பல்", "பல்லு", "துலக்கினேன்", "தேய்த்தேன்", "விளக்கினேன்"],
+    hint: "நான் + பல் + துலக்கினேன்"
+  },
+  {
+    id: "g1_04",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "daily",
+    categoryLabel: "Daily Habits",
+    categoryTamil: "அன்றாட பழக்கங்கள்",
+    categoryIcon: "🌅",
+    english: "Time for breakfast!",
+    wordCount: 3,
+    tamilPrimary: "காலை உணவுக்கான நேரம்!",
+    transliteration: "Kaalai unavukkaana nearam!",
+    variations: [
+      "காலை உணவுக்கான நேரம்",
+      "காலை சாப்பாட்டு நேரம்",
+      "காலை சாப்பாடு சாப்பிடலாம்",
+      "டிபன் சாப்பிட வாங்க",
+      "காலை உணவு நேரம்",
+      "டிபன் சாப்பிடும் நேரம்"
+    ],
+    keywords: ["காலை", "உணவு", "சாப்பாடு", "நேரம்", "டிபன்"],
+    hint: "காலை + உணவு / சாப்பாடு + நேரம்"
+  },
+  {
+    id: "g1_05",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "nature",
+    categoryLabel: "Animals & Nature",
+    categoryTamil: "விலங்குகள் & இயற்கை",
+    categoryIcon: "🐶",
+    english: "The sky is blue.",
+    wordCount: 4,
+    tamilPrimary: "வானம் நீல நிறம்.",
+    transliteration: "Vaanam neela niram.",
+    variations: [
+      "வானம் நீல நிறம்",
+      "வானம் நீலமாக உள்ளது",
+      "வானம் நீல நிறத்தில் உள்ளது",
+      "நீல நிற வானம்",
+      "வானம் நீல கலர்",
+      "வானம் நீல நிறத்தில் இருக்கு"
+    ],
+    keywords: ["வானம்", "நீல", "நிறம்", "நீலமாக"],
+    hint: "வானம் + நீல + நிறம்"
+  },
+  {
+    id: "g1_06",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "nature",
+    categoryLabel: "Animals & Nature",
+    categoryTamil: "விலங்குகள் & இயற்கை",
+    categoryIcon: "🐶",
+    english: "I see a bird.",
+    wordCount: 4,
+    tamilPrimary: "நான் பறவையைப் பார்க்கிறேன்.",
+    transliteration: "Naan paravaiyai paarkirean.",
+    variations: [
+      "நான் பறவையைப் பார்க்கிறேன்",
+      "நான் ஒரு பறவை பார்க்கிறேன்",
+      "ஒரு பறவை பார்க்கிறேன்",
+      "நான் குருவியை பார்க்கிறேன்",
+      "ஒரு பறவையை பாக்குறேன்",
+      "நான் ஒரு பறவையை பார்க்கிறேன்"
+    ],
+    keywords: ["நான்", "பறவை", "பறவையை", "குருவி", "பார்க்கிறேன்", "பாக்குறேன்"],
+    hint: "நான் + பறவை + பார்க்கிறேன்"
+  },
+  {
+    id: "g1_07",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "nature",
+    categoryLabel: "Animals & Nature",
+    categoryTamil: "விலங்குகள் & இயற்கை",
+    categoryIcon: "🐶",
+    english: "Dogs love to play.",
+    wordCount: 4,
+    tamilPrimary: "நாய்கள் விளையாட விரும்புகின்றன.",
+    transliteration: "Naaygal vilaiyaada virumbuginrana.",
+    variations: [
+      "நாய்கள் விளையாட விரும்புகின்றன",
+      "நாய்களுக்கு விளையாட பிடிக்கும்",
+      "நாய்க்கு விளையாடுவது பிடிக்கும்",
+      "நாய் நல்லா விளையாடும்",
+      "நாய்களுக்கு ஆட்டம் பிடிக்கும்",
+      "நாய்கள் விளையாட ஆசைப்படும்"
+    ],
+    keywords: ["நாய்", "நாய்கள்", "நாய்களுக்கு", "விளையாட", "பிடிக்கும்", "விரும்புகின்றன"],
+    hint: "நாய்கள் / நாய் + விளையாட + பிடிக்கும்"
+  },
+  {
+    id: "g1_08",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "nature",
+    categoryLabel: "Animals & Nature",
+    categoryTamil: "விலங்குகள் & இயற்கை",
+    categoryIcon: "🐶",
+    english: "The sun is shining.",
+    wordCount: 4,
+    tamilPrimary: "சூரியன் பிரகாசிக்கிறது.",
+    transliteration: "Sooriyan piragasikkiradhu.",
+    variations: [
+      "சூரியன் பிரகாசிக்கிறது",
+      "சூரியன் ஒளிர்கிறது",
+      "வெயில் அடிக்கிறது",
+      "சூரியன் காய்கிறது",
+      "சூரியன் வெளிச்சம் தருகிறது",
+      "சூரியன் நல்லா பிரகாசிக்குது"
+    ],
+    keywords: ["சூரியன்", "பிரகாசிக்கிறது", "ஒளிர்கிறது", "வெயில்", "வெளிச்சம்"],
+    hint: "சூரியன் + பிரகாசிக்கிறது / ஒளிர்கிறது"
+  },
+  {
+    id: "g1_09",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "feelings",
+    categoryLabel: "Food & Feelings",
+    categoryTamil: "உணவு & உணர்வுகள்",
+    categoryIcon: "🍕",
+    english: "I am very happy.",
+    wordCount: 4,
+    tamilPrimary: "நான் மிகவும் மகிழ்ச்சியாக உள்ளேன்.",
+    transliteration: "Naan migavum magizhchiyaaga ullen.",
+    variations: [
+      "நான் மிகவும் மகிழ்ச்சியாக உள்ளேன்",
+      "எனக்கு ரொம்ப சந்தோஷம்",
+      "நான் ரொம்ப மகிழ்ச்சியாக இருக்கிறேன்",
+      "நான் சந்தோஷமாக இருக்கிறேன்",
+      "எனக்கு ரொம்ப மகிழ்ச்சி",
+      "நான் மகிழ்ச்சியாக இருக்கிறேன்",
+      "எனக்கு மிகுந்த மகிழ்ச்சி"
+    ],
+    keywords: ["நான்", "மகிழ்ச்சி", "மகிழ்ச்சியாக", "சந்தோஷம்", "ரொம்ப", "மிகவும்"],
+    hint: "நான் + மகிழ்ச்சியாக / சந்தோஷமாக + இருக்கிறேன்"
+  },
+  {
+    id: "g1_10",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "feelings",
+    categoryLabel: "Food & Feelings",
+    categoryTamil: "உணவு & உணர்வுகள்",
+    categoryIcon: "🍕",
+    english: "This apple is sweet.",
+    wordCount: 4,
+    tamilPrimary: "இந்த ஆப்பிள் இனிப்பாக உள்ளது.",
+    transliteration: "Indha apple inippaaga ulladhu.",
+    variations: [
+      "இந்த ஆப்பிள் இனிப்பாக உள்ளது",
+      "இந்த ஆப்பிள் ரொம்ப இனிக்குது",
+      "இந்த ஆப்பிள் இனிப்பானது",
+      "ஆப்பிள் நல்ல இனிப்பு",
+      "இந்த பழம் இனிப்பாக உள்ளது",
+      "இந்த ஆப்பிள் சுவையாக உள்ளது"
+    ],
+    keywords: ["இந்த", "ஆப்பிள்", "இனிப்பு", "இனிப்பாக", "இனிப்பானது", "இனிக்குது"],
+    hint: "இந்த + ஆப்பிள் + இனிப்பாக + உள்ளது"
+  },
+  {
+    id: "g1_11",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "feelings",
+    categoryLabel: "Food & Feelings",
+    categoryTamil: "உணவு & உணர்வுகள்",
+    categoryIcon: "🍕",
+    english: "I like ice cream.",
+    wordCount: 4,
+    tamilPrimary: "எனக்கு ஐஸ்கிரீம் பிடிக்கும்.",
+    transliteration: "Enakku ice-cream pidikkum.",
+    variations: [
+      "எனக்கு ஐஸ்கிரீம் பிடிக்கும்",
+      "எனக்கு குச்சி ஐஸ் பிடிக்கும்",
+      "நான் ஐஸ்கிரீம் விரும்புவேன்",
+      "எனக்கு ஐஸ்கிரீம் ரொம்ப பிடிக்கும்",
+      "ஐஸ்கிரீம் எனக்கு ரொம்ப பிடிக்கும்",
+      "எனக்கு பனிக்கூழ் பிடிக்கும்"
+    ],
+    keywords: ["எனக்கு", "ஐஸ்கிரீம்", "பனிக்கூழ்", "பிடிக்கும்", "ரொம்ப"],
+    hint: "எனக்கு + ஐஸ்கிரீம் + பிடிக்கும்"
+  },
+  {
+    id: "g1_12",
+    grade: 1,
+    gradeLabel: "Grade 1 (1-ஆம் வகுப்பு)",
+    category: "feelings",
+    categoryLabel: "Food & Feelings",
+    categoryTamil: "உணவு & உணர்வுகள்",
+    categoryIcon: "🍕",
+    english: "I want to sleep.",
+    wordCount: 4,
+    tamilPrimary: "நான் தூங்க வேண்டும்.",
+    transliteration: "Naan thoonga veandum.",
+    variations: [
+      "நான் தூங்க வேண்டும்",
+      "எனக்கு தூக்கம் வருது",
+      "நான் தூங்க போறேன்",
+      "எனக்கு தூங்க ஆசை",
+      "நான் தூங்கணும்",
+      "எனக்கு தூக்கம் வருகிறது"
+    ],
+    keywords: ["நான்", "எனக்கு", "தூங்க", "தூக்கம்", "வேண்டும்", "வருது"],
+    hint: "நான் + தூங்க + வேண்டும்"
+  },
+
+  // ================= GRADE 2 (Age 7-8) =================
+  {
+    id: "g2_01",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "school",
+    categoryLabel: "School & Learning",
+    categoryTamil: "பள்ளி & கல்வி",
+    categoryIcon: "🏫",
+    english: "This book is interesting.",
+    wordCount: 4,
+    tamilPrimary: "இந்த புத்தகம் சுவாரஸ்யமானது.",
+    transliteration: "Indha puthagam suvarasyamanadhu.",
+    variations: [
+      "இந்த புத்தகம் சுவாரஸ்யமானது",
+      "இந்த புத்தகம் மிகவும் சுவாரஸ்யமானது",
+      "இந்த புத்தகம் நல்லா இருக்கு",
+      "இந்த கதை புத்தகம் அருமை",
+      "இந்த புத்தகம் படிக்க பிடிக்கும்",
+      "இந்த நூல் சுவாரஸ்யமானது"
+    ],
+    keywords: ["இந்த", "புத்தகம்", "சுவாரஸ்யமானது", "நல்லா", "அருமை"],
+    hint: "இந்த + புத்தகம் + சுவாரஸ்யமானது"
+  },
+  {
+    id: "g2_02",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "school",
+    categoryLabel: "School & Learning",
+    categoryTamil: "பள்ளி & கல்வி",
+    categoryIcon: "🏫",
+    english: "I like my teacher.",
+    wordCount: 4,
+    tamilPrimary: "எனக்கு என் ஆசிரியரை பிடிக்கும்.",
+    transliteration: "Enakku en aasiriyarai pidikkum.",
+    variations: [
+      "எனக்கு என் ஆசிரியரை பிடிக்கும்",
+      "எனக்கு என் ஆசிரியர் பிடிக்கும்",
+      "என் ஆசிரியரை எனக்கு பிடிக்கும்",
+      "எனக்கு டீச்சரை ரொம்ப பிடிக்கும்",
+      "எனக்கு ஆசிரியை பிடிக்கும்",
+      "என் ஆசிரியை எனக்கு பிடிக்கும்"
+    ],
+    keywords: ["எனக்கு", "என்", "ஆசிரியர்", "ஆசிரியரை", "டீச்சரை", "பிடிக்கும்"],
+    hint: "எனக்கு + என் ஆசிரியர் + பிடிக்கும்"
+  },
+  {
+    id: "g2_03",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "school",
+    categoryLabel: "School & Learning",
+    categoryTamil: "பள்ளி & கல்வி",
+    categoryIcon: "🏫",
+    english: "Let us read together.",
+    wordCount: 4,
+    tamilPrimary: "நாம் சேர்ந்து படிப்போம்.",
+    transliteration: "Naam searndhu padippom.",
+    variations: [
+      "நாம் சேர்ந்து படிப்போம்",
+      "நாம் ஒன்றாக வாசிப்போம்",
+      "எல்லாரும் சேர்ந்து படிப்போம்",
+      "ஒன்றாக படிப்போம் வாருங்கள்",
+      "நாம் கதை படிப்போம்",
+      "நாங்கள் சேர்ந்து படிப்போம்"
+    ],
+    keywords: ["நாம்", "நாங்கள்", "சேர்ந்து", "ஒன்றாக", "படிப்போம்", "வாசிப்போம்"],
+    hint: "நாம் + சேர்ந்து / ஒன்றாக + படிப்போம்"
+  },
+  {
+    id: "g2_04",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "school",
+    categoryLabel: "School & Learning",
+    categoryTamil: "பள்ளி & கல்வி",
+    categoryIcon: "🏫",
+    english: "I know the answer.",
+    wordCount: 4,
+    tamilPrimary: "எனக்கு பதில் தெரியும்.",
+    transliteration: "Enakku badhil theriyum.",
+    variations: [
+      "எனக்கு பதில் தெரியும்",
+      "எனக்கு சரியான பதில் தெரியும்",
+      "நான் விடையை அறிவேன்",
+      "எனக்கு விடை தெரியும்",
+      "அந்த பதில் எனக்கு தெரியும்",
+      "விடை எனக்கு தெரியும்"
+    ],
+    keywords: ["எனக்கு", "பதில்", "விடை", "தெரியும்", "அறிவேன்"],
+    hint: "எனக்கு + பதில் / விடை + தெரியும்"
+  },
+  {
+    id: "g2_05",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "play",
+    categoryLabel: "Playtime & Friends",
+    categoryTamil: "விளையாட்டு & நண்பர்கள்",
+    categoryIcon: "🧸",
+    english: "Let's play with ball.",
+    wordCount: 4,
+    tamilPrimary: "பந்து வைத்து விளையாடுவோம்.",
+    transliteration: "Pandhu vaithu vilaiyaaduvom.",
+    variations: [
+      "பந்து வைத்து விளையாடுவோம்",
+      "நாம் பந்து விளையாடுவோம்",
+      "பந்து விளையாடலாம் வா",
+      "வாருங்கள் பந்து விளையாடுவோம்",
+      "பந்தால் விளையாடுவோம்",
+      "நாம் பந்து விளையாடலாம்"
+    ],
+    keywords: ["பந்து", "விளையாடுவோம்", "விளையாடலாம்", "நாம்"],
+    hint: "பந்து + விளையாடுவோம் / விளையாடலாம்"
+  },
+  {
+    id: "g2_06",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "play",
+    categoryLabel: "Playtime & Friends",
+    categoryTamil: "விளையாட்டு & நண்பர்கள்",
+    categoryIcon: "🧸",
+    english: "She is my friend.",
+    wordCount: 4,
+    tamilPrimary: "அவள் என் தோழி.",
+    transliteration: "Aval en thozhi.",
+    variations: [
+      "அவள் என் தோழி",
+      "அவள் என்னுடைய சிநேகிதி",
+      "இவள் என் தோழி",
+      "அவள் என் சிறந்த தோழி",
+      "என் தோழி அவள்",
+      "அவள் என் நண்பன்"
+    ],
+    keywords: ["அவள்", "என்", "தோழி", "சிநேகிதி", "நண்பன்"],
+    hint: "அவள் + என் + தோழி"
+  },
+  {
+    id: "g2_07",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "play",
+    categoryLabel: "Playtime & Friends",
+    categoryTamil: "விளையாட்டு & நண்பர்கள்",
+    categoryIcon: "🧸",
+    english: "I ride my bicycle.",
+    wordCount: 4,
+    tamilPrimary: "நான் மிதிவண்டி ஓட்டுகிறேன்.",
+    transliteration: "Naan midhivandi ottugirean.",
+    variations: [
+      "நான் மிதிவண்டி ஓட்டுகிறேன்",
+      "நான் சைக்கிள் ஓட்டுகிறேன்",
+      "என்னால் மிதிவண்டி ஓட்ட முடியும்",
+      "நான் மிதிவண்டியில் செல்கிறேன்",
+      "நான் சைக்கிள் ஓட்டுவேன்",
+      "மிதிவண்டி ஓட்டுகிறேன் நான்"
+    ],
+    keywords: ["நான்", "மிதிவண்டி", "சைக்கிள்", "ஓட்டுகிறேன்", "ஓட்டுவேன்"],
+    hint: "நான் + மிதிவண்டி / சைக்கிள் + ஓட்டுகிறேன்"
+  },
+  {
+    id: "g2_08",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "play",
+    categoryLabel: "Playtime & Friends",
+    categoryTamil: "விளையாட்டு & நண்பர்கள்",
+    categoryIcon: "🧸",
+    english: "Look at the swing!",
+    wordCount: 4,
+    tamilPrimary: "ஊஞ்சலைப் பாருங்கள்!",
+    transliteration: "Oonjalai paarungal!",
+    variations: [
+      "ஊஞ்சலைப் பாருங்கள்",
+      "அந்த ஊஞ்சலை பார்",
+      "அந்த பெரிய ஊஞ்சலை பார்",
+      "ஊஞ்சல் ஆடுவதைப் பார்",
+      "அங்கே ஊஞ்சல் பார்",
+      "ஊஞ்சலை பாரு"
+    ],
+    keywords: ["ஊஞ்சல்", "ஊஞ்சலை", "பாருங்கள்", "பார்", "பாரு"],
+    hint: "ஊஞ்சலை + பாருங்கள் / பார்"
+  },
+  {
+    id: "g2_09",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "actions",
+    categoryLabel: "Colors & Actions",
+    categoryTamil: "வண்ணங்கள் & செயல்கள்",
+    categoryIcon: "🎨",
+    english: "The flower is red.",
+    wordCount: 4,
+    tamilPrimary: "மலர் சிவப்பு நிறம்.",
+    transliteration: "Malar sivappu niram.",
+    variations: [
+      "மலர் சிவப்பு நிறம்",
+      "அந்த பூ சிவப்பு நிறத்தில் உள்ளது",
+      "பூ சிவப்பாக இருக்கிறது",
+      "அந்த மலர் சிவப்பானது",
+      "சிவப்பு நிற பூ",
+      "பூ சிவப்பு கலர்"
+    ],
+    keywords: ["மலர்", "பூ", "சிவப்பு", "நிறம்", "சிவப்பாக"],
+    hint: "மலர் / பூ + சிவப்பு + நிறம்"
+  },
+  {
+    id: "g2_10",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "actions",
+    categoryLabel: "Colors & Actions",
+    categoryTamil: "வண்ணங்கள் & செயல்கள்",
+    categoryIcon: "🎨",
+    english: "I draw a picture.",
+    wordCount: 4,
+    tamilPrimary: "நான் படம் வரைகிறேன்.",
+    transliteration: "Naan padam varaigirean.",
+    variations: [
+      "நான் படம் வரைகிறேன்",
+      "நான் ஒரு படம் வரைகிறேன்",
+      "நான் சித்திரம் வரைகிறேன்",
+      "நான் படம் வரையுறேன்",
+      "ஒரு படம் நான் வரைகிறேன்",
+      "நான் ஓவியம் வரைகிறேன்"
+    ],
+    keywords: ["நான்", "படம்", "சித்திரம்", "ஓவியம்", "வரைகிறேன்", "வரையுறேன்"],
+    hint: "நான் + படம் / சித்திரம் + வரைகிறேன்"
+  },
+  {
+    id: "g2_11",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "actions",
+    categoryLabel: "Colors & Actions",
+    categoryTamil: "வண்ணங்கள் & செயல்கள்",
+    categoryIcon: "🎨",
+    english: "Birds sing sweet songs.",
+    wordCount: 4,
+    tamilPrimary: "பறவைகள் இனிமையாக பாடுகின்றன.",
+    transliteration: "Paravaigal inimaiyaaga paaduginrana.",
+    variations: [
+      "பறவைகள் இனிமையாக பாடுகின்றன",
+      "பறவைகள் இனிமையான பாடல் பாடுகின்றன",
+      "குருவிகள் பாடுகின்றன",
+      "பறவைகள் பாட்டு பாடுகின்றன",
+      "பறவை இனிமையாக பாடுகிறது",
+      "பறவைகள் இனிமையாய் பாடும்"
+    ],
+    keywords: ["பறவைகள்", "குருவிகள்", "இனிமையாக", "பாடுகின்றன", "பாட்டு", "பாடல்"],
+    hint: "பறவைகள் + இனிமையாக + பாடுகின்றன"
+  },
+  {
+    id: "g2_12",
+    grade: 2,
+    gradeLabel: "Grade 2 (2-ஆம் வகுப்பு)",
+    category: "actions",
+    categoryLabel: "Colors & Actions",
+    categoryTamil: "வண்ணங்கள் & செயல்கள்",
+    categoryIcon: "🎨",
+    english: "It is raining outside.",
+    wordCount: 4,
+    tamilPrimary: "வெளியில் மழை பெய்கிறது.",
+    transliteration: "Veliyil mazhai peygiradhu.",
+    variations: [
+      "வெளியில் மழை பெய்கிறது",
+      "இன்று வெளியில் மழை பெய்கிறது",
+      "வெளியே மழை வருது",
+      "மழை பெய்கிறது வெளியே",
+      "வெளியே நல்ல மழை",
+      "வெளியில மழை பெய்யுது"
+    ],
+    keywords: ["வெளியில்", "வெளியே", "மழை", "பெய்கிறது", "பெய்யுது", "வருது"],
+    hint: "வெளியில் / வெளியே + மழை + பெய்கிறது"
+  },
+
+  // ================= GRADE 3 (Age 8-9) =================
+  {
+    id: "g3_01",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "daily",
+    categoryLabel: "Daily Habits",
+    categoryTamil: "அன்றாட பழக்கங்கள்",
+    categoryIcon: "🌅",
+    english: "I wear my shoes.",
+    wordCount: 4,
+    tamilPrimary: "நான் காலணிகளை அணிகிறேன்.",
+    transliteration: "Naan kaalanigalai anigirean.",
+    variations: [
+      "நான் காலணிகளை அணிகிறேன்",
+      "நான் காலணி அணிகிறேன்",
+      "நான் என் காலணிகளை அணிகிறேன்",
+      "நான் ஷூ போடுகிறேன்",
+      "நான் செருப்பு அணிகிறேன்",
+      "என் காலணிகளை போடுகிறேன்"
+    ],
+    keywords: ["நான்", "காலணி", "காலணிகளை", "ஷூ", "அணிகிறேன்", "போடுகிறேன்"],
+    hint: "நான் + காலணிகளை / காலணி + அணிகிறேன்"
+  },
+  {
+    id: "g3_02",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "daily",
+    categoryLabel: "Daily Habits",
+    categoryTamil: "அன்றாட பழக்கங்கள்",
+    categoryIcon: "🌅",
+    english: "Time to go school!",
+    wordCount: 4,
+    tamilPrimary: "பள்ளிக்குச் செல்ல நேரம்!",
+    transliteration: "Pallikkuch chella nearam!",
+    variations: [
+      "பள்ளிக்குச் செல்ல நேரம்",
+      "பள்ளிக்குச் செல்ல வேண்டிய நேரம்",
+      "பள்ளிக்கு போகும் நேரம்",
+      "பள்ளிக்கு போகலாம் வாருங்கள்",
+      "ஸ்கூலுக்கு போகும் நேரம்",
+      "பள்ளி செல்லும் நேரம் இது"
+    ],
+    keywords: ["பள்ளிக்கு", "பள்ளிக்குச்", "செல்ல", "போகும்", "நேரம்", "ஸ்கூலுக்கு"],
+    hint: "பள்ளிக்கு + செல்ல / போகும் + நேரம்"
+  },
+  {
+    id: "g3_03",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "daily",
+    categoryLabel: "Daily Habits",
+    categoryTamil: "அன்றாட பழக்கங்கள்",
+    categoryIcon: "🌅",
+    english: "I ate my breakfast.",
+    wordCount: 4,
+    tamilPrimary: "நான் காலை உணவு சாப்பிட்டேன்.",
+    transliteration: "Naan kaalai unavu saappittean.",
+    variations: [
+      "நான் காலை உணவு சாப்பிட்டேன்",
+      "நான் காலை உணவை சாப்பிட்டேன்",
+      "நான் காலை சாப்பாடு சாப்பிட்டேன்",
+      "நான் டிபன் சாப்பிட்டு விட்டேன்",
+      "காலை உணவு சாப்பிட்டேன்",
+      "நான் காலை உணவு உண்டேன்"
+    ],
+    keywords: ["நான்", "காலை", "உணவு", "உணவை", "சாப்பாடு", "சாப்பிட்டேன்", "உண்டேன்"],
+    hint: "நான் + காலை உணவு + சாப்பிட்டேன்"
+  },
+  {
+    id: "g3_04",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "daily",
+    categoryLabel: "Daily Habits",
+    categoryTamil: "அன்றாட பழக்கங்கள்",
+    categoryIcon: "🌅",
+    english: "Thank you very much.",
+    wordCount: 4,
+    tamilPrimary: "உங்களுக்கு மிக்க நன்றி.",
+    transliteration: "Ungalukku mikka nandri.",
+    variations: [
+      "உங்களுக்கு மிக்க நன்றி",
+      "மிக்க நன்றி",
+      "மிகவும் நன்றி",
+      "ரொம்ப நன்றி",
+      "உனக்கு என் நன்றி",
+      "உங்களுக்கு மிகவும் நன்றி"
+    ],
+    keywords: ["உங்களுக்கு", "மிக்க", "மிகவும்", "ரொம்ப", "நன்றி"],
+    hint: "உங்களுக்கு + மிக்க / மிகவும் + நன்றி"
+  },
+  {
+    id: "g3_05",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "school",
+    categoryLabel: "School & Learning",
+    categoryTamil: "பள்ளி & கல்வி",
+    categoryIcon: "🏫",
+    english: "Can you help me?",
+    wordCount: 4,
+    tamilPrimary: "எனக்கு உதவ முடியுமா?",
+    transliteration: "Enakku udhava mudiyumaa?",
+    variations: [
+      "எனக்கு உதவ முடியுமா",
+      "எனக்கு உதவி செய்ய முடியுமா",
+      "எனக்கு கொஞ்சம் உதவுங்கள்",
+      "எனக்கு தயவுசெய்து உதவுங்கள்",
+      "உதவி செய்வீர்களா",
+      "எனக்கு உதவ முடியுமா தயவுசெய்து"
+    ],
+    keywords: ["எனக்கு", "உதவ", "உதவி", "முடியுமா", "உதவுங்கள்"],
+    hint: "எனக்கு + உதவ / உதவி செய்ய + முடியுமா"
+  },
+  {
+    id: "g3_06",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "school",
+    categoryLabel: "School & Learning",
+    categoryTamil: "பள்ளி & கல்வி",
+    categoryIcon: "🏫",
+    english: "Let us read stories.",
+    wordCount: 4,
+    tamilPrimary: "நாம் கதைகள் படிப்போம்.",
+    transliteration: "Naam kadhaigal padippom.",
+    variations: [
+      "நாம் கதைகள் படிப்போம்",
+      "நாம் ஒரு கதை படிப்போம்",
+      "நாம் கதைகளை வாசிப்போம்",
+      "வாருங்கள் கதை படிப்போம்",
+      "கதை படிப்போம் வா",
+      "நாங்கள் கதைகள் படிப்போம்"
+    ],
+    keywords: ["நாம்", "நாங்கள்", "கதை", "கதைகள்", "கதைகளை", "படிப்போம்", "வாசிப்போம்"],
+    hint: "நாம் + கதைகள் + படிப்போம்"
+  },
+  {
+    id: "g3_07",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "school",
+    categoryLabel: "School & Learning",
+    categoryTamil: "பள்ளி & கல்வி",
+    categoryIcon: "🏫",
+    english: "I love my school.",
+    wordCount: 4,
+    tamilPrimary: "என் பள்ளியை நேசிக்கிறேன்.",
+    transliteration: "En palliyai naesikkirean.",
+    variations: [
+      "என் பள்ளியை நேசிக்கிறேன்",
+      "எனக்கு என் பள்ளி பிடிக்கும்",
+      "எனக்கு என் பள்ளிக்கூடம் பிடிக்கும்",
+      "என் பள்ளியை எனக்கு மிகவும் பிடிக்கும்",
+      "என் பள்ளிக்கூடம் எனக்கு பிடிக்கும்",
+      "நான் என் பள்ளியை விரும்புகிறேன்"
+    ],
+    keywords: ["என்", "பள்ளி", "பள்ளியை", "பள்ளிக்கூடம்", "நேசிக்கிறேன்", "பிடிக்கும்", "விரும்புகிறேன்"],
+    hint: "எனக்கு + என் பள்ளி + பிடிக்கும் / நேசிக்கிறேன்"
+  },
+  {
+    id: "g3_08",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "play",
+    categoryLabel: "Playtime & Friends",
+    categoryTamil: "விளையாட்டு & நண்பர்கள்",
+    categoryIcon: "🧸",
+    english: "It is my turn.",
+    wordCount: 4,
+    tamilPrimary: "இப்போது என் முறை.",
+    transliteration: "Ippodhu en murai.",
+    variations: [
+      "இப்போது என் முறை",
+      "இது என் முறை",
+      "அடுத்து என் முறை",
+      "இப்போ என் டர்ன்",
+      "இப்போது எனது முறை",
+      "என் முறை இது"
+    ],
+    keywords: ["இப்போது", "இது", "என்", "எனது", "முறை"],
+    hint: "இப்போது / இது + என் + முறை"
+  },
+  {
+    id: "g3_09",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "play",
+    categoryLabel: "Playtime & Friends",
+    categoryTamil: "விளையாட்டு & நண்பர்கள்",
+    categoryIcon: "🧸",
+    english: "We build a castle.",
+    wordCount: 4,
+    tamilPrimary: "நாம் கோட்டை கட்டுகிறோம்.",
+    transliteration: "Naam kottai kattugirom.",
+    variations: [
+      "நாம் கோட்டை கட்டுகிறோம்",
+      "நாங்கள் ஒரு கோட்டை கட்டுகிறோம்",
+      "மணல் கோட்டை கட்டுகிறோம்",
+      "நாம் மணலில் கோட்டை கட்டுவோம்",
+      "நாம் ஒரு கோட்டை அமைப்போம்",
+      "நாங்கள் மணல் கோட்டை கட்டுகிறோம்"
+    ],
+    keywords: ["நாம்", "நாங்கள்", "கோட்டை", "மணல்", "கட்டுகிறோம்", "கட்டுவோம்"],
+    hint: "நாம் + கோட்டை + கட்டுகிறோம்"
+  },
+  {
+    id: "g3_10",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "nature",
+    categoryLabel: "Animals & Nature",
+    categoryTamil: "விலங்குகள் & இயற்கை",
+    categoryIcon: "🐶",
+    english: "Cats jump very high.",
+    wordCount: 4,
+    tamilPrimary: "பூனைகள் உயரமாக குதிக்கின்றன.",
+    transliteration: "Poonaigal uyaramaaga kudhikkinrana.",
+    variations: [
+      "பூனைகள் உயரமாக குதிக்கின்றன",
+      "பூனைகளால் மிக உயரமாக குதிக்க முடியும்",
+      "பூனை மேலே குதிக்கிறது",
+      "பூனைகள் உயரமாய் தாவும்",
+      "பூனை நல்லா குதிக்கும்",
+      "பூனைகள் மிகவும் உயரமாக குதிக்கும்"
+    ],
+    keywords: ["பூனை", "பூனைகள்", "பூனைகளால்", "உயரமாக", "உயரமாய்", "குதிக்கும்", "குதிக்கின்றன"],
+    hint: "பூனைகள் + உயரமாக + குதிக்கின்றன / குதிக்கும்"
+  },
+  {
+    id: "g3_11",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "nature",
+    categoryLabel: "Animals & Nature",
+    categoryTamil: "விலங்குகள் & இயற்கை",
+    categoryIcon: "🐶",
+    english: "The flower smells sweet.",
+    wordCount: 4,
+    tamilPrimary: "மலர் நல்ல வாசனை தருகிறது.",
+    transliteration: "Malar nalla vaasanai tharugiradhu.",
+    variations: [
+      "மலர் நல்ல வாசனை தருகிறது",
+      "இந்த மலர் நறுமணம் தருகிறது",
+      "பூ நல்ல மணக்குது",
+      "இந்த பூ இனிய வாசனை உடையது",
+      "மலர் வாசனை நன்று",
+      "பூ நல்ல வாசனை தருது"
+    ],
+    keywords: ["மலர்", "பூ", "வாசனை", "நறுமணம்", "மணக்குது", "தருகிறது", "நல்ல"],
+    hint: "மலர் / பூ + நல்ல வாசனை + தருகிறது"
+  },
+  {
+    id: "g3_12",
+    grade: 3,
+    gradeLabel: "Grade 3 (3-ஆம் வகுப்பு)",
+    category: "feelings",
+    categoryLabel: "Food & Feelings",
+    categoryTamil: "உணவு & உணர்வுகள்",
+    categoryIcon: "🍕",
+    english: "My mother cooks food.",
+    wordCount: 4,
+    tamilPrimary: "என் அம்மா சமைக்கிறார்.",
+    transliteration: "En amma samaikkiraar.",
+    variations: [
+      "என் அம்மா சமைக்கிறார்",
+      "என் அம்மா உணவு சமைக்கிறார்",
+      "அம்மா சுவையான உணவு சமைக்கிறார்",
+      "என் தாய் சமையல் செய்கிறார்",
+      "அம்மா சாப்பாடு சமைக்கிறாங்க",
+      "என் அம்மா சமையல் செய்கிறார்"
+    ],
+    keywords: ["என்", "அம்மா", "தாய்", "சமைக்கிறார்", "உணவு", "சாப்பாடு", "சமையல்"],
+    hint: "என் அம்மா + உணவு + சமைக்கிறார்"
+  }
+];
+
+// Export to window or global object for standalone browser or module execution
+if (typeof window !== "undefined") {
+  window.SENTENCE_DATA = SENTENCE_DATA;
+}
+if (typeof global !== "undefined") {
+  global.SENTENCE_DATA = SENTENCE_DATA;
+}
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = SENTENCE_DATA;
+}
