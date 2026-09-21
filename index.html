@@ -180,6 +180,22 @@
             </div>
           </div>
 
+          <!-- Kid Spoken Voice Playback Player -->
+          <div class="kid-voice-player-box" id="kid-voice-player-box" style="display: none;">
+            <button class="play-my-voice-btn" id="play-my-voice-btn">
+              <span>🎧</span> உங்கள் குரலைக் கேளுங்கள் (Listen to Your Voice)
+            </button>
+            <audio id="kid-voice-audio-element" style="display:none;"></audio>
+          </div>
+
+          <!-- Quick Touch Tamil Choice Chips (Ideal for iOS & Pronunciation Practice) -->
+          <div class="quick-phrases-container" id="quick-phrases-container">
+            <div class="quick-phrase-label">⚡ அல்லது தொட்டு பயிற்சி செய்யவும் (Or tap to practice):</div>
+            <div class="quick-chips-box" id="quick-chips-box">
+              <!-- Dynamically generated Tamil touch chips -->
+            </div>
+          </div>
+
           <!-- Validation & Percentage Matching Meter -->
           <div class="validation-zone" id="validation-zone">
             <div class="match-header">
@@ -243,16 +259,23 @@
         </div>
       </div>
 
-      <!-- Activity Diagnostics Toolbar -->
+      <!-- Activity Diagnostics & Voice Dataset Toolbar -->
       <div class="diagnostics-bar">
         <button class="diag-btn" id="view-logs-btn" title="View captured device activity logs">📊 Activity Logs</button>
+        <button class="diag-btn" id="download-voice-btn" title="Download collected kids voice samples bundle">🎙️ Voice Data (input_voice_data)</button>
         <button class="diag-btn" id="download-logs-btn" title="Download diagnostic logs as JSON">💾 Export Logs</button>
+      </div>
+
+      <!-- iPhone Helper Note -->
+      <div class="iphone-tip-banner">
+        <span>💡 iPhone குறிப்பு:</span> மைக் அனுமதி கேட்கும்போது <b>'Allow'</b> கொடுக்கவும். மேலும் iPhone Settings &gt; General &gt; Keyboard &gt; Dictation-ல் <b>Tamil</b> ஆன் செய்யவும்.
       </div>
     </section>
   </div>
 
   <!-- Application Scripts -->
   <script src="js/logger.js"></script>
+  <script src="js/voice_recorder.js"></script>
   <script src="js/sentences.js"></script>
   <script src="js/matcher.js"></script>
   <script src="js/audio.js"></script>

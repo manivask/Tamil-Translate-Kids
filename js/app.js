@@ -1,7 +1,7 @@
 /**
  * Tamil-Translate-Kids - Main Interactive Application Logic
  * Coordinates 3-Screen Wizard Flow (Grade -> Topics -> Practice), Voice Recognition,
- * Multi-variant Matching, Sound FX, Confetti, and Activity Diagnostics Logging.
+ * Raw Audio Waveform Capture for `input_voice_data`, Multi-variant Matching, Confetti, and Logs.
  */
 
 const App = {
@@ -16,6 +16,7 @@ const App = {
   isAnswerRevealed: false,
   isListening: false,
   completedIds: new Set(),
+  currentAudioBlobUrl: null,
 
   // Topic Metadata
   topicsMeta: [
@@ -36,6 +37,9 @@ const App = {
     this.bindEvents();
     this.initConfetti();
     KidSpeechService.init();
+    if (window.KidVoiceRecorder) {
+      KidVoiceRecorder.init();
+    }
 
     if (window.KidAppLogger) {
       KidAppLogger.log("INIT", "App initialized", KidAppLogger.getDeviceInfo());
@@ -75,6 +79,10 @@ const App = {
       micPromptText: document.getElementById("mic-prompt-text"),
       listeningHint: document.getElementById("listening-hint"),
       spokenTextDisplay: document.getElementById("spoken-text-display"),
+      kidVoicePlayerBox: document.getElementById("kid-voice-player-box"),
+      playMyVoiceBtn: document.getElementById("play-my-voice-btn"),
+      kidVoiceAudioElement: document.getElementById("kid-voice-audio-element"),
+      quickChipsBox: document.getElementById("quick-chips-box"),
       validationZone: document.getElementById("validation-zone"),
       matchNumber: document.getElementById("match-number"),
       matchUnit: document.getElementById("match-unit"),
@@ -95,8 +103,9 @@ const App = {
       manualSubmitBtn: document.getElementById("manual-submit-btn"),
       confettiCanvas: document.getElementById("confetti-canvas"),
 
-      // Logs diagnostics buttons
+      // Activity & Voice Diagnostics Toolbar
       viewLogsBtn: document.getElementById("view-logs-btn"),
+      downloadVoiceBtn: document.getElementById("download-voice-btn"),
       downloadLogsBtn: document.getElementById("download-logs-btn")
     };
   },
@@ -167,7 +176,19 @@ const App = {
       });
     }
 
-    // 7. Listen to Tamil answer audio
+    // 7. Kid Voice Playback
+    if (this.elements.playMyVoiceBtn) {
+      this.elements.playMyVoiceBtn.addEventListener("click", () => {
+        if (this.currentAudioBlobUrl) {
+          KidAudioFX.playClick();
+          const audio = this.elements.kidVoiceAudioElement || new Audio();
+          audio.src = this.currentAudioBlobUrl;
+          audio.play().catch(e => console.warn("Playback error:", e));
+        }
+      });
+    }
+
+    // 8. Listen to Tamil answer audio
     if (this.elements.listenTamilBtn) {
       this.elements.listenTamilBtn.addEventListener("click", () => {
         KidAudioFX.playClick();
@@ -179,7 +200,7 @@ const App = {
       });
     }
 
-    // 8. Reveal answer toggle
+    // 9. Reveal answer toggle
     if (this.elements.revealAnswerBtn) {
       this.elements.revealAnswerBtn.addEventListener("click", () => {
         KidAudioFX.playClick();
@@ -187,7 +208,7 @@ const App = {
       });
     }
 
-    // 9. Navigation
+    // 10. Navigation
     if (this.elements.prevBtn) {
       this.elements.prevBtn.addEventListener("click", () => {
         KidAudioFX.playClick();
@@ -202,7 +223,7 @@ const App = {
       });
     }
 
-    // 10. Manual Tamil input drawer
+    // 11. Manual Tamil input drawer
     if (this.elements.toggleManualBtn) {
       this.elements.toggleManualBtn.addEventListener("click", () => {
         KidAudioFX.playClick();
@@ -229,12 +250,26 @@ const App = {
       });
     }
 
-    // 11. Diagnostic Logs
+    // 12. Diagnostics & Voice Data Downloads
     if (this.elements.viewLogsBtn) {
       this.elements.viewLogsBtn.addEventListener("click", () => {
         if (window.KidAppLogger) {
           const logs = KidAppLogger.getLogs();
           alert(`📊 Activity Logs (${logs.length} entries):\n\n` + logs.slice(0, 5).map(l => `[${l.timestamp.slice(11,19)}] [${l.category}] ${l.action}`).join("\n"));
+        }
+      });
+    }
+
+    if (this.elements.downloadVoiceBtn) {
+      this.elements.downloadVoiceBtn.addEventListener("click", () => {
+        if (window.KidVoiceRecorder) {
+          const samples = KidVoiceRecorder.getSavedSamples();
+          if (samples.length === 0) {
+            alert("🎙️ No voice samples recorded yet in this session. Tap the mic and speak to record voice data!");
+          } else {
+            KidVoiceRecorder.downloadDataset();
+            alert(`💾 Downloading ${samples.length} recorded kids voice samples for input_voice_data/ !`);
+          }
         }
       });
     }
@@ -254,8 +289,6 @@ const App = {
     if (this.elements.screenPractice) this.elements.screenPractice.classList.toggle("active", screenName === "practice");
 
     if (window.KidAppLogger) KidAppLogger.log("NAV", `Show screen: ${screenName}`);
-
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
   },
 
@@ -329,7 +362,6 @@ const App = {
 
     if (window.KidAppLogger) KidAppLogger.log("MATCH", `Mode changed: ${mode}`);
 
-    // Re-evaluate if there is already a spoken transcript
     const currentSpoken = this.elements.spokenTextDisplay ? this.elements.spokenTextDisplay.textContent : "";
     if (currentSpoken && !this.elements.spokenTextDisplay.classList.contains("empty")) {
       this.evaluateTamilInput(currentSpoken);
@@ -364,6 +396,8 @@ const App = {
 
     // Reset card UI states
     this.isAnswerRevealed = false;
+    this.currentAudioBlobUrl = null;
+    if (this.elements.kidVoicePlayerBox) this.elements.kidVoicePlayerBox.style.display = "none";
     if (this.elements.tamilAnswerContent) this.elements.tamilAnswerContent.classList.remove("show");
     if (this.elements.revealAnswerBtn) this.elements.revealAnswerBtn.textContent = "பதில் பார்க்க (Show Answer) 👁️";
     if (this.elements.validationZone) {
@@ -391,9 +425,34 @@ const App = {
     if (this.elements.tamilTextPrimary) this.elements.tamilTextPrimary.textContent = item.tamilPrimary;
     if (this.elements.translitText) this.elements.translitText.textContent = `(${item.transliteration})`;
 
+    // Populate Quick Touch Tamil Chips for kid practice
+    this.renderQuickChips(item);
+
     // Navigation buttons state
     if (this.elements.prevBtn) this.elements.prevBtn.disabled = this.currentIndex === 0;
     if (this.elements.nextBtn) this.elements.nextBtn.disabled = false;
+  },
+
+  renderQuickChips(item) {
+    if (!this.elements.quickChipsBox) return;
+    this.elements.quickChipsBox.innerHTML = "";
+
+    const phrases = [
+      item.tamilPrimary,
+      ...(item.variations || []).slice(0, 2)
+    ];
+
+    phrases.forEach(phrase => {
+      const clean = phrase.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’]/g, "").trim();
+      const btn = document.createElement("button");
+      btn.className = "quick-chip-btn";
+      btn.textContent = clean;
+      btn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        this.processSpokenTranscript(clean, true);
+      });
+      this.elements.quickChipsBox.appendChild(btn);
+    });
   },
 
   toggleRevealAnswer() {
@@ -408,10 +467,28 @@ const App = {
     }
   },
 
-  toggleMic() {
+  async toggleMic() {
     if (this.isListening) {
       if (window.KidAppLogger) KidAppLogger.log("VOICE", "Mic stopped by user");
       KidSpeechService.stopListening();
+
+      // Stop raw audio recorder and save voice snippet
+      if (window.KidVoiceRecorder && KidVoiceRecorder.isRecording) {
+        const current = this.getCurrentSentence();
+        const res = await KidVoiceRecorder.stopRecording({
+          sentenceId: current ? current.id : "unknown",
+          english: current ? current.english : "",
+          grade: this.currentGrade,
+          category: this.currentCategory
+        });
+
+        if (res && res.audioUrl) {
+          this.currentAudioBlobUrl = res.audioUrl;
+          if (this.elements.kidVoicePlayerBox) {
+            this.elements.kidVoicePlayerBox.style.display = "flex";
+          }
+        }
+      }
     } else {
       if (this.elements.spokenTextDisplay) {
         this.elements.spokenTextDisplay.textContent = "கேட்கிறது... தமிழில் பேசவும் (Listening...)";
@@ -420,6 +497,12 @@ const App = {
 
       if (window.KidAppLogger) KidAppLogger.log("VOICE", "Mic started listening");
 
+      // Start hardware raw voice recorder
+      if (window.KidVoiceRecorder) {
+        KidVoiceRecorder.startRecording();
+      }
+
+      // Start speech recognition
       KidSpeechService.startListening(
         (transcript, isFinal) => this.processSpokenTranscript(transcript, isFinal),
         (listening, status) => this.handleSpeechStateChange(listening, status)
@@ -447,14 +530,10 @@ const App = {
       if (status) {
         if (window.KidAppLogger) KidAppLogger.log("VOICE", `Speech status: ${status}`);
 
-        if (status === "not_supported") {
-          alert("Microphone Note:\nSafari or Chrome is recommended for Tamil voice recognition. You can also use the manual typing option below!");
-        } else if (status === "not-allowed" || status === "service-not-allowed") {
-          alert("📱 iPhone / Safari Microphone Permission:\n\n1. Open iPhone 'Settings'\n2. Scroll down and tap 'Safari' (or 'Chrome')\n3. Tap 'Microphone' and choose 'Allow'\n4. Return and tap the mic button!");
-        } else if (status === "audio-capture") {
-          if (this.elements.spokenTextDisplay) {
-            this.elements.spokenTextDisplay.textContent = "மைக் கிடைக்கவில்லை. அமைப்புகளில் அனுமதியை சரிபார்க்கவும் (No microphone access)";
-            this.elements.spokenTextDisplay.classList.add("empty");
+        // If Apple Siri speech recognition fails with service-not-allowed, show friendly hint
+        if (status === "not-allowed" || status === "service-not-allowed") {
+          if (this.elements.spokenTextDisplay && this.elements.spokenTextDisplay.classList.contains("empty")) {
+            this.elements.spokenTextDisplay.textContent = "குரல் பதிவாகியுள்ளது! கீழே உள்ள வாக்கியத்தை தொட்டு சரிபார்க்கவும் (Voice recorded! Tap a phrase below to test)";
           }
         } else if (status === "no-speech") {
           if (this.elements.spokenTextDisplay) {
@@ -546,7 +625,6 @@ const App = {
       this.currentIndex++;
       this.renderCurrentCard();
     } else {
-      // Loop back to first question in topic
       this.currentIndex = 0;
       this.renderCurrentCard();
     }

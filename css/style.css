@@ -995,11 +995,104 @@ body {
   cursor: pointer;
 }
 
+/* Kid Voice Playback Box */
+.kid-voice-player-box {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0 10px;
+}
+
+.play-my-voice-btn {
+  background: linear-gradient(135deg, #118AB2, #06D6A0);
+  border: none;
+  color: #FFF;
+  font-family: var(--font-kid);
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(17, 138, 178, 0.3);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.play-my-voice-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(17, 138, 178, 0.45);
+}
+
+/* Quick Touch Tamil Choice Chips */
+.quick-phrases-container {
+  margin: 6px 0 12px;
+  text-align: center;
+}
+
+.quick-phrase-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 6px;
+}
+
+.quick-chips-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.quick-chip-btn {
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #1E293B;
+  font-family: var(--font-tamil);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quick-chip-btn:hover {
+  background: #E2E8F0;
+  border-color: var(--secondary);
+  transform: scale(1.03);
+}
+
+.quick-chip-btn.selected {
+  background: var(--secondary);
+  color: #FFF;
+  border-color: var(--secondary);
+}
+
+/* iPhone Helper Note Banner */
+.iphone-tip-banner {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px dashed var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.4;
+}
+
+.iphone-tip-banner span {
+  font-weight: 700;
+  color: var(--accent-yellow);
+}
+
 /* Diagnostics Toolbar */
 .diagnostics-bar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   margin-top: 14px;
 }
 
