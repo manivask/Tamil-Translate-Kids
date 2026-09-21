@@ -322,46 +322,48 @@ const App = {
   },
 
   toggleRevealAnswer() {
-    this.isAnswerRevealed = !this.isAnswerRevealed;
-    if (this.isAnswerRevealed) {
-      this.elements.tamilAnswerContent.classList.add("show");
-      this.elements.revealAnswerBtn.textContent = "மறைக்க (Hide Answer) 🙈";
-    } else {
-      this.elements.tamilAnswerContent.classList.remove("show");
-      this.elements.revealAnswerBtn.textContent = "பதில் பார்க்க (Show Answer) 👁️";
-    }
-  },
-
-  toggleMic() {
+    this.isAnswer  toggleMic() {
     if (this.isListening) {
       KidSpeechService.stopListening();
-      KidAudioFX.playMicStop();
     } else {
-      KidAudioFX.playMicStart();
+      // Clear previous spoken display
+      this.elements.spokenTextDisplay.textContent = "கேட்கிறது... தமிழில் பேசவும் (Listening...)";
+      this.elements.spokenTextDisplay.classList.add("empty");
+
       KidSpeechService.startListening(
         (transcript, isFinal) => this.processSpokenTranscript(transcript, isFinal),
-        (listening, error) => this.handleSpeechStateChange(listening, error)
+        (listening, status) => this.handleSpeechStateChange(listening, status)
       );
     }
   },
 
-  handleSpeechStateChange(listening, error) {
+  handleSpeechStateChange(listening, status) {
     this.isListening = listening;
     if (listening) {
       this.elements.micBtn.classList.add("listening");
-      this.elements.micPromptText.textContent = "கேட்கிறது... தமிழில் பேசுங்கள்! (Listening...)";
-      this.elements.listeningHint.textContent = "Speak clearly in Tamil";
+
+      if (status === "speech_detected") {
+        this.elements.micPromptText.textContent = "🎙️ குரல் கேட்கிறது... (Voice Detected!)";
+        this.elements.listeningHint.textContent = "Speaking Tamil...";
+      } else {
+        this.elements.micPromptText.textContent = "🔴 கேட்கிறது... தமிழில் பேசவும்! (Listening...)";
+        this.elements.listeningHint.textContent = "Say the Tamil translation out loud";
+      }
     } else {
       this.elements.micBtn.classList.remove("listening");
       this.elements.micPromptText.textContent = "பேச மைக்-ஐ அழுத்தவும் (Tap to Speak Tamil)";
       this.elements.listeningHint.textContent = "Press mic and say translation in Tamil";
-      if (error) {
-        if (error === "not_supported") {
-          alert("Microphone Note: Chrome or Safari is recommended. You can also use the manual typing option below!");
-        } else if (error === "not-allowed" || error === "permission-denied") {
-          alert("📱 iPhone / Mobile Hint:\nMicrophone permission is needed.\n• iPhone: Open iOS Settings > Safari (or Chrome) > Microphone > Choose 'Allow'.\n• Then tap the microphone again!");
-        } else if (error === "no-speech") {
-          this.elements.spokenTextDisplay.textContent = "சத்தம் கேட்கவில்லை. மீண்டும் மைக் தொட்டு பேசவும் (No speech detected. Please tap mic and speak again)";
+
+      if (status) {
+        if (status === "not_supported") {
+          alert("Microphone Note:\nSafari or Chrome is recommended for Tamil voice recognition. You can also use the manual typing option below!");
+        } else if (status === "not-allowed" || status === "service-not-allowed") {
+          alert("📱 iPhone / Safari Microphone Permission:\n\n1. Open iPhone 'Settings'\n2. Scroll down and tap 'Safari' (or 'Chrome')\n3. Tap 'Microphone' and choose 'Allow'\n4. Return and tap the mic button!");
+        } else if (status === "audio-capture") {
+          this.elements.spokenTextDisplay.textContent = "மைக் கிடைக்கவில்லை. அமைப்புகளில் அனுமதியை சரிபார்க்கவும் (No microphone found or access restricted)";
+          this.elements.spokenTextDisplay.classList.add("empty");
+        } else if (status === "no-speech") {
+          this.elements.spokenTextDisplay.textContent = "சத்தம் கேட்கவில்லை. மீண்டும் மைக் தொட்டு பேசவும் (No speech detected. Please tap mic again)";
           this.elements.spokenTextDisplay.classList.add("empty");
         }
       }

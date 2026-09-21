@@ -1,6 +1,6 @@
 /**
- * Tamil-Translate-Kids - Enhanced Voice Recognition & Soft Tamil Kid Voice Synthesis
- * Cross-platform support for iOS (iPhone/iPad Safari/Chrome), Android, and Desktop.
+ * Tamil-Translate-Kids - Mobile & iOS Optimized Speech Service
+ * Reliable SpeechRecognition (ta-IN) & Natural Soft Tamil Voice Synthesis.
  */
 
 const KidSpeechService = {
@@ -11,7 +11,6 @@ const KidSpeechService = {
   onTranscriptCallback: null,
   onStateChangeCallback: null,
   audioPlayer: null,
-  hasMicPermission: false,
 
   init() {
     this.audioPlayer = new Audio();
@@ -26,8 +25,7 @@ const KidSpeechService = {
     const voices = window.speechSynthesis.getVoices();
     if (!voices || voices.length === 0) return;
 
-    // Preference list for soft, natural, kid-friendly Tamil voices:
-    // Kani, Latha, Google தமிழ், Valluvar, or any ta-*
+    // Preference list for sweet, soft, natural Tamil voices:
     this.tamilVoice = 
       voices.find(v => v.lang.startsWith("ta") && (v.name.toLowerCase().includes("kani") || v.name.toLowerCase().includes("female") || v.name.toLowerCase().includes("natural"))) ||
       voices.find(v => v.lang.startsWith("ta") || v.name.toLowerCase().includes("tamil")) ||
@@ -44,116 +42,86 @@ const KidSpeechService = {
     return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   },
 
-  // Request Microphone Permission explicitly (Fixes iPhone/Safari blocking)
-  async ensureMicPermission() {
-    if (this.hasMicPermission) return true;
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        // Stop audio tracks immediately after granting permission
-        stream.getTracks().forEach(track => track.stop());
-        this.hasMicPermission = true;
-        return true;
-      } catch (err) {
-        console.warn("Microphone access request error:", err);
-        return false;
-      }
-    }
-    return true; // Fallback for browsers without getUserMedia
-  },
-
-  // Create fresh instance of recognition (Fixes iOS WebKit state bugs)
-  createRecognitionInstance() {
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) return null;
-
-    const rec = new SpeechRec();
-    rec.continuous = false;
-    rec.interimResults = true;
-    rec.maxAlternatives = 3;
-    rec.lang = "ta-IN"; // Tamil (India)
-
-    rec.onstart = () => {
-      this.isListening = true;
-      if (this.onStateChangeCallback) this.onStateChangeCallback(true);
-    };
-
-    rec.onresult = (event) => {
-      let transcript = "";
-      let isFinal = false;
-
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        transcript += event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          isFinal = true;
-        }
-      }
-
-      if (this.onTranscriptCallback && transcript) {
-        this.onTranscriptCallback(transcript, isFinal);
-      }
-    };
-
-    rec.onerror = (event) => {
-      console.warn("Speech Recognition Error:", event.error);
-      this.isListening = false;
-      if (this.onStateChangeCallback) {
-        this.onStateChangeCallback(false, event.error);
-      }
-    };
-
-    rec.onend = () => {
-      this.isListening = false;
-      if (this.onStateChangeCallback) {
-        this.onStateChangeCallback(false);
-      }
-    };
-
-    return rec;
-  },
-
-  async startListening(onTranscript, onStateChange) {
+  // Synchronous recognition starter for iOS Safari / Mobile
+  startListening(onTranscript, onStateChange) {
     this.onTranscriptCallback = onTranscript;
     this.onStateChangeCallback = onStateChange;
 
-    if (!this.isSupported()) {
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRec) {
       if (onStateChange) onStateChange(false, "not_supported");
       return;
     }
 
-    // Explicit mic check for iOS / Mobile Safari & Chrome
-    try {
-      await this.ensureMicPermission();
-    } catch (e) {
-      console.warn("Mic permission error:", e);
-    }
-
-    // Always create a fresh instance on mobile to prevent stuck recognition
-    try {
-      if (this.recognition && this.isListening) {
+    // Abort any existing recognition instance
+    if (this.recognition) {
+      try {
         this.recognition.abort();
-      }
-    } catch (e) {}
-
-    this.recognition = this.createRecognitionInstance();
-    if (!this.recognition) {
-      if (onStateChange) onStateChange(false, "not_supported");
-      return;
+      } catch (e) {}
+      this.recognition = null;
     }
 
     try {
-      this.recognition.start();
-    } catch (e) {
-      console.warn("Recognition failed to start:", e);
-      // Retry once after brief timeout if busy
-      setTimeout(() => {
-        try {
-          this.recognition = this.createRecognitionInstance();
-          if (this.recognition) this.recognition.start();
-        } catch (err) {
-          if (onStateChange) onStateChange(false, err.message || "start_failed");
+      const rec = new SpeechRec();
+      rec.continuous = false;
+      rec.interimResults = true;
+      rec.maxAlternatives = 3;
+      rec.lang = "ta-IN"; // Tamil (India)
+
+      rec.onstart = () => {
+        this.isListening = true;
+        if (this.onStateChangeCallback) this.onStateChangeCallback(true);
+      };
+
+      rec.onaudiostart = () => {
+        if (this.onStateChangeCallback) this.onStateChangeCallback(true, "recording_audio");
+      };
+
+      rec.onspeechstart = () => {
+        if (this.onStateChangeCallback) this.onStateChangeCallback(true, "speech_detected");
+      };
+
+      rec.onresult = (event) => {
+        let transcript = "";
+        let isFinal = false;
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          transcript += event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            isFinal = true;
+          }
         }
-      }, 150);
+
+        if (this.onTranscriptCallback && transcript.trim()) {
+          this.onTranscriptCallback(transcript, isFinal);
+        }
+      };
+
+      rec.onerror = (event) => {
+        console.warn("Speech recognition error:", event.error);
+        this.isListening = false;
+        if (this.onStateChangeCallback) {
+          this.onStateChangeCallback(false, event.error);
+        }
+      };
+
+      rec.onend = () => {
+        this.isListening = false;
+        if (this.onStateChangeCallback) {
+          this.onStateChangeCallback(false);
+        }
+      };
+
+      this.recognition = rec;
+      // Start synchronously within user gesture callstack
+      rec.start();
+
+    } catch (err) {
+      console.warn("Start recognition error:", err);
+      this.isListening = false;
+      if (this.onStateChangeCallback) {
+        this.onStateChangeCallback(false, err.name || "start_error");
+      }
     }
   },
 
@@ -171,90 +139,79 @@ const KidSpeechService = {
   },
 
   /**
-   * Speak Tamil with soft, sweet, kid-friendly voice modulation.
-   * Uses Web Speech Synthesis with high-pitch female/soft voice,
-   * with fallback to natural pronunciation audio.
+   * Speak Tamil with sweet, gentle kid-friendly voice modulation.
    */
   speakTamil(tamilText) {
     if (!tamilText) return;
+    const cleanText = tamilText.replace(/[()]/g, "").trim();
 
-    // Try SpeechSynthesis first
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel(); // Stop any playing speech
-
-      const cleanText = tamilText.replace(/[()]/g, "").trim();
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.lang = "ta-IN";
-      
-      // Soft, gentle, kid-friendly pitch & rate
-      utterance.rate = 0.85; // Gentle pace so kids can hear each syllable
-      utterance.pitch = 1.25; // Cheerful, sweet, high-toned kid pitch
-      utterance.volume = 1.0;
-
-      if (this.tamilVoice) {
-        utterance.voice = this.tamilVoice;
+    // Natural online audio stream player (plays immediately on mobile)
+    const playAudioFallback = () => {
+      try {
+        if (!this.audioPlayer) this.audioPlayer = new Audio();
+        const encoded = encodeURIComponent(cleanText);
+        this.audioPlayer.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ta&client=tw-ob&q=${encoded}`;
+        this.audioPlayer.playbackRate = 0.9;
+        this.audioPlayer.play().catch(e => console.warn("Audio play notice:", e));
+      } catch (err) {
+        console.warn("Fallback audio error:", err);
       }
+    };
 
-      // If synthesis succeeds, play
-      let synthesisStarted = false;
-      utterance.onstart = () => {
-        synthesisStarted = true;
-      };
+    if (window.speechSynthesis) {
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = "ta-IN";
+        utterance.rate = 0.85; // Sweet, clear pace
+        utterance.pitch = 1.25; // Gentle, high-toned kid pitch
+        utterance.volume = 1.0;
 
-      utterance.onerror = () => {
-        // Fallback to natural audio stream if TTS engine fails on device
-        this.playNaturalTamilAudio(cleanText);
-      };
-
-      window.speechSynthesis.speak(utterance);
-
-      // Timeout check: on some iPhones, speechSynthesis can hang if no voice installed
-      setTimeout(() => {
-        if (!synthesisStarted && window.speechSynthesis.speaking === false) {
-          this.playNaturalTamilAudio(cleanText);
+        if (this.tamilVoice) {
+          utterance.voice = this.tamilVoice;
         }
-      }, 400);
 
+        let didStart = false;
+        utterance.onstart = () => {
+          didStart = true;
+        };
+
+        utterance.onerror = () => {
+          playAudioFallback();
+        };
+
+        window.speechSynthesis.speak(utterance);
+
+        // If synthesis is not supported on this mobile device, fallback to natural audio
+        setTimeout(() => {
+          if (!didStart && (!window.speechSynthesis.speaking)) {
+            playAudioFallback();
+          }
+        }, 350);
+
+      } catch (e) {
+        playAudioFallback();
+      }
     } else {
-      this.playNaturalTamilAudio(tamilText);
+      playAudioFallback();
     }
   },
 
-  // Natural high-clarity soft audio playback fallback
-  playNaturalTamilAudio(text) {
-    if (!this.audioPlayer) {
-      this.audioPlayer = new Audio();
-    }
-    try {
-      const encoded = encodeURIComponent(text);
-      const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ta&client=tw-ob&q=${encoded}`;
-      this.audioPlayer.src = url;
-      this.audioPlayer.playbackRate = 0.9; // Soft and clear
-      this.audioPlayer.play().catch(e => {
-        console.warn("Audio fallback autoplay notice:", e);
-      });
-    } catch (e) {
-      console.warn("Natural audio error:", e);
-    }
-  },
-
-  // Speak English sentence
   speakEnglish(englishText) {
     if (!englishText) return;
-
     if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(englishText);
+        utterance.lang = "en-US";
+        utterance.rate = 0.88;
+        utterance.pitch = 1.15;
 
-      const utterance = new SpeechSynthesisUtterance(englishText);
-      utterance.lang = "en-US";
-      utterance.rate = 0.88;
-      utterance.pitch = 1.15; // Friendly upbeat pitch
-
-      if (this.englishVoice) {
-        utterance.voice = this.englishVoice;
-      }
-
-      window.speechSynthesis.speak(utterance);
+        if (this.englishVoice) {
+          utterance.voice = this.englishVoice;
+        }
+        window.speechSynthesis.speak(utterance);
+      } catch (e) {}
     }
   }
 };
