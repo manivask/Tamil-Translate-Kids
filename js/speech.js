@@ -16,7 +16,6 @@ const KidSpeechService = {
   init() {
     this.audioPlayer = new Audio();
     this.setupVoices();
-    this.initSpeechRecognition();
     if (window.speechSynthesis && "onvoiceschanged" in window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = () => this.setupVoices();
     }
@@ -58,14 +57,39 @@ const KidSpeechService = {
     if (!SpeechRecognition) return;
 
     try {
+      // Safari requires construction as well as start() to occur in the tap
+      // that asks to listen. Reusing an object created during page load can
+      // fail with a generic start exception on iPhone.
+      if (this.recognition) {
+        try { this.recognition.abort(); } catch (_) {}
+      }
       this.recognition = new SpeechRecognition();
       this.recognition.continuous = false;
       this.recognition.interimResults = true;
       this.recognition.lang = this.currentLanguage;
       this.recognition.maxAlternatives = 1;
     } catch (e) {
+      this.recognition = null;
       console.warn("SpeechRecognition init error:", e);
+      this.logDiagnostic("Speech recognizer construction failed", this.errorDetails(e));
     }
+  },
+
+  errorDetails(error) {
+    return {
+      name: error && error.name ? error.name : "unknown",
+      message: error && error.message ? error.message : String(error || "unknown"),
+      language: this.currentLanguage,
+      secureContext: window.isSecureContext,
+      origin: window.location.origin,
+      hasSpeechRecognition: !!window.SpeechRecognition,
+      hasWebkitSpeechRecognition: !!window.webkitSpeechRecognition,
+      userAgent: navigator.userAgent
+    };
+  },
+
+  logDiagnostic(action, details = {}) {
+    if (window.KidAppLogger) KidAppLogger.log("VOICE", action, details);
   },
 
   stopSpeaking() {
@@ -88,37 +112,40 @@ const KidSpeechService = {
 
   startListening({ onStart, onResult, onError, onEnd } = {}) {
     this.stopSpeaking();
+    this.logDiagnostic("Speech recognition requested", this.errorDetails(null));
 
     // SpeechRecognition.start() must run in the original tap call stack on
     // iOS. Do not await getUserMedia before it: doing so loses the user gesture
     // and iOS reports NotAllowedError even when the browser has mic access.
     if (!window.isSecureContext) {
+      this.logDiagnostic("Speech recognition blocked: insecure context");
       if (onError) onError("insecure-context");
       return false;
     }
 
     if (this.isUnsupportedIOSBrowser()) {
+      this.logDiagnostic("Speech recognition unavailable: unsupported iOS browser");
       if (onError) onError("ios-browser-speech-unavailable");
       return false;
     }
 
-    if (!this.recognition) {
-      this.initSpeechRecognition();
-    }
+    // Always create a fresh instance here. This method is called directly by
+    // the mic button's click handler, preserving Safari's required gesture.
+    this.initSpeechRecognition();
 
     if (this.recognition) {
       this.recognition.lang = this.currentLanguage;
     }
 
-    if (onStart) onStart();
-
     if (!this.recognition) {
+      this.logDiagnostic("Speech recognition unavailable: API missing");
       if (onError) onError("speech-api-unavailable");
       return false;
     }
 
     this.recognition.onstart = () => {
       this.isListening = true;
+      this.logDiagnostic("Speech recognition started");
       if (onStart) onStart();
     };
 
@@ -148,11 +175,17 @@ const KidSpeechService = {
     this.recognition.onerror = (event) => {
       console.warn("SpeechRecognition event note:", event.error);
       this.isListening = false;
+      this.logDiagnostic("Speech recognition error", {
+        error: event.error,
+        message: event.message || "",
+        ...this.errorDetails(null)
+      });
       if (onError) onError(event.error);
     };
 
     this.recognition.onend = () => {
       this.isListening = false;
+      this.logDiagnostic("Speech recognition ended");
       if (onEnd) onEnd();
     };
 
@@ -162,6 +195,7 @@ const KidSpeechService = {
     } catch (err) {
       console.warn("Recognition start exception:", err);
       this.isListening = false;
+      this.logDiagnostic("Speech recognition start exception", this.errorDetails(err));
       if (onError) onError("recognition-start-failed");
       if (onEnd) onEnd();
       return false;
