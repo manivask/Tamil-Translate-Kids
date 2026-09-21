@@ -15,6 +15,8 @@ const App = {
   totalStarsEarned: 0,
   isAnswerRevealed: false,
   isListening: false,
+  lastSpokenTranscript: "",
+  hasEvaluatedCurrentSpeech: false,
   completedIds: new Set(),
 
   // Topic Metadata
@@ -215,7 +217,11 @@ const App = {
         const text = this.elements.manualTextInput.value.trim();
         if (text) {
           if (window.KidAppLogger) KidAppLogger.log("MATCH", "Manual input submit", { text });
-          this.processSpokenTranscript(text, true);
+          if (this.elements.spokenTextDisplay) {
+            this.elements.spokenTextDisplay.textContent = text;
+            this.elements.spokenTextDisplay.classList.remove("empty");
+          }
+          this.evaluateTamilInput(text);
           this.elements.manualTextInput.value = "";
         }
       });
@@ -359,6 +365,13 @@ const App = {
     const item = this.getCurrentSentence();
     if (!item) return;
 
+    // Reset voice & speech states
+    KidSpeechService.stopSpeaking();
+    KidSpeechService.stopListening();
+    this.handleSpeechStateChange(false);
+    this.lastSpokenTranscript = "";
+    this.hasEvaluatedCurrentSpeech = false;
+
     // Reset card UI states
     this.isAnswerRevealed = false;
     if (this.elements.tamilAnswerContent) this.elements.tamilAnswerContent.classList.remove("show");
@@ -406,10 +419,20 @@ const App = {
   },
 
   toggleMic() {
-    if (this.isListening) {
+    if (this.isListening || KidSpeechService.isListening) {
       if (window.KidAppLogger) KidAppLogger.log("VOICE", "Mic stopped by user");
       KidSpeechService.stopListening();
+      this.handleSpeechStateChange(false);
+
+      // If manual stop occurred after speech was heard, evaluate it
+      if (this.lastSpokenTranscript && !this.hasEvaluatedCurrentSpeech) {
+        this.hasEvaluatedCurrentSpeech = true;
+        this.evaluateTamilInput(this.lastSpokenTranscript);
+      }
     } else {
+      this.lastSpokenTranscript = "";
+      this.hasEvaluatedCurrentSpeech = false;
+
       if (this.elements.spokenTextDisplay) {
         this.elements.spokenTextDisplay.textContent = "கேட்கிறது... தமிழில் பேசவும் (Listening...)";
         this.elements.spokenTextDisplay.classList.add("empty");
@@ -417,55 +440,60 @@ const App = {
 
       if (window.KidAppLogger) KidAppLogger.log("VOICE", "Mic started listening");
 
-      KidSpeechService.startListening(
-        (transcript, isFinal) => this.processSpokenTranscript(transcript, isFinal),
-        (listening, status) => this.handleSpeechStateChange(listening, status)
-      );
+      KidSpeechService.startListening({
+        onStart: () => {
+          this.handleSpeechStateChange(true);
+        },
+        onResult: ({ final, interim }) => {
+          const liveText = (interim || final || "").trim();
+          if (liveText) {
+            this.lastSpokenTranscript = liveText;
+            if (this.elements.spokenTextDisplay) {
+              this.elements.spokenTextDisplay.textContent = liveText;
+              this.elements.spokenTextDisplay.classList.remove("empty");
+            }
+          }
+
+          if (final) {
+            this.hasEvaluatedCurrentSpeech = true;
+            KidSpeechService.stopListening();
+            this.handleSpeechStateChange(false);
+            if (window.KidAppLogger) KidAppLogger.log("VOICE", "Final transcript captured", { transcript: final });
+            this.evaluateTamilInput(final);
+          }
+        },
+        onError: (err) => {
+          console.warn("Speech recognition note:", err);
+          if (window.KidAppLogger) KidAppLogger.log("VOICE", `Speech error: ${err}`);
+          if (err === "not-allowed" || err === "service-not-allowed") {
+            alert("Microphone Note:\nMicrophone permission was denied. Please allow microphone access in your iOS / browser settings.");
+          } else if (err === "speech-api-unavailable") {
+            alert("Microphone Note:\nWeb Speech API is not supported in this browser. Safari or Chrome is recommended.");
+          }
+        },
+        onEnd: () => {
+          this.handleSpeechStateChange(false);
+          // On Apple/iOS Safari, onend frequently fires before final is flagged. Evaluate any heard speech:
+          if (this.lastSpokenTranscript && !this.hasEvaluatedCurrentSpeech) {
+            this.hasEvaluatedCurrentSpeech = true;
+            if (window.KidAppLogger) KidAppLogger.log("VOICE", "Evaluation on speech end", { transcript: this.lastSpokenTranscript });
+            this.evaluateTamilInput(this.lastSpokenTranscript);
+          }
+        }
+      });
     }
   },
 
-  handleSpeechStateChange(listening, status) {
+  handleSpeechStateChange(listening) {
     this.isListening = listening;
     if (listening) {
       if (this.elements.micBtn) this.elements.micBtn.classList.add("listening");
-
-      if (status === "speech_detected") {
-        if (this.elements.micPromptText) this.elements.micPromptText.textContent = "🎙️ குரல் கேட்கிறது... (Voice Detected!)";
-        if (this.elements.listeningHint) this.elements.listeningHint.textContent = "Speaking Tamil...";
-      } else {
-        if (this.elements.micPromptText) this.elements.micPromptText.textContent = "🔴 கேட்கிறது... தமிழில் பேசவும்! (Listening...)";
-        if (this.elements.listeningHint) this.elements.listeningHint.textContent = "Say the Tamil translation out loud";
-      }
+      if (this.elements.micPromptText) this.elements.micPromptText.textContent = "🔴 கேட்கிறது... தமிழில் பேசவும்! (Listening...)";
+      if (this.elements.listeningHint) this.elements.listeningHint.textContent = "Say the Tamil translation out loud";
     } else {
       if (this.elements.micBtn) this.elements.micBtn.classList.remove("listening");
       if (this.elements.micPromptText) this.elements.micPromptText.textContent = "பேச மைக்-ஐ அழுத்தவும் (Tap to Speak Tamil)";
       if (this.elements.listeningHint) this.elements.listeningHint.textContent = "Press mic and say translation in Tamil";
-
-      if (status) {
-        if (window.KidAppLogger) KidAppLogger.log("VOICE", `Speech status: ${status}`);
-
-        if (status === "not_supported") {
-          alert("Microphone Note:\nChrome, Safari, or Edge is recommended. You can also type manually below.");
-        } else if (status === "no-speech") {
-          if (this.elements.spokenTextDisplay) {
-            this.elements.spokenTextDisplay.textContent = "சத்தம் கேட்கவில்லை. மீண்டும் மைக் தொட்டு பேசவும் (No speech detected. Please tap mic again)";
-            this.elements.spokenTextDisplay.classList.add("empty");
-          }
-        }
-      }
-    }
-  },
-
-  processSpokenTranscript(transcript, isFinal) {
-    if (!transcript) return;
-    if (this.elements.spokenTextDisplay) {
-      this.elements.spokenTextDisplay.textContent = transcript;
-      this.elements.spokenTextDisplay.classList.remove("empty");
-    }
-
-    if (isFinal) {
-      if (window.KidAppLogger) KidAppLogger.log("VOICE", "Final transcript captured", { transcript });
-      this.evaluateTamilInput(transcript);
     }
   },
 

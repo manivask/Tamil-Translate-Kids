@@ -1,21 +1,23 @@
 /**
  * Tamil-Translate-Kids - Voice Recognition & Soft Tamil Voice Synthesis
  * Cross-platform speech engine for Android, iOS Safari/Chrome, and Desktop.
+ * Mimics and matches the robust Apple/iPhone Speech Recognition architecture from Chatbot.
  */
 
 const KidSpeechService = {
   recognition: null,
   isListening: false,
+  isSpeaking: false,
   tamilVoice: null,
   englishVoice: null,
-  onTranscriptCallback: null,
-  onStateChangeCallback: null,
   audioPlayer: null,
+  currentLanguage: "ta-IN",
 
   init() {
     this.audioPlayer = new Audio();
     this.setupVoices();
-    if (window.speechSynthesis) {
+    this.initSpeechRecognition();
+    if (window.speechSynthesis && "onvoiceschanged" in window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = () => this.setupVoices();
     }
   },
@@ -41,98 +43,113 @@ const KidSpeechService = {
     return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
   },
 
-  startListening(onTranscript, onStateChange) {
-    this.onTranscriptCallback = onTranscript;
-    this.onStateChangeCallback = onStateChange;
+  initSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return;
 
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) {
-      if (onStateChange) onStateChange(false, "not_supported");
+    try {
+      this.recognition = new SpeechRecognition();
+      this.recognition.continuous = false;
+      this.recognition.interimResults = true;
+      this.recognition.lang = this.currentLanguage;
+      this.recognition.maxAlternatives = 1;
+    } catch (e) {
+      console.warn("SpeechRecognition init error:", e);
+    }
+  },
+
+  stopSpeaking() {
+    if (this.audioPlayer) {
+      try {
+        this.audioPlayer.pause();
+        this.audioPlayer.currentTime = 0;
+      } catch (_) {}
+      if (this.audioPlayer.src && this.audioPlayer.src.startsWith("blob:")) {
+        URL.revokeObjectURL(this.audioPlayer.src);
+      }
+    }
+    if (window.speechSynthesis) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch (_) {}
+    }
+    this.isSpeaking = false;
+  },
+
+  startListening({ onStart, onResult, onError, onEnd } = {}) {
+    this.stopSpeaking();
+    this.isListening = true;
+
+    if (!this.recognition) {
+      this.initSpeechRecognition();
+    }
+
+    if (this.recognition) {
+      this.recognition.lang = this.currentLanguage;
+    }
+
+    if (onStart) onStart();
+
+    if (!this.recognition) {
+      if (onError) onError("speech-api-unavailable");
       return;
     }
 
-    // Stop any existing instance
-    if (this.recognition) {
-      try {
-        this.recognition.abort();
-      } catch (e) {}
-      this.recognition = null;
-    }
+    this.recognition.onstart = () => {
+      this.isListening = true;
+    };
+
+    this.recognition.onresult = (event) => {
+      let finalTranscript = "";
+      let interimTranscript = "";
+
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        const transcript = event.results[i][0].transcript.trim();
+        if (!transcript) continue;
+
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript + " ";
+        } else {
+          interimTranscript += transcript + " ";
+        }
+      }
+
+      if (onResult) {
+        onResult({
+          final: finalTranscript.trim(),
+          interim: interimTranscript.trim()
+        });
+      }
+    };
+
+    this.recognition.onerror = (event) => {
+      console.warn("SpeechRecognition event note:", event.error);
+      if (onError) onError(event.error);
+    };
+
+    this.recognition.onend = () => {
+      this.isListening = false;
+      if (onEnd) onEnd();
+    };
 
     try {
-      const rec = new SpeechRec();
-      rec.continuous = false;
-      rec.interimResults = true;
-      rec.maxAlternatives = 3;
-      rec.lang = "ta-IN"; // Tamil (India)
-
-      rec.onstart = () => {
-        this.isListening = true;
-        if (this.onStateChangeCallback) this.onStateChangeCallback(true);
-      };
-
-      rec.onaudiostart = () => {
-        if (this.onStateChangeCallback) this.onStateChangeCallback(true, "speech_detected");
-      };
-
-      rec.onspeechstart = () => {
-        if (this.onStateChangeCallback) this.onStateChangeCallback(true, "speech_detected");
-      };
-
-      rec.onresult = (event) => {
-        let transcript = "";
-        let isFinal = false;
-
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          transcript += event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            isFinal = true;
-          }
-        }
-
-        if (this.onTranscriptCallback && transcript.trim()) {
-          this.onTranscriptCallback(transcript, isFinal);
-        }
-      };
-
-      rec.onerror = (event) => {
-        console.warn("Speech Recognition Error:", event.error);
-        this.isListening = false;
-        if (this.onStateChangeCallback) {
-          this.onStateChangeCallback(false, event.error);
-        }
-      };
-
-      rec.onend = () => {
-        this.isListening = false;
-        if (this.onStateChangeCallback) {
-          this.onStateChangeCallback(false);
-        }
-      };
-
-      this.recognition = rec;
-      rec.start();
-
+      this.recognition.start();
     } catch (err) {
-      console.warn("Speech start failed:", err);
-      this.isListening = false;
-      if (this.onStateChangeCallback) {
-        this.onStateChangeCallback(false, err.name || "start_failed");
-      }
+      console.warn("Recognition start exception:", err);
     }
   },
 
   stopListening() {
+    this.isListening = false;
     if (this.recognition) {
       try {
         this.recognition.stop();
       } catch (e) {
         try {
           this.recognition.abort();
-        } catch (err) {}
+        } catch (_) {}
       }
     }
-    this.isListening = false;
   },
 
   /**
@@ -140,6 +157,8 @@ const KidSpeechService = {
    */
   speakTamil(tamilText) {
     if (!tamilText) return;
+    this.stopSpeaking();
+    this.isSpeaking = true;
     const cleanText = tamilText.replace(/[()]/g, "").trim();
 
     const playAudioFallback = () => {
@@ -148,15 +167,20 @@ const KidSpeechService = {
         const encoded = encodeURIComponent(cleanText);
         this.audioPlayer.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ta&client=tw-ob&q=${encoded}`;
         this.audioPlayer.playbackRate = 0.9;
-        this.audioPlayer.play().catch(e => console.warn("Audio notice:", e));
+        this.audioPlayer.onended = () => { this.isSpeaking = false; };
+        this.audioPlayer.onerror = () => { this.isSpeaking = false; };
+        this.audioPlayer.play().catch(e => {
+          console.warn("Audio notice:", e);
+          this.isSpeaking = false;
+        });
       } catch (err) {
         console.warn("Audio error:", err);
+        this.isSpeaking = false;
       }
     };
 
     if (window.speechSynthesis) {
       try {
-        window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = "ta-IN";
         utterance.rate = 0.85;
@@ -170,6 +194,9 @@ const KidSpeechService = {
         let started = false;
         utterance.onstart = () => {
           started = true;
+        };
+        utterance.onend = () => {
+          this.isSpeaking = false;
         };
         utterance.onerror = () => {
           playAudioFallback();
@@ -193,9 +220,10 @@ const KidSpeechService = {
 
   speakEnglish(englishText) {
     if (!englishText) return;
+    this.stopSpeaking();
+    this.isSpeaking = true;
     if (window.speechSynthesis) {
       try {
-        window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(englishText);
         utterance.lang = "en-US";
         utterance.rate = 0.88;
@@ -204,8 +232,12 @@ const KidSpeechService = {
         if (this.englishVoice) {
           utterance.voice = this.englishVoice;
         }
+        utterance.onend = () => { this.isSpeaking = false; };
+        utterance.onerror = () => { this.isSpeaking = false; };
         window.speechSynthesis.speak(utterance);
-      } catch (e) {}
+      } catch (e) {
+        this.isSpeaking = false;
+      }
     }
   }
 };
