@@ -1,7 +1,7 @@
 /**
  * Tamil-Translate-Kids - Voice Recognition & Soft Tamil Voice Synthesis
  * Cross-platform speech engine for Android, iOS, and Desktop.
- * Uses the same recognition lifecycle as the working Chatbot app.
+ * Keeps Safari's recognizer creation inside the microphone tap gesture.
  */
 
 const KidSpeechService = {
@@ -15,10 +15,6 @@ const KidSpeechService = {
 
   init() {
     this.audioPlayer = new Audio();
-    // Keep one recognizer ready, just like Chatbot. In particular, do not
-    // replace it immediately before start(): that can make iOS discard the
-    // microphone gesture or throw a generic start error.
-    this.initSpeechRecognition();
     this.setupVoices();
     if (window.speechSynthesis && "onvoiceschanged" in window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = () => this.setupVoices();
@@ -51,6 +47,12 @@ const KidSpeechService = {
     if (!SpeechRecognition) return;
 
     try {
+      // Safari associates access to its Siri-powered recognition service with
+      // the user gesture. Recreate the recognizer during the microphone tap,
+      // rather than reusing one constructed while the page was loading.
+      if (this.recognition) {
+        try { this.recognition.abort(); } catch (_) {}
+      }
       this.recognition = new SpeechRecognition();
       this.recognition.continuous = false;
       this.recognition.interimResults = true;
@@ -110,9 +112,9 @@ const KidSpeechService = {
       return false;
     }
 
-    // Match Chatbot: reuse the ready recognizer and only construct one if the
-    // browser did not provide it during initialization.
-    if (!this.recognition) this.initSpeechRecognition();
+    // Must remain synchronous and within the mic button's click call stack.
+    // Safari otherwise rejects its speech service with service-not-allowed.
+    this.initSpeechRecognition();
 
     if (this.recognition) {
       this.recognition.lang = this.currentLanguage;
@@ -124,14 +126,10 @@ const KidSpeechService = {
       return false;
     }
 
-    // Reflect the active state before calling start(), as Chatbot does. This
-    // prevents a second tap while iOS is opening the permission sheet.
-    this.isListening = true;
-    if (onStart) onStart();
-
     this.recognition.onstart = () => {
       this.isListening = true;
       this.logDiagnostic("Speech recognition started");
+      if (onStart) onStart();
     };
 
     this.recognition.onresult = (event) => {

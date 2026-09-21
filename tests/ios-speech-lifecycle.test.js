@@ -1,7 +1,7 @@
 "use strict";
 
-// Reproduces the WebKit API shape exposed by iPhone browsers. This verifies
-// the Tamil app uses the same ready-and-reuse recognition lifecycle as Chatbot.
+// Reproduces the WebKit API shape exposed by iPhone Safari. This verifies the
+// recognizer is constructed and started in the microphone tap's call stack.
 const assert = require("node:assert");
 const fs = require("node:fs");
 const vm = require("node:vm");
@@ -48,7 +48,7 @@ vm.runInContext(
 
 const service = context.KidSpeechService;
 service.init();
-assert.strictEqual(recognizers.length, 1, "initialization creates one recognizer");
+assert.strictEqual(recognizers.length, 0, "page initialization does not create a recognizer");
 
 let startCalls = 0;
 let endCalls = 0;
@@ -59,9 +59,10 @@ assert.strictEqual(service.startListening({
   onResult: (result) => { transcript = result; }
 }), true);
 
-assert.strictEqual(recognizers.length, 1, "start reuses the ready WebKit recognizer");
+assert.strictEqual(recognizers.length, 1, "start creates the WebKit recognizer in the tap gesture");
 assert.strictEqual(recognizers[0].lang, "ta-IN", "Tamil recognition language is used");
 assert.strictEqual(recognizers[0].started, true, "recognition starts successfully");
+recognizers[0].onstart();
 assert.strictEqual(startCalls, 1, "the UI receives its listening callback");
 
 recognizers[0].onresult({
