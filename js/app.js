@@ -1,7 +1,7 @@
 /**
  * Tamil-Translate-Kids - Main Interactive Application Logic
- * Coordinates 3-Screen Flow (Grade -> Topics -> Practice), UI, Voice Recognition,
- * Multi-variant Matching, Sound FX, and Progress Tracking.
+ * Coordinates 3-Screen Wizard Flow (Grade -> Topics -> Practice), Voice Recognition,
+ * Multi-variant Matching, Sound FX, Confetti, and Activity Diagnostics Logging.
  */
 
 const App = {
@@ -36,6 +36,10 @@ const App = {
     this.bindEvents();
     this.initConfetti();
     KidSpeechService.init();
+
+    if (window.KidAppLogger) {
+      KidAppLogger.log("INIT", "App initialized", KidAppLogger.getDeviceInfo());
+    }
 
     // Start on Grade Selection Screen (Page 1)
     this.showScreen("grade");
@@ -89,113 +93,167 @@ const App = {
       manualInputBox: document.getElementById("manual-input-box"),
       manualTextInput: document.getElementById("manual-text-input"),
       manualSubmitBtn: document.getElementById("manual-submit-btn"),
-      confettiCanvas: document.getElementById("confetti-canvas")
+      confettiCanvas: document.getElementById("confetti-canvas"),
+
+      // Logs diagnostics buttons
+      viewLogsBtn: document.getElementById("view-logs-btn"),
+      downloadLogsBtn: document.getElementById("download-logs-btn")
     };
   },
 
   bindEvents() {
     // 1. Home / Brand button (Returns to Page 1 from anywhere)
-    this.elements.brandHomeBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      this.showScreen("grade");
-    });
+    if (this.elements.brandHomeBtn) {
+      this.elements.brandHomeBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        if (window.KidAppLogger) KidAppLogger.log("NAV", "Home logo clicked");
+        this.showScreen("grade");
+      });
+    }
 
     // 2. Grade Cards on Page 1
-    this.elements.gradeCards.forEach(card => {
-      card.addEventListener("click", () => {
-        const grade = parseInt(card.getAttribute("data-grade"), 10);
-        KidAudioFX.playClick();
-        this.selectGrade(grade);
+    if (this.elements.gradeCards) {
+      this.elements.gradeCards.forEach(card => {
+        card.addEventListener("click", () => {
+          const grade = parseInt(card.getAttribute("data-grade"), 10);
+          KidAudioFX.playClick();
+          this.selectGrade(grade);
+        });
       });
-    });
+    }
 
     // 3. Back buttons
-    this.elements.backToGradeBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      this.showScreen("grade");
-    });
+    if (this.elements.backToGradeBtn) {
+      this.elements.backToGradeBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        this.showScreen("grade");
+      });
+    }
 
-    this.elements.backToTopicsBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      this.showScreen("topic");
-    });
+    if (this.elements.backToTopicsBtn) {
+      this.elements.backToTopicsBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        this.showScreen("topic");
+      });
+    }
 
     // 4. Difficulty mode switcher (Page 3)
-    this.elements.modePills.forEach(pill => {
-      pill.addEventListener("click", () => {
-        const mode = pill.getAttribute("data-mode");
-        KidAudioFX.playClick();
-        this.setMode(mode);
+    if (this.elements.modePills) {
+      this.elements.modePills.forEach(pill => {
+        pill.addEventListener("click", () => {
+          const mode = pill.getAttribute("data-mode");
+          KidAudioFX.playClick();
+          this.setMode(mode);
+        });
       });
-    });
+    }
 
     // 5. Listen to English audio
-    this.elements.listenEnBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      const current = this.getCurrentSentence();
-      if (current) {
-        KidSpeechService.speakEnglish(current.english);
-      }
-    });
+    if (this.elements.listenEnBtn) {
+      this.elements.listenEnBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        const current = this.getCurrentSentence();
+        if (current) {
+          if (window.KidAppLogger) KidAppLogger.log("TTS", "Listen English", { text: current.english });
+          KidSpeechService.speakEnglish(current.english);
+        }
+      });
+    }
 
     // 6. Mic button
-    this.elements.micBtn.addEventListener("click", () => {
-      this.toggleMic();
-    });
+    if (this.elements.micBtn) {
+      this.elements.micBtn.addEventListener("click", () => {
+        this.toggleMic();
+      });
+    }
 
     // 7. Listen to Tamil answer audio
-    this.elements.listenTamilBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      const current = this.getCurrentSentence();
-      if (current) {
-        KidSpeechService.speakTamil(current.tamilPrimary);
-      }
-    });
+    if (this.elements.listenTamilBtn) {
+      this.elements.listenTamilBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        const current = this.getCurrentSentence();
+        if (current) {
+          if (window.KidAppLogger) KidAppLogger.log("TTS", "Listen Tamil", { text: current.tamilPrimary });
+          KidSpeechService.speakTamil(current.tamilPrimary);
+        }
+      });
+    }
 
     // 8. Reveal answer toggle
-    this.elements.revealAnswerBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      this.toggleRevealAnswer();
-    });
+    if (this.elements.revealAnswerBtn) {
+      this.elements.revealAnswerBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        this.toggleRevealAnswer();
+      });
+    }
 
     // 9. Navigation
-    this.elements.prevBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      this.prevCard();
-    });
+    if (this.elements.prevBtn) {
+      this.elements.prevBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        this.prevCard();
+      });
+    }
 
-    this.elements.nextBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      this.nextCard();
-    });
+    if (this.elements.nextBtn) {
+      this.elements.nextBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        this.nextCard();
+      });
+    }
 
     // 10. Manual Tamil input drawer
-    this.elements.toggleManualBtn.addEventListener("click", () => {
-      KidAudioFX.playClick();
-      this.elements.manualInputBox.classList.toggle("show");
-    });
+    if (this.elements.toggleManualBtn) {
+      this.elements.toggleManualBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        this.elements.manualInputBox.classList.toggle("show");
+      });
+    }
 
-    this.elements.manualSubmitBtn.addEventListener("click", () => {
-      const text = this.elements.manualTextInput.value.trim();
-      if (text) {
-        this.processSpokenTranscript(text, true);
-        this.elements.manualTextInput.value = "";
-      }
-    });
+    if (this.elements.manualSubmitBtn) {
+      this.elements.manualSubmitBtn.addEventListener("click", () => {
+        const text = this.elements.manualTextInput.value.trim();
+        if (text) {
+          if (window.KidAppLogger) KidAppLogger.log("MATCH", "Manual input submit", { text });
+          this.processSpokenTranscript(text, true);
+          this.elements.manualTextInput.value = "";
+        }
+      });
+    }
 
-    this.elements.manualTextInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        this.elements.manualSubmitBtn.click();
-      }
-    });
+    if (this.elements.manualTextInput) {
+      this.elements.manualTextInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          this.elements.manualSubmitBtn.click();
+        }
+      });
+    }
+
+    // 11. Diagnostic Logs
+    if (this.elements.viewLogsBtn) {
+      this.elements.viewLogsBtn.addEventListener("click", () => {
+        if (window.KidAppLogger) {
+          const logs = KidAppLogger.getLogs();
+          alert(`📊 Activity Logs (${logs.length} entries):\n\n` + logs.slice(0, 5).map(l => `[${l.timestamp.slice(11,19)}] [${l.category}] ${l.action}`).join("\n"));
+        }
+      });
+    }
+
+    if (this.elements.downloadLogsBtn) {
+      this.elements.downloadLogsBtn.addEventListener("click", () => {
+        if (window.KidAppLogger) KidAppLogger.downloadLogs();
+      });
+    }
   },
 
   // Screen Switcher
   showScreen(screenName) {
     this.currentScreen = screenName;
-    this.elements.screenGrade.classList.toggle("active", screenName === "grade");
-    this.elements.screenTopic.classList.toggle("active", screenName === "topic");
-    this.elements.screenPractice.classList.toggle("active", screenName === "practice");
+    if (this.elements.screenGrade) this.elements.screenGrade.classList.toggle("active", screenName === "grade");
+    if (this.elements.screenTopic) this.elements.screenTopic.classList.toggle("active", screenName === "topic");
+    if (this.elements.screenPractice) this.elements.screenPractice.classList.toggle("active", screenName === "practice");
+
+    if (window.KidAppLogger) KidAppLogger.log("NAV", `Show screen: ${screenName}`);
 
     // Scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -210,8 +268,10 @@ const App = {
       3: "👑 3rd Grade (3-ஆம் வகுப்பு)"
     };
     const label = gradeLabels[grade] || `Grade ${grade}`;
-    this.elements.topicScreenGradeBadge.textContent = label;
-    this.elements.practiceGradeBadge.textContent = label;
+    if (this.elements.topicScreenGradeBadge) this.elements.topicScreenGradeBadge.textContent = label;
+    if (this.elements.practiceGradeBadge) this.elements.practiceGradeBadge.textContent = label;
+
+    if (window.KidAppLogger) KidAppLogger.log("NAV", `Selected Grade ${grade}`);
 
     this.renderTopicsGrid();
     this.showScreen("topic");
@@ -219,7 +279,7 @@ const App = {
 
   // Render Page 2 Topic Grid with sentence counts
   renderTopicsGrid() {
-    if (typeof SENTENCE_DATA === "undefined") return;
+    if (typeof SENTENCE_DATA === "undefined" || !this.elements.topicsGrid) return;
 
     const gradeSentences = SENTENCE_DATA.filter(s => s.grade === this.currentGrade);
     this.elements.topicsGrid.innerHTML = "";
@@ -229,7 +289,6 @@ const App = {
         ? gradeSentences.length
         : gradeSentences.filter(s => s.category === topic.key).length;
 
-      // Skip empty categories for this grade
       if (count === 0 && topic.key !== "all") return;
 
       const card = document.createElement("button");
@@ -255,17 +314,23 @@ const App = {
   // Page 2 -> Page 3: Select Topic
   selectTopic(categoryKey) {
     this.currentCategory = categoryKey;
+    if (window.KidAppLogger) KidAppLogger.log("NAV", `Selected Topic: ${categoryKey}`);
     this.filterSentences();
     this.showScreen("practice");
   },
 
   setMode(mode) {
     this.currentMode = mode;
-    this.elements.modePills.forEach(pill => {
-      pill.classList.toggle("active", pill.getAttribute("data-mode") === mode);
-    });
+    if (this.elements.modePills) {
+      this.elements.modePills.forEach(pill => {
+        pill.classList.toggle("active", pill.getAttribute("data-mode") === mode);
+      });
+    }
+
+    if (window.KidAppLogger) KidAppLogger.log("MATCH", `Mode changed: ${mode}`);
+
     // Re-evaluate if there is already a spoken transcript
-    const currentSpoken = this.elements.spokenTextDisplay.textContent;
+    const currentSpoken = this.elements.spokenTextDisplay ? this.elements.spokenTextDisplay.textContent : "";
     if (currentSpoken && !this.elements.spokenTextDisplay.classList.contains("empty")) {
       this.evaluateTamilInput(currentSpoken);
     }
@@ -299,36 +364,61 @@ const App = {
 
     // Reset card UI states
     this.isAnswerRevealed = false;
-    this.elements.tamilAnswerContent.classList.remove("show");
-    this.elements.revealAnswerBtn.textContent = "பதில் பார்க்க (Show Answer) 👁️";
-    this.elements.validationZone.style.display = "none";
-    this.elements.validationZone.classList.remove("fail-mode");
-    this.elements.spokenTextDisplay.textContent = "மைக் தொட்டு தமிழில் பேசவும்...";
-    this.elements.spokenTextDisplay.classList.add("empty");
-    this.elements.progressBarFill.style.width = "0%";
+    if (this.elements.tamilAnswerContent) this.elements.tamilAnswerContent.classList.remove("show");
+    if (this.elements.revealAnswerBtn) this.elements.revealAnswerBtn.textContent = "பதில் பார்க்க (Show Answer) 👁️";
+    if (this.elements.validationZone) {
+      this.elements.validationZone.style.display = "none";
+      this.elements.validationZone.classList.remove("fail-mode");
+    }
+    if (this.elements.spokenTextDisplay) {
+      this.elements.spokenTextDisplay.textContent = "மைக் தொட்டு தமிழில் பேசவும்...";
+      this.elements.spokenTextDisplay.classList.add("empty");
+    }
+    if (this.elements.progressBarFill) this.elements.progressBarFill.style.width = "0%";
 
     // Set English and Info
-    this.elements.cardIndexLabel.textContent = `${this.currentIndex + 1} / ${this.activeSentences.length}`;
-    this.elements.cardCatBadge.innerHTML = `${item.categoryIcon} ${item.categoryLabel}`;
-    this.elements.englishText.textContent = item.english;
+    if (this.elements.cardIndexLabel) {
+      this.elements.cardIndexLabel.textContent = `${this.currentIndex + 1} / ${this.activeSentences.length}`;
+    }
+    if (this.elements.cardCatBadge) {
+      this.elements.cardCatBadge.innerHTML = `${item.categoryIcon} ${item.categoryLabel}`;
+    }
+    if (this.elements.englishText) {
+      this.elements.englishText.textContent = item.english;
+    }
 
     // Set Tamil Answer info
-    this.elements.tamilTextPrimary.textContent = item.tamilPrimary;
-    this.elements.translitText.textContent = `(${item.transliteration})`;
+    if (this.elements.tamilTextPrimary) this.elements.tamilTextPrimary.textContent = item.tamilPrimary;
+    if (this.elements.translitText) this.elements.translitText.textContent = `(${item.transliteration})`;
 
     // Navigation buttons state
-    this.elements.prevBtn.disabled = this.currentIndex === 0;
-    this.elements.nextBtn.disabled = false;
+    if (this.elements.prevBtn) this.elements.prevBtn.disabled = this.currentIndex === 0;
+    if (this.elements.nextBtn) this.elements.nextBtn.disabled = false;
   },
 
   toggleRevealAnswer() {
-    this.isAnswer  toggleMic() {
+    this.isAnswerRevealed = !this.isAnswerRevealed;
+    if (this.isAnswerRevealed) {
+      if (this.elements.tamilAnswerContent) this.elements.tamilAnswerContent.classList.add("show");
+      if (this.elements.revealAnswerBtn) this.elements.revealAnswerBtn.textContent = "மறைக்க (Hide Answer) 🙈";
+      if (window.KidAppLogger) KidAppLogger.log("NAV", "Answer revealed");
+    } else {
+      if (this.elements.tamilAnswerContent) this.elements.tamilAnswerContent.classList.remove("show");
+      if (this.elements.revealAnswerBtn) this.elements.revealAnswerBtn.textContent = "பதில் பார்க்க (Show Answer) 👁️";
+    }
+  },
+
+  toggleMic() {
     if (this.isListening) {
+      if (window.KidAppLogger) KidAppLogger.log("VOICE", "Mic stopped by user");
       KidSpeechService.stopListening();
     } else {
-      // Clear previous spoken display
-      this.elements.spokenTextDisplay.textContent = "கேட்கிறது... தமிழில் பேசவும் (Listening...)";
-      this.elements.spokenTextDisplay.classList.add("empty");
+      if (this.elements.spokenTextDisplay) {
+        this.elements.spokenTextDisplay.textContent = "கேட்கிறது... தமிழில் பேசவும் (Listening...)";
+        this.elements.spokenTextDisplay.classList.add("empty");
+      }
+
+      if (window.KidAppLogger) KidAppLogger.log("VOICE", "Mic started listening");
 
       KidSpeechService.startListening(
         (transcript, isFinal) => this.processSpokenTranscript(transcript, isFinal),
@@ -340,31 +430,37 @@ const App = {
   handleSpeechStateChange(listening, status) {
     this.isListening = listening;
     if (listening) {
-      this.elements.micBtn.classList.add("listening");
+      if (this.elements.micBtn) this.elements.micBtn.classList.add("listening");
 
       if (status === "speech_detected") {
-        this.elements.micPromptText.textContent = "🎙️ குரல் கேட்கிறது... (Voice Detected!)";
-        this.elements.listeningHint.textContent = "Speaking Tamil...";
+        if (this.elements.micPromptText) this.elements.micPromptText.textContent = "🎙️ குரல் கேட்கிறது... (Voice Detected!)";
+        if (this.elements.listeningHint) this.elements.listeningHint.textContent = "Speaking Tamil...";
       } else {
-        this.elements.micPromptText.textContent = "🔴 கேட்கிறது... தமிழில் பேசவும்! (Listening...)";
-        this.elements.listeningHint.textContent = "Say the Tamil translation out loud";
+        if (this.elements.micPromptText) this.elements.micPromptText.textContent = "🔴 கேட்கிறது... தமிழில் பேசவும்! (Listening...)";
+        if (this.elements.listeningHint) this.elements.listeningHint.textContent = "Say the Tamil translation out loud";
       }
     } else {
-      this.elements.micBtn.classList.remove("listening");
-      this.elements.micPromptText.textContent = "பேச மைக்-ஐ அழுத்தவும் (Tap to Speak Tamil)";
-      this.elements.listeningHint.textContent = "Press mic and say translation in Tamil";
+      if (this.elements.micBtn) this.elements.micBtn.classList.remove("listening");
+      if (this.elements.micPromptText) this.elements.micPromptText.textContent = "பேச மைக்-ஐ அழுத்தவும் (Tap to Speak Tamil)";
+      if (this.elements.listeningHint) this.elements.listeningHint.textContent = "Press mic and say translation in Tamil";
 
       if (status) {
+        if (window.KidAppLogger) KidAppLogger.log("VOICE", `Speech status: ${status}`);
+
         if (status === "not_supported") {
           alert("Microphone Note:\nSafari or Chrome is recommended for Tamil voice recognition. You can also use the manual typing option below!");
         } else if (status === "not-allowed" || status === "service-not-allowed") {
           alert("📱 iPhone / Safari Microphone Permission:\n\n1. Open iPhone 'Settings'\n2. Scroll down and tap 'Safari' (or 'Chrome')\n3. Tap 'Microphone' and choose 'Allow'\n4. Return and tap the mic button!");
         } else if (status === "audio-capture") {
-          this.elements.spokenTextDisplay.textContent = "மைக் கிடைக்கவில்லை. அமைப்புகளில் அனுமதியை சரிபார்க்கவும் (No microphone found or access restricted)";
-          this.elements.spokenTextDisplay.classList.add("empty");
+          if (this.elements.spokenTextDisplay) {
+            this.elements.spokenTextDisplay.textContent = "மைக் கிடைக்கவில்லை. அமைப்புகளில் அனுமதியை சரிபார்க்கவும் (No microphone access)";
+            this.elements.spokenTextDisplay.classList.add("empty");
+          }
         } else if (status === "no-speech") {
-          this.elements.spokenTextDisplay.textContent = "சத்தம் கேட்கவில்லை. மீண்டும் மைக் தொட்டு பேசவும் (No speech detected. Please tap mic again)";
-          this.elements.spokenTextDisplay.classList.add("empty");
+          if (this.elements.spokenTextDisplay) {
+            this.elements.spokenTextDisplay.textContent = "சத்தம் கேட்கவில்லை. மீண்டும் மைக் தொட்டு பேசவும் (No speech detected. Please tap mic again)";
+            this.elements.spokenTextDisplay.classList.add("empty");
+          }
         }
       }
     }
@@ -372,10 +468,13 @@ const App = {
 
   processSpokenTranscript(transcript, isFinal) {
     if (!transcript) return;
-    this.elements.spokenTextDisplay.textContent = transcript;
-    this.elements.spokenTextDisplay.classList.remove("empty");
+    if (this.elements.spokenTextDisplay) {
+      this.elements.spokenTextDisplay.textContent = transcript;
+      this.elements.spokenTextDisplay.classList.remove("empty");
+    }
 
     if (isFinal) {
+      if (window.KidAppLogger) KidAppLogger.log("VOICE", "Final transcript captured", { transcript });
       this.evaluateTamilInput(transcript);
     }
   },
@@ -386,38 +485,52 @@ const App = {
 
     const result = TamilMatcher.evaluate(current, spokenText, this.currentMode);
 
+    if (window.KidAppLogger) {
+      KidAppLogger.log("MATCH", "Evaluation result", {
+        english: current.english,
+        spoken: spokenText,
+        score: result.percentage,
+        isPass: result.isPass,
+        stars: result.stars
+      });
+    }
+
     // Update Validation UI
-    this.elements.validationZone.style.display = "block";
-    this.elements.matchNumber.textContent = `${result.percentage}%`;
-    this.elements.progressBarFill.style.width = `${result.percentage}%`;
-    this.elements.feedbackMsg.textContent = result.feedback;
+    if (this.elements.validationZone) {
+      this.elements.validationZone.style.display = "block";
+      if (this.elements.matchNumber) this.elements.matchNumber.textContent = `${result.percentage}%`;
+      if (this.elements.progressBarFill) this.elements.progressBarFill.style.width = `${result.percentage}%`;
+      if (this.elements.feedbackMsg) this.elements.feedbackMsg.textContent = result.feedback;
 
-    // Star Icons update
-    this.elements.starIcons.forEach((star, idx) => {
-      if (idx < result.stars) {
-        star.classList.add("earned");
-        star.textContent = "★";
+      // Star Icons update
+      if (this.elements.starIcons) {
+        this.elements.starIcons.forEach((star, idx) => {
+          if (idx < result.stars) {
+            star.classList.add("earned");
+            star.textContent = "★";
+          } else {
+            star.classList.remove("earned");
+            star.textContent = "☆";
+          }
+        });
+      }
+
+      if (result.isPass) {
+        this.elements.validationZone.classList.remove("fail-mode");
+        KidAudioFX.playSuccessFanfare();
+        KidAudioFX.playStarDing(result.stars);
+        this.triggerConfetti();
+
+        // Track stars once per sentence
+        if (!this.completedIds.has(current.id)) {
+          this.completedIds.add(current.id);
+          this.totalStarsEarned += result.stars;
+          if (this.elements.totalStarsCount) this.elements.totalStarsCount.textContent = this.totalStarsEarned;
+        }
       } else {
-        star.classList.remove("earned");
-        star.textContent = "☆";
+        this.elements.validationZone.classList.add("fail-mode");
+        KidAudioFX.playTryAgain();
       }
-    });
-
-    if (result.isPass) {
-      this.elements.validationZone.classList.remove("fail-mode");
-      KidAudioFX.playSuccessFanfare();
-      KidAudioFX.playStarDing(result.stars);
-      this.triggerConfetti();
-
-      // Track stars once per sentence
-      if (!this.completedIds.has(current.id)) {
-        this.completedIds.add(current.id);
-        this.totalStarsEarned += result.stars;
-        this.elements.totalStarsCount.textContent = this.totalStarsEarned;
-      }
-    } else {
-      this.elements.validationZone.classList.add("fail-mode");
-      KidAudioFX.playTryAgain();
     }
   },
 
@@ -515,6 +628,15 @@ const App = {
 };
 
 // Bootstrap application on DOM ready
-document.addEventListener("DOMContentLoaded", () => {
-  App.init();
-});
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", () => {
+    App.init();
+  });
+}
+
+if (typeof window !== "undefined") {
+  window.App = App;
+}
+if (typeof global !== "undefined") {
+  global.App = App;
+}

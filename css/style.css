@@ -995,6 +995,31 @@ body {
   cursor: pointer;
 }
 
+/* Diagnostics Toolbar */
+.diagnostics-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.diag-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--glass-border);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.diag-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #FFF;
+}
+
 /* Confetti Canvas */
 #confetti-canvas {
   position: fixed;
