@@ -357,9 +357,12 @@ const App = {
       this.elements.listeningHint.textContent = "Press mic and say translation in Tamil";
       if (error) {
         if (error === "not_supported") {
-          alert("Chrome or Edge browser is recommended for Tamil voice recognition. You can also use the manual typing option below!");
-        } else if (error === "not-allowed") {
-          alert("Microphone permission was denied. Please allow microphone access to practice speaking Tamil!");
+          alert("Microphone Note: Chrome or Safari is recommended. You can also use the manual typing option below!");
+        } else if (error === "not-allowed" || error === "permission-denied") {
+          alert("📱 iPhone / Mobile Hint:\nMicrophone permission is needed.\n• iPhone: Open iOS Settings > Safari (or Chrome) > Microphone > Choose 'Allow'.\n• Then tap the microphone again!");
+        } else if (error === "no-speech") {
+          this.elements.spokenTextDisplay.textContent = "சத்தம் கேட்கவில்லை. மீண்டும் மைக் தொட்டு பேசவும் (No speech detected. Please tap mic and speak again)";
+          this.elements.spokenTextDisplay.classList.add("empty");
         }
       }
     }
