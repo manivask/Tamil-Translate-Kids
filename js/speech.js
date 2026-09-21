@@ -1,6 +1,6 @@
 /**
  * Tamil-Translate-Kids - Voice Recognition & Soft Tamil Voice Synthesis
- * Cross-platform speech engine for Android, iOS Safari/Chrome, and Desktop.
+ * Cross-platform speech engine for Android, iOS Safari, and Desktop.
  * Mimics and matches the robust Apple/iPhone Speech Recognition architecture from Chatbot.
  */
 
@@ -41,6 +41,16 @@ const KidSpeechService = {
 
   isSupported() {
     return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  },
+
+  // iOS Chrome exposes webkitSpeechRecognition but WebKit does not enable the
+  // speech-recognition service for Chrome and other third-party iOS browsers.
+  // Treat that as unsupported instead of sending children to a dead mic button.
+  isUnsupportedIOSBrowser() {
+    const ua = navigator.userAgent || "";
+    const isIOS = /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    return isIOS && /CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(ua);
   },
 
   initSpeechRecognition() {
@@ -84,6 +94,11 @@ const KidSpeechService = {
     // and iOS reports NotAllowedError even when the browser has mic access.
     if (!window.isSecureContext) {
       if (onError) onError("insecure-context");
+      return false;
+    }
+
+    if (this.isUnsupportedIOSBrowser()) {
+      if (onError) onError("ios-browser-speech-unavailable");
       return false;
     }
 

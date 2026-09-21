@@ -473,8 +473,10 @@ const App = {
             alert("This browser cannot access the microphone right now. Check iPhone microphone access, close any app using the mic, then try again.");
           } else if (err === "speech-api-unavailable") {
             alert("Speech-to-text is not available in this browser. You can use the Type manually option below; on iPhone, also make sure Tamil Dictation is enabled in Settings > General > Keyboard.");
+          } else if (err === "ios-browser-speech-unavailable") {
+            alert("iPhone Chrome cannot use the web speech-recognition service, even when microphone permission is enabled. Open this app in Safari, or tap Type manually and use the iPhone keyboard's Tamil Dictation microphone.");
           } else if (err === "network" || err === "service-not-allowed" || err === "recognition-start-failed") {
-            alert("Speech recognition could not start. Check your internet connection, then try again. You can also use Type manually below.");
+            alert("Speech recognition could not start. On iPhone, open the app in Safari (not Chrome). Otherwise, check your internet connection and try again. You can also use Type manually below.");
           }
         },
         onEnd: () => {

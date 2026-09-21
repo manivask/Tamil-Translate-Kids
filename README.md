@@ -74,14 +74,15 @@ URL.
    ```bash
    python -m http.server 8080
    ```
-2. On an iPhone, open the deployed GitHub Pages HTTPS URL. When the app asks for
-   microphone access, choose **Allow**. If access was previously denied, enable
-   the browser under **Settings > Privacy & Security > Microphone**, reload the
-   page, and try again.
-3. Speech recognition support itself varies by iOS version and browser state.
-   The app keeps its **Type manually** option available whenever speech-to-text
-   is unavailable. For Tamil dictation, enable Tamil in **Settings > General >
-   Keyboard > Dictation**.
+2. On an iPhone, open the deployed GitHub Pages HTTPS URL in **Safari**. When
+   the app asks for microphone access, choose **Allow**. If access was
+   previously denied, enable Safari under **Settings > Privacy & Security >
+   Microphone**, reload the page, and try again.
+3. Do not use Chrome on iPhone for the voice button: it exposes the web API but
+   Apple does not enable its speech-recognition service there. The app detects
+   this and directs users to Safari. It also keeps **Type manually** available;
+   for Tamil dictation, enable Tamil in **Settings > General > Keyboard >
+   Dictation**.
 
 ---
 
