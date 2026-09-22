@@ -39,12 +39,16 @@ const KidSpeechService = {
   },
 
   isSupported() {
-    return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+    return typeof this.getRecognitionConstructor() === "function";
+  },
+
+  getRecognitionConstructor() {
+    return window.SpeechRecognition || window.webkitSpeechRecognition || null;
   },
 
   initSpeechRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) return;
+    const SpeechRecognition = this.getRecognitionConstructor();
+    if (typeof SpeechRecognition !== "function") return;
 
     try {
       // Safari associates access to its Siri-powered recognition service with
@@ -179,7 +183,8 @@ const KidSpeechService = {
       console.warn("Recognition start exception:", err);
       this.isListening = false;
       this.logDiagnostic("Speech recognition start exception", this.errorDetails(err));
-      if (onError) onError("recognition-start-failed");
+      const errorName = err && err.name ? err.name : "";
+      if (onError) onError(errorName === "NotAllowedError" ? "not-allowed" : "recognition-start-failed");
       if (onEnd) onEnd();
       return false;
     }

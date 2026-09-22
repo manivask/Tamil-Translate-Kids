@@ -92,5 +92,24 @@ URL.
    git push origin main
    ```
 2. In GitHub, go to **Settings > Pages**.
-3. Under **Build and deployment > Source**, select **Deploy from a branch** and choose `main` branch `/ (root)` or `apps/Tamil-Translate-Kids`.
-4. Your live app URL will be available immediately!
+3. With this app at the repository root, under **Build and deployment > Source**, select **Deploy from a branch**, choose `main` and `/ (root)`, then save.
+4. Wait for the Pages deployment to finish. Open the HTTPS URL shown in **Settings > Pages**.
+
+## iPhone Validation
+
+Run the speech lifecycle regression check with Node.js:
+
+```bash
+node tests/ios-speech-lifecycle.test.js
+```
+
+On the deployed HTTPS site, repeat these checks in both iPhone Chrome and Safari:
+
+- Select each grade and move between sentences.
+- Tap the microphone, allow access, speak a Tamil answer, and check the transcript and score.
+- Stop and restart the microphone, then try another sentence.
+- Play both English and Tamil pronunciation audio.
+- Check manual Tamil input and answer scoring when speech is unavailable or permission is denied.
+- Rotate the phone and check that controls remain visible and usable.
+
+The automated test mocks WebKit recognition; it does not verify real microphone permissions, recognition service availability, or installed Tamil voices. Those require testing on the device.

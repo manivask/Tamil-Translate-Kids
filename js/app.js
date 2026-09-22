@@ -17,6 +17,7 @@ const App = {
   isListening: false,
   lastSpokenTranscript: "",
   hasEvaluatedCurrentSpeech: false,
+  manualFallbackMessage: "",
   completedIds: new Set(),
 
   // Topic Metadata
@@ -371,6 +372,7 @@ const App = {
     this.handleSpeechStateChange(false);
     this.lastSpokenTranscript = "";
     this.hasEvaluatedCurrentSpeech = false;
+    this.manualFallbackMessage = "";
 
     // Reset card UI states
     this.isAnswerRevealed = false;
@@ -432,6 +434,7 @@ const App = {
     } else {
       this.lastSpokenTranscript = "";
       this.hasEvaluatedCurrentSpeech = false;
+      this.manualFallbackMessage = "";
 
       if (this.elements.spokenTextDisplay) {
         this.elements.spokenTextDisplay.textContent = "கேட்கிறது... தமிழில் பேசவும் (Listening...)";
@@ -464,17 +467,22 @@ const App = {
         },
         onError: (err) => {
           console.warn("Speech recognition note:", err);
+          this.handleSpeechStateChange(false);
+          if (this.elements.spokenTextDisplay) {
+            this.elements.spokenTextDisplay.textContent = "குரல் சேவை கிடைக்கவில்லை. கீழே தமிழில் தட்டச்சு செய்யவும்.";
+            this.elements.spokenTextDisplay.classList.add("empty");
+          }
           if (window.KidAppLogger) KidAppLogger.log("VOICE", `Speech error: ${err}`);
           if (err === "not-allowed") {
-            alert("Microphone access is off. On iPhone, enable Chrome (or Safari) in Settings > Privacy & Security > Microphone, then reload this page and try again.");
+            this.showManualInputFallback("Microphone access is off. You can type the Tamil answer below, or enable microphone access in iPhone Settings and try again.");
           } else if (err === "insecure-context") {
             alert("Microphone access requires the secure HTTPS version of this website. Please open the published GitHub Pages link, not a local file.");
           } else if (err === "microphone-api-unavailable" || err === "microphone-unavailable") {
-            alert("This browser cannot access the microphone right now. Check iPhone microphone access, close any app using the mic, then try again.");
+            this.showManualInputFallback("This browser cannot access the microphone right now. You can type the Tamil answer below and continue learning.");
           } else if (err === "speech-api-unavailable") {
-            alert("Speech-to-text is not available in this browser. You can use the Type manually option below; on iPhone, also make sure Tamil Dictation is enabled in Settings > General > Keyboard.");
+            this.showManualInputFallback("Speech-to-text is not available in this browser. Type the Tamil answer below, or use the iPhone keyboard microphone with Tamil Dictation enabled.");
           } else if (err === "network" || err === "service-not-allowed" || err === "recognition-start-failed") {
-            alert("Speech recognition could not start. Check your internet connection and microphone permission, then try again. You can also use Type manually below.");
+            this.showManualInputFallback("Speech recognition could not start. You can type the Tamil answer below and continue, then try the microphone again later.");
           }
         },
         onEnd: () => {
@@ -490,6 +498,17 @@ const App = {
     }
   },
 
+  showManualInputFallback(message) {
+    this.manualFallbackMessage = message;
+    if (this.elements.manualInputBox) this.elements.manualInputBox.classList.add("show");
+    if (this.elements.manualTextInput) {
+      this.elements.manualTextInput.placeholder = "தமிழில் தட்டச்சு செய்யவும் (Type Tamil)...";
+      this.elements.manualTextInput.focus({ preventScroll: true });
+    }
+    if (window.KidAppLogger) KidAppLogger.log("VOICE", "Manual input fallback shown", { message });
+    if (this.elements.listeningHint) this.elements.listeningHint.textContent = message;
+  },
+
   handleSpeechStateChange(listening) {
     this.isListening = listening;
     if (listening) {
@@ -499,7 +518,9 @@ const App = {
     } else {
       if (this.elements.micBtn) this.elements.micBtn.classList.remove("listening");
       if (this.elements.micPromptText) this.elements.micPromptText.textContent = "பேச மைக்-ஐ அழுத்தவும் (Tap to Speak Tamil)";
-      if (this.elements.listeningHint) this.elements.listeningHint.textContent = "Press mic and say translation in Tamil";
+      if (this.elements.listeningHint) {
+        this.elements.listeningHint.textContent = this.manualFallbackMessage || "Press mic and say translation in Tamil";
+      }
     }
   },
 

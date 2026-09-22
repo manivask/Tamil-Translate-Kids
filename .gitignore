@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+logs/*
+!logs/README.md
+input_voice_data/*
+!input_voice_data/README.md
+input_voice_data_bundle_*.json
