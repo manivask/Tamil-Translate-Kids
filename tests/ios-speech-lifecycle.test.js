@@ -157,3 +157,31 @@ finalSession.onend();
 assert.deepStrictEqual(evaluations, ["வணக்கம்"], "a final answer is evaluated exactly once");
 assert.strictEqual(service.recognition, null);
 console.log("PASS: app error visibility, navigation cancellation, and single evaluation");
+
+// These are API simulations, not real-device browser tests. In particular,
+// microphone permission does not guarantee access to an iOS speech service.
+for (const browser of ["Version/18.0 Mobile/15E148 Safari/604.1", "CriOS/140.0.0.0 Mobile/15E148 Safari/604.1"]) {
+  context.navigator.userAgent = `Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 ${browser}`;
+  context.navigator.permissions = { query: async () => ({ state: "granted" }) };
+  context.navigator.mediaDevices = { getUserMedia() { throw new Error("Recognition must not request a competing audio stream"); } };
+  for (const code of ["not-allowed", "service-not-allowed", "language-not-supported", "audio-capture", "network", "no-speech"]) {
+    app.toggleMic();
+    const failedSession = recognizers.at(-1);
+    failedSession.onerror({ error: code });
+    failedSession.onend();
+    assert.ok(app.elements.spokenTextDisplay.textContent.includes(`(${code})`));
+    assert.strictEqual(app.isListening, false);
+    assert.strictEqual(service.isStarting, false);
+    assert.strictEqual(service.recognition, null);
+  }
+  context.webkitSpeechRecognition = undefined;
+  app.toggleMic();
+  assert.match(app.elements.spokenTextDisplay.textContent, /speech-api-unavailable/);
+  context.webkitSpeechRecognition = class extends WebKitSpeechRecognitionMock {
+    start() { const error = new Error("Permission denied"); error.name = "NotAllowedError"; throw error; }
+  };
+  app.toggleMic();
+  assert.match(app.elements.spokenTextDisplay.textContent, /\(not-allowed\)/);
+  context.webkitSpeechRecognition = WebKitSpeechRecognitionMock;
+  console.log(`PASS: iPhone ${browser.split(" ")[0]} API failure matrix`);
+}

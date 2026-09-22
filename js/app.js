@@ -475,13 +475,13 @@ const App = {
           console.warn("Speech recognition note:", err);
           this.handleSpeechStateChange(false);
           const messages = {
-            "not-allowed": "Safari denied speech access. Check this website’s microphone permission and that Siri is enabled in iPhone Settings, then try again.",
-            "service-not-allowed": "Safari’s speech service is unavailable. Check that Siri is enabled in iPhone Settings and open this page directly in Safari, then retry.",
-            "language-not-supported": "Safari’s speech service cannot recognize Tamil on this device. Use Tamil keyboard dictation or type your answer below.",
+            "not-allowed": "The browser denied speech access. Check this website’s microphone permission. On iPhone, also check that Siri is enabled in Settings, then retry.",
+            "service-not-allowed": "The browser’s speech service is unavailable even if microphone access is allowed. On iPhone, check that Siri is enabled in Settings. If using Chrome, try opening the page directly in Safari. If Safari also fails, use Tamil keyboard dictation or type below.",
+            "language-not-supported": "The browser’s speech service cannot recognize Tamil on this device. Use Tamil keyboard dictation or type your answer below.",
             "network": "Speech recognition could not connect. Check your internet connection and retry.",
-            "audio-capture": "Safari could not capture microphone audio. Close other apps using the microphone and retry.",
+            "audio-capture": "The browser could not capture microphone audio. Close other apps using the microphone and retry.",
             "no-speech": "No words were recognized. Tap the microphone and speak your Tamil answer again.",
-            "recognition-timeout": "Safari did not finish speech recognition. Reload the page and retry. You can also use Tamil keyboard dictation below.",
+            "recognition-timeout": "The browser did not finish speech recognition. Reload the page and retry. You can also use Tamil keyboard dictation below.",
             "speech-api-unavailable": "Speech recognition is unavailable in this browser. Open this page in Safari or enter Tamil below.",
             "insecure-context": "Microphone access requires the HTTPS website. Open the published GitHub Pages link."
           };

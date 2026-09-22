@@ -128,3 +128,12 @@ cancelled, navigation discards old results, and a 20-second timeout releases a
 stalled session. These protections do not bypass an unavailable Safari speech
 service or add server-based transcription. Tamil keyboard dictation/manual
 input remains available when browser recognition fails.
+
+Chrome on iPhone is not a guaranteed workaround for Safari speech failures.
+WebKit has documented that an embedding browser can expose
+`webkitSpeechRecognition` while rejecting the service with `service-not-allowed`:
+https://bugs.webkit.org/show_bug.cgi?id=239816 . This is a documented failure
+mode, not proof of the cause on a particular iPhone. The regression suite covers
+Safari and Chrome iPhone user agents with an unavailable API, service rejection,
+permission denial, unsupported language, capture failure, network failure, and
+silence. These simulated cases do not establish real-device compatibility.
