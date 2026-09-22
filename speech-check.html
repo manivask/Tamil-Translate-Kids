@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speech service check — Tamil Kids</title>
+  <style>
+    body { font: 18px/1.5 system-ui, sans-serif; max-width: 640px; margin: auto; padding: 24px; color: #182235; background: #f7f8fc; }
+    button { font: inherit; padding: 14px; margin: 6px 0; width: 100%; border: 1px solid #8994aa; border-radius: 8px; background: white; color: #182235; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; background: white; padding: 16px; border: 1px solid #8994aa; }
+  </style>
+</head>
+<body>
+  <a href="index.html">Back to Tamil Kids</a>
+  <h1>Check speech recognition</h1>
+  <p>Try each language separately. This page uses the browser’s speech service without the game or audio playback. It does not save recordings or change your score.</p>
+  <button id="check-tamil" type="button">1. Test Tamil — say “வணக்கம்”</button>
+  <button id="check-english" type="button">2. Test English — say “hello”</button>
+  <button id="stop-check" type="button" disabled>Stop check</button>
+  <p id="check-status" role="status">Choose a language to start.</p>
+  <pre id="check-results" aria-label="Diagnostic results"></pre>
+  <p>If English works but Tamil fails, the failure appears language-specific. If both fail, these checks cannot identify the cause by themselves. Share the results below, including the browser’s message.</p>
+  <script src="js/speech_check.js?v=1"></script>
+</body>
+</html>

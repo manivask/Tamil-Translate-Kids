@@ -185,3 +185,40 @@ for (const browser of ["Version/18.0 Mobile/15E148 Safari/604.1", "CriOS/140.0.0
   context.webkitSpeechRecognition = WebKitSpeechRecognitionMock;
   console.log(`PASS: iPhone ${browser.split(" ")[0]} API failure matrix`);
 }
+
+const diagnostics = [];
+context.KidAppLogger = { log(category, action, details) { diagnostics.push({ action, details }); } };
+service.startListening();
+recognizers.at(-1).onerror({ error: "service-not-allowed", message: "Speech recognition service is not available" });
+assert.strictEqual(diagnostics.find(entry => entry.action === "Speech recognition error").details.message,
+  "Speech recognition service is not available", "browser error details must not be overwritten");
+
+const controls = {};
+context.document = { getElementById(id) {
+  return controls[id] ||= { textContent: "", disabled: false, addEventListener(type, callback) { this[type] = callback; } };
+} };
+context.addEventListener = () => {};
+vm.runInContext(fs.readFileSync("js/speech_check.js", "utf8"), context);
+controls["check-tamil"].click();
+const tamilCheck = recognizers.at(-1);
+assert.strictEqual(tamilCheck.lang, "ta-IN");
+assert.strictEqual(tamilCheck.started, true, "check starts in click handler");
+tamilCheck.onerror({ error: "service-not-allowed", message: "Speech recognition service is not available" });
+assert.match(controls["check-results"].textContent, /browser message: Speech recognition service is not available/);
+assert.strictEqual(controls["check-english"].disabled, false);
+controls["check-english"].click();
+const englishCheck = recognizers.at(-1);
+assert.strictEqual(englishCheck.lang, "en-US");
+tamilCheck.onend();
+assert.strictEqual(controls["check-tamil"].disabled, true, "old check cannot end a new check");
+englishCheck.onresult({ resultIndex: 0, results: [{ 0: { transcript: "hello" }, isFinal: true }] });
+englishCheck.onend();
+assert.match(controls["check-results"].textContent, /en-US: final: hello/);
+assert.deepStrictEqual(evaluations, ["வணக்கம்"], "diagnostic speech is never scored");
+assert.strictEqual(service.currentLanguage, "ta-IN", "diagnostic language never changes practice language");
+controls["check-tamil"].click();
+const cancelledCheck = recognizers.at(-1);
+controls["stop-check"].click();
+assert.strictEqual(cancelledCheck.aborted, true);
+assert.strictEqual(controls["stop-check"].disabled, true);
+console.log("PASS: original browser message preserved; independent Tamil/English checks and cancellation");

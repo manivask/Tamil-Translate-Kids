@@ -192,9 +192,9 @@ const KidSpeechService = {
       console.warn("SpeechRecognition event note:", event.error);
       this.isListening = false;
       this.logDiagnostic("Speech recognition error", {
+        ...this.errorDetails(null),
         error: event.error,
-        message: event.message || "",
-        ...this.errorDetails(null)
+        message: event.message || ""
       });
       finish(event.error);
     };

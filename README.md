@@ -137,3 +137,15 @@ mode, not proof of the cause on a particular iPhone. The regression suite covers
 Safari and Chrome iPhone user agents with an unavailable API, service rejection,
 permission denial, unsupported language, capture failure, network failure, and
 silence. These simulated cases do not establish real-device compatibility.
+
+For `service-not-allowed` with Siri already working, open **Check speech service**
+(`speech-check.html`). Test Tamil and English separately and share the output.
+This page has no game/audio-playback dependencies and displays the original
+browser error message. It does not save audio or change practice scores.
+English success with Tamil failure suggests a language-specific issue; failure
+in both languages needs further service/permission investigation.
+
+WebKit's `SpeechRecognitionPermissionManager.cpp` uses `service-not-allowed`
+for both service permission denial and locale-specific service unavailability:
+https://github.com/WebKit/WebKit/blob/main/Source/WebKit/UIProcess/SpeechRecognitionPermissionManager.cpp
+Siri working therefore does not establish that Tamil browser recognition works.
