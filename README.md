@@ -113,3 +113,18 @@ On the deployed HTTPS site, repeat these checks in both iPhone Chrome and Safari
 - Rotate the phone and check that controls remain visible and usable.
 
 The automated test mocks WebKit recognition; it does not verify real microphone permissions, recognition service availability, or installed Tamil voices. Those require testing on the device.
+
+### Safari speech errors
+
+Microphone permission and speech service availability are separate. WebKit
+[documents that Safari recognition requires Siri to be enabled](https://webkit.org/blog/11648/new-webkit-features-in-safari-14-1/).
+The app now displays the recognition error code with specific recovery advice.
+After a failure, **Activity Logs** shows recent events and their details;
+**Export Logs** downloads the diagnostic report. Record the error code and iOS
+version when reporting a device failure.
+
+Recognition starts synchronously on a microphone tap. Pending sessions can be
+cancelled, navigation discards old results, and a 20-second timeout releases a
+stalled session. These protections do not bypass an unavailable Safari speech
+service or add server-based transcription. Tamil keyboard dictation/manual
+input remains available when browser recognition fails.

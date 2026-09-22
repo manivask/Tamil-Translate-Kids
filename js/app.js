@@ -154,6 +154,7 @@ const App = {
     // 5. Listen to English audio
     if (this.elements.listenEnBtn) {
       this.elements.listenEnBtn.addEventListener("click", () => {
+        this.handleSpeechStateChange(false);
         KidAudioFX.playClick();
         const current = this.getCurrentSentence();
         if (current) {
@@ -173,6 +174,7 @@ const App = {
     // 7. Listen to Tamil answer audio
     if (this.elements.listenTamilBtn) {
       this.elements.listenTamilBtn.addEventListener("click", () => {
+        this.handleSpeechStateChange(false);
         KidAudioFX.playClick();
         const current = this.getCurrentSentence();
         if (current) {
@@ -241,7 +243,7 @@ const App = {
       this.elements.viewLogsBtn.addEventListener("click", () => {
         if (window.KidAppLogger) {
           const logs = KidAppLogger.getLogs();
-          alert(`📊 Activity Logs (${logs.length} entries):\n\n` + logs.slice(0, 5).map(l => `[${l.timestamp.slice(11,19)}] [${l.category}] ${l.action}`).join("\n"));
+          alert(`📊 Activity Logs (${logs.length} entries):\n\n` + logs.slice(0, 12).map(l => `[${l.timestamp.slice(11,19)}] [${l.category}] ${l.action}\n${JSON.stringify(l.details)}`).join("\n\n"));
         }
       });
     }
@@ -255,6 +257,9 @@ const App = {
 
   // Screen Switcher
   showScreen(screenName) {
+    KidSpeechService.cancelListening();
+    KidSpeechService.stopSpeaking();
+    this.handleSpeechStateChange(false);
     this.currentScreen = screenName;
     if (this.elements.screenGrade) this.elements.screenGrade.classList.toggle("active", screenName === "grade");
     if (this.elements.screenTopic) this.elements.screenTopic.classList.toggle("active", screenName === "topic");
@@ -368,7 +373,7 @@ const App = {
 
     // Reset voice & speech states
     KidSpeechService.stopSpeaking();
-    KidSpeechService.stopListening();
+    KidSpeechService.cancelListening();
     this.handleSpeechStateChange(false);
     this.lastSpokenTranscript = "";
     this.hasEvaluatedCurrentSpeech = false;
@@ -421,9 +426,9 @@ const App = {
   },
 
   toggleMic() {
-    if (this.isListening || KidSpeechService.isListening) {
+    if (this.isListening || KidSpeechService.isListening || KidSpeechService.isStarting) {
       if (window.KidAppLogger) KidAppLogger.log("VOICE", "Mic stopped by user");
-      KidSpeechService.stopListening();
+      KidSpeechService.cancelListening();
       this.handleSpeechStateChange(false);
 
       // If manual stop occurred after speech was heard, evaluate it
@@ -443,6 +448,7 @@ const App = {
 
       if (window.KidAppLogger) KidAppLogger.log("VOICE", "Mic started listening");
 
+      if (this.elements.micPromptText) this.elements.micPromptText.textContent = "Starting microphone… Tap again to cancel";
       KidSpeechService.startListening({
         onStart: () => {
           this.handleSpeechStateChange(true);
@@ -459,7 +465,7 @@ const App = {
 
           if (final) {
             this.hasEvaluatedCurrentSpeech = true;
-            KidSpeechService.stopListening();
+            KidSpeechService.cancelListening();
             this.handleSpeechStateChange(false);
             if (window.KidAppLogger) KidAppLogger.log("VOICE", "Final transcript captured", { transcript: final });
             this.evaluateTamilInput(final);
@@ -468,22 +474,23 @@ const App = {
         onError: (err) => {
           console.warn("Speech recognition note:", err);
           this.handleSpeechStateChange(false);
+          const messages = {
+            "not-allowed": "Safari denied speech access. Check this website’s microphone permission and that Siri is enabled in iPhone Settings, then try again.",
+            "service-not-allowed": "Safari’s speech service is unavailable. Check that Siri is enabled in iPhone Settings and open this page directly in Safari, then retry.",
+            "language-not-supported": "Safari’s speech service cannot recognize Tamil on this device. Use Tamil keyboard dictation or type your answer below.",
+            "network": "Speech recognition could not connect. Check your internet connection and retry.",
+            "audio-capture": "Safari could not capture microphone audio. Close other apps using the microphone and retry.",
+            "no-speech": "No words were recognized. Tap the microphone and speak your Tamil answer again.",
+            "recognition-timeout": "Safari did not finish speech recognition. Reload the page and retry. You can also use Tamil keyboard dictation below.",
+            "speech-api-unavailable": "Speech recognition is unavailable in this browser. Open this page in Safari or enter Tamil below.",
+            "insecure-context": "Microphone access requires the HTTPS website. Open the published GitHub Pages link."
+          };
+          this.showManualInputFallback(`${messages[err] || "Speech recognition could not start. Retry or enter Tamil below."} (${err})`);
           if (this.elements.spokenTextDisplay) {
-            this.elements.spokenTextDisplay.textContent = "குரல் சேவை கிடைக்கவில்லை. கீழே தமிழில் தட்டச்சு செய்யவும்.";
+            this.elements.spokenTextDisplay.textContent = this.manualFallbackMessage;
             this.elements.spokenTextDisplay.classList.add("empty");
           }
           if (window.KidAppLogger) KidAppLogger.log("VOICE", `Speech error: ${err}`);
-          if (err === "not-allowed") {
-            this.showManualInputFallback("Microphone access is off. You can type the Tamil answer below, or enable microphone access in iPhone Settings and try again.");
-          } else if (err === "insecure-context") {
-            alert("Microphone access requires the secure HTTPS version of this website. Please open the published GitHub Pages link, not a local file.");
-          } else if (err === "microphone-api-unavailable" || err === "microphone-unavailable") {
-            this.showManualInputFallback("This browser cannot access the microphone right now. You can type the Tamil answer below and continue learning.");
-          } else if (err === "speech-api-unavailable") {
-            this.showManualInputFallback("Speech-to-text is not available in this browser. Type the Tamil answer below, or use the iPhone keyboard microphone with Tamil Dictation enabled.");
-          } else if (err === "network" || err === "service-not-allowed" || err === "recognition-start-failed") {
-            this.showManualInputFallback("Speech recognition could not start. You can type the Tamil answer below and continue, then try the microphone again later.");
-          }
         },
         onEnd: () => {
           this.handleSpeechStateChange(false);
@@ -503,7 +510,6 @@ const App = {
     if (this.elements.manualInputBox) this.elements.manualInputBox.classList.add("show");
     if (this.elements.manualTextInput) {
       this.elements.manualTextInput.placeholder = "தமிழில் தட்டச்சு செய்யவும் (Type Tamil)...";
-      this.elements.manualTextInput.focus({ preventScroll: true });
     }
     if (window.KidAppLogger) KidAppLogger.log("VOICE", "Manual input fallback shown", { message });
     if (this.elements.listeningHint) this.elements.listeningHint.textContent = message;

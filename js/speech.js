@@ -7,6 +7,9 @@
 const KidSpeechService = {
   recognition: null,
   isListening: false,
+  isStarting: false,
+  recognitionTimer: null,
+  speechGeneration: 0,
   isSpeaking: false,
   tamilVoice: null,
   englishVoice: null,
@@ -87,6 +90,7 @@ const KidSpeechService = {
   },
 
   stopSpeaking() {
+    this.speechGeneration += 1;
     if (this.audioPlayer) {
       try {
         this.audioPlayer.pause();
@@ -105,6 +109,7 @@ const KidSpeechService = {
   },
 
   startListening({ onStart, onResult, onError, onEnd } = {}) {
+    if (this.isStarting || this.isListening) return false;
     this.stopSpeaking();
     this.logDiagnostic("Speech recognition requested", this.errorDetails(null));
 
@@ -130,13 +135,35 @@ const KidSpeechService = {
       return false;
     }
 
+    const recognition = this.recognition;
+    const active = () => this.recognition === recognition;
+    let heardSpeech = false;
+    const finish = (error) => {
+      if (!active()) return;
+      clearTimeout(this.recognitionTimer);
+      this.recognition = null;
+      this.isStarting = false;
+      this.isListening = false;
+      if (error) {
+        try { recognition.abort(); } catch (_) {}
+        if (onError) onError(error);
+      }
+      if (onEnd) onEnd();
+    };
+    this.isStarting = true;
+    // Some Safari failures emit neither an error nor an end event.
+    this.recognitionTimer = setTimeout(() => finish("recognition-timeout"), 20000);
+
     this.recognition.onstart = () => {
+      if (!active()) return;
+      this.isStarting = false;
       this.isListening = true;
       this.logDiagnostic("Speech recognition started");
       if (onStart) onStart();
     };
 
     this.recognition.onresult = (event) => {
+      if (!active()) return;
       let finalTranscript = "";
       let interimTranscript = "";
 
@@ -151,6 +178,7 @@ const KidSpeechService = {
         }
       }
 
+      heardSpeech = heardSpeech || !!(finalTranscript || interimTranscript);
       if (onResult) {
         onResult({
           final: finalTranscript.trim(),
@@ -160,6 +188,7 @@ const KidSpeechService = {
     };
 
     this.recognition.onerror = (event) => {
+      if (!active()) return;
       console.warn("SpeechRecognition event note:", event.error);
       this.isListening = false;
       this.logDiagnostic("Speech recognition error", {
@@ -167,13 +196,13 @@ const KidSpeechService = {
         message: event.message || "",
         ...this.errorDetails(null)
       });
-      if (onError) onError(event.error);
+      finish(event.error);
     };
 
     this.recognition.onend = () => {
-      this.isListening = false;
+      if (!active()) return;
       this.logDiagnostic("Speech recognition ended");
-      if (onEnd) onEnd();
+      finish(heardSpeech ? null : "no-speech");
     };
 
     try {
@@ -184,8 +213,7 @@ const KidSpeechService = {
       this.isListening = false;
       this.logDiagnostic("Speech recognition start exception", this.errorDetails(err));
       const errorName = err && err.name ? err.name : "";
-      if (onError) onError(errorName === "NotAllowedError" ? "not-allowed" : "recognition-start-failed");
-      if (onEnd) onEnd();
+      finish(errorName === "NotAllowedError" ? "not-allowed" : "recognition-start-failed");
       return false;
     }
   },
@@ -203,16 +231,30 @@ const KidSpeechService = {
     }
   },
 
+  cancelListening() {
+    const recognition = this.recognition;
+    this.recognition = null;
+    clearTimeout(this.recognitionTimer);
+    this.isStarting = false;
+    this.isListening = false;
+    if (recognition) {
+      try { recognition.abort(); } catch (_) {}
+    }
+  },
+
   /**
    * Speak Tamil answer with soft, sweet, kid-friendly voice modulation.
    */
   speakTamil(tamilText) {
     if (!tamilText) return;
     this.stopSpeaking();
+    this.cancelListening();
+    const generation = this.speechGeneration;
     this.isSpeaking = true;
     const cleanText = tamilText.replace(/[()]/g, "").trim();
 
     const playAudioFallback = () => {
+      if (generation !== this.speechGeneration) return;
       try {
         if (!this.audioPlayer) this.audioPlayer = new Audio();
         const encoded = encodeURIComponent(cleanText);
@@ -272,6 +314,7 @@ const KidSpeechService = {
   speakEnglish(englishText) {
     if (!englishText) return;
     this.stopSpeaking();
+    this.cancelListening();
     this.isSpeaking = true;
     if (window.speechSynthesis) {
       try {
