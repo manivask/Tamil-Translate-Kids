@@ -39,6 +39,7 @@ const App = {
     this.bindEvents();
     this.initConfetti();
     KidSpeechService.init();
+    this.syncVoiceModeControl();
 
     if (window.KidAppLogger) {
       KidAppLogger.log("INIT", "App initialized", KidAppLogger.getDeviceInfo());
@@ -65,6 +66,8 @@ const App = {
 
       // Grade Selection Cards (Page 1)
       gradeCards: document.querySelectorAll(".grade-card"),
+      voiceModeInputs: document.querySelectorAll('input[name="voice-mode"]'),
+      deviceLanguageLabel: document.getElementById("device-language-label"),
 
       // Mode Selector (Page 3)
       modePills: document.querySelectorAll(".mode-pill"),
@@ -121,6 +124,17 @@ const App = {
           const grade = parseInt(card.getAttribute("data-grade"), 10);
           KidAudioFX.playClick();
           this.selectGrade(grade);
+        });
+      });
+    }
+
+    if (this.elements.voiceModeInputs) {
+      this.elements.voiceModeInputs.forEach(input => {
+        input.addEventListener("change", () => {
+          if (!input.checked) return;
+          KidSpeechService.setInputLanguage(input.value);
+          this.syncVoiceModeControl();
+          KidAudioFX.playClick();
         });
       });
     }
@@ -252,6 +266,17 @@ const App = {
       this.elements.downloadLogsBtn.addEventListener("click", () => {
         if (window.KidAppLogger) KidAppLogger.downloadLogs();
       });
+    }
+  },
+
+  syncVoiceModeControl() {
+    if (this.elements.voiceModeInputs) {
+      this.elements.voiceModeInputs.forEach(input => {
+        input.checked = input.value === KidSpeechService.languageMode;
+      });
+    }
+    if (this.elements.deviceLanguageLabel) {
+      this.elements.deviceLanguageLabel.textContent = KidSpeechService.getDeviceLanguage();
     }
   },
 

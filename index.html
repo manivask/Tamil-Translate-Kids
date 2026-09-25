@@ -50,6 +50,25 @@
         <p class="welcome-sub">உங்கள் வகுப்பைத் தேர்ந்தெடுக்கவும் <br><small>(Select your Grade)</small></p>
       </div>
 
+      <fieldset class="voice-mode-panel" aria-describedby="voice-mode-help">
+        <legend>🎙️ Voice input mode</legend>
+        <div class="voice-mode-options" id="voice-mode-options">
+          <label class="voice-mode-option">
+            <input type="radio" name="voice-mode" value="ta-IN" checked>
+            <span>Tamil<br><small>ta-IN</small></span>
+          </label>
+          <label class="voice-mode-option">
+            <input type="radio" name="voice-mode" value="en-US">
+            <span>English<br><small>en-US</small></span>
+          </label>
+          <label class="voice-mode-option">
+            <input type="radio" name="voice-mode" value="device">
+            <span>Device language<br><small id="device-language-label">Device default</small></span>
+          </label>
+        </div>
+        <p id="voice-mode-help">Choose Tamil first for Tamil answers. Your choice is saved on this device.</p>
+      </fieldset>
+
       <div class="grade-cards-grid">
         <!-- Grade 1 Card -->
         <button class="grade-card" data-grade="1" id="card-grade-1">
@@ -264,7 +283,7 @@
   <script src="js/sentences.js"></script>
   <script src="js/matcher.js"></script>
   <script src="js/audio.js"></script>
-  <script src="js/speech.js?v=ios-diagnostics-5"></script>
-  <script src="js/app.js?v=ios-session-4"></script>
+  <script src="js/speech.js?v=voice-mode-selector-1"></script>
+  <script src="js/app.js?v=voice-mode-selector-1"></script>
 </body>
 </html>

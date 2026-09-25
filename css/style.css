@@ -234,6 +234,58 @@ body {
   font-size: 0.88rem;
 }
 
+.voice-mode-panel {
+  margin: 0 0 16px;
+  padding: 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.13);
+  color: var(--text-light);
+}
+
+.voice-mode-panel legend {
+  padding: 0 6px;
+  font-family: var(--font-kid);
+  font-weight: 700;
+}
+
+.voice-mode-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.voice-mode-option {
+  min-height: 64px;
+  padding: 8px 5px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.12);
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.voice-mode-option:has(input:checked) {
+  background: var(--accent-yellow);
+  color: var(--text-dark);
+}
+
+.voice-mode-option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.voice-mode-option small,
+.voice-mode-panel p {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.voice-mode-panel p {
+  margin-top: 8px;
+  opacity: 0.9;
+}
+
 .grade-cards-grid {
   display: flex;
   flex-direction: column;

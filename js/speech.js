@@ -14,16 +14,41 @@ const KidSpeechService = {
   tamilVoice: null,
   englishVoice: null,
   audioPlayer: null,
-  // English recognition keeps Safari/iPhone dictation compatible while still
-  // allowing the browser's speech service to transcribe Tamil automatically.
-  currentLanguage: "en-US",
+  currentLanguage: "ta-IN",
+  languageMode: "ta-IN",
+  languageStorageKey: "tamil_kids_voice_input_mode",
 
   init() {
+    this.restoreInputLanguage();
     this.audioPlayer = new Audio();
     this.setupVoices();
     if (window.speechSynthesis && "onvoiceschanged" in window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = () => this.setupVoices();
     }
+  },
+
+  getDeviceLanguage() {
+    return (typeof navigator !== "undefined" && navigator.language) || "ta-IN";
+  },
+
+  setInputLanguage(mode, { persist = true } = {}) {
+    const supportedModes = ["ta-IN", "en-US", "device"];
+    this.languageMode = supportedModes.includes(mode) ? mode : "ta-IN";
+    this.currentLanguage = this.languageMode === "device" ? this.getDeviceLanguage() : this.languageMode;
+    if (persist) {
+      try { localStorage.setItem(this.languageStorageKey, this.languageMode); } catch (_) {}
+    }
+    this.logDiagnostic("Voice input language changed", {
+      mode: this.languageMode,
+      language: this.currentLanguage
+    });
+    return this.currentLanguage;
+  },
+
+  restoreInputLanguage() {
+    let savedMode = "ta-IN";
+    try { savedMode = localStorage.getItem(this.languageStorageKey) || savedMode; } catch (_) {}
+    this.setInputLanguage(savedMode, { persist: false });
   },
 
   setupVoices() {

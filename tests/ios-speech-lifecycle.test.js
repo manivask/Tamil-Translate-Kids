@@ -35,6 +35,7 @@ const context = {
   URL: { revokeObjectURL() {} },
   SpeechSynthesisUtterance: class {},
   navigator: {
+    language: "en-IN",
     userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)",
     platform: "iPhone",
     maxTouchPoints: 5
@@ -55,6 +56,9 @@ vm.runInContext(
 const service = context.KidSpeechService;
 service.init();
 assert.strictEqual(recognizers.length, 0, "page initialization does not create a recognizer");
+assert.strictEqual(service.currentLanguage, "ta-IN", "Tamil is the default voice input language");
+assert.strictEqual(service.setInputLanguage("device"), "en-IN", "device mode uses the device language");
+assert.strictEqual(service.setInputLanguage("en-US"), "en-US", "English mode can be selected");
 
 let startCalls = 0;
 let endCalls = 0;
@@ -81,6 +85,7 @@ assert.strictEqual(transcript.interim, "", "no interim text is reported for a fi
 recognizers[0].onend();
 assert.strictEqual(endCalls, 1, "the UI receives its stopped callback");
 assert.strictEqual(service.isListening, false, "listening state is cleaned up");
+service.setInputLanguage("ta-IN");
 
 console.log("PASS: iPhone WebKit speech-recognition lifecycle");
 
