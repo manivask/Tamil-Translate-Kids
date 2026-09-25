@@ -14,7 +14,9 @@ const KidSpeechService = {
   tamilVoice: null,
   englishVoice: null,
   audioPlayer: null,
-  currentLanguage: "ta-IN",
+  // English recognition keeps Safari/iPhone dictation compatible while still
+  // allowing the browser's speech service to transcribe Tamil automatically.
+  currentLanguage: "en-US",
 
   init() {
     this.audioPlayer = new Audio();

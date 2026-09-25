@@ -66,7 +66,7 @@ assert.strictEqual(service.startListening({
 }), true);
 
 assert.strictEqual(recognizers.length, 1, "start creates the WebKit recognizer in the tap gesture");
-assert.strictEqual(recognizers[0].lang, "ta-IN", "Tamil recognition language is used");
+assert.strictEqual(recognizers[0].lang, "en-US", "English recognition language is used");
 assert.strictEqual(recognizers[0].started, true, "recognition starts successfully");
 recognizers[0].onstart();
 assert.strictEqual(startCalls, 1, "the UI receives its listening callback");

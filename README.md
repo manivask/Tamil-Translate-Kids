@@ -26,7 +26,7 @@ An interactive, voice-driven Tamil learning web application tailored for young k
    - 🔴 **Hard (85% Pass Threshold)**: High-accuracy mode for grammar masters.
 
 4. **Speech-to-Text & Audio Feedback**
-   - **Voice Input**: Web Speech Recognition API (`ta-IN`) with pulsating kid-friendly microphone animations.
+   - **Voice Input**: Web Speech Recognition API (`en-US`) with pulsating kid-friendly microphone animations; the browser can still automatically transcribe spoken Tamil.
    - **Listen Tamil Audio**: Tap to hear authentic Tamil speech pronunciation (`ta-IN` TTS) with transliteration guidance.
    - **Listen English Audio**: Tap to hear the English sentence.
 
@@ -52,7 +52,7 @@ Tamil-Translate-Kids/
 ├── js/
 │   ├── sentences.js      # Structured dataset of Grade 1-3 sentences & variations
 │   ├── matcher.js        # Multi-variant Tamil matching & similarity engine
-│   ├── speech.js         # Speech Recognition (ta-IN) & Tamil TTS playback
+│   ├── speech.js         # Speech Recognition (en-US) & Tamil TTS playback
 │   ├── audio.js          # Web Audio API celebratory synthesizer sound FX
 │   └── app.js            # Main application UI controller & state management
 └── README.md             # Documentation
