@@ -102,7 +102,32 @@
           </div>
           <div class="grade-card-arrow">➔</div>
         </button>
+
+        <button class="grade-card" data-grade="4" id="card-grade-4"><div class="grade-card-icon">📚</div><div class="grade-card-body"><h3 class="grade-card-title">4th Grade</h3><div class="grade-card-tamil">4-ஆம் வகுப்பு</div><div class="grade-card-tag">Age 9-10 • Descriptive Sentences</div></div><div class="grade-card-arrow">➜</div></button>
+        <button class="grade-card" data-grade="5" id="card-grade-5"><div class="grade-card-icon">🔎</div><div class="grade-card-body"><h3 class="grade-card-title">5th Grade</h3><div class="grade-card-tamil">5-ஆம் வகுப்பு</div><div class="grade-card-tag">Age 10-11 • Rich Vocabulary</div></div><div class="grade-card-arrow">➜</div></button>
+        <button class="grade-card" data-grade="6" id="card-grade-6"><div class="grade-card-icon">🧠</div><div class="grade-card-body"><h3 class="grade-card-title">6th Grade</h3><div class="grade-card-tamil">6-ஆம் வகுப்பு</div><div class="grade-card-tag">Age 11-12 • Ideas & Reasons</div></div><div class="grade-card-arrow">➜</div></button>
+        <button class="grade-card" data-grade="7" id="card-grade-7"><div class="grade-card-icon">🌱</div><div class="grade-card-body"><h3 class="grade-card-title">7th Grade</h3><div class="grade-card-tamil">7-ஆம் வகுப்பு</div><div class="grade-card-tag">Age 12-13 • Expressive Language</div></div><div class="grade-card-arrow">➜</div></button>
+        <button class="grade-card" data-grade="8" id="card-grade-8"><div class="grade-card-icon">🏆</div><div class="grade-card-body"><h3 class="grade-card-title">8th Grade</h3><div class="grade-card-tamil">8-ஆம் வகுப்பு</div><div class="grade-card-tag">Age 13-14 • Confident Communication</div></div><div class="grade-card-arrow">➜</div></button>
       </div>
+
+      <button class="heritage-home-card" id="open-kural-btn">
+        <span class="heritage-icon">📜</span><span><strong>திருக்குறள் பயிற்சி</strong><small>Read, listen, and practise beautiful Tamil</small></span><span>➜</span>
+      </button>
+    </section>
+
+    <!-- ================= THIRUKKURAL PRACTICE ================= -->
+    <section class="screen" id="screen-kural">
+      <div class="screen-nav-bar"><button class="screen-back-btn" id="back-from-kural-btn">◀ முகப்பு</button><div class="current-grade-badge">📜 திருக்குறள்</div></div>
+      <div class="screen-header-text"><h2 class="page-title">திருக்குறள் வாசிப்புப் பயிற்சி</h2><p class="page-sub">கேளுங்கள் • வாசியுங்கள் • தெளிவாகப் பேசுங்கள்</p></div>
+      <main class="kural-card">
+        <div class="kural-number" id="kural-number">குறள் 1</div>
+        <p class="kural-text" id="kural-text"></p>
+        <p class="kural-meaning" id="kural-meaning"></p>
+        <div class="kural-actions"><button class="listen-ta-btn" id="listen-kural-btn">🔊 கேளுங்கள்</button><button class="kural-mic-btn" id="kural-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button></div>
+        <div class="kural-result" id="kural-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்.</div>
+        <div class="kural-tip"><strong>உச்சரிப்பு குறிப்பு:</strong> ஒவ்வொரு சொல்லுக்கும் இடையில் சிறிய இடைவெளி விடுங்கள். தவறு வந்தால் பதற வேண்டாம் — மீண்டும் முயற்சி செய்யலாம்!</div>
+      </main>
+      <div class="bottom-nav"><button class="nav-btn" id="prev-kural-btn">◀ முந்தைய குறள்</button><button class="nav-btn primary" id="next-kural-btn">அடுத்த குறள் ▶</button></div>
     </section>
 
     <!-- ================= PAGE 2: TOPIC SELECTION SCREEN ================= -->
@@ -277,6 +302,15 @@
     </section>
   </div>
 
+  <button class="chat-fab" id="chat-fab" aria-label="Open Tamil voice friend" title="தமிழ் பேசும் நண்பர்">💬<span>பேசலாம்</span></button>
+  <section class="chat-panel" id="chat-panel" aria-label="Tamil voice conversation" aria-hidden="true">
+    <header class="chat-header"><div><strong>அரும்பு நண்பன்</strong><small>உங்கள் தமிழ் பேசும் நண்பன்</small></div><button id="close-chat-btn" aria-label="Close chat">×</button></header>
+    <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+    <div class="chat-status" id="chat-status">🎙️ பேசத் தயாராக இருக்கிறேன்</div>
+    <div class="chat-compose"><input id="chat-input" lang="ta" placeholder="தமிழில் எழுதுங்கள்…"><button id="chat-send-btn" aria-label="Send message">➤</button><button id="chat-mic-btn" aria-label="Speak in Tamil">🎙️</button></div>
+    <p class="chat-note">உங்கள் குரல் இந்த உலாவியிலேயே செயலாக்கப்படுகிறது.</p>
+  </section>
+
   <!-- Application Scripts -->
   <script src="js/logger.js"></script>
   <script src="js/voice_recorder.js"></script>
@@ -284,6 +318,8 @@
   <script src="js/matcher.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/speech.js?v=voice-mode-selector-1"></script>
+  <script src="js/thirukkural.js"></script>
+  <script src="js/chat-agent.js"></script>
   <script src="js/app.js?v=voice-mode-selector-1"></script>
 </body>
 </html>

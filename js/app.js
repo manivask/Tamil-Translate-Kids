@@ -6,7 +6,7 @@
 
 const App = {
   // State
-  currentScreen: "grade", // 'grade' | 'topic' | 'practice'
+  currentScreen: "grade", // 'grade' | 'topic' | 'practice' | 'kural'
   currentGrade: 1,
   currentCategory: "all",
   currentMode: "medium", // 'easy' (50%), 'medium' (70%), 'hard' (85%)
@@ -55,6 +55,7 @@ const App = {
       screenGrade: document.getElementById("screen-grade"),
       screenTopic: document.getElementById("screen-topic"),
       screenPractice: document.getElementById("screen-practice"),
+      screenKural: document.getElementById("screen-kural"),
 
       // Navigation & Branding
       brandHomeBtn: document.getElementById("brand-home-btn"),
@@ -153,6 +154,15 @@ const App = {
         this.showScreen("topic");
       });
     }
+
+    const openKural = document.getElementById("open-kural-btn");
+    const backFromKural = document.getElementById("back-from-kural-btn");
+    if (openKural) openKural.addEventListener("click", () => {
+      KidAudioFX.playClick();
+      if (window.ThirukkuralPractice) window.ThirukkuralPractice.render();
+      this.showScreen("kural");
+    });
+    if (backFromKural) backFromKural.addEventListener("click", () => this.showScreen("grade"));
 
     // 4. Difficulty mode switcher (Page 3)
     if (this.elements.modePills) {
@@ -289,6 +299,7 @@ const App = {
     if (this.elements.screenGrade) this.elements.screenGrade.classList.toggle("active", screenName === "grade");
     if (this.elements.screenTopic) this.elements.screenTopic.classList.toggle("active", screenName === "topic");
     if (this.elements.screenPractice) this.elements.screenPractice.classList.toggle("active", screenName === "practice");
+    if (this.elements.screenKural) this.elements.screenKural.classList.toggle("active", screenName === "kural");
 
     if (window.KidAppLogger) KidAppLogger.log("NAV", `Show screen: ${screenName}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -300,7 +311,12 @@ const App = {
     const gradeLabels = {
       1: "🌟 1st Grade (1-ஆம் வகுப்பு)",
       2: "🚀 2nd Grade (2-ஆம் வகுப்பு)",
-      3: "👑 3rd Grade (3-ஆம் வகுப்பு)"
+      3: "👑 3rd Grade (3-ஆம் வகுப்பு)",
+      4: "📚 4th Grade (4-ஆம் வகுப்பு)",
+      5: "🔎 5th Grade (5-ஆம் வகுப்பு)",
+      6: "🧠 6th Grade (6-ஆம் வகுப்பு)",
+      7: "🌱 7th Grade (7-ஆம் வகுப்பு)",
+      8: "🏆 8th Grade (8-ஆம் வகுப்பு)"
     };
     const label = gradeLabels[grade] || `Grade ${grade}`;
     if (this.elements.topicScreenGradeBadge) this.elements.topicScreenGradeBadge.textContent = label;

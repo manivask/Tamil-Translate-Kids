@@ -843,6 +843,56 @@ const SENTENCE_DATA = [
   }
 ];
 
+// Grades 4-8 introduce longer ideas, precise vocabulary, and increasingly
+// expressive Tamil. Each prompt is intentionally more demanding than Grade 3.
+const EXTENDED_GRADE_SENTENCES = {
+  4: [
+    ["I finished my homework before dinner.", "நான் இரவு உணவிற்கு முன்பு என் வீட்டுப்பாடத்தை முடித்தேன்.", "Naan iravu unavirku munbu en veettupaadathai mudithen.", "school"],
+    ["The colourful butterfly rested on the flower.", "வண்ணத்துப்பூச்சி மலரின் மீது அமைதியாக அமர்ந்தது.", "Vannathuppoochi malarin meethu amaithiyaaga amarndhathu.", "nature"],
+    ["Please explain this difficult word to me.", "தயவுசெய்து இந்தக் கடினமான சொல்லை எனக்கு விளக்குங்கள்.", "Dayavuseythu indha kadinamaana sollai enakku vilakkungal.", "school"],
+    ["I shared my crayons with my friend.", "நான் என் நண்பருடன் வண்ணப் பென்சில்களைப் பகிர்ந்துகொண்டேன்.", "Naan en nanbarudan vannap pencilgalai pagirndhukonden.", "play"]
+  ],
+  5: [
+    ["Our class planned a clean school campaign.", "எங்கள் வகுப்பு பள்ளியைச் சுத்தமாக வைத்திருக்கும் திட்டத்தை உருவாக்கியது.", "Engal vaguppu palliyai suthamaaga vaithirukkum thittathai uruvaakkiyathu.", "school"],
+    ["Water is precious, so we should not waste it.", "தண்ணீர் மிகவும் மதிப்புமிக்கது; அதனால் அதை வீணாக்கக் கூடாது.", "Thanneer migavum madippumikkadhu; adhanaal athai veenaakkak koodadhu.", "nature"],
+    ["I felt proud when I helped my younger brother.", "என் தம்பிக்கு உதவியபோது நான் பெருமையாக உணர்ந்தேன்.", "En thambikku uthaviyapodhu naan perumaiaaga unarndhen.", "feelings"],
+    ["The librarian recommended an interesting adventure book.", "நூலகர் சுவாரசியமான சாகசக் கதையுள்ள புத்தகத்தைப் பரிந்துரைத்தார்.", "Noolagar suvaarsiyamaana saagasa kathaiyulla puthagathai parindhuraithaar.", "school"]
+  ],
+  6: [
+    ["I compared the results carefully before making a conclusion.", "ஒரு முடிவுக்கு வருவதற்கு முன்பு நான் முடிவுகளை கவனமாக ஒப்பிட்டேன்.", "Oru mudivukku varuvatharku munbu naan mudivugalai gavanamaaga oppitten.", "school"],
+    ["Protecting trees helps every living creature in our environment.", "மரங்களைப் பாதுகாப்பது நமது சுற்றுச்சூழலில் உள்ள எல்லா உயிரினங்களுக்கும் உதவுகிறது.", "Marangalai paadhukaappadhu namadhu sutruchoozhalil ulla ella uyirinangalukkum uthavugiradhu.", "nature"],
+    ["I respectfully disagreed and explained my reason clearly.", "நான் மரியாதையுடன் மறுத்து, என் காரணத்தைத் தெளிவாக விளக்கினேன்.", "Naan mariyaadhaiyudan maruthu, en kaaranathai thelivaga vilakkinen.", "feelings"],
+    ["Regular practice improves both confidence and communication skills.", "தொடர்ச்சியான பயிற்சி தன்னம்பிக்கையையும் தொடர்புத் திறனையும் மேம்படுத்துகிறது.", "Thodarchiyaana payirchi thannambikkaiyaiyum thodarbu thiranaiyum membaduthugiradhu.", "daily"]
+  ],
+  7: [
+    ["Technology should be used responsibly to solve meaningful problems.", "பயனுள்ள பிரச்சினைகளைத் தீர்க்கத் தொழில்நுட்பத்தைப் பொறுப்புடன் பயன்படுத்த வேண்டும்.", "Payanulla pirachinaigalai theerkka thozhilnutpathai poruppudan payanpadutha vendum.", "school"],
+    ["I listened patiently because every viewpoint deserves respect.", "ஒவ்வொரு கருத்தும் மரியாதைக்குரியது என்பதால் நான் பொறுமையாகக் கேட்டேன்.", "Ovvoru karuthum mariyaadhaikkuriyadhu enbadhaal naan porumaiyaaga ketten.", "feelings"],
+    ["Our community can reduce pollution by choosing reusable materials.", "மீண்டும் பயன்படுத்தக்கூடிய பொருட்களைத் தேர்ந்தெடுப்பதன் மூலம் நமது சமூகம் மாசுபாட்டைக் குறைக்கலாம்.", "Meendum payanpaduthakkoodiya porutgalai therndheduppathan moolam namadhu samoogam maasupaattai kuraikkalaam.", "nature"],
+    ["I organized the information into clear and useful categories.", "தகவல்களைத் தெளிவான மற்றும் பயனுள்ள வகைகளாக நான் ஒழுங்குபடுத்தினேன்.", "Thagavalgalai thelivaana matrum payanulla vagaigalaga naan ozhungupaduthinen.", "school"]
+  ],
+  8: [
+    ["Thoughtful questions help us understand complex ideas more deeply.", "சிந்தனையுடன் கேட்கப்படும் கேள்விகள் சிக்கலான கருத்துகளை ஆழமாகப் புரிந்துகொள்ள உதவுகின்றன.", "Sindhanaiyudan ketkappadum kelvigal sikkalaana karuthugalai aazhamaga purindhukolla uthavugindrana.", "school"],
+    ["I will support my opinion with evidence and respectful reasoning.", "ஆதாரங்களையும் மரியாதையான காரணங்களையும் கொண்டு என் கருத்தை ஆதரிப்பேன்.", "Aadhaarangalaiyum mariyaadhaiyaana kaaranangalaiyum kondu en karuthai aadharippen.", "school"],
+    ["Sustainable choices today protect the future of our planet.", "இன்று நாம் எடுக்கும் நிலைத்த தேர்வுகள் நமது பூமியின் எதிர்காலத்தைப் பாதுகாக்கின்றன.", "Indru naam edukkum nilaitha thervugal namadhu boomiyin ethirkaalathai paadhukaakkindrana.", "nature"],
+    ["Learning from mistakes gives us courage to try again.", "தவறுகளிலிருந்து கற்றுக்கொள்வது மீண்டும் முயற்சி செய்யும் தைரியத்தைத் தருகிறது.", "Thavarugalilirundhu katrukkolvathu meendum muyarchi seyyum dhairiyathai tharugiradhu.", "feelings"]
+  ]
+};
+
+const CATEGORY_META = {
+  daily: ["Daily Habits", "அன்றாடப் பழக்கங்கள்", "🌅"], school: ["School & Learn", "பள்ளி & கல்வி", "🏫"],
+  play: ["Play & Friends", "விளையாட்டு & தோழர்கள்", "🧸"], nature: ["Animals & Nature", "விலங்குகள் & இயற்கை", "🐾"],
+  feelings: ["Food & Feelings", "உணவு & உணர்வுகள்", "🍕"]
+};
+Object.entries(EXTENDED_GRADE_SENTENCES).forEach(([grade, prompts]) => prompts.forEach(([english, tamil, transliteration, category], index) => {
+  const meta = CATEGORY_META[category];
+  SENTENCE_DATA.push({
+    id: `g${grade}_advanced_${index + 1}`, grade: Number(grade), gradeLabel: `Grade ${grade} (${grade}-ஆம் வகுப்பு)`,
+    category, categoryLabel: meta[0], categoryTamil: meta[1], categoryIcon: meta[2], english,
+    wordCount: english.replace(/[.,;]/g, "").split(/\s+/).length, tamilPrimary: tamil, transliteration,
+    variations: [tamil.replace(/[.,;]/g, "")], keywords: tamil.replace(/[.,;]/g, "").split(/\s+/).slice(0, 5), hint: tamil
+  });
+}));
+
 // Export to window or global object for standalone browser or module execution
 if (typeof window !== "undefined") {
   window.SENTENCE_DATA = SENTENCE_DATA;

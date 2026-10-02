@@ -1,13 +1,13 @@
 # 🦜 Tamil Translate for Kids (தமிழ் குரல் மொழிபெயர்ப்பு)
 
-An interactive, voice-driven Tamil learning web application tailored for young kids aged **7, 8, and 9 (Grades 1, 2, and 3)**. Kids read simple English statements (maximum 5 words) on flashcards, speak the Tamil translation into the microphone, and receive instant percentage match validation, sound effects, star ratings, and celebratory rewards!
+An interactive, voice-driven Tamil learning web application for **Grades 1–8**. Kids read English prompts matched to their grade, speak the Tamil translation, and receive instant percentage match validation, sound effects, star ratings, and celebratory rewards.
 
 ---
 
 ## 🌟 Key Features
 
-1. **Kid-Friendly Statements (Max 5 Words)**
-   - Over **36 curated statements** categorized by **Grade 1, Grade 2, and Grade 3**.
+1. **Progressive Grade Learning (Grades 1–8)**
+   - Grade 1–3 uses short, friendly prompts; Grade 4–8 introduces longer sentences, richer vocabulary, explanations, reasoning, and expressive language.
    - Categories include:
      - 🌅 *Daily Routines & Habits (அன்றாட பழக்கங்கள்)*
      - 🏫 *School & Learning (பள்ளி & கல்வி)*
@@ -38,6 +38,11 @@ An interactive, voice-driven Tamil learning web application tailored for young k
 6. **Mobile-First & GitHub Pages Ready**
    - Zero-dependency static app (Vanilla HTML, CSS, JavaScript, Web Audio API).
    - Fully optimized for mobile screens (iOS Safari, Android Chrome) and desktops.
+
+7. **Tamil Voice Friend & Thirukkural Studio**
+   - The floating **அரும்பு நண்பன்** button opens a Tamil-first voice companion. It asks for a child's name, remembers it locally, listens in Tamil, answers aloud, and guides an age-appropriate conversation without an API key.
+   - **திருக்குறள் பயிற்சி** on the home page lets children listen to selected couplets, read them aloud, and receive a friendly pronunciation score and tip.
+   - Voice recognition and the saved name stay in the browser. The optional existing Tamil TTS fallback only needs network access if the device has no Tamil system voice.
 
 ---
 
