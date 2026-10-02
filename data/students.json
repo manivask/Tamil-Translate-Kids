@@ -6,11 +6,6 @@
       "grade": 1
     },
     {
-      "firstName": "Kohila",
-      "lastName": "Kandasamy",
-      "grade": 1
-    },
-    {
       "firstName": "Aarudh",
       "lastName": "Lakshminarasimhan",
       "grade": 1
@@ -36,11 +31,6 @@
       "grade": 1
     },
     {
-      "firstName": "Sharmila",
-      "lastName": "Mathivannan",
-      "grade": 1
-    },
-    {
       "firstName": "Yugan",
       "lastName": "Sakthivel",
       "grade": 1
@@ -54,11 +44,6 @@
       "firstName": "Nalan",
       "lastName": "Yogesh",
       "grade": 1
-    },
-    {
-      "firstName": "Saranya",
-      "lastName": "Anandbabu",
-      "grade": 2
     },
     {
       "firstName": "Aadhini",
@@ -101,23 +86,18 @@
       "grade": 2
     },
     {
-      "firstName": "Nila",
-      "lastName": "Rajarajan",
-      "grade": 2
-    },
-    {
       "firstName": "Aathira",
       "lastName": "Ramesh",
       "grade": 2
     },
     {
-      "firstName": "Padma Priya",
+      "firstName": "Akshaya",
       "lastName": "Ramesh Kumar",
       "grade": 2
     },
     {
-      "firstName": "Rishab",
-      "lastName": "Rao",
+      "firstName": "Padma Priya",
+      "lastName": "Ramesh Kumar",
       "grade": 2
     },
     {
@@ -138,11 +118,6 @@
     {
       "firstName": "Dheeran",
       "lastName": "Sathishkumar",
-      "grade": 2
-    },
-    {
-      "firstName": "Anitha",
-      "lastName": "Sriman",
       "grade": 2
     },
     {
@@ -241,13 +216,8 @@
       "grade": 3
     },
     {
-      "firstName": "Akshaya",
-      "lastName": "Ramesh Kumar",
-      "grade": 3
-    },
-    {
-      "firstName": "Reethika",
-      "lastName": "Ramesh Kumar",
+      "firstName": "Rishab",
+      "lastName": "Rao",
       "grade": 3
     },
     {
@@ -262,11 +232,6 @@
     },
     {
       "firstName": "Aadhya",
-      "lastName": "Suresh",
-      "grade": 3
-    },
-    {
-      "firstName": "Anuradha",
       "lastName": "Suresh",
       "grade": 3
     },
@@ -296,11 +261,6 @@
       "grade": 4
     },
     {
-      "firstName": "Senchulakshmi",
-      "lastName": "Durairaj",
-      "grade": 4
-    },
-    {
       "firstName": "Jayalakshmi",
       "lastName": "Duraiswamy",
       "grade": 4
@@ -308,11 +268,6 @@
     {
       "firstName": "Arvin",
       "lastName": "Elumalai",
-      "grade": 4
-    },
-    {
-      "firstName": "Priyadharshini",
-      "lastName": "Gnanasekaran",
       "grade": 4
     },
     {
@@ -328,11 +283,6 @@
     {
       "firstName": "Janesh",
       "lastName": "Karthick",
-      "grade": 4
-    },
-    {
-      "firstName": "Arthi",
-      "lastName": "kumaravadivel",
       "grade": 4
     },
     {
@@ -436,11 +386,6 @@
       "grade": 5
     },
     {
-      "firstName": "Senthilkumar",
-      "lastName": "Veeramani",
-      "grade": 5
-    },
-    {
       "firstName": "Aadya",
       "lastName": "Lakshminarasimhan",
       "grade": 6
@@ -486,19 +431,9 @@
       "grade": 7
     },
     {
-      "firstName": "Rubini",
-      "lastName": "Senthamizh",
-      "grade": 7
-    },
-    {
       "firstName": "Sana",
       "lastName": "Vinoth Kumar",
       "grade": 7
-    },
-    {
-      "firstName": "Priya",
-      "lastName": "Ganesan",
-      "grade": 8
     },
     {
       "firstName": "Ashwinth",
@@ -533,11 +468,6 @@
     {
       "firstName": "SyedSameer",
       "lastName": "Sheik Abdul Kadhar",
-      "grade": 8
-    },
-    {
-      "firstName": "Vinodhini",
-      "lastName": "Yogesh",
       "grade": 8
     }
   ]
