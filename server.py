@@ -45,5 +45,5 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    initialize_database(); print("Tamil Kids Voice: http://localhost:8080")
+    initialize_database(); print("Tamil Web Learning - Kids: http://localhost:8080")
     ThreadingHTTPServer(("", 8080), Handler).serve_forever()

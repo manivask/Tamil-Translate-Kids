@@ -1,3 +1,3 @@
 @echo off
-start "Tamil Kids Voice" http://localhost:8080
+start "Tamil Web Learning - Kids" http://localhost:8080
 python server.py
