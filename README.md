@@ -46,6 +46,7 @@ An interactive, voice-driven Tamil learning web application for **Grades 1–8**
 
 8. **Student learning records**
    - Students select their Nilai and name from the supplied roster before beginning. Their successful sentence and Thirukkural attempts are associated with that student.
+   - The reusable student roster is stored at `data/students/roster.json`; it contains only first name, last name, and Nilai.
    - `server.py` stores local development records in `data/learning_progress.db`. On GitHub Pages, the same records remain in that browser's local storage until a hosted API is connected.
 
 ---

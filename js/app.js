@@ -337,7 +337,7 @@ const App = {
   },
 
   async loadStudents() {
-    try { this.students = (await fetch("data/students.json").then(response => response.json())).students || []; }
+    try { this.students = (await fetch("data/students/roster.json").then(response => response.json())).students || []; }
     catch (_) { this.elements.loginMessage.textContent = "Student list could not be loaded. Please refresh the page."; }
   },
 
