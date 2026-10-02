@@ -14,11 +14,36 @@
     if (/எப்படி|என்ன|ஏன்|எப்போது/.test(text)) return "அருமையான கேள்வி! நீங்கள் நினைப்பது என்ன என்று முதலில் சொல்லுங்கள்; அதைச் சேர்ந்து ஆராயலாம்.";
     return `${childName}, நான் கவனமாகக் கேட்கிறேன். இதைப் பற்றி இன்னும் ஒரு வாக்கியத்தில் சொல்ல முடியுமா?`;
   };
+  async function internetAnswer(question) {
+    // Wikipedia provides a public, CORS-enabled factual lookup. The result is
+    // explicitly marked as a source rather than being presented as invented AI.
+    const query = question.replace(/[?!.]/g, "").trim();
+    if (query.length < 3) return null;
+    try {
+      const searchUrl = `https://ta.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*&srlimit=1`;
+      const search = await fetch(searchUrl).then(r => r.json());
+      const first = search?.query?.search?.[0];
+      if (!first?.title) return null;
+      const summaryUrl = `https://ta.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(first.title)}`;
+      const summary = await fetch(summaryUrl).then(r => r.ok ? r.json() : null);
+      const extract = summary?.extract?.replace(/\s+/g, " ").trim();
+      if (!extract) return null;
+      return `விக்கிப்பீடியா தகவல்: ${extract.length > 520 ? `${extract.slice(0, 517)}…` : extract}`;
+    } catch (_) { return null; }
+  }
   document.addEventListener("DOMContentLoaded", () => {
     const panel = document.getElementById("chat-panel"), messages = document.getElementById("chat-messages"), status = document.getElementById("chat-status"), input = document.getElementById("chat-input");
     const say = (text, who = "bot") => { const el = document.createElement("div"); el.className = `chat-bubble ${who}`; el.textContent = text; messages.appendChild(el); messages.scrollTop = messages.scrollHeight; if (who === "bot") KidSpeechService.speakTamil(text); };
     const open = () => { panel.classList.add("open"); panel.setAttribute("aria-hidden", "false"); if (!started) { started = true; say(childName ? `வணக்கம் ${childName}! மீண்டும் பேசுவதில் மகிழ்ச்சி. இன்று எப்படி இருக்கிறீர்கள்?` : "வணக்கம் குட்டீஸ்! நான் அரும்பு நண்பன். உங்கள் பெயர் என்ன?"); } };
-    const send = value => { const text = value.trim(); if (!text) return; say(text, "child"); input.value = ""; setTimeout(() => say(responseFor(text)), 250); };
+    const send = async value => {
+      const text = value.trim(); if (!text) return;
+      say(text, "child"); input.value = "";
+      if (!childName) { setTimeout(() => say(responseFor(text)), 250); return; }
+      status.textContent = "🌐 தமிழில் தகவல் தேடுகிறேன்…";
+      const online = await internetAnswer(text);
+      status.textContent = "🎙️ பேசத் தயாராக இருக்கிறேன்";
+      say(online || responseFor(text));
+    };
     document.getElementById("chat-fab").addEventListener("click", open);
     document.getElementById("close-chat-btn").addEventListener("click", () => { panel.classList.remove("open"); panel.setAttribute("aria-hidden", "true"); KidSpeechService.stopSpeaking(); });
     document.getElementById("chat-send-btn").addEventListener("click", () => send(input.value));

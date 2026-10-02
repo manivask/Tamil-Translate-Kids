@@ -9,9 +9,8 @@
   let index = 0;
   const clean = text => text.replace(/\n/g, " ").replace(/[.,;]/g, "").trim();
   function score(target, heard) {
-    const expected = clean(target).split(/\s+/); const actual = clean(heard).split(/\s+/);
-    const matched = expected.filter(word => actual.some(said => said === word || said.includes(word) || word.includes(said))).length;
-    return Math.round((matched / expected.length) * 100);
+    const kuralTarget = { tamilPrimary: clean(target), variations: [clean(target)], keywords: clean(target).split(/\s+/), english: "திருக்குறள்" };
+    return TamilMatcher.evaluate(kuralTarget, heard, "medium");
   }
   const Practice = {
     render() {
@@ -19,7 +18,7 @@
       document.getElementById("kural-number").textContent = `குறள் ${item.n}`;
       document.getElementById("kural-text").textContent = item.text;
       document.getElementById("kural-meaning").textContent = item.meaning;
-      document.getElementById("kural-result").textContent = "மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்.";
+      document.getElementById("kural-result").innerHTML = "மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்.";
     },
     speak() { KidSpeechService.speakTamil(clean(KURALS[index].text)); },
     listen() {
@@ -27,7 +26,13 @@
       result.textContent = "🎙️ கேட்கிறேன்… குறளை மெதுவாக வாசியுங்கள்.";
       KidSpeechService.setInputLanguage("ta-IN", { persist: false });
       KidSpeechService.startListening({
-        onResult: value => { if (value.final) { const pct = score(KURALS[index].text, value.final); const tip = pct >= 80 ? "அருமை! உங்கள் வாசிப்பு தெளிவாக உள்ளது." : pct >= 50 ? "நன்றாக முயற்சி செய்தீர்கள்! விடுபட்ட சொற்களை மீண்டும் மெதுவாகச் சொல்லுங்கள்." : "பரவாயில்லை! முதலில் கேட்டு, ஒரு வரியாக மீண்டும் வாசியுங்கள்."; result.textContent = `நீங்கள் சொன்னது: “${value.final}”\n${pct}% பொருத்தம் — ${tip}`; } },
+        onResult: value => { if (value.final) {
+          const match = score(KURALS[index].text, value.final);
+          const stars = "★".repeat(match.stars) + "☆".repeat(3 - match.stars);
+          result.innerHTML = `<strong>நீங்கள் சொன்னது:</strong> “${value.final}”<br><span class="kural-score">${match.percentage}% பொருத்தம் &nbsp; ${stars}</span><br>${match.feedback}`;
+          if (match.isPass) { KidAudioFX.playSuccessFanfare(); KidAudioFX.playStarDing(match.stars); if (window.App) App.triggerConfetti(); }
+          else KidAudioFX.playTryAgain();
+        } },
         onError: error => { result.textContent = `குரல் சேவை கிடைக்கவில்லை (${error}). உங்கள் உலாவியில் Tamil microphone அனுமதியைச் சரிபார்க்கவும்.`; }
       });
     },
