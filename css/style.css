@@ -185,6 +185,10 @@ body {
   font-size: 1.2rem;
 }
 
+.header-right-tools { display: flex; align-items: center; gap: 8px; }
+.header-logout-btn { border: 1px solid var(--glass-border); border-radius: var(--radius-full); padding: 6px 10px; background: rgba(255,255,255,.12); color: #fff; font: 700 .78rem var(--font-main); cursor: pointer; }
+.header-logout-btn:hover { background: rgba(255,255,255,.24); }
+
 /* Multi-screen Management */
 .screen {
   display: none;

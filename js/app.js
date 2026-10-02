@@ -116,6 +116,7 @@ const App = {
       adminLogoutBtn: document.getElementById("admin-logout-btn"),
       adminSummary: document.getElementById("admin-summary"),
       adminProgressList: document.getElementById("admin-progress-list"),
+      logoutBtn: document.getElementById("logout-btn"),
 
       // Diagnostics Toolbar
       viewLogsBtn: document.getElementById("view-logs-btn"),
@@ -129,6 +130,7 @@ const App = {
     this.elements.studentLoginForm.addEventListener("submit", event => { event.preventDefault(); this.loginStudent(); });
     this.elements.adminContinueBtn.addEventListener("click", () => this.openAdmin());
     this.elements.adminLogoutBtn.addEventListener("click", () => this.logout());
+    this.elements.logoutBtn.addEventListener("click", () => this.logout());
     // 1. Home / Brand button (Returns to Page 1 from anywhere)
     if (this.elements.brandHomeBtn) {
       this.elements.brandHomeBtn.addEventListener("click", () => {
@@ -176,8 +178,14 @@ const App = {
     }
 
     const openKural = document.getElementById("open-kural-btn");
+    const openKuralFromTopics = document.getElementById("open-kural-topic-btn");
     const backFromKural = document.getElementById("back-from-kural-btn");
     if (openKural) openKural.addEventListener("click", () => {
+      KidAudioFX.playClick();
+      if (window.ThirukkuralPractice) window.ThirukkuralPractice.open();
+      this.showScreen("kural");
+    });
+    if (openKuralFromTopics) openKuralFromTopics.addEventListener("click", () => {
       KidAudioFX.playClick();
       if (window.ThirukkuralPractice) window.ThirukkuralPractice.open();
       this.showScreen("kural");
@@ -316,6 +324,7 @@ const App = {
     KidSpeechService.stopSpeaking();
     this.handleSpeechStateChange(false);
     this.currentScreen = screenName;
+    if (this.elements.logoutBtn) this.elements.logoutBtn.hidden = screenName === "login" || screenName === "admin";
     if (this.elements.screenLogin) this.elements.screenLogin.classList.toggle("active", screenName === "login");
     if (this.elements.screenAdmin) this.elements.screenAdmin.classList.toggle("active", screenName === "admin");
     if (this.elements.screenGrade) this.elements.screenGrade.classList.toggle("active", screenName === "grade");
