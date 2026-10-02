@@ -44,6 +44,10 @@ An interactive, voice-driven Tamil learning web application for **Grades 1–8**
    - **திருக்குறள் பயிற்சி** on the home page lets children listen to selected couplets, read them aloud, and receive a friendly pronunciation score and tip.
    - Voice recognition and the saved name stay in the browser. The optional existing Tamil TTS fallback only needs network access if the device has no Tamil system voice.
 
+8. **Student learning records**
+   - Students select their Nilai and name from the supplied roster before beginning. Their successful sentence and Thirukkural attempts are associated with that student.
+   - `server.py` stores local development records in `data/learning_progress.db`. On GitHub Pages, the same records remain in that browser's local storage until a hosted API is connected.
+
 ---
 
 ## 📂 Project Structure
@@ -71,14 +75,7 @@ Microphone access only works from a secure context: the deployed **HTTPS** site 
 `localhost` during development. Do not open `index.html` directly as a `file://`
 URL.
 
-1. Run a lightweight local server:
-   ```bash
-   npx serve .
-   ```
-   or
-   ```bash
-   python -m http.server 8080
-   ```
+1. Double-click `start_app.bat`, or run `python server.py`. This starts the local site and its learning-progress API at `http://localhost:8080`.
 2. On an iPhone, open the deployed GitHub Pages HTTPS URL in your browser. When
    the app asks for microphone access, choose **Allow**. If access was
    previously denied, enable that browser under **Settings > Privacy & Security

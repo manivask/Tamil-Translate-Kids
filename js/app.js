@@ -6,7 +6,9 @@
 
 const App = {
   // State
-  currentScreen: "grade", // 'grade' | 'topic' | 'practice' | 'kural'
+  currentScreen: "login", // 'login' | 'topic' | 'practice' | 'kural' | 'admin'
+  currentStudent: null,
+  students: [],
   currentGrade: 1,
   currentCategory: "all",
   currentMode: "medium", // 'easy' (50%), 'medium' (70%), 'hard' (85%)
@@ -45,14 +47,16 @@ const App = {
       KidAppLogger.log("INIT", "App initialized", KidAppLogger.getDeviceInfo());
     }
 
-    // Start on Grade Selection Screen (Page 1)
-    this.showScreen("grade");
+    this.loadStudents();
+    this.showScreen("login");
   },
 
   cacheDOM() {
     this.elements = {
       // Screens
       screenGrade: document.getElementById("screen-grade"),
+      screenLogin: document.getElementById("screen-login"),
+      screenAdmin: document.getElementById("screen-admin"),
       screenTopic: document.getElementById("screen-topic"),
       screenPractice: document.getElementById("screen-practice"),
       screenKural: document.getElementById("screen-kural"),
@@ -102,6 +106,17 @@ const App = {
       manualSubmitBtn: document.getElementById("manual-submit-btn"),
       confettiCanvas: document.getElementById("confetti-canvas"),
 
+      studentLoginForm: document.getElementById("student-login-form"),
+      studentGrade: document.getElementById("student-grade"),
+      studentName: document.getElementById("student-name"),
+      loginMessage: document.getElementById("login-message"),
+      roleInputs: document.querySelectorAll('input[name="user-role"]'),
+      adminLoginPanel: document.getElementById("admin-login-panel"),
+      adminContinueBtn: document.getElementById("admin-continue-btn"),
+      adminLogoutBtn: document.getElementById("admin-logout-btn"),
+      adminSummary: document.getElementById("admin-summary"),
+      adminProgressList: document.getElementById("admin-progress-list"),
+
       // Diagnostics Toolbar
       viewLogsBtn: document.getElementById("view-logs-btn"),
       downloadLogsBtn: document.getElementById("download-logs-btn")
@@ -109,12 +124,17 @@ const App = {
   },
 
   bindEvents() {
+    this.elements.roleInputs.forEach(input => input.addEventListener("change", () => this.toggleRole()));
+    this.elements.studentGrade.addEventListener("change", () => this.populateStudentNames());
+    this.elements.studentLoginForm.addEventListener("submit", event => { event.preventDefault(); this.loginStudent(); });
+    this.elements.adminContinueBtn.addEventListener("click", () => this.openAdmin());
+    this.elements.adminLogoutBtn.addEventListener("click", () => this.logout());
     // 1. Home / Brand button (Returns to Page 1 from anywhere)
     if (this.elements.brandHomeBtn) {
       this.elements.brandHomeBtn.addEventListener("click", () => {
         KidAudioFX.playClick();
         if (window.KidAppLogger) KidAppLogger.log("NAV", "Home logo clicked");
-        this.showScreen("grade");
+        this.showScreen(this.currentStudent ? "topic" : "login");
       });
     }
 
@@ -144,7 +164,7 @@ const App = {
     if (this.elements.backToGradeBtn) {
       this.elements.backToGradeBtn.addEventListener("click", () => {
         KidAudioFX.playClick();
-        this.showScreen("grade");
+        this.showScreen("login");
       });
     }
 
@@ -162,7 +182,7 @@ const App = {
       if (window.ThirukkuralPractice) window.ThirukkuralPractice.open();
       this.showScreen("kural");
     });
-    if (backFromKural) backFromKural.addEventListener("click", () => this.showScreen("grade"));
+    if (backFromKural) backFromKural.addEventListener("click", () => this.showScreen("topic"));
 
     // 4. Difficulty mode switcher (Page 3)
     if (this.elements.modePills) {
@@ -296,6 +316,8 @@ const App = {
     KidSpeechService.stopSpeaking();
     this.handleSpeechStateChange(false);
     this.currentScreen = screenName;
+    if (this.elements.screenLogin) this.elements.screenLogin.classList.toggle("active", screenName === "login");
+    if (this.elements.screenAdmin) this.elements.screenAdmin.classList.toggle("active", screenName === "admin");
     if (this.elements.screenGrade) this.elements.screenGrade.classList.toggle("active", screenName === "grade");
     if (this.elements.screenTopic) this.elements.screenTopic.classList.toggle("active", screenName === "topic");
     if (this.elements.screenPractice) this.elements.screenPractice.classList.toggle("active", screenName === "practice");
@@ -304,6 +326,59 @@ const App = {
     if (window.KidAppLogger) KidAppLogger.log("NAV", `Show screen: ${screenName}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   },
+
+  async loadStudents() {
+    try { this.students = (await fetch("data/students.json").then(response => response.json())).students || []; }
+    catch (_) { this.elements.loginMessage.textContent = "Student list could not be loaded. Please refresh the page."; }
+  },
+
+  toggleRole() {
+    const isAdmin = [...this.elements.roleInputs].find(input => input.checked).value === "admin";
+    this.elements.studentLoginForm.hidden = isAdmin;
+    this.elements.adminLoginPanel.hidden = !isAdmin;
+    this.elements.loginMessage.textContent = "";
+  },
+
+  populateStudentNames() {
+    const grade = Number(this.elements.studentGrade.value);
+    const matches = this.students.filter(student => student.grade === grade);
+    this.elements.studentName.disabled = !matches.length;
+    this.elements.studentName.innerHTML = `<option value="">${matches.length ? "Select your name" : "No students listed for this grade"}</option>` + matches.map((student, index) => `<option value="${student.firstName}|${student.lastName}|${student.grade}">${student.firstName} ${student.lastName}</option>`).join("");
+  },
+
+  async loginStudent() {
+    const value = this.elements.studentName.value;
+    if (!value) { this.elements.loginMessage.textContent = "Choose your grade and name to continue."; return; }
+    const [firstName, lastName, grade] = value.split("|");
+    this.currentStudent = { firstName, lastName, grade: Number(grade) };
+    this.currentGrade = Number(grade);
+    this.elements.loginMessage.textContent = "";
+    await this.saveSession();
+    this.selectGrade(this.currentGrade);
+  },
+
+  async saveSession() {
+    localStorage.setItem("tamilKidsStudent", JSON.stringify(this.currentStudent));
+    try { await fetch("/api/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(this.currentStudent) }); } catch (_) { /* GitHub Pages uses local browser storage. */ }
+  },
+
+  async saveProgress(record) {
+    if (!this.currentStudent) return;
+    const entry = { ...record, student: this.currentStudent, recordedAt: new Date().toISOString() };
+    const key = "tamilKidsProgress"; const saved = JSON.parse(localStorage.getItem(key) || "[]"); saved.push(entry); localStorage.setItem(key, JSON.stringify(saved));
+    try { await fetch("/api/progress", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(entry) }); } catch (_) { /* Local fallback remains available. */ }
+  },
+
+  async openAdmin() {
+    this.showScreen("admin");
+    let records = JSON.parse(localStorage.getItem("tamilKidsProgress") || "[]");
+    try { const response = await fetch("/api/progress"); if (response.ok) records = await response.json(); } catch (_) { /* Browser fallback shown. */ }
+    this.elements.adminSummary.textContent = `${this.students.length} students in the roster · ${records.length} saved learning attempts`;
+    const recent = records.slice(-12).reverse();
+    this.elements.adminProgressList.innerHTML = recent.length ? recent.map(item => `<div class="admin-progress-item"><span>${item.student.firstName} ${item.student.lastName} · Nilai ${item.student.grade}</span><strong>${item.score}%</strong></div>`).join("") : "<div class=\"admin-progress-item\">No learning attempts have been recorded yet.</div>";
+  },
+
+  logout() { this.currentStudent = null; localStorage.removeItem("tamilKidsStudent"); this.showScreen("login"); },
 
   // Page 1 -> Page 2: Select Grade
   selectGrade(grade) {
@@ -618,6 +693,7 @@ const App = {
           this.completedIds.add(current.id);
           this.totalStarsEarned += result.stars;
           if (this.elements.totalStarsCount) this.elements.totalStarsCount.textContent = this.totalStarsEarned;
+          this.saveProgress({ sentenceId: current.id, category: current.category, score: result.percentage, stars: result.stars, passed: true });
         }
       } else {
         this.elements.validationZone.classList.add("fail-mode");

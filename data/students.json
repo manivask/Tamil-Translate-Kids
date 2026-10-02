@@ -1,0 +1,544 @@
+{
+  "students": [
+    {
+      "firstName": "Rithanya",
+      "lastName": "Elumalai",
+      "grade": 1
+    },
+    {
+      "firstName": "Kohila",
+      "lastName": "Kandasamy",
+      "grade": 1
+    },
+    {
+      "firstName": "Aarudh",
+      "lastName": "Lakshminarasimhan",
+      "grade": 1
+    },
+    {
+      "firstName": "Mila",
+      "lastName": "Magesh",
+      "grade": 1
+    },
+    {
+      "firstName": "Magizhini",
+      "lastName": "Manikandan",
+      "grade": 1
+    },
+    {
+      "firstName": "Mukhil",
+      "lastName": "Manimaran",
+      "grade": 1
+    },
+    {
+      "firstName": "Joycee",
+      "lastName": "Martin",
+      "grade": 1
+    },
+    {
+      "firstName": "Sharmila",
+      "lastName": "Mathivannan",
+      "grade": 1
+    },
+    {
+      "firstName": "Yugan",
+      "lastName": "Sakthivel",
+      "grade": 1
+    },
+    {
+      "firstName": "Mahin Saihish",
+      "lastName": "Vijay Karthik",
+      "grade": 1
+    },
+    {
+      "firstName": "Nalan",
+      "lastName": "Yogesh",
+      "grade": 1
+    },
+    {
+      "firstName": "Saranya",
+      "lastName": "Anandbabu",
+      "grade": 2
+    },
+    {
+      "firstName": "Aadhini",
+      "lastName": "Ashok",
+      "grade": 2
+    },
+    {
+      "firstName": "Adheesh",
+      "lastName": "Gobi Krishanthan",
+      "grade": 2
+    },
+    {
+      "firstName": "Mayon",
+      "lastName": "Karthik",
+      "grade": 2
+    },
+    {
+      "firstName": "Ved",
+      "lastName": "Mani",
+      "grade": 2
+    },
+    {
+      "firstName": "Manush",
+      "lastName": "Murali",
+      "grade": 2
+    },
+    {
+      "firstName": "Sarvesh",
+      "lastName": "Prakash",
+      "grade": 2
+    },
+    {
+      "firstName": "Madhumila",
+      "lastName": "Prithivraj",
+      "grade": 2
+    },
+    {
+      "firstName": "Nila",
+      "lastName": "Rajarajan",
+      "grade": 2
+    },
+    {
+      "firstName": "Nila",
+      "lastName": "Rajarajan",
+      "grade": 2
+    },
+    {
+      "firstName": "Aathira",
+      "lastName": "Ramesh",
+      "grade": 2
+    },
+    {
+      "firstName": "Padma Priya",
+      "lastName": "Ramesh Kumar",
+      "grade": 2
+    },
+    {
+      "firstName": "Rishab",
+      "lastName": "Rao",
+      "grade": 2
+    },
+    {
+      "firstName": "Kaniska Shree",
+      "lastName": "Ravi Kumar",
+      "grade": 2
+    },
+    {
+      "firstName": "Aadith",
+      "lastName": "Ravindran",
+      "grade": 2
+    },
+    {
+      "firstName": "Kushikaa",
+      "lastName": "Saravanan",
+      "grade": 2
+    },
+    {
+      "firstName": "Dheeran",
+      "lastName": "Sathishkumar",
+      "grade": 2
+    },
+    {
+      "firstName": "Anitha",
+      "lastName": "Sriman",
+      "grade": 2
+    },
+    {
+      "firstName": "Tanve",
+      "lastName": "Sriman",
+      "grade": 2
+    },
+    {
+      "firstName": "Mahathi",
+      "lastName": "Suresh",
+      "grade": 2
+    },
+    {
+      "firstName": "Nithwik",
+      "lastName": "Vairavel",
+      "grade": 2
+    },
+    {
+      "firstName": "Niyansh",
+      "lastName": "Vairavel",
+      "grade": 2
+    },
+    {
+      "firstName": "Ananya",
+      "lastName": "Viswasundar",
+      "grade": 2
+    },
+    {
+      "firstName": "Jyotsnaa",
+      "lastName": "Arun",
+      "grade": 3
+    },
+    {
+      "firstName": "Pragyasree",
+      "lastName": "Gajapathy",
+      "grade": 3
+    },
+    {
+      "firstName": "Advith",
+      "lastName": "Gopinath",
+      "grade": 3
+    },
+    {
+      "firstName": "Nidhusri",
+      "lastName": "Hari Prasad",
+      "grade": 3
+    },
+    {
+      "firstName": "Mahanth",
+      "lastName": "Harikumar",
+      "grade": 3
+    },
+    {
+      "firstName": "Taittiriya",
+      "lastName": "Karthik",
+      "grade": 3
+    },
+    {
+      "firstName": "Ida Melkias",
+      "lastName": "Keerthi",
+      "grade": 3
+    },
+    {
+      "firstName": "Aaradhana",
+      "lastName": "Manivasagam",
+      "grade": 3
+    },
+    {
+      "firstName": "Chharu",
+      "lastName": "Meenakshi Sundaram",
+      "grade": 3
+    },
+    {
+      "firstName": "Sashtikesh",
+      "lastName": "Mohanakumar",
+      "grade": 3
+    },
+    {
+      "firstName": "Shahasra",
+      "lastName": "Murthy",
+      "grade": 3
+    },
+    {
+      "firstName": "Fayona",
+      "lastName": "Noorulhaq",
+      "grade": 3
+    },
+    {
+      "firstName": "Danvika",
+      "lastName": "Pushgaran",
+      "grade": 3
+    },
+    {
+      "firstName": "Iniyaal",
+      "lastName": "Rajesh",
+      "grade": 3
+    },
+    {
+      "firstName": "Akshaya",
+      "lastName": "Ramesh Kumar",
+      "grade": 3
+    },
+    {
+      "firstName": "Reethika",
+      "lastName": "Ramesh Kumar",
+      "grade": 3
+    },
+    {
+      "firstName": "SaheerMasood",
+      "lastName": "Sheik Abdul Kadhar",
+      "grade": 3
+    },
+    {
+      "firstName": "Tamanna Batool",
+      "lastName": "Sheik Mohideen",
+      "grade": 3
+    },
+    {
+      "firstName": "Aadhya",
+      "lastName": "Suresh",
+      "grade": 3
+    },
+    {
+      "firstName": "Anuradha",
+      "lastName": "Suresh",
+      "grade": 3
+    },
+    {
+      "firstName": "Aadhvik",
+      "lastName": "Suresh Babu",
+      "grade": 3
+    },
+    {
+      "firstName": "Janani",
+      "lastName": "Thirunavuklkarasu",
+      "grade": 3
+    },
+    {
+      "firstName": "Rehan",
+      "lastName": "Ahamed Shafi",
+      "grade": 4
+    },
+    {
+      "firstName": "Arjun",
+      "lastName": "Chandrasekaran",
+      "grade": 4
+    },
+    {
+      "firstName": "Venisha",
+      "lastName": "Dhineshkumar",
+      "grade": 4
+    },
+    {
+      "firstName": "Senchulakshmi",
+      "lastName": "Durairaj",
+      "grade": 4
+    },
+    {
+      "firstName": "Jayalakshmi",
+      "lastName": "Duraiswamy",
+      "grade": 4
+    },
+    {
+      "firstName": "Arvin",
+      "lastName": "Elumalai",
+      "grade": 4
+    },
+    {
+      "firstName": "Priyadharshini",
+      "lastName": "Gnanasekaran",
+      "grade": 4
+    },
+    {
+      "firstName": "Tanishka",
+      "lastName": "Gobi Krishanthan",
+      "grade": 4
+    },
+    {
+      "firstName": "Navneeth",
+      "lastName": "Jayaprakash",
+      "grade": 4
+    },
+    {
+      "firstName": "Janesh",
+      "lastName": "Karthick",
+      "grade": 4
+    },
+    {
+      "firstName": "Arthi",
+      "lastName": "kumaravadivel",
+      "grade": 4
+    },
+    {
+      "firstName": "Vandana",
+      "lastName": "Nedunchezhian",
+      "grade": 4
+    },
+    {
+      "firstName": "Kavinaya",
+      "lastName": "Raja",
+      "grade": 4
+    },
+    {
+      "firstName": "Abhiman",
+      "lastName": "Ramesh",
+      "grade": 4
+    },
+    {
+      "firstName": "Leo Ashok",
+      "lastName": "Raviraj",
+      "grade": 4
+    },
+    {
+      "firstName": "Kaniyandhraa",
+      "lastName": "Sathish",
+      "grade": 4
+    },
+    {
+      "firstName": "Aaswin",
+      "lastName": "Selvaganapathy",
+      "grade": 4
+    },
+    {
+      "firstName": "Preshith",
+      "lastName": "Senthil Kumar R",
+      "grade": 4
+    },
+    {
+      "firstName": "Adhiyan",
+      "lastName": "Senthilkumar",
+      "grade": 4
+    },
+    {
+      "firstName": "Yazhini",
+      "lastName": "Sriman",
+      "grade": 4
+    },
+    {
+      "firstName": "Araamudhan Sai",
+      "lastName": "Sundarsingh",
+      "grade": 4
+    },
+    {
+      "firstName": "Lithisa",
+      "lastName": "Vasudevan",
+      "grade": 4
+    },
+    {
+      "firstName": "Goventhan",
+      "lastName": "Arivazhagan",
+      "grade": 5
+    },
+    {
+      "firstName": "Surya",
+      "lastName": "Gowrisankar",
+      "grade": 5
+    },
+    {
+      "firstName": "Susan",
+      "lastName": "Keerthi",
+      "grade": 5
+    },
+    {
+      "firstName": "Nivin",
+      "lastName": "Muthukumaran",
+      "grade": 5
+    },
+    {
+      "firstName": "Vivaan",
+      "lastName": "Panditharajan",
+      "grade": 5
+    },
+    {
+      "firstName": "Prithvik",
+      "lastName": "Sangeeth",
+      "grade": 5
+    },
+    {
+      "firstName": "Adhithi",
+      "lastName": "Sankaran",
+      "grade": 5
+    },
+    {
+      "firstName": "Aadya",
+      "lastName": "Shankar",
+      "grade": 5
+    },
+    {
+      "firstName": "Yazhini",
+      "lastName": "Sundarabalan",
+      "grade": 5
+    },
+    {
+      "firstName": "Senthilkumar",
+      "lastName": "Veeramani",
+      "grade": 5
+    },
+    {
+      "firstName": "Aadya",
+      "lastName": "Lakshminarasimhan",
+      "grade": 6
+    },
+    {
+      "firstName": "Karthik Palaniappan",
+      "lastName": "Meenakshi Sundaram",
+      "grade": 6
+    },
+    {
+      "firstName": "Kanishka",
+      "lastName": "Mohanakumar",
+      "grade": 6
+    },
+    {
+      "firstName": "Krishni",
+      "lastName": "Murali",
+      "grade": 6
+    },
+    {
+      "firstName": "Yazhini",
+      "lastName": "Sakthivel",
+      "grade": 6
+    },
+    {
+      "firstName": "Shadrica",
+      "lastName": "Sathishkumar",
+      "grade": 6
+    },
+    {
+      "firstName": "Eyal",
+      "lastName": "Senthamizh",
+      "grade": 6
+    },
+    {
+      "firstName": "Iniya",
+      "lastName": "Senthil",
+      "grade": 6
+    },
+    {
+      "firstName": "Allan Antony",
+      "lastName": "Martin",
+      "grade": 7
+    },
+    {
+      "firstName": "Rubini",
+      "lastName": "Senthamizh",
+      "grade": 7
+    },
+    {
+      "firstName": "Sana",
+      "lastName": "Vinoth Kumar",
+      "grade": 7
+    },
+    {
+      "firstName": "Priya",
+      "lastName": "Ganesan",
+      "grade": 8
+    },
+    {
+      "firstName": "Ashwinth",
+      "lastName": "Gopinath",
+      "grade": 8
+    },
+    {
+      "firstName": "Sushma",
+      "lastName": "Gowrisankar",
+      "grade": 8
+    },
+    {
+      "firstName": "Charanideeksha",
+      "lastName": "Keerthivasan",
+      "grade": 8
+    },
+    {
+      "firstName": "Adithi",
+      "lastName": "Raviraj",
+      "grade": 8
+    },
+    {
+      "firstName": "Arulkumaran",
+      "lastName": "Selvaraj",
+      "grade": 8
+    },
+    {
+      "firstName": "Saurish",
+      "lastName": "Shankar",
+      "grade": 8
+    },
+    {
+      "firstName": "SyedSameer",
+      "lastName": "Sheik Abdul Kadhar",
+      "grade": 8
+    },
+    {
+      "firstName": "Vinodhini",
+      "lastName": "Yogesh",
+      "grade": 8
+    }
+  ]
+}

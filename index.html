@@ -42,15 +42,38 @@
       </div>
     </header>
 
+    <!-- ================= LOGIN ================= -->
+    <section class="screen active" id="screen-login">
+      <main class="login-card">
+        <div class="login-mark">தமிழ்</div>
+        <h1>Welcome to Tamil Kids Voice</h1>
+        <p>Choose how you would like to continue.</p>
+        <fieldset class="role-picker">
+          <legend>Continue as</legend>
+          <label><input type="radio" name="user-role" value="student" checked> <span>Student</span></label>
+          <label><input type="radio" name="user-role" value="admin"> <span>Admin</span></label>
+        </fieldset>
+        <form id="student-login-form">
+          <label for="student-grade">Grade</label>
+          <select id="student-grade" required><option value="">Select your grade</option><option value="1">Nilai 1</option><option value="2">Nilai 2</option><option value="3">Nilai 3</option><option value="4">Nilai 4</option><option value="5">Nilai 5</option><option value="6">Nilai 6</option><option value="7">Nilai 7</option><option value="8">Nilai 8</option></select>
+          <label for="student-name">Student name</label>
+          <select id="student-name" required disabled><option value="">Select your grade first</option></select>
+          <p class="login-message" id="login-message" aria-live="polite"></p>
+          <button class="login-continue" type="submit">Start learning</button>
+        </form>
+        <div id="admin-login-panel" hidden><p class="admin-note">Admin access is enabled for this prototype. Password protection can be added with the production sign-in service.</p><button class="login-continue" id="admin-continue-btn" type="button">Open admin view</button></div>
+      </main>
+    </section>
+
     <!-- ================= PAGE 1: GRADE SELECTION SCREEN ================= -->
-    <section class="screen active" id="screen-grade">
+    <section class="screen" id="screen-grade">
       <div class="screen-welcome-box">
         <div class="welcome-emoji">👋 🎒</div>
         <h2 class="welcome-title">வணக்கம் குட்டீஸ்!</h2>
         <p class="welcome-sub">உங்கள் வகுப்பைத் தேர்ந்தெடுக்கவும் <br><small>(Select your Grade)</small></p>
       </div>
 
-      <fieldset class="voice-mode-panel" aria-describedby="voice-mode-help">
+      <fieldset class="voice-mode-panel" aria-describedby="voice-mode-help" hidden>
         <legend>🎙️ Voice input mode</legend>
         <div class="voice-mode-options" id="voice-mode-options">
           <label class="voice-mode-option">
@@ -292,18 +315,11 @@
         </div>
       </div>
 
-      <!-- Activity Diagnostics & Voice Dataset Toolbar -->
-      <div class="diagnostics-bar">
-        <a class="diag-btn" href="speech-check.html">Check speech service</a>
-        <button class="diag-btn" id="view-logs-btn" title="View captured device activity logs">📊 Activity Logs</button>
-        <button class="diag-btn" id="download-voice-btn" title="Download collected kids voice samples bundle">🎙️ Voice Data (input_voice_data)</button>
-        <button class="diag-btn" id="download-logs-btn" title="Download diagnostic logs as JSON">💾 Export Logs</button>
-      </div>
+    </section>
 
-      <!-- iPhone Helper Note -->
-      <div class="iphone-tip-banner">
-        <span>💡 iPhone குறிப்பு:</span> மைக் அனுமதி கேட்கும்போது <b>'Allow'</b> கொடுக்கவும். மேலும் iPhone Settings &gt; General &gt; Keyboard &gt; Dictation-ல் <b>Tamil</b> ஆன் செய்யவும்.
-      </div>
+    <section class="screen" id="screen-admin">
+      <div class="screen-nav-bar"><button class="screen-back-btn" id="admin-logout-btn">◀ Sign out</button><div class="current-grade-badge">Admin</div></div>
+      <main class="admin-card"><h2>Student learning overview</h2><p id="admin-summary">Loading saved student progress…</p><div id="admin-progress-list" class="admin-progress-list"></div></main>
     </section>
   </div>
 
