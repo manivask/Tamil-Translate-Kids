@@ -119,6 +119,10 @@
     <section class="screen" id="screen-kural">
       <div class="screen-nav-bar"><button class="screen-back-btn" id="back-from-kural-btn">◀ முகப்பு</button><div class="current-grade-badge">📜 திருக்குறள்</div></div>
       <div class="screen-header-text"><h2 class="page-title">திருக்குறள் வாசிப்புப் பயிற்சி</h2><p class="page-sub">கேளுங்கள் • வாசியுங்கள் • தெளிவாகப் பேசுங்கள்</p></div>
+      <div class="kural-browser" aria-label="Thirukkural topic chooser">
+        <label for="kural-paal-select">பால்</label><select id="kural-paal-select"><option value="1">அறத்துப்பால்</option><option value="2">பொருட்பால்</option></select>
+        <label for="kural-chapter-select">அதிகாரம்</label><select id="kural-chapter-select"><option>குறள்களை ஏற்றுகிறது…</option></select>
+      </div>
       <main class="kural-card">
         <div class="kural-number" id="kural-number">குறள் 1</div>
         <p class="kural-text" id="kural-text"></p>
@@ -128,6 +132,7 @@
         <div class="kural-tip"><strong>உச்சரிப்பு குறிப்பு:</strong> ஒவ்வொரு சொல்லுக்கும் இடையில் சிறிய இடைவெளி விடுங்கள். தவறு வந்தால் பதற வேண்டாம் — மீண்டும் முயற்சி செய்யலாம்!</div>
       </main>
       <div class="bottom-nav"><button class="nav-btn" id="prev-kural-btn">◀ முந்தைய குறள்</button><button class="nav-btn primary" id="next-kural-btn">அடுத்த குறள் ▶</button></div>
+      <p class="kural-source">அறத்துப்பால் மற்றும் பொருட்பால்: 108 அதிகாரங்கள், 1080 குறள்கள். தரவு: <a href="https://github.com/tk120404/thirukkural" target="_blank" rel="noopener">tk120404/thirukkural (Apache-2.0)</a>.</p>
     </section>
 
     <!-- ================= PAGE 2: TOPIC SELECTION SCREEN ================= -->

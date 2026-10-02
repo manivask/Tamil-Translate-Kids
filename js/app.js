@@ -159,7 +159,7 @@ const App = {
     const backFromKural = document.getElementById("back-from-kural-btn");
     if (openKural) openKural.addEventListener("click", () => {
       KidAudioFX.playClick();
-      if (window.ThirukkuralPractice) window.ThirukkuralPractice.render();
+      if (window.ThirukkuralPractice) window.ThirukkuralPractice.open();
       this.showScreen("kural");
     });
     if (backFromKural) backFromKural.addEventListener("click", () => this.showScreen("grade"));

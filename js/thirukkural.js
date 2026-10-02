@@ -1,42 +1,51 @@
-/* A small, age-appropriate Thirukkural reading studio. */
+/* All 108 chapters of Arathuppaal + Porutpaal. Source: tk120404/thirukkural (Apache-2.0). */
 (function () {
-  const KURALS = [
-    { n: 1, text: "அகர முதல எழுத்தெல்லாம் ஆதி\nபகவன் முதற்றே உலகு.", meaning: "எழுத்துகளுக்கு 'அ' முதன்மையானது போல, உலகிற்கு இறைவன் முதன்மையானவர்." },
-    { n: 391, text: "கற்க கசடறக் கற்பவை கற்றபின்\nநிற்க அதற்குத் தக.", meaning: "கற்க வேண்டியவற்றைத் தெளிவாகக் கற்று, கற்றதற்கேற்ப நடக்க வேண்டும்." },
-    { n: 100, text: "இனிய உளவாக இன்னாத கூறல்\nகனியிருப்பக் காய்கவர்ந் தற்று.", meaning: "இனிய சொற்கள் இருக்கும்போது கடுஞ்சொல் பேசுவது, பழம் இருக்கக் காயைப் பறிப்பது போன்றது." },
-    { n: 129, text: "தீயினாற் சுட்டபுண் உள்ளாறும் ஆறாதே\nநாவினாற் சுட்ட வடு.", meaning: "நெருப்பால் ஏற்பட்ட புண் ஆறும்; ஆனால் கடுஞ்சொல்லால் ஏற்பட்ட காயம் ஆறாது." }
-  ];
-  let index = 0;
-  const clean = text => text.replace(/\n/g, " ").replace(/[.,;]/g, "").trim();
-  function score(target, heard) {
-    const kuralTarget = { tamilPrimary: clean(target), variations: [clean(target)], keywords: clean(target).split(/\s+/), english: "திருக்குறள்" };
-    return TamilMatcher.evaluate(kuralTarget, heard, "medium");
+  const DATA_URL = "https://raw.githubusercontent.com/tk120404/thirukkural/master/thirukkural.json";
+  const DETAIL_URL = "https://raw.githubusercontent.com/tk120404/thirukkural/master/detail.json";
+  let kurals = [], chapters = [], chapterIndex = 0, verseIndex = 0, ready = false;
+  const clean = text => text.replace(/[.,;\n]/g, " ").replace(/\s+/g, " ").trim();
+  const ui = () => ({ paal: document.getElementById("kural-paal-select"), chapter: document.getElementById("kural-chapter-select"), text: document.getElementById("kural-text"), number: document.getElementById("kural-number"), meaning: document.getElementById("kural-meaning"), result: document.getElementById("kural-result") });
+  const currentChapter = () => chapters[chapterIndex];
+  const currentVerse = () => kurals[verseIndex];
+  function flatten(details) {
+    const list = [];
+    details[0].section.detail.filter(section => section.number < 3).forEach(section => section.chapterGroup.detail.forEach(group => group.chapters.detail.forEach(chapter => list.push({ ...chapter, paal: section.number, paalName: section.name, iyal: group.name }))));
+    return list;
+  }
+  async function load() {
+    if (ready) return true;
+    ui().result.textContent = "திருக்குறள் தொகுப்பை ஏற்றுகிறது…";
+    try {
+      const [data, detail] = await Promise.all([fetch(DATA_URL).then(response => response.json()), fetch(DETAIL_URL).then(response => response.json())]);
+      kurals = data.kural; chapters = flatten(detail); ready = true; populate(); render(); return true;
+    } catch (_) { ui().result.textContent = "குறள் தொகுப்பை ஏற்ற முடியவில்லை. இணைய இணைப்பைச் சரிபார்க்கவும்."; return false; }
+  }
+  function populate() {
+    const controls = ui(), selected = Number(controls.paal.value), matches = chapters.filter(chapter => chapter.paal === selected);
+    chapterIndex = chapters.indexOf(matches[0]); verseIndex = matches[0].start - 1;
+    controls.chapter.innerHTML = matches.map(chapter => `<option value="${chapters.indexOf(chapter)}">${chapter.number}. ${chapter.name} (${chapter.start}–${chapter.end})</option>`).join("");
+    controls.chapter.value = chapterIndex;
+  }
+  function render() {
+    if (!ready || !currentVerse()) return;
+    const controls = ui(), verse = currentVerse(), chapter = currentChapter();
+    controls.number.textContent = `குறள் ${verse.Number} · அதிகாரம் ${chapter.number}: ${chapter.name}`;
+    controls.text.textContent = `${verse.Line1}\n${verse.Line2}`;
+    controls.meaning.textContent = verse.mv || verse.sp || "";
+    controls.result.textContent = "மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்.";
+    controls.chapter.value = chapterIndex;
   }
   const Practice = {
-    render() {
-      const item = KURALS[index];
-      document.getElementById("kural-number").textContent = `குறள் ${item.n}`;
-      document.getElementById("kural-text").textContent = item.text;
-      document.getElementById("kural-meaning").textContent = item.meaning;
-      document.getElementById("kural-result").innerHTML = "மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்.";
-    },
-    speak() { KidSpeechService.speakTamil(clean(KURALS[index].text)); },
+    open: () => load(), render,
+    speak() { const verse = currentVerse(); if (verse) KidSpeechService.speakTamil(`${verse.Line1} ${verse.Line2}`); },
     listen() {
-      const result = document.getElementById("kural-result");
-      result.textContent = "🎙️ கேட்கிறேன்… குறளை மெதுவாக வாசியுங்கள்.";
-      KidSpeechService.setInputLanguage("ta-IN", { persist: false });
-      KidSpeechService.startListening({
-        onResult: value => { if (value.final) {
-          const match = score(KURALS[index].text, value.final);
-          const stars = "★".repeat(match.stars) + "☆".repeat(3 - match.stars);
-          result.innerHTML = `<strong>நீங்கள் சொன்னது:</strong> “${value.final}”<br><span class="kural-score">${match.percentage}% பொருத்தம் &nbsp; ${stars}</span><br>${match.feedback}`;
-          if (match.isPass) { KidAudioFX.playSuccessFanfare(); KidAudioFX.playStarDing(match.stars); if (window.App) App.triggerConfetti(); }
-          else KidAudioFX.playTryAgain();
-        } },
-        onError: error => { result.textContent = `குரல் சேவை கிடைக்கவில்லை (${error}). உங்கள் உலாவியில் Tamil microphone அனுமதியைச் சரிபார்க்கவும்.`; }
-      });
+      const verse = currentVerse(), controls = ui(); if (!verse) return;
+      controls.result.textContent = "🎙️ கேட்கிறேன்… குறளை மெதுவாக வாசியுங்கள்."; KidSpeechService.setInputLanguage("ta-IN", { persist: false });
+      KidSpeechService.startListening({ onResult: value => { if (!value.final) return; const target = `${verse.Line1} ${verse.Line2}`; const match = TamilMatcher.evaluate({ tamilPrimary: clean(target), variations: [clean(target)], keywords: clean(target).split(" "), english: "திருக்குறள்" }, value.final, "medium"); const stars = "★".repeat(match.stars) + "☆".repeat(3 - match.stars); controls.result.innerHTML = `<strong>நீங்கள் சொன்னது:</strong> “${value.final}”<br><span class="kural-score">${match.percentage}% பொருத்தம் &nbsp; ${stars}</span><br>${match.feedback}`; if (match.isPass) { KidAudioFX.playSuccessFanfare(); KidAudioFX.playStarDing(match.stars); if (window.App) App.triggerConfetti(); } else KidAudioFX.playTryAgain(); }, onError: error => { controls.result.textContent = `குரல் சேவை கிடைக்கவில்லை (${error}). Tamil microphone அனுமதியைச் சரிபார்க்கவும்.`; } });
     },
-    next(direction) { index = (index + direction + KURALS.length) % KURALS.length; this.render(); }
+    next(direction) { const chapter = currentChapter(); verseIndex += direction; if (verseIndex > chapter.end - 1) verseIndex = chapter.start - 1; if (verseIndex < chapter.start - 1) verseIndex = chapter.end - 1; render(); },
+    choosePaal() { populate(); render(); },
+    chooseChapter(index) { chapterIndex = Number(index); verseIndex = currentChapter().start - 1; render(); }
   };
   window.ThirukkuralPractice = Practice;
   document.addEventListener("DOMContentLoaded", () => {
@@ -44,6 +53,7 @@
     document.getElementById("kural-mic-btn").addEventListener("click", () => Practice.listen());
     document.getElementById("prev-kural-btn").addEventListener("click", () => Practice.next(-1));
     document.getElementById("next-kural-btn").addEventListener("click", () => Practice.next(1));
-    Practice.render();
+    document.getElementById("kural-paal-select").addEventListener("change", () => Practice.choosePaal());
+    document.getElementById("kural-chapter-select").addEventListener("change", event => Practice.chooseChapter(event.target.value));
   });
 }());

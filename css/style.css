@@ -300,6 +300,10 @@ body {
 
 /* Thirukkural reading studio */
 .kural-card { background: var(--card-bg); color: var(--text-dark); border-radius: var(--radius-lg); padding: 24px 20px; text-align: center; box-shadow: var(--glass-shadow); }
+.kural-browser { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; align-items: center; margin: 0 0 14px; padding: 12px; background: rgba(255,255,255,.13); border: 1px solid var(--glass-border); border-radius: var(--radius-md); color: white; font-family: var(--font-tamil); font-weight: 700; }
+.kural-browser select { min-width: 0; width: 100%; padding: 7px 9px; border: 0; border-radius: 9px; background: white; color: #2d3436; font: 600 .9rem var(--font-tamil); }
+.kural-source { margin: 14px 4px 0; text-align: center; color: rgba(255,255,255,.78); font-size: .72rem; line-height: 1.4; }
+.kural-source a { color: var(--accent-yellow); }
 .kural-number { display: inline-block; background: #fef3c7; color: #92400e; border-radius: var(--radius-full); padding: 5px 12px; font-weight: 800; margin-bottom: 16px; }
 .kural-text { white-space: pre-line; font-family: var(--font-tamil); color: #3b1767; font-size: 1.65rem; line-height: 1.65; font-weight: 700; }
 .kural-meaning { margin: 16px 0; padding: 12px; background: #f8fafc; border-radius: var(--radius-sm); line-height: 1.5; font-size: .94rem; }
