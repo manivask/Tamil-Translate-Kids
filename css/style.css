@@ -318,25 +318,145 @@ body {
   margin-top: 6px;
 }
 
-.heritage-home-card { width: 100%; margin-top: 16px; padding: 16px; border: 1px solid rgba(255,209,102,.7); border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(255,209,102,.95), rgba(255,159,28,.92)); color: #35210a; display: flex; align-items: center; gap: 12px; text-align: left; cursor: pointer; box-shadow: 0 10px 22px rgba(0,0,0,.2); font-family: var(--font-main); }
+.heritage-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (min-width: 540px) {
+  .heritage-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.heritage-home-card { width: 100%; margin-top: 0; padding: 16px; border: 1px solid rgba(255,209,102,.7); border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(255,209,102,.95), rgba(255,159,28,.92)); color: #35210a; display: flex; align-items: center; gap: 12px; text-align: left; cursor: pointer; box-shadow: 0 10px 22px rgba(0,0,0,.2); font-family: var(--font-main); transition: transform 0.2s, box-shadow 0.2s; }
+.heritage-home-card:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.25); }
+.heritage-home-card.aathichudi-theme { border-color: rgba(147, 197, 253, 0.8); background: linear-gradient(135deg, #a7f3d0, #6ee7b7); color: #064e3b; }
 .heritage-home-card .heritage-icon { font-size: 2.1rem; }
 .heritage-home-card span:nth-child(2) { flex: 1; font-family: var(--font-tamil); font-size: 1.16rem; }
-.heritage-home-card small { display: block; font-family: var(--font-main); font-size: .75rem; margin-top: 2px; }
+.heritage-home-card small { display: block; font-family: var(--font-main); font-size: .75rem; margin-top: 2px; opacity: 0.9; }
 
-/* Thirukkural reading studio */
-.kural-card { background: var(--card-bg); color: var(--text-dark); border-radius: var(--radius-lg); padding: 24px 20px; text-align: center; box-shadow: var(--glass-shadow); }
-.kural-browser { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; align-items: center; margin: 0 0 14px; padding: 12px; background: rgba(255,255,255,.13); border: 1px solid var(--glass-border); border-radius: var(--radius-md); color: white; font-family: var(--font-tamil); font-weight: 700; }
-.kural-browser select { min-width: 0; width: 100%; padding: 7px 9px; border: 0; border-radius: 9px; background: white; color: #2d3436; font: 600 .9rem var(--font-tamil); }
-.kural-source { margin: 14px 4px 0; text-align: center; color: rgba(255,255,255,.78); font-size: .72rem; line-height: 1.4; }
-.kural-source a { color: var(--accent-yellow); }
-.kural-number { display: inline-block; background: #fef3c7; color: #92400e; border-radius: var(--radius-full); padding: 5px 12px; font-weight: 800; margin-bottom: 16px; }
-.kural-text { white-space: pre-line; font-family: var(--font-tamil); color: #3b1767; font-size: 1.65rem; line-height: 1.65; font-weight: 700; }
-.kural-meaning { margin: 16px 0; padding: 12px; background: #f8fafc; border-radius: var(--radius-sm); line-height: 1.5; font-size: .94rem; }
-.kural-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-.kural-mic-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: 0; border-radius: var(--radius-full); padding: 9px 16px; font-weight: 800; cursor: pointer; }
-.kural-result { margin-top: 16px; padding: 12px; min-height: 55px; white-space: pre-line; background: #eff6ff; border-radius: var(--radius-sm); color: #1e3a8a; font-family: var(--font-tamil); line-height: 1.45; }
-.kural-score { display: inline-block; margin: 7px 0; color: #a16207; font-family: var(--font-kid); font-weight: 800; font-size: 1.08rem; }
-.kural-tip { margin-top: 12px; text-align: left; padding: 10px; border-left: 4px solid var(--accent-orange); background: #fff7ed; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: .82rem; }
+/* Thirukkural & Aathichudi reading studios */
+.kural-card, .aathichudi-card { background: var(--card-bg); color: var(--text-dark); border-radius: var(--radius-lg); padding: 24px 20px; text-align: center; box-shadow: var(--glass-shadow); position: relative; }
+.kural-browser, .aathichudi-browser { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; align-items: center; margin: 0 0 14px; padding: 12px; background: rgba(255,255,255,.15); border: 1px solid var(--glass-border); border-radius: var(--radius-md); color: white; font-family: var(--font-tamil); font-weight: 700; backdrop-filter: blur(8px); }
+.kural-browser select, .aathichudi-browser select { min-width: 0; width: 100%; padding: 8px 10px; border: 0; border-radius: 9px; background: white; color: #2d3436; font: 600 .92rem var(--font-tamil); cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.kural-source, .aathichudi-source { margin: 14px 4px 0; text-align: center; color: rgba(255,255,255,.85); font-size: .75rem; line-height: 1.4; }
+.kural-source a, .aathichudi-source a { color: var(--accent-yellow); font-weight: 700; }
+.kural-number, .aathichudi-number { display: inline-block; background: #fef3c7; color: #92400e; border-radius: var(--radius-full); padding: 6px 14px; font-weight: 800; font-size: 0.95rem; margin-bottom: 16px; font-family: var(--font-tamil); }
+.aathichudi-number { background: #dcfce7; color: #166534; }
+.kural-text, .aathichudi-text { white-space: pre-line; font-family: var(--font-tamil); color: #3b1767; font-size: 1.7rem; line-height: 1.65; font-weight: 800; letter-spacing: 0.5px; }
+.aathichudi-text { color: #1e1b4b; font-size: 2rem; margin: 10px 0; }
+.kural-meaning, .aathichudi-meaning-ta, .aathichudi-meaning-en { margin: 12px 0; padding: 12px; background: #f8fafc; border-radius: var(--radius-sm); line-height: 1.5; font-size: .95rem; font-family: var(--font-tamil); color: #334155; text-align: left; }
+.aathichudi-meaning-en { font-family: var(--font-main); font-size: 0.9rem; color: #475569; background: #f1f5f9; margin-top: -6px; }
+.kural-actions, .aathichudi-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+
+/* Live Transcript Box */
+.kural-transcript-card { margin-top: 16px; padding: 12px 14px; background: #f8fafc; border-radius: var(--radius-md); border: 2px dashed #cbd5e1; text-align: left; }
+.kural-transcript-label { font-size: 0.8rem; font-weight: 700; color: #64748b; margin-bottom: 4px; font-family: var(--font-tamil); }
+.kural-spoken { font-family: var(--font-tamil); font-size: 1.15rem; font-weight: 700; color: #1e293b; min-height: 28px; line-height: 1.4; }
+.kural-spoken.empty { color: #94a3b8; font-style: italic; font-weight: 500; font-size: 0.95rem; }
+
+.kural-mic-btn, .aathichudi-mic-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: 0; border-radius: var(--radius-full); padding: 10px 20px; font-weight: 800; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(239, 71, 111, 0.3); transition: transform 0.15s, box-shadow 0.15s; }
+.kural-mic-btn:hover, .aathichudi-mic-btn:hover { transform: translateY(-2px); }
+.kural-mic-btn.listening, .aathichudi-mic-btn.listening { background: linear-gradient(135deg, #ef4444, #dc2626) !important; animation: micPulse 1.2s infinite alternate ease-in-out; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.35); }
+
+@keyframes micPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+
+.listening-pulse { display: inline-block; animation: blinker 1s linear infinite; }
+@keyframes blinker { 50% { opacity: 0; } }
+
+.kural-result, .aathichudi-result { margin-top: 16px; padding: 14px; min-height: 55px; white-space: pre-line; background: #eff6ff; border-radius: var(--radius-md); color: #1e3a8a; font-family: var(--font-tamil); line-height: 1.5; border: 1px solid #bfdbfe; font-size: 0.96rem; }
+.result-feedback-card { text-align: center; }
+.kural-score { display: inline-block; margin: 8px 0; color: #b45309; font-family: var(--font-kid); font-weight: 900; font-size: 1.2rem; background: #fef3c7; padding: 4px 12px; border-radius: var(--radius-full); }
+.kural-tip, .aathichudi-tip { margin-top: 14px; text-align: left; padding: 12px; border-left: 4px solid var(--accent-orange); background: #fff7ed; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: .84rem; line-height: 1.45; color: #7c2d12; }
+
+.featured-heritage-box {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px 16px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(8px);
+}
+.featured-heritage-title {
+  font-family: var(--font-tamil);
+  font-weight: 800;
+  font-size: 1rem;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.topics-section-divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0 14px;
+  font-family: var(--font-tamil);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.login-heritage-quick {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+.login-quick-title {
+  font-family: var(--font-tamil);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Aathichudi Section Pills (Interactive Categories) */
+.aathichudi-section-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 14px;
+  justify-content: center;
+}
+.aathichudi-pill {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  font-family: var(--font-tamil);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, color 0.15s;
+}
+.aathichudi-pill:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+.aathichudi-pill.active {
+  background: #ffffff;
+  color: #1e1b4b;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border-color: #ffffff;
+}
+
+/* Manual typing row */
+.kural-manual-box, .aathichudi-manual-box { display: flex; gap: 8px; margin-top: 14px; }
+.kural-manual-box input, .aathichudi-manual-box input { flex: 1; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: var(--radius-sm); font-family: var(--font-tamil); font-size: 0.92rem; outline: none; }
+.kural-manual-box input:focus, .aathichudi-manual-box input:focus { border-color: var(--secondary); }
+.kural-manual-box button, .aathichudi-manual-box button { background: #334155; color: white; border: 0; border-radius: var(--radius-sm); padding: 8px 14px; font-weight: 700; cursor: pointer; font-family: var(--font-tamil); }
+
 
 /* Floating Tamil conversation companion */
 .chat-fab { position: fixed; z-index: 1001; right: 22px; bottom: 22px; border: 0; border-radius: var(--radius-full); padding: 12px 16px; background: linear-gradient(135deg, #06d6a0, #118ab2); color: white; box-shadow: 0 12px 28px rgba(0,0,0,.35); font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--font-tamil); font-size: 1rem; }

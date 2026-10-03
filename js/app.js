@@ -60,6 +60,7 @@ const App = {
       screenTopic: document.getElementById("screen-topic"),
       screenPractice: document.getElementById("screen-practice"),
       screenKural: document.getElementById("screen-kural"),
+      screenAathichudi: document.getElementById("screen-aathichudi"),
 
       // Navigation & Branding
       brandHomeBtn: document.getElementById("brand-home-btn"),
@@ -178,19 +179,44 @@ const App = {
     }
 
     const openKural = document.getElementById("open-kural-btn");
+    const openKuralLogin = document.getElementById("open-kural-login-btn");
     const openKuralFromTopics = document.getElementById("open-kural-topic-btn");
     const backFromKural = document.getElementById("back-from-kural-btn");
-    if (openKural) openKural.addEventListener("click", () => {
+    
+    const openKuralAction = () => {
+      this.previousHeritageScreen = this.currentScreen;
       KidAudioFX.playClick();
       if (window.ThirukkuralPractice) window.ThirukkuralPractice.open();
       this.showScreen("kural");
-    });
-    if (openKuralFromTopics) openKuralFromTopics.addEventListener("click", () => {
+    };
+
+    if (openKural) openKural.addEventListener("click", openKuralAction);
+    if (openKuralLogin) openKuralLogin.addEventListener("click", openKuralAction);
+    if (openKuralFromTopics) openKuralFromTopics.addEventListener("click", openKuralAction);
+    if (backFromKural) backFromKural.addEventListener("click", () => {
       KidAudioFX.playClick();
-      if (window.ThirukkuralPractice) window.ThirukkuralPractice.open();
-      this.showScreen("kural");
+      this.showScreen(this.previousHeritageScreen || (this.currentStudent ? "topic" : "login"));
     });
-    if (backFromKural) backFromKural.addEventListener("click", () => this.showScreen("topic"));
+
+    const openAathichudi = document.getElementById("open-aathichudi-btn");
+    const openAathichudiLogin = document.getElementById("open-aathichudi-login-btn");
+    const openAathichudiFromTopics = document.getElementById("open-aathichudi-topic-btn");
+    const backFromAathichudi = document.getElementById("back-from-aathichudi-btn");
+    
+    const openAathichudiAction = () => {
+      this.previousHeritageScreen = this.currentScreen;
+      KidAudioFX.playClick();
+      if (window.AathichudiPractice) window.AathichudiPractice.open();
+      this.showScreen("aathichudi");
+    };
+
+    if (openAathichudi) openAathichudi.addEventListener("click", openAathichudiAction);
+    if (openAathichudiLogin) openAathichudiLogin.addEventListener("click", openAathichudiAction);
+    if (openAathichudiFromTopics) openAathichudiFromTopics.addEventListener("click", openAathichudiAction);
+    if (backFromAathichudi) backFromAathichudi.addEventListener("click", () => {
+      KidAudioFX.playClick();
+      this.showScreen(this.previousHeritageScreen || (this.currentStudent ? "topic" : "login"));
+    });
 
     // 4. Difficulty mode switcher (Page 3)
     if (this.elements.modePills) {
@@ -331,6 +357,7 @@ const App = {
     if (this.elements.screenTopic) this.elements.screenTopic.classList.toggle("active", screenName === "topic");
     if (this.elements.screenPractice) this.elements.screenPractice.classList.toggle("active", screenName === "practice");
     if (this.elements.screenKural) this.elements.screenKural.classList.toggle("active", screenName === "kural");
+    if (this.elements.screenAathichudi) this.elements.screenAathichudi.classList.toggle("active", screenName === "aathichudi");
 
     if (window.KidAppLogger) KidAppLogger.log("NAV", `Show screen: ${screenName}`);
     window.scrollTo({ top: 0, behavior: "smooth" });

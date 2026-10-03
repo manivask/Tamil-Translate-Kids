@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#2B1055">
   
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261002-aathichudi-v2">
   
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦜</text></svg>">
@@ -63,6 +63,18 @@
           <button class="login-continue" type="submit">Start learning</button>
         </form>
         <div id="admin-login-panel" hidden><p class="admin-note">Admin access is enabled for this prototype. Password protection can be added with the production sign-in service.</p><button class="login-continue" id="admin-continue-btn" type="button">Open admin view</button></div>
+        
+        <div class="login-heritage-quick">
+          <div class="login-quick-title">✨ பொதுவான தமிழ் பயிற்சி (Practice for Everyone):</div>
+          <div class="heritage-grid">
+            <button class="heritage-home-card" id="open-kural-login-btn" type="button">
+              <span class="heritage-icon">📜</span><span><strong>திருக்குறள்</strong><small>குரல் வாசிப்புப் பயிற்சி</small></span><span>➜</span>
+            </button>
+            <button class="heritage-home-card aathichudi-theme" id="open-aathichudi-login-btn" type="button">
+              <span class="heritage-icon">🪶</span><span><strong>ஆத்திசூடி</strong><small>109 நல்வழிப் பாடல்கள்</small></span><span>➜</span>
+            </button>
+          </div>
+        </div>
       </main>
     </section>
 
@@ -92,6 +104,15 @@
         </div>
         <p id="voice-mode-help">Choose Tamil first for Tamil answers. Your choice is saved on this device.</p>
       </fieldset>
+
+      <div class="heritage-grid" style="margin-bottom: 14px;">
+        <button class="heritage-home-card" id="open-kural-btn">
+          <span class="heritage-icon">📜</span><span><strong>திருக்குறள் பயிற்சி</strong><small>Read, listen, and practise Thirukkural</small></span><span>➜</span>
+        </button>
+        <button class="heritage-home-card aathichudi-theme" id="open-aathichudi-btn">
+          <span class="heritage-icon">🪶</span><span><strong>ஆத்திசூடி பயிற்சி</strong><small>Avvaiyar's 109 verses by letter sections</small></span><span>➜</span>
+        </button>
+      </div>
 
       <div class="grade-cards-grid">
         <!-- Grade 1 Card -->
@@ -133,10 +154,6 @@
         <button class="grade-card" data-grade="7" id="card-grade-7"><div class="grade-card-icon">🌱</div><div class="grade-card-body"><h3 class="grade-card-title">7th Grade</h3><div class="grade-card-tamil">7-ஆம் வகுப்பு</div><div class="grade-card-tag">Age 12-13 • Expressive Language</div></div><div class="grade-card-arrow">➜</div></button>
         <button class="grade-card" data-grade="8" id="card-grade-8"><div class="grade-card-icon">🏆</div><div class="grade-card-body"><h3 class="grade-card-title">8th Grade</h3><div class="grade-card-tamil">8-ஆம் வகுப்பு</div><div class="grade-card-tag">Age 13-14 • Confident Communication</div></div><div class="grade-card-arrow">➜</div></button>
       </div>
-
-      <button class="heritage-home-card" id="open-kural-btn">
-        <span class="heritage-icon">📜</span><span><strong>திருக்குறள் பயிற்சி</strong><small>Read, listen, and practise beautiful Tamil</small></span><span>➜</span>
-      </button>
     </section>
 
     <!-- ================= THIRUKKURAL PRACTICE ================= -->
@@ -152,11 +169,74 @@
         <p class="kural-text" id="kural-text"></p>
         <p class="kural-meaning" id="kural-meaning"></p>
         <div class="kural-actions"><button class="listen-ta-btn" id="listen-kural-btn">🔊 கேளுங்கள்</button><button class="kural-mic-btn" id="kural-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button></div>
+        
+        <!-- Live Speech-to-Text Transcript -->
+        <div class="kural-transcript-card">
+          <div class="kural-transcript-label">நீங்கள் பேசியது (Live speech transcript):</div>
+          <div class="kural-spoken empty" id="kural-spoken">மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்...</div>
+        </div>
+
         <div class="kural-result" id="kural-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்.</div>
-        <div class="kural-tip"><strong>உச்சரிப்பு குறிப்பு:</strong> ஒவ்வொரு சொல்லுக்கும் இடையில் சிறிய இடைவெளி விடுங்கள். தவறு வந்தால் பதற வேண்டாம் — மீண்டும் முயற்சி செய்யலாம்!</div>
+        
+        <div class="kural-tip"><strong>உச்சரிப்பு குறிப்பு:</strong> ஒவ்வொரு சொல்லுக்கும் இடையில் சிறிய இடைவெளி விட்டு தெளிவாகப் பேசுங்கள். தவறு வந்தால் மீண்டும் முயற்சி செய்யலாம்!</div>
+
+        <!-- Manual typing fallback -->
+        <div class="kural-manual-box">
+          <input type="text" id="kural-manual-input" placeholder="தமிழில் தட்டச்சு செய்யவும் (Type kural)..." aria-label="Type kural in Tamil">
+          <button id="kural-manual-submit" type="button">சரிபார் (Test)</button>
+        </div>
       </main>
       <div class="bottom-nav"><button class="nav-btn" id="prev-kural-btn">◀ முந்தைய குறள்</button><button class="nav-btn primary" id="next-kural-btn">அடுத்த குறள் ▶</button></div>
       <p class="kural-source">அறத்துப்பால் மற்றும் பொருட்பால்: 108 அதிகாரங்கள், 1080 குறள்கள். தரவு: <a href="https://github.com/tk120404/thirukkural" target="_blank" rel="noopener">tk120404/thirukkural (Apache-2.0)</a>.</p>
+    </section>
+
+    <!-- ================= AATHICHUDI PRACTICE ================= -->
+    <section class="screen" id="screen-aathichudi">
+      <div class="screen-nav-bar"><button class="screen-back-btn" id="back-from-aathichudi-btn">◀ முகப்பு</button><div class="current-grade-badge">🪶 ஆத்திசூடி</div></div>
+      <div class="screen-header-text"><h2 class="page-title">ஔவையாரின் ஆத்திசூடி பயிற்சி</h2><p class="page-sub">109 நல்வழிப் பாடல்கள் · உயிர் மற்றும் உயிர்மெய் வருக்கங்கள்</p></div>
+      
+      <div class="aathichudi-browser" aria-label="Aathichudi section and verse chooser">
+        <label for="aathichudi-section-select">வருக்கம்</label>
+        <select id="aathichudi-section-select">
+          <option value="all">அனைத்து பாடல்கள் (All 109)</option>
+        </select>
+        <label for="aathichudi-verse-select">பாடல்</label>
+        <select id="aathichudi-verse-select">
+          <option>பாடல்களை ஏற்றுகிறது…</option>
+        </select>
+      </div>
+
+      <!-- Quick Interactive Section Pills -->
+      <div class="aathichudi-section-pills" id="aathichudi-section-pills"></div>
+
+      <main class="aathichudi-card">
+        <div class="aathichudi-number" id="aathichudi-number">பாடல் 1 · உயிர் வருக்கம்</div>
+        <h1 class="aathichudi-text" id="aathichudi-text">அறம் செய விரும்பு</h1>
+        <p class="aathichudi-meaning-ta" id="aathichudi-meaning-ta"></p>
+        <p class="aathichudi-meaning-en" id="aathichudi-meaning-en"></p>
+        <div class="aathichudi-actions">
+          <button class="listen-ta-btn" id="listen-aathichudi-btn">🔊 கேளுங்கள்</button>
+          <button class="aathichudi-mic-btn" id="aathichudi-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button>
+        </div>
+
+        <!-- Live Speech-to-Text Transcript -->
+        <div class="kural-transcript-card">
+          <div class="kural-transcript-label">நீங்கள் பேசியது (Live speech transcript):</div>
+          <div class="kural-spoken empty" id="aathichudi-spoken">மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்...</div>
+        </div>
+
+        <div class="aathichudi-result" id="aathichudi-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்.</div>
+
+        <div class="aathichudi-tip"><strong>நீதி விளக்கம்:</strong> ஔவையார் அருளிய நல்வழிக் கருத்துகளைப் படித்து மனதில் பதிய வையுங்கள்!</div>
+
+        <!-- Manual typing fallback -->
+        <div class="aathichudi-manual-box">
+          <input type="text" id="aathichudi-manual-input" placeholder="தமிழில் தட்டச்சு செய்யவும் (Type Aathichudi)..." aria-label="Type Aathichudi in Tamil">
+          <button id="aathichudi-manual-submit" type="button">சரிபார் (Test)</button>
+        </div>
+      </main>
+      <div class="bottom-nav"><button class="nav-btn" id="prev-aathichudi-btn">◀ முந்தைய பாடல்</button><button class="nav-btn primary" id="next-aathichudi-btn">அடுத்த பாடல் ▶</button></div>
+      <p class="aathichudi-source">ஔவையார் இயற்றிய ஆத்திசூடி: 109 பாடல்கள், 9 வருக்கப் பிரிவுகள். மரபுசார் நீதி இலக்கியம்.</p>
     </section>
 
     <!-- ================= PAGE 2: TOPIC SELECTION SCREEN ================= -->
@@ -175,14 +255,29 @@
         <p class="page-sub">Choose a Topic to Practice</p>
       </div>
 
+      <!-- Featured Heritage Sections for All Students (Top Placement) -->
+      <div class="featured-heritage-box">
+        <div class="featured-heritage-title">⭐ சிறப்புப் பயிற்சி (Heritage Practice for Everyone):</div>
+        <div class="heritage-grid">
+          <button class="heritage-home-card" id="open-kural-topic-btn">
+            <span class="heritage-icon">📜</span><span><strong>திருக்குறள் பயிற்சி</strong><small>108 அதிகாரங்கள் · குரல் வாசிப்பு</small></span><span>➜</span>
+          </button>
+          <button class="heritage-home-card aathichudi-theme" id="open-aathichudi-topic-btn">
+            <span class="heritage-icon">🪶</span><span><strong>ஆத்திசூடி பயிற்சி</strong><small>109 பாடல்கள் · 9 வருக்கங்கள்</small></span><span>➜</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="topics-section-divider">
+        <span>📖 வகுப்புத் தலைப்புகள் (Grade Topics)</span>
+      </div>
+
       <!-- Visible 2-Column Topic Grid -->
       <div class="topics-grid" id="topics-grid">
         <!-- Generated by JavaScript for complete visibility -->
       </div>
-      <button class="heritage-home-card" id="open-kural-topic-btn">
-        <span class="heritage-icon">📜</span><span><strong>திருக்குறள் பயிற்சி</strong><small>Common practice for every Nilai</small></span><span>➜</span>
-      </button>
     </section>
+
 
     <!-- ================= PAGE 3: PRACTICE / FLASHCARD SCREEN ================= -->
     <section class="screen" id="screen-practice">
@@ -337,14 +432,15 @@
   </section>
 
   <!-- Application Scripts -->
-  <script src="js/logger.js"></script>
-  <script src="js/voice_recorder.js"></script>
-  <script src="js/sentences.js"></script>
-  <script src="js/matcher.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/speech.js?v=voice-mode-selector-1"></script>
-  <script src="js/thirukkural.js"></script>
-  <script src="js/chat-agent.js"></script>
-  <script src="js/app.js?v=voice-mode-selector-1"></script>
+  <script src="js/logger.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/voice_recorder.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/sentences.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/matcher.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/audio.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/speech.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/thirukkural.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/aathichudi.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/chat-agent.js?v=20261002-aathichudi-v2"></script>
+  <script src="js/app.js?v=20261002-aathichudi-v2"></script>
 </body>
 </html>
