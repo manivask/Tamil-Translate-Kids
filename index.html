@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="referrer" content="no-referrer">
   <title>Tamil Translate for Kids | தமிழ் குரல் மொழிபெயர்ப்பு</title>
   <meta name="description" content="A fun, voice-interactive Tamil translation learning app for kids aged 7-9 (Grades 1-3). Read English statements and speak the Tamil translation with instant percentage match!">
   <meta name="theme-color" content="#2B1055">
   
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=20261004-aathichudi-clean">
+  <link rel="stylesheet" href="css/style.css?v=20261004-tts-v5">
   
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦜</text></svg>">
@@ -43,39 +44,83 @@
       </div>
     </header>
 
-    <!-- ================= LOGIN ================= -->
+    <!-- ================= LOGIN SCREEN (SPLIT 2-COLUMN LAYOUT) ================= -->
     <section class="screen active" id="screen-login">
-      <main class="login-card">
-        <div class="login-mark">தமிழ்</div>
-        <h1>Welcome to Tamil Web Learning - Kids</h1>
-        <p>Choose how you would like to continue.</p>
-        <fieldset class="role-picker">
-          <legend>Continue as</legend>
-          <label><input type="radio" name="user-role" value="student" checked> <span>Student</span></label>
-          <label><input type="radio" name="user-role" value="admin"> <span>Admin</span></label>
-        </fieldset>
-        <form id="student-login-form">
-          <label for="student-grade">Grade</label>
-          <select id="student-grade" required><option value="">Select your grade</option><option value="1">Nilai 1</option><option value="2">Nilai 2</option><option value="3">Nilai 3</option><option value="4">Nilai 4</option><option value="5">Nilai 5</option><option value="6">Nilai 6</option><option value="7">Nilai 7</option><option value="8">Nilai 8</option></select>
-          <label for="student-name">Student name</label>
-          <select id="student-name" required disabled><option value="">Select your grade first</option></select>
-          <p class="login-message" id="login-message" aria-live="polite"></p>
-          <button class="login-continue" type="submit">Start learning</button>
-        </form>
-        <div id="admin-login-panel" hidden><p class="admin-note">Admin access is enabled for this prototype. Password protection can be added with the production sign-in service.</p><button class="login-continue" id="admin-continue-btn" type="button">Open admin view</button></div>
-        
-        <div class="login-heritage-quick">
-          <div class="login-quick-title">✨ பொதுவான தமிழ் பயிற்சி (Practice for Everyone):</div>
-          <div class="heritage-grid">
-            <button class="heritage-home-card" id="open-kural-login-btn" type="button">
-              <span class="heritage-icon">📜</span><span><strong>திருக்குறள்</strong><small>குரல் வாசிப்புப் பயிற்சி</small></span><span>➜</span>
-            </button>
-            <button class="heritage-home-card aathichudi-theme" id="open-aathichudi-login-btn" type="button">
-              <span class="heritage-icon">🪶</span><span><strong>ஆத்திசூடி</strong><small>109 நல்வழிப் பாடல்கள்</small></span><span>➜</span>
-            </button>
+      <div class="login-layout-wrapper">
+        <!-- Left Side: Hero Showcase & Welcome Details -->
+        <div class="login-hero-card">
+          <div class="login-hero-badge">🦜 தமிழ் கற்றல் தளம்</div>
+          <h1 class="login-hero-title">தமிழ் குரல் வழி கற்றல் கூடம்</h1>
+          <p class="login-hero-sub">தமிழை எளிமையாகவும், இனிமையாகவும், குரல் வழியிலும் விளையாட்டாகவும் கற்று மகிழுங்கள்!</p>
+          
+          <div class="login-hero-features">
+            <div class="hero-feature-item">
+              <span class="feature-icon">📜</span>
+              <div>
+                <strong>திருக்குறள் குரல் பயிற்சி</strong>
+                <small>108 அதிகாரங்கள் · குரல் வாசிப்பு & Quick Check</small>
+              </div>
+            </div>
+            <div class="hero-feature-item">
+              <span class="feature-icon">🪶</span>
+              <div>
+                <strong>ஔவையாரின் ஆத்திசூடி</strong>
+                <small>109 நல்வழிப் பாடல்கள் · 9 வருக்கங்கள் & வினாடி வினா</small>
+              </div>
+            </div>
+            <div class="hero-feature-item">
+              <span class="feature-icon">🎙️</span>
+              <div>
+                <strong>நேரலை குரல் அறிதல் & வினாடி வினா</strong>
+                <small>Live Speech-to-Text & Instant Practice Scoring</small>
+              </div>
+            </div>
+            <div class="hero-feature-item">
+              <span class="feature-icon">⭐</span>
+              <div>
+                <strong>தனிப்பயன் மாணவர் முன்னேற்றம்</strong>
+                <small>நட்சத்திரப் புள்ளிகள் & தினசரி கற்றல் பதிவு</small>
+              </div>
+            </div>
           </div>
         </div>
-      </main>
+
+        <!-- Right Side: Neat Login Form Card -->
+        <main class="login-card">
+          <div class="login-mark">தமிழ்</div>
+          <h2 class="login-card-title">வணக்கம்! வரவேற்கிறோம்</h2>
+          <p class="login-card-sub">உங்கள் வகுப்பையும் பெயரையும் தேர்ந்தெடுத்து தொடங்கவும்.</p>
+          <fieldset class="role-picker">
+            <legend>Continue as</legend>
+            <label><input type="radio" name="user-role" value="student" checked> <span>Student (மாணவர்)</span></label>
+            <label><input type="radio" name="user-role" value="admin"> <span>Admin (நிர்வாகம்)</span></label>
+          </fieldset>
+          <form id="student-login-form">
+            <label for="student-grade">வகுப்பு (Grade / Nilai)</label>
+            <select id="student-grade" required>
+              <option value="">Select your grade</option>
+              <option value="1">Nilai 1</option>
+              <option value="2">Nilai 2</option>
+              <option value="3">Nilai 3</option>
+              <option value="4">Nilai 4</option>
+              <option value="5">Nilai 5</option>
+              <option value="6">Nilai 6</option>
+              <option value="7">Nilai 7</option>
+              <option value="8">Nilai 8</option>
+            </select>
+            <label for="student-name">மாணவர் பெயர் (Student Name)</label>
+            <select id="student-name" required disabled>
+              <option value="">Select your grade first</option>
+            </select>
+            <p class="login-message" id="login-message" aria-live="polite"></p>
+            <button class="login-continue" type="submit">கற்றலைத் தொடங்கு (Start Learning) 🚀</button>
+          </form>
+          <div id="admin-login-panel" hidden>
+            <p class="admin-note">Admin access is enabled for this prototype. View analytics and student progress.</p>
+            <button class="login-continue" id="admin-continue-btn" type="button">Open Admin Dashboard</button>
+          </div>
+        </main>
+      </div>
     </section>
 
     <!-- ================= PAGE 1: GRADE SELECTION SCREEN ================= -->
@@ -156,153 +201,456 @@
       </div>
     </section>
 
-    <!-- ================= THIRUKKURAL PRACTICE ================= -->
+    <!-- ================= THIRUKKURAL PRACTICE & QUICK CHECK ================= -->
     <section class="screen" id="screen-kural">
-      <div class="screen-nav-bar"><button class="screen-back-btn" id="back-from-kural-btn">◀ முகப்பு</button><div class="current-grade-badge">📜 திருக்குறள்</div></div>
-      <div class="screen-header-text"><h2 class="page-title">திருக்குறள் வாசிப்புப் பயிற்சி</h2><p class="page-sub">கேளுங்கள் • வாசியுங்கள் • தெளிவாகப் பேசுங்கள்</p></div>
-      <div class="kural-browser" aria-label="Thirukkural topic chooser">
-        <label for="kural-paal-select">பால்</label><select id="kural-paal-select"><option value="1">அறத்துப்பால்</option><option value="2">பொருட்பால்</option></select>
-        <label for="kural-chapter-select">அதிகாரம்</label><select id="kural-chapter-select"><option>குறள்களை ஏற்றுகிறது…</option></select>
+      <div class="screen-nav-bar compact">
+        <button class="screen-back-btn" id="back-from-kural-btn">◀ மாணவர் முகப்பு</button>
+        <div class="current-grade-badge">📜 திருக்குறள் கூடம்</div>
       </div>
-      <main class="kural-card">
-        <div class="kural-number" id="kural-number">குறள் 1</div>
-        <p class="kural-text" id="kural-text"></p>
-        <p class="kural-meaning" id="kural-meaning"></p>
-        <div class="kural-actions"><button class="listen-ta-btn" id="listen-kural-btn">🔊 கேளுங்கள்</button><button class="kural-mic-btn" id="kural-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button></div>
-        
-        <!-- Live Speech-to-Text Transcript -->
-        <div class="kural-transcript-card">
-          <div class="kural-transcript-label">நீங்கள் பேசியது (Live speech transcript):</div>
-          <div class="kural-spoken empty" id="kural-spoken">மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்...</div>
-        </div>
-
-        <div class="kural-result" id="kural-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்.</div>
-        
-        <div class="kural-tip"><strong>உச்சரிப்பு குறிப்பு:</strong> ஒவ்வொரு சொல்லுக்கும் இடையில் சிறிய இடைவெளி விட்டு தெளிவாகப் பேசுங்கள். தவறு வந்தால் மீண்டும் முயற்சி செய்யலாம்!</div>
-
-        <!-- Manual typing fallback -->
-        <div class="kural-manual-box">
-          <input type="text" id="kural-manual-input" placeholder="தமிழில் தட்டச்சு செய்யவும் (Type kural)..." aria-label="Type kural in Tamil">
-          <button id="kural-manual-submit" type="button">சரிபார் (Test)</button>
-        </div>
-      </main>
-      <div class="bottom-nav"><button class="nav-btn" id="prev-kural-btn">◀ முந்தைய குறள்</button><button class="nav-btn primary" id="next-kural-btn">அடுத்த குறள் ▶</button></div>
-      <p class="kural-source">அறத்துப்பால் மற்றும் பொருட்பால்: 108 அதிகாரங்கள், 1080 குறள்கள். தரவு: <a href="https://github.com/tk120404/thirukkural" target="_blank" rel="noopener">tk120404/thirukkural (Apache-2.0)</a>.</p>
-    </section>
-
-    <!-- ================= AATHICHUDI PRACTICE ================= -->
-    <section class="screen" id="screen-aathichudi">
-      <div class="screen-nav-bar"><button class="screen-back-btn" id="back-from-aathichudi-btn">◀ முகப்பு</button><div class="current-grade-badge">🪶 ஆத்திசூடி</div></div>
-      <div class="screen-header-text"><h2 class="page-title">ஔவையாரின் ஆத்திசூடி பயிற்சி</h2><p class="page-sub">109 நல்வழிப் பாடல்கள் · உயிர் மற்றும் உயிர்மெய் வருக்கங்கள்</p></div>
       
-      <div class="aathichudi-browser" aria-label="Aathichudi section and verse chooser">
-        <label for="aathichudi-section-select">வருக்கம்</label>
-        <select id="aathichudi-section-select">
-          <option value="all">அனைத்து பாடல்கள் (All 109)</option>
-        </select>
-        <label for="aathichudi-verse-select">பாடல்</label>
-        <select id="aathichudi-verse-select">
-          <option>பாடல்களை ஏற்றுகிறது…</option>
-        </select>
-      </div>
-
-      <main class="aathichudi-card">
-        <div class="aathichudi-number" id="aathichudi-number">பாடல் 1 · உயிர் வருக்கம்</div>
-        <h1 class="aathichudi-text" id="aathichudi-text">அறம் செய விரும்பு</h1>
-        <p class="aathichudi-meaning-ta" id="aathichudi-meaning-ta"></p>
-        <p class="aathichudi-meaning-en" id="aathichudi-meaning-en"></p>
-        <div class="aathichudi-actions">
-          <button class="listen-ta-btn" id="listen-aathichudi-btn">🔊 கேளுங்கள்</button>
-          <button class="aathichudi-mic-btn" id="aathichudi-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button>
-        </div>
-
-        <!-- Live Speech-to-Text Transcript -->
-        <div class="kural-transcript-card">
-          <div class="kural-transcript-label">நீங்கள் பேசியது (Live speech transcript):</div>
-          <div class="kural-spoken empty" id="aathichudi-spoken">மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்...</div>
-        </div>
-
-        <div class="aathichudi-result" id="aathichudi-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்.</div>
-
-        <div class="aathichudi-tip"><strong>நீதி விளக்கம்:</strong> ஔவையார் அருளிய நல்வழிக் கருத்துகளைப் படித்து மனதில் பதிய வையுங்கள்!</div>
-
-        <!-- Manual typing fallback -->
-        <div class="aathichudi-manual-box">
-          <input type="text" id="aathichudi-manual-input" placeholder="தமிழில் தட்டச்சு செய்யவும் (Type Aathichudi)..." aria-label="Type Aathichudi in Tamil">
-          <button id="aathichudi-manual-submit" type="button">சரிபார் (Test)</button>
-        </div>
-      </main>
-      <div class="bottom-nav"><button class="nav-btn" id="prev-aathichudi-btn">◀ முந்தைய பாடல்</button><button class="nav-btn primary" id="next-aathichudi-btn">அடுத்த பாடல் ▶</button></div>
-      <p class="aathichudi-source">ஔவையார் இயற்றிய ஆத்திசூடி: 109 பாடல்கள், 9 வருக்கப் பிரிவுகள். மரபுசார் நீதி இலக்கியம்.</p>
-    </section>
-
-    <!-- ================= PAGE 2: TOPIC SELECTION SCREEN ================= -->
-    <section class="screen" id="screen-topic">
-      <div class="screen-nav-bar">
-        <button class="screen-back-btn" id="back-to-grade-btn">
-          <span>◀️</span> வகுப்பை மாற்று (Change Grade)
+      <!-- Studio Mode Switcher Tabs -->
+      <div class="studio-mode-tabs">
+        <button class="studio-tab-btn active" id="kural-tab-read-btn">
+          🎙️ குரல் வாசிப்புப் பயிற்சி (Voice Reading)
         </button>
-        <div class="current-grade-badge" id="topic-screen-grade-badge">
-          🌟 1st Grade
+        <button class="studio-tab-btn" id="kural-tab-quiz-btn">
+          ⚡ தினசரி வினாடி வினா (Daily Quick Check)
+        </button>
+      </div>
+
+      <!-- READ VIEW -->
+      <div class="studio-view" id="kural-read-view">
+        <div class="kural-browser compact" aria-label="Thirukkural topic chooser">
+          <label for="kural-paal-select">பால்</label>
+          <select id="kural-paal-select">
+            <option value="1">அறத்துப்பால்</option>
+            <option value="2">பொருட்பால்</option>
+          </select>
+          <label for="kural-chapter-select">அதிகாரம்</label>
+          <select id="kural-chapter-select"><option>குறள்களை ஏற்றுகிறது…</option></select>
         </div>
+        <main class="kural-card compact">
+          <div class="kural-number" id="kural-number">குறள் 1</div>
+          <p class="kural-text" id="kural-text"></p>
+          <p class="kural-meaning" id="kural-meaning"></p>
+          <div class="kural-actions">
+            <button class="listen-ta-btn" id="listen-kural-btn">🔊 கேளுங்கள்</button>
+            <button class="kural-mic-btn" id="kural-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button>
+          </div>
+          
+          <!-- Live Speech-to-Text Transcript -->
+          <div class="kural-transcript-card compact">
+            <div class="kural-transcript-label">நீங்கள் பேசியது (Live speech transcript):</div>
+            <div class="kural-spoken empty" id="kural-spoken">மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்...</div>
+          </div>
+
+          <div class="kural-result" id="kural-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி குறளை வாசியுங்கள்.</div>
+
+          <!-- Manual typing fallback -->
+          <div class="kural-manual-box compact">
+            <input type="text" id="kural-manual-input" placeholder="தமிழில் தட்டச்சு செய்யவும் (Type kural)..." aria-label="Type kural in Tamil">
+            <button id="kural-manual-submit" type="button">சரிபார் (Test)</button>
+          </div>
+
+          <!-- Bottom Navigation inside card to stay completely visible on one screen -->
+          <div class="studio-card-nav">
+            <button class="nav-btn" id="prev-kural-btn">◀ முந்தைய குறள்</button>
+            <button class="nav-btn primary" id="next-kural-btn">அடுத்த குறள் ▶</button>
+          </div>
+        </main>
       </div>
 
-      <div class="screen-header-text">
-        <h2 class="page-title">தலைப்பைத் தேர்ந்தெடுக்கவும்</h2>
-        <p class="page-sub">Choose a Topic to Practice</p>
-      </div>
-
-      <!-- Featured Heritage Sections for All Students (Top Placement) -->
-      <div class="featured-heritage-box">
-        <div class="featured-heritage-title">⭐ சிறப்புப் பயிற்சி (Heritage Practice for Everyone):</div>
-        <div class="heritage-grid">
-          <button class="heritage-home-card" id="open-kural-topic-btn">
-            <span class="heritage-icon">📜</span><span><strong>திருக்குறள் பயிற்சி</strong><small>108 அதிகாரங்கள் · குரல் வாசிப்பு</small></span><span>➜</span>
-          </button>
-          <button class="heritage-home-card aathichudi-theme" id="open-aathichudi-topic-btn">
-            <span class="heritage-icon">🪶</span><span><strong>ஆத்திசூடி பயிற்சி</strong><small>109 பாடல்கள் · 9 வருக்கங்கள்</small></span><span>➜</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="topics-section-divider">
-        <span>📖 வகுப்புத் தலைப்புகள் (Grade Topics)</span>
-      </div>
-
-      <!-- Visible 2-Column Topic Grid -->
-      <div class="topics-grid" id="topics-grid">
-        <!-- Generated by JavaScript for complete visibility -->
+      <!-- QUIZ VIEW -->
+      <div class="studio-view" id="kural-quiz-view" style="display: none;">
+        <main class="quiz-card" id="kural-quiz-card">
+          <div class="quiz-progress-bar-wrap">
+            <div class="quiz-progress-header">
+              <span id="kural-quiz-step-label">கேள்வி 1 / 5</span>
+              <span id="kural-quiz-score-badge">⭐ 0 புள்ளிகள்</span>
+            </div>
+            <div class="quiz-track"><div class="quiz-bar" id="kural-quiz-bar" style="width: 20%;"></div></div>
+          </div>
+          <div class="quiz-badge" id="kural-quiz-badge">குறளை நிறைவு செய்க</div>
+          <div class="quiz-question-box">
+            <h3 class="quiz-question-text" id="kural-quiz-question">கேள்வி ஏற்றப்படுகிறது...</h3>
+            <button class="listen-quiz-btn" id="kural-quiz-audio-btn" title="கேள்வியைக் கேட்கவும்">🔊 கேளுங்கள்</button>
+          </div>
+          <div class="quiz-options-grid" id="kural-quiz-options">
+            <!-- Dynamically populated options -->
+          </div>
+          <div class="quiz-feedback-box" id="kural-quiz-feedback" style="display: none;"></div>
+          <div class="quiz-bottom-actions">
+            <button class="quiz-next-btn" id="kural-quiz-next-btn" disabled>அடுத்த கேள்வி ▶</button>
+          </div>
+        </main>
       </div>
     </section>
 
+    <!-- ================= AATHICHUDI PRACTICE & QUICK CHECK ================= -->
+    <section class="screen" id="screen-aathichudi">
+      <div class="screen-nav-bar compact">
+        <button class="screen-back-btn" id="back-from-aathichudi-btn">◀ மாணவர் முகப்பு</button>
+        <div class="current-grade-badge">🪶 ஆத்திசூடி கூடம்</div>
+      </div>
+      
+      <!-- Studio Mode Switcher Tabs -->
+      <div class="studio-mode-tabs">
+        <button class="studio-tab-btn active" id="aathichudi-tab-read-btn">
+          🎙️ குரல் வாசிப்புப் பயிற்சி (Voice Reading)
+        </button>
+        <button class="studio-tab-btn" id="aathichudi-tab-quiz-btn">
+          ⚡ தினசரி வினாடி வினா (Daily Quick Check)
+        </button>
+      </div>
+
+      <!-- READ VIEW -->
+      <div class="studio-view" id="aathichudi-read-view">
+        <div class="aathichudi-browser compact" aria-label="Aathichudi section and verse chooser">
+          <label for="aathichudi-section-select">வருக்கம்</label>
+          <select id="aathichudi-section-select">
+            <option value="all">அனைத்து பாடல்கள் (All 109)</option>
+          </select>
+          <label for="aathichudi-verse-select">பாடல்</label>
+          <select id="aathichudi-verse-select">
+            <option>பாடல்களை ஏற்றுகிறது…</option>
+          </select>
+        </div>
+
+        <main class="aathichudi-card compact">
+          <div class="aathichudi-number" id="aathichudi-number">பாடல் 1 · உயிர் வருக்கம்</div>
+          <h1 class="aathichudi-text" id="aathichudi-text">அறம் செய விரும்பு</h1>
+          <p class="aathichudi-meaning-ta" id="aathichudi-meaning-ta"></p>
+          <p class="aathichudi-meaning-en" id="aathichudi-meaning-en"></p>
+          <div class="aathichudi-actions">
+            <button class="listen-ta-btn" id="listen-aathichudi-btn">🔊 கேளுங்கள்</button>
+            <button class="aathichudi-mic-btn" id="aathichudi-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button>
+          </div>
+
+          <!-- Live Speech-to-Text Transcript -->
+          <div class="kural-transcript-card compact">
+            <div class="kural-transcript-label">நீங்கள் பேசியது (Live speech transcript):</div>
+            <div class="kural-spoken empty" id="aathichudi-spoken">மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்...</div>
+          </div>
+
+          <div class="aathichudi-result" id="aathichudi-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்.</div>
+
+          <!-- Manual typing fallback -->
+          <div class="aathichudi-manual-box compact">
+            <input type="text" id="aathichudi-manual-input" placeholder="தமிழில் தட்டச்சு செய்யவும் (Type Aathichudi)..." aria-label="Type Aathichudi in Tamil">
+            <button id="aathichudi-manual-submit" type="button">சரிபார் (Test)</button>
+          </div>
+
+          <!-- Integrated Navigation inside card to stay completely visible on one screen -->
+          <div class="studio-card-nav">
+            <button class="nav-btn" id="prev-aathichudi-btn">◀ முந்தைய பாடல்</button>
+            <button class="nav-btn primary" id="next-aathichudi-btn">அடுத்த பாடல் ▶</button>
+          </div>
+        </main>
+      </div>
+
+      <!-- QUIZ VIEW -->
+      <div class="studio-view" id="aathichudi-quiz-view" style="display: none;">
+        <main class="quiz-card" id="aathichudi-quiz-card">
+          <div class="quiz-progress-bar-wrap">
+            <div class="quiz-progress-header">
+              <span id="aathichudi-quiz-step-label">கேள்வி 1 / 5</span>
+              <span id="aathichudi-quiz-score-badge">⭐ 0 புள்ளிகள்</span>
+            </div>
+            <div class="quiz-track"><div class="quiz-bar" id="aathichudi-quiz-bar" style="width: 20%;"></div></div>
+          </div>
+          <div class="quiz-badge" id="aathichudi-quiz-badge">நல்வழி நீதி</div>
+          <div class="quiz-question-box">
+            <h3 class="quiz-question-text" id="aathichudi-quiz-question">கேள்வி ஏற்றப்படுகிறது...</h3>
+            <button class="listen-quiz-btn" id="aathichudi-quiz-audio-btn" title="கேள்வியைக் கேட்கவும்">🔊 கேளுங்கள்</button>
+          </div>
+          <div class="quiz-options-grid" id="aathichudi-quiz-options">
+            <!-- Dynamically populated options -->
+          </div>
+          <div class="quiz-feedback-box" id="aathichudi-quiz-feedback" style="display: none;"></div>
+          <div class="quiz-bottom-actions">
+            <button class="quiz-next-btn" id="aathichudi-quiz-next-btn" disabled>அடுத்த கேள்வி ▶</button>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <!-- ================= READING CLUB (வாசிப்பு மன்றம்) & QUICK CHECK ================= -->
+    <section class="screen" id="screen-reading-club">
+      <div class="screen-nav-bar compact">
+        <button class="screen-back-btn" id="back-from-rc-btn">◀ மாணவர் முகப்பு</button>
+        <div class="current-grade-badge">📖 வாசிப்பு மன்றம் (Reading Club)</div>
+      </div>
+      
+      <!-- Studio Mode Switcher Tabs -->
+      <div class="studio-mode-tabs">
+        <button class="studio-tab-btn active" id="rc-tab-read-btn">
+          🎙️ குரல் வாசிப்புப் பயிற்சி (Voice Reading)
+        </button>
+        <button class="studio-tab-btn" id="rc-tab-quiz-btn">
+          ⚡ தினசரி வினாடி வினா (Daily Quick Check)
+        </button>
+      </div>
+
+      <!-- READ VIEW -->
+      <div class="studio-view" id="rc-read-view">
+        <div class="rc-browser compact" aria-label="Reading Club filter chooser">
+          <label for="rc-grade-select">வகுப்பு (Nilai)</label>
+          <select id="rc-grade-select">
+            <option value="1">Nilai 1</option>
+            <option value="2">Nilai 2</option>
+            <option value="3">Nilai 3</option>
+            <option value="4">Nilai 4</option>
+            <option value="5">Nilai 5</option>
+            <option value="6">Nilai 6</option>
+            <option value="7">Nilai 7</option>
+            <option value="8">Nilai 8</option>
+          </select>
+          <label for="rc-level-select">சொல் அளவு (Level)</label>
+          <select id="rc-level-select">
+            <option value="all">எல்லா தொடர்களும் (All Levels)</option>
+            <option value="2-words">2 சொற்கள் (2 Words)</option>
+            <option value="3-words">3 சொற்கள் (3 Words)</option>
+            <option value="4-words">4 சொற்கள் (4 Words)</option>
+          </select>
+          <label for="rc-sentence-select">தொடர்</label>
+          <select id="rc-sentence-select">
+            <option>தொடர்களை ஏற்றுகிறது…</option>
+          </select>
+        </div>
+
+        <main class="rc-card compact">
+          <div class="rc-header-meta">
+            <span class="rc-number" id="rc-sentence-number">Nilai 1 · தொடர் 1</span>
+            <span class="rc-level-pill-badge" id="rc-level-tag">இரு சொல் தொடர்</span>
+          </div>
+          <h1 class="rc-text-ta" id="rc-sentence-ta">பாடம் படி</h1>
+          <p class="rc-meaning-en" id="rc-meaning-en">Read the lesson</p>
+          <p class="rc-translit" id="rc-translit">Paadam padi</p>
+          
+          <div class="rc-actions">
+            <button class="listen-ta-btn" id="listen-rc-btn">🔊 கேளுங்கள்</button>
+            <button class="rc-mic-btn" id="rc-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button>
+          </div>
+
+          <!-- Live Speech-to-Text Transcript -->
+          <div class="kural-transcript-card compact">
+            <div class="kural-transcript-label">நீங்கள் பேசியது (Live speech transcript):</div>
+            <div class="kural-spoken empty" id="rc-spoken">மைக்ரோஃபோனை அழுத்தி வாசியுங்கள்...</div>
+          </div>
+
+          <div class="rc-result" id="rc-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி வாசியுங்கள்.</div>
+
+          <!-- Manual typing fallback -->
+          <div class="rc-manual-box compact">
+            <input type="text" id="rc-manual-input" placeholder="தமிழில் தட்டச்சு செய்யவும்..." aria-label="Type sentence in Tamil">
+            <button id="rc-manual-submit" type="button">சரிபார் (Test)</button>
+          </div>
+
+          <!-- Integrated Navigation inside card to stay completely visible on one screen -->
+          <div class="studio-card-nav">
+            <button class="nav-btn" id="prev-rc-btn">◀ முந்தைய தொடர்</button>
+            <button class="nav-btn primary" id="next-rc-btn">அடுத்த தொடர் ▶</button>
+          </div>
+        </main>
+      </div>
+
+      <!-- QUIZ VIEW -->
+      <div class="studio-view" id="rc-quiz-view" style="display: none;">
+        <main class="quiz-card" id="rc-quiz-card">
+          <div class="quiz-progress-bar-wrap">
+            <div class="quiz-progress-header">
+              <span id="rc-quiz-step-label">கேள்வி 1 / 5</span>
+              <span id="rc-quiz-score-badge">⭐ 0 புள்ளிகள்</span>
+            </div>
+            <div class="quiz-track"><div class="quiz-bar" id="rc-quiz-bar" style="width: 20%;"></div></div>
+          </div>
+          <div class="quiz-badge" id="rc-quiz-badge">வாசிப்பு வினாடி வினா</div>
+          <div class="quiz-question-box">
+            <h3 class="quiz-question-text" id="rc-quiz-question">கேள்வி ஏற்றப்படுகிறது...</h3>
+            <button class="listen-quiz-btn" id="rc-quiz-audio-btn" title="கேள்வியைக் கேட்கவும்">🔊 கேளுங்கள்</button>
+          </div>
+          <div class="quiz-options-grid" id="rc-quiz-options">
+            <!-- Dynamically populated options -->
+          </div>
+          <div class="quiz-feedback-box" id="rc-quiz-feedback" style="display: none;"></div>
+          <div class="quiz-bottom-actions">
+            <button class="quiz-next-btn" id="rc-quiz-next-btn" disabled>அடுத்த கேள்வி ▶</button>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <!-- ================= PAGE 2: STUDENT DASHBOARD & TOPIC SELECTION SCREEN ================= -->
+    <section class="screen" id="screen-topic">
+      <div class="student-dashboard-split-layout">
+        <!-- LEFT SIDEBAR: Student Profile, Dynamic Tamil Greeting & Activity Stats -->
+        <aside class="student-sidebar-card">
+          <div class="student-avatar" id="student-avatar">🎓</div>
+          <div class="student-greeting-box">
+            <!-- Dynamic 1-liner time-based greeting in Tamil -->
+            <h2 class="student-greeting-text" id="student-greeting-text">வணக்கம்!</h2>
+            <p class="student-status-text" id="student-status-text">இன்றைய தமிழ் பயிற்சிகளைத் தொடங்குங்கள் 🚀</p>
+          </div>
+
+          <div class="student-grade-pill" id="student-grade-badge">
+            🌟 Nilai 1 (1-ஆம் வகுப்பு)
+          </div>
+
+          <!-- Student Activity Stats Panel -->
+          <div class="student-stats-panel">
+            <h4 class="stats-panel-title">📊 இன்றைய சாதனைகள்</h4>
+            <div class="student-stats-vertical-grid">
+              <div class="student-stat-pill">
+                <span class="stat-icon">⭐</span>
+                <div class="stat-data">
+                  <strong id="stat-stars-count">0</strong>
+                  <small>நட்சத்திரங்கள் (Stars)</small>
+                </div>
+              </div>
+              <div class="student-stat-pill">
+                <span class="stat-icon">📜</span>
+                <div class="stat-data">
+                  <strong id="stat-kural-count">0</strong>
+                  <small>திருக்குறள் பயின்றவை</small>
+                </div>
+              </div>
+              <div class="student-stat-pill">
+                <span class="stat-icon">🪶</span>
+                <div class="stat-data">
+                  <strong id="stat-aathichudi-count">0</strong>
+                  <small>ஆத்திசூடி பயின்றவை</small>
+                </div>
+              </div>
+              <div class="student-stat-pill">
+                <span class="stat-icon">📖</span>
+                <div class="stat-data">
+                  <strong id="stat-rc-count">0</strong>
+                  <small>வாசிப்பு மன்றத் தொடர்கள்</small>
+                </div>
+              </div>
+              <div class="student-stat-pill">
+                <span class="stat-icon">⚡</span>
+                <div class="stat-data">
+                  <strong id="stat-quiz-count">0</strong>
+                  <small>Quick Check நிறைவு</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Actions -->
+          <div class="student-sidebar-actions">
+            <button class="sidebar-btn" id="back-to-grade-btn">
+              <span>◀️</span> வகுப்பை மாற்று
+            </button>
+            <button class="sidebar-btn logout" id="student-sidebar-logout-btn">
+              <span>🚪</span> வெளியேறு (Logout)
+            </button>
+          </div>
+        </aside>
+
+        <!-- RIGHT MAIN AREA: Heritage Studios & Topic Flashcards -->
+        <main class="student-main-content">
+          <!-- Featured Heritage Studios (Thirukkural & Aathichudi) -->
+          <div class="featured-heritage-box">
+            <div class="featured-heritage-title">⭐ சிறப்புப் பாரம்பரியப் பயிற்சிகள் (Heritage Studios):</div>
+            <div class="heritage-studios-grid">
+              <!-- Thirukkural Studio Card -->
+              <div class="heritage-studio-card kural-theme">
+                <div class="studio-card-head">
+                  <span class="studio-icon">📜</span>
+                  <div>
+                    <h3 class="studio-title">திருக்குறள் கூடம்</h3>
+                    <span class="studio-tag">108 அதிகாரங்கள் · குரல் வாசிப்பு & வினாடி வினா</span>
+                  </div>
+                </div>
+                <p class="studio-desc">அருமையான குறள்களைக் கேட்டு, பேசிப் பழகவும்; உடனடி Quick Check மூலம் உங்கள் அறிவைச் சோதிக்கவும்!</p>
+                <div class="studio-action-row">
+                  <button class="studio-btn primary" id="open-kural-topic-btn">
+                    <span>🎙️</span> குரல் வாசிப்பு
+                  </button>
+                  <button class="studio-btn quiz-btn" id="open-kural-quiz-btn">
+                    <span>⚡</span> Quick Check
+                  </button>
+                </div>
+              </div>
+
+              <!-- Aathichudi Studio Card -->
+              <div class="heritage-studio-card aathichudi-theme">
+                <div class="studio-card-head">
+                  <span class="studio-icon">🪶</span>
+                  <div>
+                    <h3 class="studio-title">ஔவையாரின் ஆத்திசூடி</h3>
+                    <span class="studio-tag">109 நல்வழிப் பாடல்கள் · 9 வருக்கங்கள்</span>
+                  </div>
+                </div>
+                <p class="studio-desc">உயிர் முதல் வகர வருக்கம் வரையிலான அனைத்து 109 பாடல்களையும் வாசித்து, வினாடி வினாவில் வெல்லுங்கள்!</p>
+                <div class="studio-action-row">
+                  <button class="studio-btn primary" id="open-aathichudi-topic-btn">
+                    <span>🎙️</span> குரல் வாசிப்பு
+                  </button>
+                  <button class="studio-btn quiz-btn" id="open-aathichudi-quiz-btn">
+                    <span>⚡</span> Quick Check
+                  </button>
+                </div>
+              </div>
+
+              <!-- Reading Club Studio Card -->
+              <div class="heritage-studio-card reading-club-theme">
+                <div class="studio-card-head">
+                  <span class="studio-icon">📖</span>
+                  <div>
+                    <h3 class="studio-title">வாசிப்பு மன்றம் (Reading Club)</h3>
+                    <span class="studio-tag">Nilai 1-8 · 2, 3, 4 சொல் தொடர்கள்</span>
+                  </div>
+                </div>
+                <p class="studio-desc">எளிய வாக்கியங்கள் மூலம் சரளமாகத் தமிழில் வாசிக்கப் பழகவும்; தினசரி Quick Check மூலம் தேர்ச்சி பெறவும்!</p>
+                <div class="studio-action-row">
+                  <button class="studio-btn primary" id="open-rc-topic-btn">
+                    <span>🎙️</span> குரல் வாசிப்பு
+                  </button>
+                  <button class="studio-btn quiz-btn" id="open-rc-quiz-btn">
+                    <span>⚡</span> Quick Check
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topics-section-divider">
+            <span>📖 வகுப்புத் தலைப்புகள் (Grade Translation Topics)</span>
+          </div>
+
+          <!-- Visible 2-Column Topic Grid -->
+          <div class="topics-grid" id="topics-grid">
+            <!-- Generated by JavaScript for complete visibility -->
+          </div>
+        </main>
+      </div>
+    </section>
 
     <!-- ================= PAGE 3: PRACTICE / FLASHCARD SCREEN ================= -->
     <section class="screen" id="screen-practice">
-      <!-- Practice Screen Top Navigation Breadcrumb -->
-      <div class="screen-nav-bar">
+      <!-- Practice Screen Top Navigation Breadcrumb & Mode Selector -->
+      <div class="screen-nav-bar compact">
         <button class="screen-back-btn" id="back-to-topics-btn">
           <span>◀️</span> தலைப்புகள் (Topics)
         </button>
+        <div class="practice-top-mode-row">
+          <div class="mode-pills">
+            <button class="mode-pill" data-mode="easy" id="mode-easy" title="Pass threshold 50%">Easy (50%)</button>
+            <button class="mode-pill active" data-mode="medium" id="mode-medium" title="Pass threshold 70%">Medium (70%)</button>
+            <button class="mode-pill" data-mode="hard" id="mode-hard" title="Pass threshold 85%">Hard (85%)</button>
+          </div>
+        </div>
         <div class="current-grade-badge" id="practice-grade-badge">
           🌟 1st Grade
         </div>
       </div>
 
-      <!-- Difficulty Mode Target Selector -->
-      <div class="mode-bar">
-        <div class="mode-label">
-          <span>🎯 Target:</span>
-        </div>
-        <div class="mode-pills">
-          <button class="mode-pill" data-mode="easy" id="mode-easy" title="Pass threshold 50%">Easy (50%)</button>
-          <button class="mode-pill active" data-mode="medium" id="mode-medium" title="Pass threshold 70%">Medium (70%)</button>
-          <button class="mode-pill" data-mode="hard" id="mode-hard" title="Pass threshold 85%">Hard (85%)</button>
-        </div>
-      </div>
-
       <!-- Flashcard Wrapper -->
-      <main class="card-wrapper">
-        <div class="flashcard" id="main-flashcard">
+      <main class="card-wrapper compact">
+        <div class="flashcard compact" id="main-flashcard">
           <!-- Card Top Details -->
           <div class="card-top-bar">
             <div class="card-cat-badge" id="card-cat-badge">
@@ -314,46 +662,42 @@
           </div>
 
           <!-- English Statement Box -->
-          <div class="sentence-box">
-            <div class="prompt-subtitle">Read in English & Speak in Tamil</div>
+          <div class="sentence-box compact">
             <h1 class="english-sentence" id="english-text">
               Good morning, Amma.
             </h1>
-            <button class="listen-en-btn" id="listen-en-btn" aria-label="Listen to English pronunciation">
-              <span>🔊</span> Listen English
-            </button>
+            <div class="sentence-action-row">
+              <button class="listen-en-btn" id="listen-en-btn" aria-label="Listen to English pronunciation">
+                <span>🔊</span> Listen English
+              </button>
+            </div>
           </div>
 
-          <!-- Kids Microphone Voice Action -->
-          <div class="voice-action-zone">
+          <!-- Kids Microphone Voice Action & Live Transcript Row -->
+          <div class="practice-mic-row">
             <div class="mic-button-wrapper">
-              <button class="mic-btn" id="mic-btn" aria-label="Start recording spoken Tamil" title="Tap and speak in Tamil">
+              <button class="mic-btn compact" id="mic-btn" aria-label="Start recording spoken Tamil" title="Tap and speak in Tamil">
                 🎙️
               </button>
               <div class="mic-waves"></div>
             </div>
-            <div class="mic-prompt-text" id="mic-prompt-text">
-              பேச மைக்-ஐ அழுத்தவும் (Tap to Speak Tamil)
-            </div>
-            <div class="listening-hint" id="listening-hint">
-              Press mic and say translation in Tamil
-            </div>
-          </div>
-
-          <!-- Live Spoken Transcript -->
-          <div class="transcript-card">
-            <div class="transcript-label">நீங்கள் பேசியது (What you said):</div>
-            <div class="spoken-text empty" id="spoken-text-display">
-              மைக் தொட்டு தமிழில் பேசவும்...
+            <div class="transcript-card compact">
+              <div class="transcript-label">நீங்கள் பேசியது (What you said):</div>
+              <div class="spoken-text empty" id="spoken-text-display">
+                மைக் தொட்டு தமிழில் பேசவும்...
+              </div>
             </div>
           </div>
 
           <!-- Validation & Percentage Matching Meter -->
-          <div class="validation-zone" id="validation-zone">
+          <div class="validation-zone compact" id="validation-zone">
             <div class="match-header">
               <div class="match-percent-box">
                 <span class="match-number" id="match-number">0%</span>
                 <span class="match-unit">பொருத்தம் (Match)</span>
+              </div>
+              <div class="feedback-msg" id="feedback-msg">
+                மிக நன்று!
               </div>
               <div class="stars-display">
                 <span class="star">☆</span>
@@ -361,61 +705,114 @@
                 <span class="star">☆</span>
               </div>
             </div>
-            <div class="feedback-msg" id="feedback-msg">
-              மிக நன்று!
-            </div>
             <div class="progress-bar-bg">
               <div class="progress-bar-fill" id="progress-bar-fill"></div>
             </div>
           </div>
 
           <!-- Tamil Answer Reveal & Pronunciation Player -->
-          <div class="answer-section">
+          <div class="answer-section compact">
             <div class="answer-header">
               <span class="answer-title">💡 Tamil Answer (பதில்)</span>
-              <button class="reveal-btn" id="reveal-answer-btn">பதில் பார்க்க (Show Answer) 👁️</button>
+              <button class="reveal-btn" id="reveal-answer-btn">பதில் பார்க்க (Show) 👁️</button>
             </div>
             <div class="tamil-answer-content" id="tamil-answer-content">
-              <div class="tamil-text-main" id="tamil-text-primary">
-                காலை வணக்கம், அம்மா.
+              <div class="tamil-answer-flex">
+                <div>
+                  <div class="tamil-text-main" id="tamil-text-primary">
+                    காலை வணக்கம், அம்மா.
+                  </div>
+                  <div class="translit-text" id="translit-text">
+                    (Kaalai vanakkam, Amma.)
+                  </div>
+                </div>
+                <button class="listen-ta-btn" id="listen-tamil-btn">
+                  <span>🔊</span> Listen Tamil
+                </button>
               </div>
-              <div class="translit-text" id="translit-text">
-                (Kaalai vanakkam, Amma.)
-              </div>
-              <button class="listen-ta-btn" id="listen-tamil-btn">
-                <span>🔊</span> சரியான உச்சரிப்பை கேட்கவும் (Listen Tamil)
-              </button>
+            </div>
+          </div>
+
+          <!-- Integrated Navigation inside card to stay completely visible on one screen -->
+          <div class="studio-card-nav">
+            <button class="nav-btn" id="prev-btn" aria-label="Previous sentence">
+              <span>◀️</span> முந்தையது (Prev)
+            </button>
+            <button class="nav-btn primary" id="next-btn" aria-label="Next sentence">
+              அடுத்தது (Next) <span>▶️</span>
+            </button>
+          </div>
+
+          <!-- Fallback Manual Typing Bar inside card -->
+          <div class="manual-input-toggle compact">
+            <button class="manual-toggle-btn" id="toggle-manual-btn">
+              ⌨️ விசைப்பலகை மூலம் டைப் செய்ய (Type manually)
+            </button>
+            <div class="manual-input-box compact" id="manual-input-box">
+              <input type="text" id="manual-text-input" placeholder="தமிழில் தட்டச்சு செய்யவும்..." aria-label="Tamil input">
+              <button class="manual-submit-btn" id="manual-submit-btn">சரிபார் (Test)</button>
             </div>
           </div>
         </div>
       </main>
-
-      <!-- Bottom Navigation Controls -->
-      <footer class="bottom-nav">
-        <button class="nav-btn" id="prev-btn" aria-label="Previous sentence">
-          <span>◀️</span> முந்தையது (Prev)
-        </button>
-        <button class="nav-btn primary" id="next-btn" aria-label="Next sentence">
-          அடுத்தது (Next) <span>▶️</span>
-        </button>
-      </footer>
-
-      <!-- Fallback Manual Typing Bar -->
-      <div class="manual-input-toggle">
-        <button class="manual-toggle-btn" id="toggle-manual-btn">
-          ⌨️ விசைப்பலகை மூலம் டைப் செய்ய (Type manually)
-        </button>
-        <div class="manual-input-box" id="manual-input-box">
-          <input type="text" id="manual-text-input" placeholder="தமிழில் தட்டச்சு செய்யவும்..." aria-label="Tamil input">
-          <button class="manual-submit-btn" id="manual-submit-btn">சரிபார் (Test)</button>
-        </div>
-      </div>
-
     </section>
 
+    <!-- ================= ADMIN SCREEN ================= -->
     <section class="screen" id="screen-admin">
-      <div class="screen-nav-bar"><button class="screen-back-btn" id="admin-logout-btn">◀ Sign out</button><div class="current-grade-badge">Admin</div></div>
-      <main class="admin-card"><h2>Student learning overview</h2><p id="admin-summary">Loading saved student progress…</p><div id="admin-progress-list" class="admin-progress-list"></div></main>
+      <div class="screen-nav-bar">
+        <button class="screen-back-btn" id="admin-logout-btn">◀ Sign out</button>
+        <div class="current-grade-badge">Admin Dashboard</div>
+      </div>
+      <main class="admin-card">
+        <h2>📊 Student Learning Overview & Analytics</h2>
+        <p id="admin-summary">Loading saved student progress…</p>
+        
+        <!-- Analytics Metric Cards -->
+        <div class="admin-metric-grid" id="admin-metric-grid">
+          <div class="admin-metric-card">
+            <div class="metric-icon">👥</div>
+            <div class="metric-data">
+              <span class="metric-value" id="metric-students-count">0</span>
+              <span class="metric-label">Registered Students</span>
+            </div>
+          </div>
+          <div class="admin-metric-card">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-data">
+              <span class="metric-value" id="metric-attempts-count">0</span>
+              <span class="metric-label">Total Learning Activities</span>
+            </div>
+          </div>
+          <div class="admin-metric-card">
+            <div class="metric-icon">📜</div>
+            <div class="metric-data">
+              <span class="metric-value" id="metric-kural-count">0</span>
+              <span class="metric-label">Thirukkural Activities</span>
+            </div>
+          </div>
+          <div class="admin-metric-card">
+            <div class="metric-icon">🪶</div>
+            <div class="metric-data">
+              <span class="metric-value" id="metric-aathichudi-count">0</span>
+              <span class="metric-label">Aathichudi Activities</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-filter-bar">
+          <label for="admin-filter-select">Activity Filter:</label>
+          <select id="admin-filter-select">
+            <option value="all">All Activities</option>
+            <option value="thirukkural">Thirukkural Voice Practice</option>
+            <option value="kural-quiz">Thirukkural Quick Check</option>
+            <option value="aathichudi">Aathichudi Voice Practice</option>
+            <option value="aathichudi-quiz">Aathichudi Quick Check</option>
+            <option value="translation">Grade Sentence Translations</option>
+          </select>
+        </div>
+
+        <div id="admin-progress-list" class="admin-progress-list"></div>
+      </main>
     </section>
   </div>
 
@@ -429,15 +826,16 @@
   </section>
 
   <!-- Application Scripts -->
-  <script src="js/logger.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/voice_recorder.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/sentences.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/matcher.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/audio.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/speech.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/thirukkural.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/aathichudi.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/chat-agent.js?v=20261004-aathichudi-clean"></script>
-  <script src="js/app.js?v=20261004-aathichudi-clean"></script>
+  <script src="js/logger.js?v=20261004-tts-v5"></script>
+  <script src="js/voice_recorder.js?v=20261004-tts-v5"></script>
+  <script src="js/sentences.js?v=20261004-tts-v5"></script>
+  <script src="js/matcher.js?v=20261004-tts-v5"></script>
+  <script src="js/audio.js?v=20261004-tts-v5"></script>
+  <script src="js/speech.js?v=20261004-tts-v5"></script>
+  <script src="js/thirukkural.js?v=20261004-tts-v5"></script>
+  <script src="js/aathichudi.js?v=20261004-tts-v5"></script>
+  <script src="js/reading-club.js?v=20261004-tts-v5"></script>
+  <script src="js/chat-agent.js?v=20261004-tts-v5"></script>
+  <script src="js/app.js?v=20261004-tts-v5"></script>
 </body>
 </html>

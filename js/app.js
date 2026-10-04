@@ -61,6 +61,7 @@ const App = {
       screenPractice: document.getElementById("screen-practice"),
       screenKural: document.getElementById("screen-kural"),
       screenAathichudi: document.getElementById("screen-aathichudi"),
+      screenReadingClub: document.getElementById("screen-reading-club"),
 
       // Navigation & Branding
       brandHomeBtn: document.getElementById("brand-home-btn"),
@@ -117,7 +118,29 @@ const App = {
       adminLogoutBtn: document.getElementById("admin-logout-btn"),
       adminSummary: document.getElementById("admin-summary"),
       adminProgressList: document.getElementById("admin-progress-list"),
+      adminFilterSelect: document.getElementById("admin-filter-select"),
+      metricStudentsCount: document.getElementById("metric-students-count"),
+      metricAttemptsCount: document.getElementById("metric-attempts-count"),
+      metricKuralCount: document.getElementById("metric-kural-count"),
+      metricAathichudiCount: document.getElementById("metric-aathichudi-count"),
       logoutBtn: document.getElementById("logout-btn"),
+
+      // Student Dashboard & Sidebar Elements
+      studentGreetingText: document.getElementById("student-greeting-text"),
+      studentStatusText: document.getElementById("student-status-text"),
+      studentGradeBadge: document.getElementById("student-grade-badge"),
+      studentSidebarLogoutBtn: document.getElementById("student-sidebar-logout-btn"),
+      statStarsCount: document.getElementById("stat-stars-count"),
+      statKuralCount: document.getElementById("stat-kural-count"),
+      statAathichudiCount: document.getElementById("stat-aathichudi-count"),
+      statRcCount: document.getElementById("stat-rc-count"),
+      statQuizCount: document.getElementById("stat-quiz-count"),
+      openKuralTopicBtn: document.getElementById("open-kural-topic-btn"),
+      openKuralQuizBtn: document.getElementById("open-kural-quiz-btn"),
+      openAathichudiTopicBtn: document.getElementById("open-aathichudi-topic-btn"),
+      openAathichudiQuizBtn: document.getElementById("open-aathichudi-quiz-btn"),
+      openRcTopicBtn: document.getElementById("open-rc-topic-btn"),
+      openRcQuizBtn: document.getElementById("open-rc-quiz-btn"),
 
       // Diagnostics Toolbar
       viewLogsBtn: document.getElementById("view-logs-btn"),
@@ -132,7 +155,17 @@ const App = {
     this.elements.adminContinueBtn.addEventListener("click", () => this.openAdmin());
     this.elements.adminLogoutBtn.addEventListener("click", () => this.logout());
     this.elements.logoutBtn.addEventListener("click", () => this.logout());
-    // 1. Home / Brand button (Returns to Page 1 from anywhere)
+    if (this.elements.studentSidebarLogoutBtn) {
+      this.elements.studentSidebarLogoutBtn.addEventListener("click", () => {
+        KidAudioFX.playClick();
+        this.logout();
+      });
+    }
+    if (this.elements.adminFilterSelect) {
+      this.elements.adminFilterSelect.addEventListener("change", () => this.renderAdminList());
+    }
+
+    // 1. Home / Brand button (Returns to student dashboard or login)
     if (this.elements.brandHomeBtn) {
       this.elements.brandHomeBtn.addEventListener("click", () => {
         KidAudioFX.playClick();
@@ -178,42 +211,65 @@ const App = {
       });
     }
 
-    const openKural = document.getElementById("open-kural-btn");
-    const openKuralLogin = document.getElementById("open-kural-login-btn");
-    const openKuralFromTopics = document.getElementById("open-kural-topic-btn");
-    const backFromKural = document.getElementById("back-from-kural-btn");
-    
-    const openKuralAction = () => {
+    // Thirukkural Studio Launchers
+    const openKuralAction = (mode = "read") => {
       this.previousHeritageScreen = this.currentScreen;
       KidAudioFX.playClick();
-      if (window.ThirukkuralPractice) window.ThirukkuralPractice.open();
+      if (window.ThirukkuralPractice) window.ThirukkuralPractice.open(mode);
       this.showScreen("kural");
     };
 
-    if (openKural) openKural.addEventListener("click", openKuralAction);
-    if (openKuralLogin) openKuralLogin.addEventListener("click", openKuralAction);
-    if (openKuralFromTopics) openKuralFromTopics.addEventListener("click", openKuralAction);
+    if (this.elements.openKuralTopicBtn) {
+      this.elements.openKuralTopicBtn.addEventListener("click", () => openKuralAction("read"));
+    }
+    if (this.elements.openKuralQuizBtn) {
+      this.elements.openKuralQuizBtn.addEventListener("click", () => openKuralAction("quiz"));
+    }
+
+    const backFromKural = document.getElementById("back-from-kural-btn");
     if (backFromKural) backFromKural.addEventListener("click", () => {
       KidAudioFX.playClick();
       this.showScreen(this.previousHeritageScreen || (this.currentStudent ? "topic" : "login"));
     });
 
-    const openAathichudi = document.getElementById("open-aathichudi-btn");
-    const openAathichudiLogin = document.getElementById("open-aathichudi-login-btn");
-    const openAathichudiFromTopics = document.getElementById("open-aathichudi-topic-btn");
-    const backFromAathichudi = document.getElementById("back-from-aathichudi-btn");
-    
-    const openAathichudiAction = () => {
+    // Aathichudi Studio Launchers
+    const openAathichudiAction = (mode = "read") => {
       this.previousHeritageScreen = this.currentScreen;
       KidAudioFX.playClick();
-      if (window.AathichudiPractice) window.AathichudiPractice.open();
+      if (window.AathichudiPractice) window.AathichudiPractice.open(mode);
       this.showScreen("aathichudi");
     };
 
-    if (openAathichudi) openAathichudi.addEventListener("click", openAathichudiAction);
-    if (openAathichudiLogin) openAathichudiLogin.addEventListener("click", openAathichudiAction);
-    if (openAathichudiFromTopics) openAathichudiFromTopics.addEventListener("click", openAathichudiAction);
+    if (this.elements.openAathichudiTopicBtn) {
+      this.elements.openAathichudiTopicBtn.addEventListener("click", () => openAathichudiAction("read"));
+    }
+    if (this.elements.openAathichudiQuizBtn) {
+      this.elements.openAathichudiQuizBtn.addEventListener("click", () => openAathichudiAction("quiz"));
+    }
+
+    const backFromAathichudi = document.getElementById("back-from-aathichudi-btn");
     if (backFromAathichudi) backFromAathichudi.addEventListener("click", () => {
+      KidAudioFX.playClick();
+      this.showScreen(this.previousHeritageScreen || (this.currentStudent ? "topic" : "login"));
+    });
+
+    // Reading Club Studio Launchers
+    const openRcAction = (mode = "read") => {
+      this.previousHeritageScreen = this.currentScreen;
+      KidAudioFX.playClick();
+      if (window.ReadingClubPractice) window.ReadingClubPractice.open(mode);
+      this.showScreen("reading-club");
+    };
+
+    if (this.elements.openRcTopicBtn) {
+      this.elements.openRcTopicBtn.addEventListener("click", () => openRcAction("read"));
+    }
+    if (this.elements.openRcQuizBtn) {
+      this.elements.openRcQuizBtn.addEventListener("click", () => openRcAction("quiz"));
+    }
+
+    const backFromRc = document.getElementById("back-from-rc-btn");
+    if (backFromRc) backFromRc.addEventListener("click", () => {
       KidAudioFX.playClick();
       this.showScreen(this.previousHeritageScreen || (this.currentStudent ? "topic" : "login"));
     });
@@ -358,14 +414,30 @@ const App = {
     if (this.elements.screenPractice) this.elements.screenPractice.classList.toggle("active", screenName === "practice");
     if (this.elements.screenKural) this.elements.screenKural.classList.toggle("active", screenName === "kural");
     if (this.elements.screenAathichudi) this.elements.screenAathichudi.classList.toggle("active", screenName === "aathichudi");
+    if (this.elements.screenReadingClub) this.elements.screenReadingClub.classList.toggle("active", screenName === "reading-club");
+
+    if (screenName === "topic") {
+      this.updateStudentDashboard();
+    }
 
     if (window.KidAppLogger) KidAppLogger.log("NAV", `Show screen: ${screenName}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   },
 
   async loadStudents() {
-    try { this.students = (await fetch("data/students/roster.json").then(response => response.json())).students || []; }
-    catch (_) { this.elements.loginMessage.textContent = "Student list could not be loaded. Please refresh the page."; }
+    try {
+      const response = await fetch("data/students/roster.json");
+      const data = await response.json();
+      this.students = data.students || [];
+      if (this.elements.studentGrade && this.elements.studentGrade.value) {
+        this.populateStudentNames();
+      }
+    } catch (err) {
+      console.error("Could not load student roster:", err);
+      if (this.elements.loginMessage) {
+        this.elements.loginMessage.textContent = "Student list could not be loaded. Please refresh the page.";
+      }
+    }
   },
 
   toggleRole() {
@@ -376,10 +448,29 @@ const App = {
   },
 
   populateStudentNames() {
-    const grade = Number(this.elements.studentGrade.value);
-    const matches = this.students.filter(student => student.grade === grade);
-    this.elements.studentName.disabled = !matches.length;
-    this.elements.studentName.innerHTML = `<option value="">${matches.length ? "Select your name" : "No students listed for this grade"}</option>` + matches.map((student, index) => `<option value="${student.firstName}|${student.lastName}|${student.grade}">${student.firstName} ${student.lastName}</option>`).join("");
+    const gradeVal = this.elements.studentGrade ? this.elements.studentGrade.value : "";
+    if (!gradeVal) {
+      this.elements.studentName.disabled = true;
+      this.elements.studentName.innerHTML = `<option value="">Select your grade first</option>`;
+      return;
+    }
+    const grade = Number(gradeVal);
+    if (!this.students || !this.students.length) {
+      this.elements.studentName.disabled = true;
+      this.elements.studentName.innerHTML = `<option value="">மாணவர் பட்டியல் ஏற்றப்படுகிறது (Loading students)...</option>`;
+      return;
+    }
+    const matches = this.students.filter(student => Number(student.grade) === grade);
+    matches.sort((a, b) => (a.firstName || "").localeCompare(b.firstName || ""));
+
+    if (matches.length > 0) {
+      this.elements.studentName.disabled = false;
+      this.elements.studentName.innerHTML = `<option value="">உங்கள் பெயரைத் தேர்ந்தெடுக்கவும் (Select your name)</option>` +
+        matches.map(student => `<option value="${student.firstName}|${student.lastName}|${student.grade}">${student.firstName} ${student.lastName}</option>`).join("");
+    } else {
+      this.elements.studentName.disabled = true;
+      this.elements.studentName.innerHTML = `<option value="">No students listed for Nilai ${grade}</option>`;
+    }
   },
 
   async loginStudent() {
@@ -393,6 +484,19 @@ const App = {
     this.selectGrade(this.currentGrade);
   },
 
+  getTamilGreeting(name) {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) {
+      return `🌅 இனிய காலை வணக்கம், ${name}!`;
+    } else if (hour >= 12 && hour < 17) {
+      return `☀️ இனிய மதிய வணக்கம், ${name}!`;
+    } else if (hour >= 17 && hour < 21) {
+      return `🌆 இனிய மாலை வணக்கம், ${name}!`;
+    } else {
+      return `🌙 இனிய இரவு வணக்கம், ${name}!`;
+    }
+  },
+
   async saveSession() {
     localStorage.setItem("tamilKidsStudent", JSON.stringify(this.currentStudent));
     try { await fetch("/api/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(this.currentStudent) }); } catch (_) { /* GitHub Pages uses local browser storage. */ }
@@ -401,17 +505,128 @@ const App = {
   async saveProgress(record) {
     if (!this.currentStudent) return;
     const entry = { ...record, student: this.currentStudent, recordedAt: new Date().toISOString() };
-    const key = "tamilKidsProgress"; const saved = JSON.parse(localStorage.getItem(key) || "[]"); saved.push(entry); localStorage.setItem(key, JSON.stringify(saved));
+    const key = "tamilKidsProgress";
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    saved.push(entry);
+    localStorage.setItem(key, JSON.stringify(saved));
+    this.updateStudentDashboard();
     try { await fetch("/api/progress", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(entry) }); } catch (_) { /* Local fallback remains available. */ }
+  },
+
+  updateStudentDashboard() {
+    if (!this.currentStudent) return;
+    const name = `${this.currentStudent.firstName} ${this.currentStudent.lastName}`.trim();
+    if (this.elements.studentGreetingText) {
+      this.elements.studentGreetingText.textContent = this.getTamilGreeting(name);
+    }
+    if (this.elements.studentStatusText) {
+      this.elements.studentStatusText.textContent = `இன்றைய தமிழ் பயிற்சிகளைத் தொடங்குங்கள் 🚀`;
+    }
+    if (this.elements.studentGradeBadge) {
+      this.elements.studentGradeBadge.textContent = `🌟 Nilai ${this.currentStudent.grade} (${this.currentStudent.grade}-ஆம் வகுப்பு)`;
+    }
+
+    const key = "tamilKidsProgress";
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    const studentRecords = saved.filter(r =>
+      r.student &&
+      r.student.firstName === this.currentStudent.firstName &&
+      r.student.lastName === this.currentStudent.lastName
+    );
+
+    let stars = 0;
+    let kuralCount = 0;
+    let aathichudiCount = 0;
+    let rcCount = 0;
+    let quizCount = 0;
+
+    studentRecords.forEach(r => {
+      stars += (r.stars || 0);
+      const cat = (r.category || "").toLowerCase();
+      if (cat.includes("kural-quiz") || cat.includes("aathichudi-quiz") || cat.includes("reading-club-quiz") || cat.includes("rc-quiz")) {
+        quizCount++;
+      } else if (cat.includes("thirukkural") || cat.includes("kural")) {
+        kuralCount++;
+      } else if (cat.includes("aathichudi")) {
+        aathichudiCount++;
+      } else if (cat.includes("reading-club") || cat.includes("rc")) {
+        rcCount++;
+      }
+    });
+
+    if (this.elements.statStarsCount) this.elements.statStarsCount.textContent = stars;
+    if (this.elements.statKuralCount) this.elements.statKuralCount.textContent = kuralCount;
+    if (this.elements.statAathichudiCount) this.elements.statAathichudiCount.textContent = aathichudiCount;
+    if (this.elements.statRcCount) this.elements.statRcCount.textContent = rcCount;
+    if (this.elements.statQuizCount) this.elements.statQuizCount.textContent = quizCount;
+    if (this.elements.totalStarsCount) this.elements.totalStarsCount.textContent = stars;
   },
 
   async openAdmin() {
     this.showScreen("admin");
     let records = JSON.parse(localStorage.getItem("tamilKidsProgress") || "[]");
-    try { const response = await fetch("/api/progress"); if (response.ok) records = await response.json(); } catch (_) { /* Browser fallback shown. */ }
-    this.elements.adminSummary.textContent = `${this.students.length} students in the roster · ${records.length} saved learning attempts`;
-    const recent = records.slice(-12).reverse();
-    this.elements.adminProgressList.innerHTML = recent.length ? recent.map(item => `<div class="admin-progress-item"><span>${item.student.firstName} ${item.student.lastName} · Nilai ${item.student.grade}</span><strong>${item.score}%</strong></div>`).join("") : "<div class=\"admin-progress-item\">No learning attempts have been recorded yet.</div>";
+    try {
+      const response = await fetch("/api/progress");
+      if (response.ok) records = await response.json();
+    } catch (_) { /* Browser fallback */ }
+    this.adminRecords = records;
+    this.renderAdminList();
+  },
+
+  renderAdminList() {
+    const records = this.adminRecords || JSON.parse(localStorage.getItem("tamilKidsProgress") || "[]");
+    const filter = this.elements.adminFilterSelect ? this.elements.adminFilterSelect.value : "all";
+
+    let filtered = records;
+    if (filter === "thirukkural") {
+      filtered = records.filter(r => r.category === "thirukkural");
+    } else if (filter === "kural-quiz") {
+      filtered = records.filter(r => r.category === "kural-quiz");
+    } else if (filter === "aathichudi") {
+      filtered = records.filter(r => r.category === "aathichudi");
+    } else if (filter === "aathichudi-quiz") {
+      filtered = records.filter(r => r.category === "aathichudi-quiz");
+    } else if (filter === "translation") {
+      filtered = records.filter(r => !["thirukkural", "kural-quiz", "aathichudi", "aathichudi-quiz"].includes(r.category));
+    }
+
+    if (this.elements.adminSummary) {
+      this.elements.adminSummary.textContent = `${this.students.length} students registered · ${records.length} total learning attempts tracked`;
+    }
+    if (this.elements.metricStudentsCount) this.elements.metricStudentsCount.textContent = this.students.length;
+    if (this.elements.metricAttemptsCount) this.elements.metricAttemptsCount.textContent = records.length;
+    if (this.elements.metricKuralCount) {
+      this.elements.metricKuralCount.textContent = records.filter(r => (r.category || "").includes("kural")).length;
+    }
+    if (this.elements.metricAathichudiCount) {
+      this.elements.metricAathichudiCount.textContent = records.filter(r => (r.category || "").includes("aathichudi")).length;
+    }
+
+    const recent = filtered.slice(-25).reverse();
+    if (this.elements.adminProgressList) {
+      this.elements.adminProgressList.innerHTML = recent.length ? recent.map(item => {
+        const studentName = item.student ? `${item.student.firstName} ${item.student.lastName} (Nilai ${item.student.grade})` : "Student";
+        const catLabel = item.category === "thirukkural" ? "📜 திருக்குறள் வாசிப்பு" :
+                        item.category === "kural-quiz" ? "⚡ திருக்குறள் Quick Check" :
+                        item.category === "aathichudi" ? "🪶 ஆத்திசூடி வாசிப்பு" :
+                        item.category === "aathichudi-quiz" ? "⚡ ஆத்திசூடி Quick Check" :
+                        `📖 மொழிபெயர்ப்பு (${item.category || "வகுப்பு"})`;
+        const timeStr = item.recordedAt ? new Date(item.recordedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
+        const starsStr = item.stars ? "★".repeat(item.stars) : "";
+        return `
+          <div class="admin-progress-item">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <strong>${studentName}</strong>
+              <small style="color: #64748b;">${catLabel} · ${item.sentenceId || ""} · ${timeStr}</small>
+            </div>
+            <div style="text-align: right;">
+              <strong style="color: ${item.score >= 70 ? '#166534' : '#b45309'};">${item.score}%</strong>
+              <div style="color: #eab308; font-size: 0.85rem;">${starsStr}</div>
+            </div>
+          </div>
+        `;
+      }).join("") : `<div class="admin-progress-item">No records found for this filter.</div>`;
+    }
   },
 
   logout() { this.currentStudent = null; localStorage.removeItem("tamilKidsStudent"); this.showScreen("login"); },

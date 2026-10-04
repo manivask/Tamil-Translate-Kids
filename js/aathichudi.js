@@ -152,10 +152,24 @@
   let isListening = false;
   let hasEvaluated = false;
   let lastSpokenTranscript = "";
+  let currentMode = "read"; // 'read' | 'quiz'
+
+  // Quick Check Quiz state
+  let quizQuestions = [];
+  let quizCurrentIndex = 0;
+  let quizScore = 0;
+  let quizAnswered = false;
 
   const clean = (text) => text ? text.replace(/[.,;\n]/g, " ").replace(/\s+/g, " ").trim() : "";
 
   const ui = () => ({
+    // Mode Switcher Tabs
+    tabReadBtn: document.getElementById("aathichudi-tab-read-btn"),
+    tabQuizBtn: document.getElementById("aathichudi-tab-quiz-btn"),
+    readView: document.getElementById("aathichudi-read-view"),
+    quizView: document.getElementById("aathichudi-quiz-view"),
+
+    // Read View
     sectionSelect: document.getElementById("aathichudi-section-select"),
     verseSelect: document.getElementById("aathichudi-verse-select"),
     number: document.getElementById("aathichudi-number"),
@@ -170,10 +184,38 @@
     nextBtn: document.getElementById("next-aathichudi-btn"),
     manualBox: document.getElementById("aathichudi-manual-box"),
     manualInput: document.getElementById("aathichudi-manual-input"),
-    manualSubmit: document.getElementById("aathichudi-manual-submit")
+    manualSubmit: document.getElementById("aathichudi-manual-submit"),
+
+    // Quiz View
+    quizStepLabel: document.getElementById("aathichudi-quiz-step-label"),
+    quizScoreBadge: document.getElementById("aathichudi-quiz-score-badge"),
+    quizBar: document.getElementById("aathichudi-quiz-bar"),
+    quizBadge: document.getElementById("aathichudi-quiz-badge"),
+    quizQuestion: document.getElementById("aathichudi-quiz-question"),
+    quizAudioBtn: document.getElementById("aathichudi-quiz-audio-btn"),
+    quizOptions: document.getElementById("aathichudi-quiz-options"),
+    quizFeedback: document.getElementById("aathichudi-quiz-feedback"),
+    quizNextBtn: document.getElementById("aathichudi-quiz-next-btn")
   });
 
   const getCurrentVerse = () => filteredVerses[currentVerseIndex] || VERSES[0];
+
+  function switchMode(mode) {
+    currentMode = mode;
+    const controls = ui();
+    if (controls.tabReadBtn) controls.tabReadBtn.classList.toggle("active", mode === "read");
+    if (controls.tabQuizBtn) controls.tabQuizBtn.classList.toggle("active", mode === "quiz");
+
+    if (mode === "read") {
+      if (controls.readView) controls.readView.style.display = "block";
+      if (controls.quizView) controls.quizView.style.display = "none";
+      render();
+    } else {
+      if (controls.readView) controls.readView.style.display = "none";
+      if (controls.quizView) controls.quizView.style.display = "block";
+      startQuiz();
+    }
+  }
 
   function populateSections() {
     const controls = ui();
@@ -207,10 +249,35 @@
     controls.verseSelect.value = currentVerseIndex;
   }
 
+  function getStudentKey() {
+    if (window.App && App.currentStudent) {
+      return `${App.currentStudent.firstName}_${App.currentStudent.lastName}_G${App.currentStudent.grade}`;
+    }
+    return "guest_student";
+  }
+
+  function trackStudied(verse) {
+    if (!verse) return;
+    const key = `studied_aathichudi_${getStudentKey()}`;
+    let studied = [];
+    try { studied = JSON.parse(localStorage.getItem(key) || "[]"); } catch (_) {}
+    if (!studied.includes(verse.id)) {
+      studied.push(verse.id);
+      localStorage.setItem(key, JSON.stringify(studied));
+    }
+  }
+
+  function getStudiedIds() {
+    const key = `studied_aathichudi_${getStudentKey()}`;
+    try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch (_) { return []; }
+  }
+
   function render() {
     const verse = getCurrentVerse();
     const controls = ui();
     if (!verse || !controls.number) return;
+
+    trackStudied(verse);
 
     controls.number.textContent = `பாடல் ${verse.id} · ${verse.sectionName} · எழுத்து [ ${verse.letter} ]`;
     controls.text.textContent = verse.line;
@@ -218,9 +285,13 @@
     if (controls.meaningEn) controls.meaningEn.textContent = `📖 ${verse.meaningEn}`;
 
     if (!isListening) {
-      controls.spoken.textContent = "மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்...";
-      controls.spoken.classList.add("empty");
-      controls.result.innerHTML = `<strong>பயிற்சிக்குத் தயார்!</strong> 🎙️ மைக் பொத்தானை அழுத்திப் பேசவும்.`;
+      if (controls.spoken) {
+        controls.spoken.textContent = "மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்...";
+        controls.spoken.classList.add("empty");
+      }
+      if (controls.result) {
+        controls.result.innerHTML = `<strong>பயிற்சிக்குத் தயார்!</strong> 🎙️ மைக் பொத்தானை அழுத்திப் பேசவும்.`;
+      }
       if (controls.micBtn) controls.micBtn.classList.remove("listening");
     }
 
@@ -232,6 +303,8 @@
     const verse = getCurrentVerse();
     const controls = ui();
     if (!verse || !transcript) return;
+
+    trackStudied(verse);
 
     const target = clean(verse.line);
     const spoken = clean(transcript);
@@ -276,20 +349,254 @@
     }
   }
 
+  // --- Dynamic Aathichudi Quick Check Engine (Prioritizes Studied Verses) ---
+  function generateQuizQuestions() {
+    const studiedIds = getStudiedIds();
+    let candidates = VERSES.filter(v => studiedIds.includes(v.id));
+
+    // If student studied fewer than 5, supplement with the current section's verses
+    if (candidates.length < 5) {
+      let sectionPool = filteredVerses.length ? filteredVerses : VERSES;
+      const unstudied = sectionPool.filter(v => !studiedIds.includes(v.id));
+      candidates = [...candidates, ...unstudied];
+    }
+    if (candidates.length < 5) {
+      candidates = VERSES;
+    }
+
+    const questions = [];
+    const pool = [...candidates].sort(() => Math.random() - 0.5);
+
+    for (let i = 0; i < Math.min(5, pool.length); i++) {
+      const v = pool[i];
+      const words = v.line.split(" ");
+      const qType = i % 3;
+
+      if (qType === 0 && words.length >= 2) {
+        const targetWord = words[words.length - 1];
+        const promptLine = words.slice(0, words.length - 1).join(" ") + " _______";
+        
+        const distractors = VERSES
+          .filter(other => other.id !== v.id)
+          .map(other => {
+            const w = other.line.split(" ");
+            return w[w.length - 1];
+          })
+          .filter(w => w && w !== targetWord);
+
+        const uniqueDistractors = [...new Set(distractors)].sort(() => Math.random() - 0.5).slice(0, 3);
+        const allOptions = [targetWord, ...uniqueDistractors].sort(() => Math.random() - 0.5);
+        const ansIdx = allOptions.indexOf(targetWord);
+
+        questions.push({
+          id: `acq-${v.id}-blank`,
+          badge: "விடுபட்ட சொல்லை நிரப்புக",
+          question: promptLine,
+          options: allOptions,
+          answerIndex: ansIdx,
+          explanation: `முழு பாடல்: “${v.line}” - ${v.meaningTa}`
+        });
+      } else if (qType === 1) {
+        const targetMeaning = v.meaningTa;
+        const distractorMeanings = VERSES
+          .filter(other => other.id !== v.id)
+          .map(other => other.meaningTa)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+
+        const allOptions = [targetMeaning, ...distractorMeanings].sort(() => Math.random() - 0.5);
+        const ansIdx = allOptions.indexOf(targetMeaning);
+
+        questions.push({
+          id: `acq-${v.id}-meaning`,
+          badge: "நல்வழிப் பொருள் அறிக",
+          question: `‘${v.line}’ என்பதன் பொருள் என்ன?`,
+          options: allOptions,
+          answerIndex: ansIdx,
+          explanation: `“${v.line}” - ${v.meaningTa} (${v.sectionName})`
+        });
+      } else {
+        const correctSection = v.sectionName;
+        const otherSections = SECTIONS
+          .filter(s => s.name !== correctSection && s.id !== "all")
+          .map(s => s.name)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+
+        const allOptions = [correctSection, ...otherSections].sort(() => Math.random() - 0.5);
+        const ansIdx = allOptions.indexOf(correctSection);
+
+        questions.push({
+          id: `acq-${v.id}-sec`,
+          badge: "வருக்கத்தைக் கண்டறிக",
+          question: `‘${v.line}’ [${v.letter}] எந்த வருக்கப் பாடல்?`,
+          options: allOptions,
+          answerIndex: ansIdx,
+          explanation: `பாடல் எண் ${v.id}: ${v.line} - இது ${v.sectionName} பிரிவில் வருகிறது.`
+        });
+      }
+    }
+    return questions;
+  }
+
+  function startQuiz() {
+    quizQuestions = generateQuizQuestions();
+    quizCurrentIndex = 0;
+    quizScore = 0;
+    renderQuizQuestion();
+  }
+
+  function renderQuizQuestion() {
+    const controls = ui();
+    if (!quizQuestions || !quizQuestions.length) return;
+
+    quizAnswered = false;
+    const q = quizQuestions[quizCurrentIndex];
+    const total = quizQuestions.length;
+    const progressPercent = Math.round(((quizCurrentIndex + 1) / total) * 100);
+
+    if (controls.quizStepLabel) controls.quizStepLabel.textContent = `கேள்வி ${quizCurrentIndex + 1} / ${total}`;
+    if (controls.quizScoreBadge) controls.quizScoreBadge.textContent = `⭐ ${quizScore} புள்ளிகள்`;
+    if (controls.quizBar) controls.quizBar.style.width = `${progressPercent}%`;
+    if (controls.quizBadge) controls.quizBadge.textContent = q.badge || "ஆத்திசூடி வினாடி வினா";
+    if (controls.quizQuestion) controls.quizQuestion.textContent = q.question;
+    if (controls.quizFeedback) {
+      controls.quizFeedback.style.display = "none";
+      controls.quizFeedback.className = "quiz-feedback-box";
+      controls.quizFeedback.innerHTML = "";
+    }
+    if (controls.quizNextBtn) {
+      controls.quizNextBtn.disabled = true;
+      controls.quizNextBtn.textContent = (quizCurrentIndex === total - 1) ? "வினாடி வினா நிறைவு 🎉" : "அடுத்த கேள்வி ▶";
+    }
+
+    if (controls.quizOptions) {
+      controls.quizOptions.innerHTML = q.options.map((opt, idx) => `
+        <button class="quiz-option-btn" data-index="${idx}">
+          <span>🔹</span><span>${opt}</span>
+        </button>
+      `).join("");
+
+      controls.quizOptions.querySelectorAll(".quiz-option-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (quizAnswered) return;
+          const selectedIdx = Number(btn.getAttribute("data-index"));
+          answerQuizQuestion(selectedIdx);
+        });
+      });
+    }
+  }
+
+  function answerQuizQuestion(selectedIdx) {
+    if (quizAnswered) return;
+    quizAnswered = true;
+    const controls = ui();
+    const q = quizQuestions[quizCurrentIndex];
+    const isCorrect = (selectedIdx === q.answerIndex);
+
+    const optionBtns = controls.quizOptions.querySelectorAll(".quiz-option-btn");
+    optionBtns.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === q.answerIndex) {
+        btn.classList.add("correct");
+      } else if (idx === selectedIdx && !isCorrect) {
+        btn.classList.add("wrong");
+      }
+    });
+
+    if (isCorrect) {
+      quizScore += 20;
+      if (controls.quizScoreBadge) controls.quizScoreBadge.textContent = `⭐ ${quizScore} புள்ளிகள்`;
+      if (window.KidAudioFX) {
+        KidAudioFX.playSuccessFanfare();
+        KidAudioFX.playStarDing(3);
+      }
+      if (window.App) App.triggerConfetti();
+
+      if (controls.quizFeedback) {
+        controls.quizFeedback.style.display = "block";
+        controls.quizFeedback.className = "quiz-feedback-box correct";
+        controls.quizFeedback.innerHTML = `<strong>🎉 மிகச் சரியான விடை!</strong><br>${q.explanation}`;
+      }
+    } else {
+      if (window.KidAudioFX) KidAudioFX.playTryAgain();
+      if (controls.quizFeedback) {
+        controls.quizFeedback.style.display = "block";
+        controls.quizFeedback.className = "quiz-feedback-box wrong";
+        controls.quizFeedback.innerHTML = `<strong>தவறான விடை. சரியான விடை:</strong> “${q.options[q.answerIndex]}”<br>${q.explanation}`;
+      }
+    }
+
+    // Save student quiz answer
+    if (window.App) {
+      App.saveProgress({
+        sentenceId: `aathichudi-quiz-${q.id}`,
+        category: "aathichudi-quiz",
+        score: isCorrect ? 100 : 0,
+        stars: isCorrect ? 3 : 0,
+        passed: isCorrect
+      });
+    }
+
+    if (controls.quizNextBtn) controls.quizNextBtn.disabled = false;
+  }
+
+  function nextQuizQuestion() {
+    if (quizCurrentIndex < quizQuestions.length - 1) {
+      quizCurrentIndex++;
+      renderQuizQuestion();
+    } else {
+      showQuizSummary();
+    }
+  }
+
+  function showQuizSummary() {
+    const controls = ui();
+    const stars = quizScore >= 80 ? 3 : (quizScore >= 60 ? 2 : 1);
+
+    if (controls.quizQuestion) {
+      controls.quizQuestion.innerHTML = `🌟 ஆத்திசூடி வினாடி வினா நிறைவு! மதிப்பெண்: <strong>${quizScore} / 100</strong> (${"★".repeat(stars)}${"☆".repeat(3 - stars)})`;
+    }
+    if (controls.quizOptions) {
+      controls.quizOptions.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 20px; background: #f8fafc; border-radius: 16px;">
+          <h3 style="font-family: var(--font-kid); font-size: 1.5rem; color: #064e3b; margin-bottom: 8px;">அருமை! ஔவையாரின் நல்வழிகளை உணர்ந்துள்ளீர்கள்! 🏆</h3>
+          <p style="font-family: var(--font-tamil); color: #475569; margin-bottom: 16px;">இன்றைய ஆத்திசூடி வினாடி வினா முயற்சி உங்கள் கணக்கில் சேமிக்கப்பட்டுள்ளது.</p>
+          <button class="studio-btn primary" id="restart-aathichudi-quiz-btn" style="max-width: 260px; margin: 0 auto; background: linear-gradient(135deg, #059669, #0d9488);">🔄 மீண்டும் பயிற்சி செய்க (Restart)</button>
+        </div>
+      `;
+      const restartBtn = document.getElementById("restart-aathichudi-quiz-btn");
+      if (restartBtn) restartBtn.addEventListener("click", () => startQuiz());
+    }
+    if (controls.quizFeedback) controls.quizFeedback.style.display = "none";
+    if (controls.quizNextBtn) controls.quizNextBtn.disabled = true;
+
+    if (window.KidAudioFX) {
+      KidAudioFX.playSuccessFanfare();
+      KidAudioFX.playStarDing(stars);
+    }
+    if (window.App) App.triggerConfetti();
+  }
+
   const Aathichudi = {
-    open() {
+    open(mode = "read") {
       populateSections();
       populateVerses();
-      render();
+      switchMode(mode);
     },
-
+    switchMode,
     speak() {
       const verse = getCurrentVerse();
       if (verse && window.KidSpeechService) {
         KidSpeechService.speakTamil(verse.line);
       }
     },
-
+    speakQuizQuestion() {
+      const q = quizQuestions[quizCurrentIndex];
+      if (q && window.KidSpeechService) {
+        KidSpeechService.speakTamil(q.question);
+      }
+    },
     listen() {
       const verse = getCurrentVerse();
       const controls = ui();
@@ -311,9 +618,13 @@
       isListening = true;
       if (controls.micBtn) controls.micBtn.classList.add("listening");
 
-      controls.spoken.textContent = "கேட்கிறது... ஆத்திசூடியைப் பேசவும் (Listening...)";
-      controls.spoken.classList.remove("empty");
-      controls.result.innerHTML = `<span class="listening-pulse">🔴</span> <strong>கேட்கிறேன்…</strong> தெளிவாக வாசியுங்கள்.`;
+      if (controls.spoken) {
+        controls.spoken.textContent = "கேட்கிறது... ஆத்திசூடியைப் பேசவும் (Listening...)";
+        controls.spoken.classList.remove("empty");
+      }
+      if (controls.result) {
+        controls.result.innerHTML = `<span class="listening-pulse">🔴</span> <strong>கேட்கிறேன்…</strong> தெளிவாக வாசியுங்கள்.`;
+      }
 
       if (window.KidSpeechService) {
         KidSpeechService.setInputLanguage("ta-IN", { persist: false });
@@ -343,7 +654,9 @@
           onError: (error) => {
             isListening = false;
             if (controls.micBtn) controls.micBtn.classList.remove("listening");
-            controls.result.innerHTML = `⚠️ குரல் சேவை கிடைக்கவில்லை (${error}). தமிழ் microphone அனுமதியைச் சரிபார்க்கவும்.`;
+            if (controls.result) {
+              controls.result.innerHTML = `⚠️ குரல் சேவை கிடைக்கவில்லை (${error}). தமிழ் microphone அனுமதியைச் சரிபார்க்கவும்.`;
+            }
           },
           onEnd: () => {
             isListening = false;
@@ -387,8 +700,10 @@
       if (!controls.manualInput) return;
       const text = controls.manualInput.value.trim();
       if (text) {
-        controls.spoken.textContent = text;
-        controls.spoken.classList.remove("empty");
+        if (controls.spoken) {
+          controls.spoken.textContent = text;
+          controls.spoken.classList.remove("empty");
+        }
         evaluateTranscript(text);
       }
     }
@@ -401,6 +716,9 @@
     populateVerses();
 
     const controls = ui();
+    if (controls.tabReadBtn) controls.tabReadBtn.addEventListener("click", () => switchMode("read"));
+    if (controls.tabQuizBtn) controls.tabQuizBtn.addEventListener("click", () => switchMode("quiz"));
+
     if (controls.listenBtn) controls.listenBtn.addEventListener("click", () => Aathichudi.speak());
     if (controls.micBtn) controls.micBtn.addEventListener("click", () => Aathichudi.listen());
     if (controls.prevBtn) controls.prevBtn.addEventListener("click", () => Aathichudi.next(-1));
@@ -416,5 +734,8 @@
         }
       });
     }
+
+    if (controls.quizAudioBtn) controls.quizAudioBtn.addEventListener("click", () => Aathichudi.speakQuizQuestion());
+    if (controls.quizNextBtn) controls.quizNextBtn.addEventListener("click", () => nextQuizQuestion());
   });
 }());

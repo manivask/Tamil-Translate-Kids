@@ -53,19 +53,33 @@ const KidSpeechService = {
 
   setupVoices() {
     if (!window.speechSynthesis) return;
-    const voices = window.speechSynthesis.getVoices();
-    if (!voices || voices.length === 0) return;
+    try {
+      const voices = window.speechSynthesis.getVoices() || [];
+      if (!voices || voices.length === 0) return;
 
-    this.tamilVoice = 
-      voices.find(v => v.lang.startsWith("ta") && (v.name.toLowerCase().includes("kani") || v.name.toLowerCase().includes("female") || v.name.toLowerCase().includes("natural"))) ||
-      voices.find(v => v.lang.startsWith("ta") || v.name.toLowerCase().includes("tamil")) ||
-      null;
+      this.tamilVoice = 
+        voices.find(v => {
+          const l = (v.lang || "").toLowerCase().replace("_", "-");
+          const n = (v.name || "").toLowerCase();
+          return (l.startsWith("ta") && (n.includes("kani") || n.includes("female") || n.includes("natural") || n.includes("valluvar") || n.includes("latha") || n.includes("vani") || n.includes("iniyan"))) ||
+                 (n.includes("tamil") || n.includes("தமிழ்"));
+        }) ||
+        voices.find(v => {
+          const l = (v.lang || "").toLowerCase().replace("_", "-");
+          return l.startsWith("ta") || l === "ta-in" || l === "ta-lk" || l === "ta-sg";
+        }) ||
+        null;
 
-    this.englishVoice = 
-      voices.find(v => v.lang.startsWith("en") && (v.name.toLowerCase().includes("kid") || v.name.toLowerCase().includes("child") || v.name.toLowerCase().includes("samantha") || v.name.toLowerCase().includes("natural"))) ||
-      voices.find(v => v.lang.startsWith("en-US")) ||
-      voices.find(v => v.lang.startsWith("en")) ||
-      null;
+      this.englishVoice = 
+        voices.find(v => {
+          const l = (v.lang || "").toLowerCase().replace("_", "-");
+          const n = (v.name || "").toLowerCase();
+          return l.startsWith("en") && (n.includes("kid") || n.includes("child") || n.includes("samantha") || n.includes("natural") || n.includes("female"));
+        }) ||
+        voices.find(v => (v.lang || "").toLowerCase().replace("_", "-") === "en-us") ||
+        voices.find(v => (v.lang || "").toLowerCase().startsWith("en")) ||
+        null;
+    } catch (_) {}
   },
 
   isSupported() {
@@ -118,6 +132,9 @@ const KidSpeechService = {
 
   stopSpeaking() {
     this.speechGeneration += 1;
+    if (window.responsiveVoice && typeof responsiveVoice.cancel === "function") {
+      try { responsiveVoice.cancel(); } catch (_) {}
+    }
     if (this.audioPlayer) {
       try {
         this.audioPlayer.pause();
@@ -280,31 +297,50 @@ const KidSpeechService = {
     this.isSpeaking = true;
     const cleanText = tamilText.replace(/[()]/g, "").trim();
 
-    const playAudioFallback = () => {
+    // 1. Audio stream playback helper using reliable tw-ob endpoint
+    const playAudioStream = () => {
       if (generation !== this.speechGeneration) return;
       try {
         if (!this.audioPlayer) this.audioPlayer = new Audio();
         const encoded = encodeURIComponent(cleanText);
         this.audioPlayer.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ta&client=tw-ob&q=${encoded}`;
-        this.audioPlayer.playbackRate = 0.9;
-        this.audioPlayer.onended = () => { this.isSpeaking = false; };
-        this.audioPlayer.onerror = () => { this.isSpeaking = false; };
-        this.audioPlayer.play().catch(e => {
-          console.warn("Audio notice:", e);
-          this.isSpeaking = false;
-        });
+        this.audioPlayer.playbackRate = 0.92;
+        this.audioPlayer.onended = () => {
+          if (generation === this.speechGeneration) this.isSpeaking = false;
+        };
+        this.audioPlayer.onerror = (err) => {
+          console.warn("Tamil audio stream notice:", err);
+          if (generation === this.speechGeneration) this.isSpeaking = false;
+        };
+        if (typeof this.audioPlayer.play === "function") {
+          const playPromise = this.audioPlayer.play();
+          if (playPromise !== undefined && typeof playPromise.catch === "function") {
+            playPromise.catch(e => {
+              console.warn("Audio play promise notice:", e);
+              if (generation === this.speechGeneration) this.isSpeaking = false;
+            });
+          }
+        }
       } catch (err) {
-        console.warn("Audio error:", err);
-        this.isSpeaking = false;
+        console.warn("Audio stream error:", err);
+        if (generation === this.speechGeneration) this.isSpeaking = false;
       }
     };
 
+    // 2. Ensure SpeechSynthesis voices are initialized
+    this.setupVoices();
+
     if (window.speechSynthesis) {
       try {
+        window.speechSynthesis.cancel();
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+
         const utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = "ta-IN";
-        utterance.rate = 0.85;
-        utterance.pitch = 1.25; // Sweet, high-toned kid pitch
+        utterance.rate = 0.88;
+        utterance.pitch = 1.05;
         utterance.volume = 1.0;
 
         if (this.tamilVoice) {
@@ -314,52 +350,100 @@ const KidSpeechService = {
         let started = false;
         utterance.onstart = () => {
           started = true;
+          this.isSpeaking = true;
         };
         utterance.onend = () => {
-          this.isSpeaking = false;
+          if (generation === this.speechGeneration) this.isSpeaking = false;
         };
-        utterance.onerror = () => {
-          playAudioFallback();
+        utterance.onerror = (e) => {
+          console.warn("SpeechSynthesis Tamil notice:", e);
+          playAudioStream();
         };
 
         window.speechSynthesis.speak(utterance);
 
         setTimeout(() => {
-          if (!started && (!window.speechSynthesis.speaking)) {
-            playAudioFallback();
+          if (!this.tamilVoice || (!started && !window.speechSynthesis.speaking)) {
+            playAudioStream();
           }
-        }, 350);
-
+        }, 150);
+        return;
       } catch (e) {
-        playAudioFallback();
+        console.warn("SpeechSynthesis exception:", e);
+        playAudioStream();
+        return;
       }
-    } else {
-      playAudioFallback();
     }
+
+    playAudioStream();
   },
 
   speakEnglish(englishText) {
     if (!englishText) return;
     this.stopSpeaking();
     this.cancelListening();
+    const generation = this.speechGeneration;
     this.isSpeaking = true;
+
+    const playAudioStream = () => {
+      if (generation !== this.speechGeneration) return;
+      try {
+        if (!this.audioPlayer) this.audioPlayer = new Audio();
+        const encoded = encodeURIComponent(englishText);
+        this.audioPlayer.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=${encoded}`;
+        this.audioPlayer.playbackRate = 0.95;
+        this.audioPlayer.onended = () => {
+          if (generation === this.speechGeneration) this.isSpeaking = false;
+        };
+        this.audioPlayer.onerror = () => {
+          if (generation === this.speechGeneration) this.isSpeaking = false;
+        };
+        if (typeof this.audioPlayer.play === "function") {
+          const playPromise = this.audioPlayer.play();
+          if (playPromise !== undefined && typeof playPromise.catch === "function") {
+            playPromise.catch(() => {
+              if (generation === this.speechGeneration) this.isSpeaking = false;
+            });
+          }
+        }
+      } catch (_) {
+        if (generation === this.speechGeneration) this.isSpeaking = false;
+      }
+    };
+
+    this.setupVoices();
+
     if (window.speechSynthesis) {
       try {
+        window.speechSynthesis.cancel();
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+
         const utterance = new SpeechSynthesisUtterance(englishText);
         utterance.lang = "en-US";
-        utterance.rate = 0.88;
-        utterance.pitch = 1.15;
+        utterance.rate = 0.9;
+        utterance.pitch = 1.05;
+        utterance.volume = 1.0;
 
         if (this.englishVoice) {
           utterance.voice = this.englishVoice;
         }
-        utterance.onend = () => { this.isSpeaking = false; };
-        utterance.onerror = () => { this.isSpeaking = false; };
+        utterance.onend = () => {
+          if (generation === this.speechGeneration) this.isSpeaking = false;
+        };
+        utterance.onerror = () => {
+          playAudioStream();
+        };
         window.speechSynthesis.speak(utterance);
+        return;
       } catch (e) {
-        this.isSpeaking = false;
+        playAudioStream();
+        return;
       }
     }
+
+    playAudioStream();
   }
 };
 
