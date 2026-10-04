@@ -420,36 +420,7 @@ body {
   text-align: center;
 }
 
-/* Aathichudi Section Pills (Interactive Categories) */
-.aathichudi-section-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0 0 14px;
-  justify-content: center;
-}
-.aathichudi-pill {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: var(--radius-full);
-  padding: 6px 12px;
-  font-family: var(--font-tamil);
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.15s, color 0.15s;
-}
-.aathichudi-pill:hover {
-  background: rgba(255, 255, 255, 0.35);
-  transform: translateY(-1px);
-}
-.aathichudi-pill.active {
-  background: #ffffff;
-  color: #1e1b4b;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  border-color: #ffffff;
-}
+
 
 /* Manual typing row */
 .kural-manual-box, .aathichudi-manual-box { display: flex; gap: 8px; margin-top: 14px; }

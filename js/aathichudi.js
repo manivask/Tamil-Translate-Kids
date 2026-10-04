@@ -157,7 +157,6 @@
 
   const ui = () => ({
     sectionSelect: document.getElementById("aathichudi-section-select"),
-    sectionPills: document.getElementById("aathichudi-section-pills"),
     verseSelect: document.getElementById("aathichudi-verse-select"),
     number: document.getElementById("aathichudi-number"),
     text: document.getElementById("aathichudi-text"),
@@ -183,17 +182,6 @@
         sec => `<option value="${sec.id}">${sec.name}</option>`
       ).join("");
       controls.sectionSelect.value = currentSectionId;
-    }
-    if (controls.sectionPills) {
-      controls.sectionPills.innerHTML = SECTIONS.map(
-        sec => `<button type="button" class="aathichudi-pill ${sec.id === currentSectionId ? "active" : ""}" data-section="${sec.id}">${sec.name.split(" · ")[0]}</button>`
-      ).join("");
-      controls.sectionPills.querySelectorAll(".aathichudi-pill").forEach(pill => {
-        pill.addEventListener("click", () => {
-          const secId = pill.getAttribute("data-section");
-          Aathichudi.chooseSection(secId);
-        });
-      });
     }
   }
 
@@ -228,12 +216,6 @@
     controls.text.textContent = verse.line;
     if (controls.meaningTa) controls.meaningTa.textContent = `💡 ${verse.meaningTa}`;
     if (controls.meaningEn) controls.meaningEn.textContent = `📖 ${verse.meaningEn}`;
-
-    if (controls.sectionPills) {
-      controls.sectionPills.querySelectorAll(".aathichudi-pill").forEach(pill => {
-        pill.classList.toggle("active", pill.getAttribute("data-section") === currentSectionId);
-      });
-    }
 
     if (!isListening) {
       controls.spoken.textContent = "மைக்ரோஃபோனை அழுத்தி ஆத்திசூடியை வாசியுங்கள்...";
