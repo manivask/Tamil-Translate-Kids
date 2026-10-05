@@ -85,39 +85,88 @@
           </div>
         </div>
 
-        <!-- Right Side: Neat Login Form Card -->
+        <!-- Right Side: Neat Login Form Card with Camera QR Scanner -->
         <main class="login-card">
           <div class="login-mark">தமிழ்</div>
           <h2 class="login-card-title">வணக்கம்! வரவேற்கிறோம்</h2>
-          <p class="login-card-sub">உங்கள் வகுப்பையும் பெயரையும் தேர்ந்தெடுத்து தொடங்கவும்.</p>
+          <p class="login-card-sub" id="login-card-sub">உங்கள் QR அடையாள அட்டையைக் காட்டி உள்நுழையவும்.</p>
           <fieldset class="role-picker">
             <legend>Continue as</legend>
             <label><input type="radio" name="user-role" value="student" checked> <span>Student (மாணவர்)</span></label>
             <label><input type="radio" name="user-role" value="admin"> <span>Admin (நிர்வாகம்)</span></label>
           </fieldset>
-          <form id="student-login-form">
-            <label for="student-grade">வகுப்பு (Grade / Nilai)</label>
-            <select id="student-grade" required>
-              <option value="">Select your grade</option>
-              <option value="1">Nilai 1</option>
-              <option value="2">Nilai 2</option>
-              <option value="3">Nilai 3</option>
-              <option value="4">Nilai 4</option>
-              <option value="5">Nilai 5</option>
-              <option value="6">Nilai 6</option>
-              <option value="7">Nilai 7</option>
-              <option value="8">Nilai 8</option>
-            </select>
-            <label for="student-name">மாணவர் பெயர் (Student Name)</label>
-            <select id="student-name" required disabled>
-              <option value="">Select your grade first</option>
-            </select>
-            <p class="login-message" id="login-message" aria-live="polite"></p>
-            <button class="login-continue" type="submit">கற்றலைத் தொடங்கு (Start Learning) 🚀</button>
-          </form>
+
+          <!-- Student Camera QR Scanner Panel -->
+          <div id="student-qr-panel">
+            <div class="qr-scanner-viewport" id="qr-scanner-viewport">
+              <video id="qr-video" playsinline muted autoplay></video>
+              <canvas id="qr-canvas" style="display:none;"></canvas>
+              <div class="qr-aim-overlay">
+                <div class="qr-aim-corners"></div>
+                <div class="qr-scan-laser"></div>
+              </div>
+            </div>
+
+            <div class="qr-scanner-status-box" id="qr-status-box">
+              <span class="qr-pulse-dot"></span>
+              <span id="qr-scan-status">📸 கேமராவில் உங்கள் QR அடையாள அட்டையைக் காட்டவும்...</span>
+            </div>
+
+            <div class="qr-scanner-actions">
+              <button type="button" class="qr-action-btn" id="qr-flip-camera-btn">🔄 கேமரா மாற்று (Flip)</button>
+              <button type="button" class="qr-action-btn" id="qr-restart-cam-btn">▶️ மீண்டும் தொடங்கு (Restart)</button>
+            </div>
+
+            <div class="qr-view-badges-row">
+              <a href="students-qr.html" target="_blank" class="qr-link-badge">
+                <span>🖨️</span> அனைத்து மாணவர் QR அட்டைகள் (View QR Badges) ➜
+              </a>
+            </div>
+
+            <!-- Fallback manual student selector -->
+            <div class="manual-login-toggle-wrap">
+              <button type="button" class="manual-login-toggle-btn" id="toggle-manual-student-login">
+                ⌨️ QR அட்டை இல்லையா? கைமுறையாகத் தேர்வு செய்க
+              </button>
+            </div>
+
+            <form id="student-login-form" style="display: none;">
+              <label for="student-grade">வகுப்பு (Grade / Nilai)</label>
+              <select id="student-grade">
+                <option value="">Select your grade</option>
+                <option value="1">Nilai 1</option>
+                <option value="2">Nilai 2</option>
+                <option value="3">Nilai 3</option>
+                <option value="4">Nilai 4</option>
+                <option value="5">Nilai 5</option>
+                <option value="6">Nilai 6</option>
+                <option value="7">Nilai 7</option>
+                <option value="8">Nilai 8</option>
+              </select>
+              <label for="student-name">மாணவர் பெயர் (Student Name)</label>
+              <select id="student-name" disabled>
+                <option value="">Select your grade first</option>
+              </select>
+              <p class="login-message" id="login-message" aria-live="polite"></p>
+              <button class="login-continue" type="submit">கற்றலைத் தொடங்கு (Start Learning) 🚀</button>
+            </form>
+          </div>
+
+          <!-- Admin Login Panel with Credentials (admin / TBTA_admin) -->
           <div id="admin-login-panel" hidden>
-            <p class="admin-note">Admin access is enabled for this prototype. View analytics and student progress.</p>
-            <button class="login-continue" id="admin-continue-btn" type="button">Open Admin Dashboard</button>
+            <form id="admin-login-form">
+              <label for="admin-username">பயனர்பெயர் (Username)</label>
+              <input type="text" id="admin-username" placeholder="Enter username (admin)" required autocomplete="username">
+              <label for="admin-password">கடவுச்சொல் (Password)</label>
+              <input type="password" id="admin-password" placeholder="Enter password (TBTA_admin)" required autocomplete="current-password">
+              <p class="login-message" id="admin-login-message" aria-live="polite"></p>
+              <button class="login-continue" id="admin-continue-btn" type="submit">நிர்வாக உள்நுழைவு (Sign In) 🚀</button>
+            </form>
+            <div style="margin-top: 14px; text-align: center;">
+              <a href="students-qr.html" target="_blank" class="qr-link-badge">
+                <span>🖨️</span> அனைத்து மாணவர் QR அட்டைகள் (Student QR Badges) ➜
+              </a>
+            </div>
           </div>
         </main>
       </div>
@@ -826,16 +875,18 @@
   </section>
 
   <!-- Application Scripts -->
-  <script src="js/logger.js?v=20261004-tts-v5"></script>
-  <script src="js/voice_recorder.js?v=20261004-tts-v5"></script>
-  <script src="js/sentences.js?v=20261004-tts-v5"></script>
-  <script src="js/matcher.js?v=20261004-tts-v5"></script>
-  <script src="js/audio.js?v=20261004-tts-v5"></script>
-  <script src="js/speech.js?v=20261004-tts-v5"></script>
-  <script src="js/thirukkural.js?v=20261004-tts-v5"></script>
-  <script src="js/aathichudi.js?v=20261004-tts-v5"></script>
-  <script src="js/reading-club.js?v=20261004-tts-v5"></script>
-  <script src="js/chat-agent.js?v=20261004-tts-v5"></script>
-  <script src="js/app.js?v=20261004-tts-v5"></script>
+  <script src="js/lib/jsqr.min.js"></script>
+  <script src="js/lib/qrcode.min.js"></script>
+  <script src="js/logger.js?v=20261004-qr-v1"></script>
+  <script src="js/voice_recorder.js?v=20261004-qr-v1"></script>
+  <script src="js/sentences.js?v=20261004-qr-v1"></script>
+  <script src="js/matcher.js?v=20261004-qr-v1"></script>
+  <script src="js/audio.js?v=20261004-qr-v1"></script>
+  <script src="js/speech.js?v=20261004-qr-v1"></script>
+  <script src="js/thirukkural.js?v=20261004-qr-v1"></script>
+  <script src="js/aathichudi.js?v=20261004-qr-v1"></script>
+  <script src="js/reading-club.js?v=20261004-qr-v1"></script>
+  <script src="js/chat-agent.js?v=20261004-qr-v1"></script>
+  <script src="js/app.js?v=20261004-qr-v1"></script>
 </body>
 </html>

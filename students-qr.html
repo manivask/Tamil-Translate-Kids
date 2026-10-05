@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>மாணவர் QR அடையாள அட்டைகள் | Student QR Badges - TBTA</title>
+  <meta name="description" content="Printable and interactive QR Code Badges for all 94 students across Nilai 1 to Nilai 8.">
+  <meta name="theme-color" content="#2B1055">
+  
+  <link rel="stylesheet" href="css/style.css?v=20261004-qr-v1">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪪</text></svg>">
+
+  <style>
+    /* QR Badges Page Specific Styles */
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-light);
+      padding: 20px 16px 40px;
+    }
+
+    .qr-page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .qr-header-card {
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--text-dark);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--glass-shadow);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .qr-header-titles {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .qr-brand-logo {
+      font-size: 3rem;
+      background: #EDE9FE;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+    }
+
+    .qr-page-title {
+      font-family: var(--font-kid);
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #1E1B4B;
+      line-height: 1.2;
+    }
+
+    .qr-page-sub {
+      font-family: var(--font-tamil);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #4B5563;
+      margin-top: 4px;
+    }
+
+    .qr-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .qr-btn {
+      padding: 10px 18px;
+      border-radius: var(--radius-full);
+      border: none;
+      font-family: var(--font-tamil);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-decoration: none;
+    }
+
+    .qr-btn.primary {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: #FFF;
+      box-shadow: 0 4px 14px rgba(108, 92, 231, 0.35);
+    }
+
+    .qr-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(108, 92, 231, 0.45);
+    }
+
+    .qr-btn.secondary {
+      background: #F1F5F9;
+      color: #1E293B;
+      border: 1px solid #CBD5E1;
+    }
+
+    .qr-btn.secondary:hover {
+      background: #E2E8F0;
+      transform: translateY(-1px);
+    }
+
+    /* Filter & Search Bar */
+    .qr-controls-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .qr-search-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .qr-search-input {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.95);
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      outline: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .qr-search-input:focus {
+      border-color: var(--accent-yellow);
+      background: #FFF;
+    }
+
+    .qr-grade-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .grade-tab-btn {
+      background: rgba(255, 255, 255, 0.18);
+      color: #FFF;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
+      font-family: var(--font-tamil);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .grade-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .grade-tab-btn.active {
+      background: #FFF;
+      color: #1E1B4B;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Badges Grid */
+    .qr-badges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 20px;
+    }
+
+    /* Badge Card */
+    .student-badge-card {
+      background: #FFFFFF;
+      color: #1E293B;
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #E2E8F0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      page-break-inside: avoid;
+    }
+
+    .student-badge-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.28);
+    }
+
+    .badge-top-strip {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #E2E8F0;
+    }
+
+    .badge-school-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #6C5CE7;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-kid);
+      text-transform: uppercase;
+    }
+
+    .badge-grade-pill {
+      font-family: var(--font-tamil);
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: #EDE9FE;
+      color: #5B21B6;
+    }
+
+    .badge-grade-pill.grade-1 { background: #FEF3C7; color: #92400E; }
+    .badge-grade-pill.grade-2 { background: #EDE9FE; color: #5B21B6; }
+    .badge-grade-pill.grade-3 { background: #DCFCE7; color: #166534; }
+    .badge-grade-pill.grade-4 { background: #E0F2FE; color: #0369A1; }
+    .badge-grade-pill.grade-5 { background: #FCE7F3; color: #9D174D; }
+    .badge-grade-pill.grade-6 { background: #FFEDD5; color: #9A3412; }
+    .badge-grade-pill.grade-7 { background: #F3E8FF; color: #6B21A8; }
+    .badge-grade-pill.grade-8 { background: #CCFBF1; color: #115E59; }
+
+    .badge-student-name {
+      font-family: var(--font-kid);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0F172A;
+      line-height: 1.2;
+      margin: 2px 0 8px;
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge-qr-container {
+      background: #F8FAFC;
+      border: 2px solid #CBD5E1;
+      border-radius: 14px;
+      padding: 10px;
+      margin: 4px 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 170px;
+      height: 170px;
+    }
+
+    .badge-qr-container canvas, .badge-qr-container img {
+      max-width: 150px;
+      max-height: 150px;
+      display: block;
+    }
+
+    .badge-id-tag {
+      font-family: var(--font-main);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #64748B;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-scan-hint {
+      font-family: var(--font-tamil);
+      font-size: 0.72rem;
+      color: #059669;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .no-results-box {
+      grid-column: 1 / -1;
+      background: rgba(255, 255, 255, 0.95);
+      color: #1E293B;
+      border-radius: var(--radius-lg);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    /* Print Optimized Styling */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+
+      .bg-bubbles, #confetti-canvas, .qr-controls-card, .qr-header-actions {
+        display: none !important;
+      }
+
+      .qr-header-card {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 10px 0 !important;
+        margin-bottom: 12px !important;
+      }
+
+      .qr-badges-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 12px !important;
+      }
+
+      .student-badge-card {
+        border: 1px dashed #64748B !important;
+        box-shadow: none !important;
+        padding: 12px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+
+      .badge-qr-container {
+        border-color: #94A3B8 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="qr-page-container">
+    <!-- Top Header Card -->
+    <header class="qr-header-card">
+      <div class="qr-header-titles">
+        <div class="qr-brand-logo">🪪</div>
+        <div>
+          <h1 class="qr-page-title">மாணவர் QR அடையாள அட்டைகள் (Student QR Badges)</h1>
+          <p class="qr-page-sub">அனைத்து 94 மாணவர்களுக்கான தனித்துவமான QR உள்நுழைவு அடையாள அட்டைகள் (Nilai 1 - 8)</p>
+        </div>
+      </div>
+      <div class="qr-header-actions">
+        <button class="qr-btn primary" id="print-badges-btn">
+          <span>🖨️</span> அச்சிடுக (Print Badges)
+        </button>
+        <a href="index.html" class="qr-btn secondary">
+          <span>🚀</span> மாணவர் உள்நுழைவு (App Login)
+        </a>
+      </div>
+    </header>
+
+    <!-- Filter & Search Controls -->
+    <section class="qr-controls-card" aria-label="Student Filters">
+      <div class="qr-search-row">
+        <input type="text" id="qr-search-input" class="qr-search-input" placeholder="🔍 மாணவர் பெயரைத் தேடவும் (Search student by name)..." aria-label="Search student">
+      </div>
+      <div class="qr-grade-tabs" id="qr-grade-tabs">
+        <button class="grade-tab-btn active" data-grade="all">அனைத்தும் (All 94)</button>
+        <button class="grade-tab-btn" data-grade="1">1-ஆம் வகுப்பு (Nilai 1 · 9)</button>
+        <button class="grade-tab-btn" data-grade="2">2-ஆம் வகுப்பு (Nilai 2 · 20)</button>
+        <button class="grade-tab-btn" data-grade="3">3-ஆம் வகுப்பு (Nilai 3 · 20)</button>
+        <button class="grade-tab-btn" data-grade="4">4-ஆம் வகுப்பு (Nilai 4 · 19)</button>
+        <button class="grade-tab-btn" data-grade="5">5-ஆம் வகுப்பு (Nilai 5 · 9)</button>
+        <button class="grade-tab-btn" data-grade="6">6-ஆம் வகுப்பு (Nilai 6 · 8)</button>
+        <button class="grade-tab-btn" data-grade="7">7-ஆம் வகுப்பு (Nilai 7 · 2)</button>
+        <button class="grade-tab-btn" data-grade="8">8-ஆம் வகுப்பு (Nilai 8 · 7)</button>
+      </div>
+    </section>
+
+    <!-- Badges Grid Container -->
+    <main class="qr-badges-grid" id="qr-badges-grid">
+      <div class="no-results-box">
+        <h3>மாணவர் பட்டியலை ஏற்றுகிறது (Loading student badges)...</h3>
+      </div>
+    </main>
+  </div>
+
+  <!-- QR Code Generation Script -->
+  <script src="js/lib/qrcode.min.js"></script>
+  <script>
+    (function () {
+      let allStudents = [];
+      let currentGradeFilter = "all";
+      let currentSearchQuery = "";
+
+      const grid = document.getElementById("qr-badges-grid");
+      const searchInput = document.getElementById("qr-search-input");
+      const gradeTabs = document.querySelectorAll(".grade-tab-btn");
+      const printBtn = document.getElementById("print-badges-btn");
+
+      async function init() {
+        try {
+          const res = await fetch("data/students/roster.json");
+          const data = await res.json();
+          allStudents = data.students || [];
+          renderBadges();
+        } catch (err) {
+          console.error("Failed to load roster:", err);
+          grid.innerHTML = `<div class="no-results-box"><h3>மாணவர் பட்டியலை ஏற்ற முடியவில்லை.</h3></div>`;
+        }
+
+        searchInput.addEventListener("input", (e) => {
+          currentSearchQuery = e.target.value.trim().toLowerCase();
+          renderBadges();
+        });
+
+        gradeTabs.forEach(tab => {
+          tab.addEventListener("click", () => {
+            gradeTabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            currentGradeFilter = tab.getAttribute("data-grade");
+            renderBadges();
+          });
+        });
+
+        if (printBtn) {
+          printBtn.addEventListener("click", () => window.print());
+        }
+      }
+
+      function renderBadges() {
+        let filtered = allStudents.filter(s => {
+          const matchesGrade = (currentGradeFilter === "all" || String(s.grade) === String(currentGradeFilter));
+          const fullName = `${s.firstName} ${s.lastName}`.toLowerCase();
+          const matchesSearch = !currentSearchQuery || fullName.includes(currentSearchQuery);
+          return matchesGrade && matchesSearch;
+        });
+
+        if (!filtered.length) {
+          grid.innerHTML = `<div class="no-results-box"><h3>பொருத்தமான மாணவர்கள் எவரும் இல்லை (No students found)</h3></div>`;
+          return;
+        }
+
+        grid.innerHTML = "";
+
+        filtered.forEach((student, index) => {
+          const fullName = `${student.firstName} ${student.lastName}`;
+          const studentId = `TBTA-G${student.grade}-${String(index + 1).padStart(2, "0")}`;
+          
+          // QR payload contains structured identification
+          const qrPayload = JSON.stringify({
+            type: "TBTA_STUDENT",
+            firstName: student.firstName,
+            lastName: student.lastName,
+            grade: student.grade,
+            id: studentId
+          });
+
+          const card = document.createElement("div");
+          card.className = "student-badge-card";
+          card.innerHTML = `
+            <div class="badge-top-strip">
+              <span class="badge-school-tag">🦜 TBTA TAMIL</span>
+              <span class="badge-grade-pill grade-${student.grade}">${student.grade}-ஆம் வகுப்பு</span>
+            </div>
+            <div class="badge-student-name">${fullName}</div>
+            <div class="badge-qr-container" id="qr-box-${student.grade}-${index}"></div>
+            <div class="badge-id-tag">ID: ${studentId}</div>
+            <div class="badge-scan-hint">📸 Scan to Login</div>
+          `;
+
+          grid.appendChild(card);
+
+          // Generate QR Code into container
+          const qrBox = card.querySelector(`#qr-box-${student.grade}-${index}`);
+          if (window.QRCode && qrBox) {
+            new QRCode(qrBox, {
+              text: qrPayload,
+              width: 140,
+              height: 140,
+              colorDark: "#1E1B4B",
+              colorLight: "#FFFFFF",
+              correctLevel: QRCode.CorrectLevel.M
+            });
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
+</body>
+</html>

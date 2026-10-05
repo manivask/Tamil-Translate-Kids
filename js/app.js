@@ -113,7 +113,19 @@ const App = {
       studentName: document.getElementById("student-name"),
       loginMessage: document.getElementById("login-message"),
       roleInputs: document.querySelectorAll('input[name="user-role"]'),
+      studentQrPanel: document.getElementById("student-qr-panel"),
+      qrVideo: document.getElementById("qr-video"),
+      qrCanvas: document.getElementById("qr-canvas"),
+      qrScanStatus: document.getElementById("qr-scan-status"),
+      qrStatusBox: document.getElementById("qr-status-box"),
+      qrFlipCameraBtn: document.getElementById("qr-flip-camera-btn"),
+      qrRestartCamBtn: document.getElementById("qr-restart-cam-btn"),
+      toggleManualStudentLogin: document.getElementById("toggle-manual-student-login"),
       adminLoginPanel: document.getElementById("admin-login-panel"),
+      adminLoginForm: document.getElementById("admin-login-form"),
+      adminUsername: document.getElementById("admin-username"),
+      adminPassword: document.getElementById("admin-password"),
+      adminLoginMessage: document.getElementById("admin-login-message"),
       adminContinueBtn: document.getElementById("admin-continue-btn"),
       adminLogoutBtn: document.getElementById("admin-logout-btn"),
       adminSummary: document.getElementById("admin-summary"),
@@ -150,9 +162,42 @@ const App = {
 
   bindEvents() {
     this.elements.roleInputs.forEach(input => input.addEventListener("change", () => this.toggleRole()));
-    this.elements.studentGrade.addEventListener("change", () => this.populateStudentNames());
-    this.elements.studentLoginForm.addEventListener("submit", event => { event.preventDefault(); this.loginStudent(); });
-    this.elements.adminContinueBtn.addEventListener("click", () => this.openAdmin());
+    if (this.elements.studentGrade) {
+      this.elements.studentGrade.addEventListener("change", () => this.populateStudentNames());
+    }
+    if (this.elements.studentLoginForm) {
+      this.elements.studentLoginForm.addEventListener("submit", event => { event.preventDefault(); this.loginStudent(); });
+    }
+    if (this.elements.adminLoginForm) {
+      this.elements.adminLoginForm.addEventListener("submit", event => {
+        event.preventDefault();
+        this.handleAdminAuth();
+      });
+    }
+    if (this.elements.toggleManualStudentLogin) {
+      this.elements.toggleManualStudentLogin.addEventListener("click", () => {
+        const form = this.elements.studentLoginForm;
+        if (form) {
+          const isHidden = (form.style.display === "none" || form.hidden);
+          form.style.display = isHidden ? "block" : "none";
+          this.elements.toggleManualStudentLogin.textContent = isHidden ?
+            "📷 கேமரா QR ஸ்கேனருக்குத் திரும்பு (Back to QR Scanner)" :
+            "⌨️ QR அட்டை இல்லையா? கைமுறையாகத் தேர்வு செய்க";
+        }
+      });
+    }
+    if (this.elements.qrFlipCameraBtn) {
+      this.elements.qrFlipCameraBtn.addEventListener("click", () => this.flipQrCamera());
+    }
+    if (this.elements.qrRestartCamBtn) {
+      this.elements.qrRestartCamBtn.addEventListener("click", () => {
+        this.stopQrScanner();
+        this.startQrScanner();
+      });
+    }
+    if (this.elements.adminContinueBtn) {
+      this.elements.adminContinueBtn.addEventListener("click", () => this.handleAdminAuth());
+    }
     this.elements.adminLogoutBtn.addEventListener("click", () => this.logout());
     this.elements.logoutBtn.addEventListener("click", () => this.logout());
     if (this.elements.studentSidebarLogoutBtn) {
@@ -416,6 +461,12 @@ const App = {
     if (this.elements.screenAathichudi) this.elements.screenAathichudi.classList.toggle("active", screenName === "aathichudi");
     if (this.elements.screenReadingClub) this.elements.screenReadingClub.classList.toggle("active", screenName === "reading-club");
 
+    if (screenName === "login") {
+      this.startQrScanner();
+    } else {
+      this.stopQrScanner();
+    }
+
     if (screenName === "topic") {
       this.updateStudentDashboard();
     }
@@ -442,9 +493,206 @@ const App = {
 
   toggleRole() {
     const isAdmin = [...this.elements.roleInputs].find(input => input.checked).value === "admin";
-    this.elements.studentLoginForm.hidden = isAdmin;
-    this.elements.adminLoginPanel.hidden = !isAdmin;
-    this.elements.loginMessage.textContent = "";
+    if (this.elements.studentQrPanel) this.elements.studentQrPanel.hidden = isAdmin;
+    if (this.elements.adminLoginPanel) this.elements.adminLoginPanel.hidden = !isAdmin;
+    if (this.elements.loginMessage) this.elements.loginMessage.textContent = "";
+    if (this.elements.adminLoginMessage) this.elements.adminLoginMessage.textContent = "";
+
+    if (isAdmin) {
+      this.stopQrScanner();
+    } else {
+      this.startQrScanner();
+    }
+  },
+
+  // --- Live Camera QR Code Scanner Engine ---
+  qrStream: null,
+  qrScanning: false,
+  qrFacingMode: "environment",
+  qrAnimationId: null,
+
+  async startQrScanner() {
+    if (this.currentScreen !== "login" || this.qrScanning) return;
+    const isStudent = [...this.elements.roleInputs].some(i => i.checked && i.value === "student");
+    if (!isStudent) return;
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      if (this.elements.qrScanStatus) {
+        this.elements.qrScanStatus.textContent = "⚠️ கேமரா அணுகல் இல்லை. கீழே கைமுறையாகத் தேர்வு செய்க.";
+      }
+      return;
+    }
+
+    try {
+      this.qrScanning = true;
+      if (this.elements.qrScanStatus) {
+        this.elements.qrScanStatus.textContent = "📷 கேமரா தயாராகிறது...";
+      }
+
+      const constraints = {
+        video: {
+          facingMode: this.qrFacingMode,
+          width: { ideal: 640 },
+          height: { ideal: 480 }
+        }
+      };
+
+      let stream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+      } catch (err) {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      }
+
+      this.qrStream = stream;
+      if (this.elements.qrVideo) {
+        this.elements.qrVideo.srcObject = stream;
+        this.elements.qrVideo.setAttribute("playsinline", "true");
+        await this.elements.qrVideo.play().catch(() => {});
+      }
+
+      if (this.elements.qrScanStatus) {
+        this.elements.qrScanStatus.textContent = "📸 உங்கள் QR அடையாள அட்டையைக் கேமராவில் காட்டவும்...";
+      }
+
+      this.scanQrFrame();
+    } catch (err) {
+      console.warn("QR Camera start notice:", err);
+      this.qrScanning = false;
+      if (this.elements.qrScanStatus) {
+        this.elements.qrScanStatus.textContent = "⚠️ கேமரா அனுமதி தேவை. கீழே கைமுறையாகத் தேர்வு செய்யவும்.";
+      }
+    }
+  },
+
+  stopQrScanner() {
+    this.qrScanning = false;
+    if (this.qrAnimationId) {
+      cancelAnimationFrame(this.qrAnimationId);
+      this.qrAnimationId = null;
+    }
+    if (this.qrStream) {
+      this.qrStream.getTracks().forEach(track => track.stop());
+      this.qrStream = null;
+    }
+    if (this.elements.qrVideo) {
+      this.elements.qrVideo.srcObject = null;
+    }
+  },
+
+  flipQrCamera() {
+    this.qrFacingMode = (this.qrFacingMode === "environment") ? "user" : "environment";
+    this.stopQrScanner();
+    this.startQrScanner();
+  },
+
+  scanQrFrame() {
+    if (!this.qrScanning) return;
+    const video = this.elements.qrVideo;
+    const canvas = this.elements.qrCanvas;
+
+    if (video && canvas && video.readyState === video.HAVE_ENOUGH_DATA) {
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      if (ctx) {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        if (typeof window.jsQR === "function") {
+          const code = window.jsQR(imageData.data, imageData.width, imageData.height, {
+            inversionAttempts: "dontInvert"
+          });
+
+          if (code && code.data) {
+            const success = this.handleScannedQr(code.data);
+            if (success) return;
+          }
+        }
+      }
+    }
+
+    this.qrAnimationId = requestAnimationFrame(() => this.scanQrFrame());
+  },
+
+  handleScannedQr(qrData) {
+    if (!qrData) return false;
+    let matchedStudent = null;
+
+    // 1. Try parsing JSON format
+    try {
+      const parsed = JSON.parse(qrData);
+      if (parsed.firstName && parsed.grade) {
+        matchedStudent = this.students.find(s =>
+          s.firstName.toLowerCase() === parsed.firstName.toLowerCase() &&
+          Number(s.grade) === Number(parsed.grade)
+        );
+      } else if (parsed.name && parsed.grade) {
+        const parts = parsed.name.trim().split(" ");
+        const first = parts[0];
+        matchedStudent = this.students.find(s =>
+          s.firstName.toLowerCase() === first.toLowerCase() &&
+          Number(s.grade) === Number(parsed.grade)
+        );
+      }
+    } catch (_) {}
+
+    // 2. Try parsing delimited string: TBTA|grade|firstName|lastName or grade|firstName|lastName
+    if (!matchedStudent && typeof qrData === "string") {
+      const tokens = qrData.split(/[:|]/);
+      if (tokens.length >= 3) {
+        const gradeCandidate = Number(tokens[1]) || Number(tokens[0]);
+        const nameCandidate = (tokens[2] || tokens[1] || "").toLowerCase();
+        matchedStudent = this.students.find(s =>
+          Number(s.grade) === gradeCandidate &&
+          s.firstName.toLowerCase() === nameCandidate
+        );
+      }
+    }
+
+    if (matchedStudent) {
+      this.stopQrScanner();
+      KidAudioFX.playSuccessFanfare();
+      this.triggerConfetti();
+
+      if (this.elements.qrScanStatus) {
+        this.elements.qrScanStatus.textContent = `🎉 வணக்கம் ${matchedStudent.firstName} ${matchedStudent.lastName}!`;
+      }
+
+      this.currentStudent = matchedStudent;
+      this.currentGrade = Number(matchedStudent.grade);
+      this.saveSession();
+
+      setTimeout(() => {
+        this.selectGrade(this.currentGrade);
+      }, 600);
+      return true;
+    } else {
+      if (this.elements.qrScanStatus) {
+        this.elements.qrScanStatus.textContent = "⚠️ அறியப்படாத QR குறியீடு (Unrecognized QR). மீண்டும் காட்டவும்...";
+      }
+      return false;
+    }
+  },
+
+  handleAdminAuth() {
+    const user = (this.elements.adminUsername ? this.elements.adminUsername.value : "").trim();
+    const pass = (this.elements.adminPassword ? this.elements.adminPassword.value : "").trim();
+    const msg = this.elements.adminLoginMessage;
+
+    if (user === "admin" && pass === "TBTA_admin") {
+      if (msg) {
+        msg.textContent = "✅ அனுமதி வழங்கப்பட்டது (Access Granted)...";
+        msg.className = "login-message success";
+      }
+      this.stopQrScanner();
+      this.openAdmin();
+    } else {
+      if (msg) {
+        msg.textContent = "❌ தவறான பயனர்பெயர் அல்லது கடவுச்சொல் (Invalid admin credentials)";
+        msg.className = "login-message";
+      }
+    }
   },
 
   populateStudentNames() {
