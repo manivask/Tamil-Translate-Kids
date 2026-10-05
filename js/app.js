@@ -9,6 +9,7 @@ const App = {
   currentScreen: "login", // 'login' | 'topic' | 'practice' | 'kural' | 'admin'
   currentStudent: null,
   students: [],
+  clubEnrollments: {},
   currentGrade: 1,
   currentCategory: "all",
   currentMode: "medium", // 'easy' (50%), 'medium' (70%), 'hard' (85%)
@@ -48,6 +49,7 @@ const App = {
     }
 
     this.loadStudents();
+    this.loadClubEnrollments();
     this.showScreen("login");
   },
 
@@ -491,6 +493,43 @@ const App = {
     }
   },
 
+  async loadClubEnrollments() {
+    try {
+      const local = localStorage.getItem("tbta_student_club_enrollments");
+      if (local) {
+        this.clubEnrollments = JSON.parse(local);
+        return;
+      }
+      const response = await fetch("data/students/club_enrollments.json");
+      if (response.ok) {
+        this.clubEnrollments = await response.json();
+      }
+    } catch (err) {
+      console.warn("Could not load club enrollments:", err);
+    }
+  },
+
+  getStudentClubs(student) {
+    if (!student) return ["thirukkural", "aathichudi", "reading"];
+    const key = `${student.firstName}_${student.lastName}_G${student.grade}`;
+    
+    // Check localStorage first in case user recently edited clubs-management
+    try {
+      const raw = localStorage.getItem("tbta_student_club_enrollments");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed[key] && Array.isArray(parsed[key].clubs)) {
+          return parsed[key].clubs;
+        }
+      }
+    } catch (_) {}
+
+    if (this.clubEnrollments && this.clubEnrollments[key] && Array.isArray(this.clubEnrollments[key].clubs)) {
+      return this.clubEnrollments[key].clubs;
+    }
+    return ["thirukkural", "aathichudi", "reading"];
+  },
+
   toggleRole() {
     const isAdmin = [...this.elements.roleInputs].find(input => input.checked).value === "admin";
     if (this.elements.studentQrPanel) this.elements.studentQrPanel.hidden = isAdmin;
@@ -808,6 +847,39 @@ const App = {
     if (this.elements.statRcCount) this.elements.statRcCount.textContent = rcCount;
     if (this.elements.statQuizCount) this.elements.statQuizCount.textContent = quizCount;
     if (this.elements.totalStarsCount) this.elements.totalStarsCount.textContent = stars;
+
+    // Filter Heritage Studios based on student club enrollments
+    const enrolledClubs = this.getStudentClubs(this.currentStudent);
+    const hasKural = enrolledClubs.includes("thirukkural");
+    const hasAathichudi = enrolledClubs.includes("aathichudi");
+    const hasReading = enrolledClubs.includes("reading");
+
+    const kuralCard = document.querySelector(".heritage-studio-card.kural-theme");
+    const aathichudiCard = document.querySelector(".heritage-studio-card.aathichudi-theme");
+    const rcCard = document.querySelector(".heritage-studio-card.reading-club-theme");
+    const featuredHeritageBox = document.querySelector(".featured-heritage-box");
+
+    if (kuralCard) kuralCard.style.display = hasKural ? "flex" : "none";
+    if (aathichudiCard) aathichudiCard.style.display = hasAathichudi ? "flex" : "none";
+    if (rcCard) rcCard.style.display = hasReading ? "flex" : "none";
+
+    if (featuredHeritageBox) {
+      featuredHeritageBox.style.display = (hasKural || hasAathichudi || hasReading) ? "block" : "none";
+    }
+
+    // Toggle sidebar stat pills
+    if (this.elements.statKuralCount) {
+      const pill = this.elements.statKuralCount.closest(".student-stat-pill");
+      if (pill) pill.style.display = hasKural ? "flex" : "none";
+    }
+    if (this.elements.statAathichudiCount) {
+      const pill = this.elements.statAathichudiCount.closest(".student-stat-pill");
+      if (pill) pill.style.display = hasAathichudi ? "flex" : "none";
+    }
+    if (this.elements.statRcCount) {
+      const pill = this.elements.statRcCount.closest(".student-stat-pill");
+      if (pill) pill.style.display = hasReading ? "flex" : "none";
+    }
   },
 
   async openAdmin() {

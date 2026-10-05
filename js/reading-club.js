@@ -68,12 +68,13 @@
 
   let allSentences = [...DEFAULT_SENTENCES];
   let currentGrade = 1;
-  let currentLevel = "all"; // 'all' | '2-words' | '3-words' | '4-words'
+  let currentLevel = "all"; // 'all' | 'simple' | 'intermediate' | 'complex' | '2-words' | '3-words' | '4-words'
   let currentIndex = 0;
   let filteredSentences = [];
   let isListening = false;
   let lastSpokenTranscript = "";
   let hasEvaluated = false;
+  let dataLoaded = false;
 
   // Quick Check State
   let quizQuestions = [];
@@ -121,6 +122,30 @@
     quizNextBtn: document.getElementById("rc-quiz-next-btn")
   });
 
+  async function loadData() {
+    if (dataLoaded) return;
+    try {
+      const res = await fetch("data/reading_club/reading_club_data.json");
+      if (res.ok) {
+        const json = await res.json();
+        if (json.sentences && json.sentences.length) {
+          allSentences = json.sentences.map(item => ({
+            id: item.id,
+            grade: Number(item.grade),
+            level: item.level,
+            category: item.category || "",
+            sentenceTa: item.tamil || item.sentenceTa,
+            meaningEn: item.english || item.meaningEn,
+            translit: item.translit || ""
+          }));
+          dataLoaded = true;
+        }
+      }
+    } catch (_) {
+      // Fallback remains with DEFAULT_SENTENCES
+    }
+  }
+
   function getStudentKey() {
     if (window.App && App.currentStudent) {
       return `${App.currentStudent.firstName}_${App.currentStudent.lastName}_G${App.currentStudent.grade}`;
@@ -146,13 +171,21 @@
 
   function updateFiltered() {
     filteredSentences = allSentences.filter(s => {
-      const matchGrade = (s.grade === currentGrade);
-      const matchLevel = (currentLevel === "all" || s.level === currentLevel);
+      const matchGrade = (currentGrade === "all" || s.grade === currentGrade);
+      let matchLevel = true;
+      if (currentLevel !== "all") {
+        matchLevel = (s.level === currentLevel || (s.category && s.category.toLowerCase().includes(currentLevel.toLowerCase())));
+      }
       return matchGrade && matchLevel;
     });
 
     if (!filteredSentences.length) {
-      filteredSentences = allSentences.filter(s => s.grade === currentGrade);
+      filteredSentences = allSentences.filter(s => {
+        if (currentLevel !== "all") {
+          return s.level === currentLevel;
+        }
+        return s.grade === currentGrade;
+      });
     }
     if (!filteredSentences.length) {
       filteredSentences = allSentences;
@@ -168,7 +201,7 @@
     if (!controls.sentenceSelect) return;
 
     controls.sentenceSelect.innerHTML = filteredSentences.map((s, idx) => `
-      <option value="${idx}">தொடர் ${idx + 1}: ${s.sentenceTa}</option>
+      <option value="${idx}">தொடர் ${idx + 1}: ${s.sentenceTa.length > 32 ? s.sentenceTa.slice(0, 30) + '…' : s.sentenceTa}</option>
     `).join("");
     controls.sentenceSelect.value = String(currentIndex);
   }
@@ -181,12 +214,16 @@
     trackStudied(item);
 
     const levelNames = {
+      "simple": "🌟 எளிய நிலை (Simple)",
+      "intermediate": "🚀 நடுத்தர நிலை (Intermediate)",
+      "complex": "🏆 உயர் நிலை (Complex)",
       "2-words": "இரு சொல் தொடர் (2 Words)",
       "3-words": "முச்சொல் தொடர் (3 Words)",
       "4-words": "நான்கு சொல் தொடர் (4 Words)"
     };
 
-    if (controls.numberBadge) controls.numberBadge.textContent = `Nilai ${item.grade} · தொடர் ${currentIndex + 1} / ${filteredSentences.length}`;
+    const catInfo = item.category ? ` · ${item.category}` : "";
+    if (controls.numberBadge) controls.numberBadge.textContent = `Nilai ${item.grade} · தொடர் ${currentIndex + 1} / ${filteredSentences.length}${catInfo}`;
     if (controls.tagBadge) controls.tagBadge.textContent = levelNames[item.level] || item.level;
     if (controls.textTa) controls.textTa.textContent = item.sentenceTa;
     if (controls.meaningEn) controls.meaningEn.textContent = item.meaningEn || "";
@@ -479,7 +516,8 @@
   }
 
   const ReadingClub = {
-    open(mode = "read") {
+    async open(mode = "read") {
+      await loadData();
       if (window.App && App.currentGrade) {
         currentGrade = App.currentGrade;
       }
@@ -583,6 +621,7 @@
       renderCurrentSentence();
     },
     init() {
+      loadData();
       const controls = ui();
       if (controls.tabReadBtn) controls.tabReadBtn.addEventListener("click", () => switchMode("read"));
       if (controls.tabQuizBtn) controls.tabQuizBtn.addEventListener("click", () => switchMode("quiz"));

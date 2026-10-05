@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>மாணவர் மன்றப் பதிவுகள் | Student Club Enrollments - TBTA</title>
+  <meta name="description" content="Manage and assign students to Thirukkural, Aathichudi, and Reading Club heritage tracks.">
+  <meta name="theme-color" content="#2B1055">
+  
+  <link rel="stylesheet" href="css/style.css?v=20261004-clubs-v1">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
+
+  <style>
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-light);
+      padding: 20px 16px 40px;
+    }
+
+    .clubs-page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .clubs-header-card {
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--text-dark);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--glass-shadow);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .clubs-header-titles {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .clubs-brand-logo {
+      font-size: 2.6rem;
+      background: #EDE9FE;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+    }
+
+    .clubs-page-title {
+      font-family: var(--font-kid);
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #1E1B4B;
+      line-height: 1.2;
+    }
+
+    .clubs-page-sub {
+      font-family: var(--font-tamil);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #4B5563;
+      margin-top: 4px;
+    }
+
+    .clubs-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .clubs-btn {
+      padding: 9px 16px;
+      border-radius: var(--radius-full);
+      border: none;
+      font-family: var(--font-tamil);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .clubs-btn.primary {
+      background: linear-gradient(135deg, #059669, #10B981);
+      color: #FFF;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+
+    .clubs-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45);
+    }
+
+    .clubs-btn.secondary {
+      background: #F1F5F9;
+      color: #1E293B;
+      border: 1px solid #CBD5E1;
+    }
+
+    .clubs-btn.secondary:hover {
+      background: #E2E8F0;
+      transform: translateY(-1px);
+    }
+
+    /* Controls & Filter Card */
+    .clubs-controls-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .clubs-search-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .clubs-search-input {
+      flex: 1;
+      padding: 11px 18px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.95);
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      outline: none;
+    }
+
+    .clubs-grade-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .bulk-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.2);
+    }
+
+    .bulk-label {
+      font-family: var(--font-tamil);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent-yellow);
+    }
+
+    .bulk-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #FFF;
+      font-family: var(--font-tamil);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .bulk-btn:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Table Card */
+    .clubs-table-card {
+      background: #FFFFFF;
+      color: #1E293B;
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      box-shadow: var(--glass-shadow);
+      overflow-x: auto;
+    }
+
+    .clubs-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .clubs-table th {
+      background: #F8FAFC;
+      color: #475569;
+      font-family: var(--font-tamil);
+      font-size: 0.88rem;
+      font-weight: 800;
+      padding: 12px 14px;
+      border-bottom: 2px solid #E2E8F0;
+      white-space: nowrap;
+    }
+
+    .clubs-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 0.92rem;
+      vertical-align: middle;
+    }
+
+    .clubs-table tr:hover {
+      background: #F8FAFC;
+    }
+
+    .student-row-highlight {
+      background: #FEF3C7 !important;
+    }
+
+    .student-row-highlight td {
+      font-weight: 700;
+    }
+
+    .club-checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .club-checkbox-label:hover {
+      background: #F1F5F9;
+    }
+
+    .club-checkbox-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #6C5CE7;
+    }
+
+    .club-pill-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      font-family: var(--font-tamil);
+      margin-right: 4px;
+    }
+
+    .club-pill-tag.kural { background: #FEF3C7; color: #92400E; }
+    .club-pill-tag.aathichudi { background: #DCFCE7; color: #166534; }
+    .club-pill-tag.reading { background: #EDE9FE; color: #5B21B6; }
+    .club-pill-tag.none { background: #F1F5F9; color: #94A3B8; }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #059669;
+      color: #FFF;
+      font-family: var(--font-tamil);
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 1000;
+      animation: popIn 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="clubs-page-container">
+    <!-- Header -->
+    <header class="clubs-header-card">
+      <div class="clubs-header-titles">
+        <div class="clubs-brand-logo">🏛️</div>
+        <div>
+          <h1 class="clubs-page-title">மாணவர் மன்றப் பதிவுகள் (Student Club Enrollments)</h1>
+          <p class="clubs-page-sub">திருக்குறள், ஆத்திசூடி, மற்றும் வாசிப்பு மன்றங்களுக்கான மாணவர் சேர்க்கை மேலாண்மை</p>
+        </div>
+      </div>
+      <div class="clubs-header-actions">
+        <button class="clubs-btn primary" id="save-clubs-btn">
+          <span>💾</span> சேமி (Save Enrollments)
+        </button>
+        <button class="clubs-btn secondary" id="export-json-btn">
+          <span>📥</span> JSON ஏற்றுமதி
+        </button>
+        <a href="students-qr.html" class="clubs-btn secondary">
+          <span>🪪</span> QR அட்டைகள்
+        </a>
+        <a href="index.html" class="clubs-btn secondary">
+          <span>🚀</span> மாணவர் கூடம்
+        </a>
+      </div>
+    </header>
+
+    <!-- Controls -->
+    <section class="clubs-controls-card">
+      <div class="clubs-search-row">
+        <input type="text" id="clubs-search-input" class="clubs-search-input" placeholder="🔍 மாணவர் பெயரைத் தேடுக (Search student by name)..." aria-label="Search student">
+      </div>
+      <div class="clubs-grade-tabs" id="clubs-grade-tabs">
+        <button class="grade-tab-btn active" data-grade="all">அனைத்தும் (All 94)</button>
+        <button class="grade-tab-btn" data-grade="1">Nilai 1 (9)</button>
+        <button class="grade-tab-btn" data-grade="2">Nilai 2 (20)</button>
+        <button class="grade-tab-btn" data-grade="3">Nilai 3 (20)</button>
+        <button class="grade-tab-btn" data-grade="4">Nilai 4 (19)</button>
+        <button class="grade-tab-btn" data-grade="5">Nilai 5 (9)</button>
+        <button class="grade-tab-btn" data-grade="6">Nilai 6 (8)</button>
+        <button class="grade-tab-btn" data-grade="7">Nilai 7 (2)</button>
+        <button class="grade-tab-btn" data-grade="8">Nilai 8 (7)</button>
+      </div>
+      <div class="bulk-bar">
+        <span class="bulk-label">⚡ தொகுப்பு தேர்வுகள் (Bulk Actions for Visible Students):</span>
+        <button class="bulk-btn" id="bulk-kural-all">📜 அனைவரையும் திருக்குறளில் சேர்</button>
+        <button class="bulk-btn" id="bulk-aathichudi-all">🪶 அனைவரையும் ஆத்திசூடியில் சேர்</button>
+        <button class="bulk-btn" id="bulk-reading-all">📖 அனைவரையும் வாசிப்பு மன்றத்தில் சேர்</button>
+        <button class="bulk-btn" id="bulk-select-all">✅ அனைத்தையும் தேர்ந்தெடு (All)</button>
+        <button class="bulk-btn" id="bulk-clear-all" style="background: rgba(239, 68, 68, 0.25); border-color: rgba(239, 68, 68, 0.4);">❌ அனைத்தையும் நீக்கு (Clear)</button>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <main class="clubs-table-card">
+      <table class="clubs-table" id="clubs-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>வகுப்பு</th>
+            <th>மாணவர் பெயர் (Student Name)</th>
+            <th style="text-align: center;">📜 திருக்குறள்</th>
+            <th style="text-align: center;">🪶 ஆத்திசூடி</th>
+            <th style="text-align: center;">📖 வாசிப்பு மன்றம்</th>
+            <th>சேர்க்கை சுருக்கம் (Enrolled Clubs)</th>
+          </tr>
+        </thead>
+        <tbody id="clubs-table-body">
+          <tr><td colspan="7" style="text-align: center; padding: 30px;">மாணவர் பட்டியல் ஏற்றப்படுகிறது...</td></tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <div class="toast-msg" id="toast-msg">✅ மன்றப் பதிவுகள் வெற்றிகரமாகச் சேமிக்கப்பட்டன!</div>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = "tbta_student_club_enrollments";
+      let allStudents = [];
+      let enrollments = {};
+      let currentGradeFilter = "all";
+      let currentSearchQuery = "";
+
+      const tbody = document.getElementById("clubs-table-body");
+      const searchInput = document.getElementById("clubs-search-input");
+      const gradeTabs = document.querySelectorAll(".grade-tab-btn");
+      const saveBtn = document.getElementById("save-clubs-btn");
+      const exportBtn = document.getElementById("export-json-btn");
+      const toast = document.getElementById("toast-msg");
+
+      async function init() {
+        try {
+          const [rosterRes, enrollRes] = await Promise.all([
+            fetch("data/students/roster.json").then(r => r.json()),
+            fetch("data/students/club_enrollments.json").then(r => r.json()).catch(() => ({}))
+          ]);
+
+          allStudents = rosterRes.students || [];
+
+          // Load local storage or default file
+          let local = {};
+          try { local = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) {}
+          enrollments = Object.keys(local).length ? local : (enrollRes || {});
+
+          // Ensure every student has an enrollment entry
+          allStudents.forEach(s => {
+            const key = getStudentKey(s);
+            if (!enrollments[key]) {
+              enrollments[key] = {
+                firstName: s.firstName,
+                lastName: s.lastName,
+                grade: s.grade,
+                clubs: ["thirukkural", "aathichudi", "reading"]
+              };
+            }
+          });
+
+          renderTable();
+        } catch (err) {
+          console.error("Failed to load data:", err);
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">தரவுகளை ஏற்ற முடியவில்லை.</td></tr>`;
+        }
+
+        searchInput.addEventListener("input", (e) => {
+          currentSearchQuery = e.target.value.trim().toLowerCase();
+          renderTable();
+        });
+
+        gradeTabs.forEach(tab => {
+          tab.addEventListener("click", () => {
+            gradeTabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            currentGradeFilter = tab.getAttribute("data-grade");
+            renderTable();
+          });
+        });
+
+        if (saveBtn) saveBtn.addEventListener("click", () => saveEnrollments(true));
+        if (exportBtn) exportBtn.addEventListener("click", exportJSON);
+
+        // Bulk buttons
+        document.getElementById("bulk-kural-all").addEventListener("click", () => bulkToggle("thirukkural", true));
+        document.getElementById("bulk-aathichudi-all").addEventListener("click", () => bulkToggle("aathichudi", true));
+        document.getElementById("bulk-reading-all").addEventListener("click", () => bulkToggle("reading", true));
+        document.getElementById("bulk-select-all").addEventListener("click", () => bulkAll(true));
+        document.getElementById("bulk-clear-all").addEventListener("click", () => bulkAll(false));
+      }
+
+      function getStudentKey(s) {
+        return `${s.firstName}_${s.lastName}_G${s.grade}`;
+      }
+
+      function renderTable() {
+        const filtered = allStudents.filter(s => {
+          const matchGrade = (currentGradeFilter === "all" || String(s.grade) === String(currentGradeFilter));
+          const fullName = `${s.firstName} ${s.lastName}`.toLowerCase();
+          const matchSearch = !currentSearchQuery || fullName.includes(currentSearchQuery);
+          return matchGrade && matchSearch;
+        });
+
+        if (!filtered.length) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 24px; color: #64748B;">பொருத்தமான மாணவர்கள் எவரும் இல்லை.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = "";
+
+        filtered.forEach((student, idx) => {
+          const key = getStudentKey(student);
+          const studentEnrollment = enrollments[key] || { clubs: [] };
+          const clubs = studentEnrollment.clubs || [];
+
+          const hasKural = clubs.includes("thirukkural");
+          const hasAathichudi = clubs.includes("aathichudi");
+          const hasReading = clubs.includes("reading");
+
+          const isAaradhana = (student.firstName.toLowerCase() === "aaradhana");
+
+          const tr = document.createElement("tr");
+          if (isAaradhana) tr.className = "student-row-highlight";
+
+          tr.innerHTML = `
+            <td>${idx + 1}</td>
+            <td><strong>Nilai ${student.grade}</strong></td>
+            <td>
+              <strong>${student.firstName} ${student.lastName}</strong>
+              ${isAaradhana ? ' <span style="background: #10B981; color: #FFF; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Featured Student ⭐</span>' : ''}
+            </td>
+            <td style="text-align: center;">
+              <label class="club-checkbox-label">
+                <input type="checkbox" data-key="${key}" data-club="thirukkural" ${hasKural ? 'checked' : ''}>
+              </label>
+            </td>
+            <td style="text-align: center;">
+              <label class="club-checkbox-label">
+                <input type="checkbox" data-key="${key}" data-club="aathichudi" ${hasAathichudi ? 'checked' : ''}>
+              </label>
+            </td>
+            <td style="text-align: center;">
+              <label class="club-checkbox-label">
+                <input type="checkbox" data-key="${key}" data-club="reading" ${hasReading ? 'checked' : ''}>
+              </label>
+            </td>
+            <td>
+              ${hasKural ? '<span class="club-pill-tag kural">📜 திருக்குறள்</span>' : ''}
+              ${hasAathichudi ? '<span class="club-pill-tag aathichudi">🪶 ஆத்திசூடி</span>' : ''}
+              ${hasReading ? '<span class="club-pill-tag reading">📖 வாசிப்பு மன்றம்</span>' : ''}
+              ${(!hasKural && !hasAathichudi && !hasReading) ? '<span class="club-pill-tag none">பதிவு இல்லை (None)</span>' : ''}
+            </td>
+          `;
+
+          tbody.appendChild(tr);
+        });
+
+        // Attach checkbox change handlers
+        tbody.querySelectorAll('input[type="checkbox"]').forEach(box => {
+          box.addEventListener("change", (e) => {
+            const key = e.target.getAttribute("data-key");
+            const club = e.target.getAttribute("data-club");
+            const checked = e.target.checked;
+
+            if (!enrollments[key]) enrollments[key] = { clubs: [] };
+            let studentClubs = enrollments[key].clubs || [];
+
+            if (checked && !studentClubs.includes(club)) {
+              studentClubs.push(club);
+            } else if (!checked && studentClubs.includes(club)) {
+              studentClubs = studentClubs.filter(c => c !== club);
+            }
+
+            enrollments[key].clubs = studentClubs;
+            saveEnrollments(false);
+            renderTable();
+          });
+        });
+      }
+
+      function bulkToggle(club, state) {
+        const visibleKeys = getVisibleKeys();
+        visibleKeys.forEach(key => {
+          if (!enrollments[key]) enrollments[key] = { clubs: [] };
+          let clubs = enrollments[key].clubs || [];
+          if (state && !clubs.includes(club)) {
+            clubs.push(club);
+          } else if (!state && clubs.includes(club)) {
+            clubs = clubs.filter(c => c !== club);
+          }
+          enrollments[key].clubs = clubs;
+        });
+        saveEnrollments(true);
+        renderTable();
+      }
+
+      function bulkAll(state) {
+        const visibleKeys = getVisibleKeys();
+        visibleKeys.forEach(key => {
+          if (!enrollments[key]) enrollments[key] = { clubs: [] };
+          enrollments[key].clubs = state ? ["thirukkural", "aathichudi", "reading"] : [];
+        });
+        saveEnrollments(true);
+        renderTable();
+      }
+
+      function getVisibleKeys() {
+        return allStudents.filter(s => {
+          const matchGrade = (currentGradeFilter === "all" || String(s.grade) === String(currentGradeFilter));
+          const fullName = `${s.firstName} ${s.lastName}`.toLowerCase();
+          const matchSearch = !currentSearchQuery || fullName.includes(currentSearchQuery);
+          return matchGrade && matchSearch;
+        }).map(getStudentKey);
+      }
+
+      function saveEnrollments(showToast = true) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(enrollments));
+        if (showToast && toast) {
+          toast.style.display = "block";
+          setTimeout(() => { toast.style.display = "none"; }, 2500);
+        }
+      }
+
+      function exportJSON() {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(enrollments, null, 2));
+        const a = document.createElement("a");
+        a.setAttribute("href", dataStr);
+        a.setAttribute("download", "student_club_enrollments.json");
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
+</body>
+</html>

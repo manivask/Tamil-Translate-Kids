@@ -1,0 +1,409 @@
+{
+  "sentences": [
+    {
+      "id": "rc-s1",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "இது பூ.",
+      "translit": "Ithu poo.",
+      "english": "This is a flower."
+    },
+    {
+      "id": "rc-s2",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "இது மாடு.",
+      "translit": "Ithu maadu.",
+      "english": "This is a cow."
+    },
+    {
+      "id": "rc-s3",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "அது நாய்.",
+      "translit": "Athu naai.",
+      "english": "That is a dog."
+    },
+    {
+      "id": "rc-s4",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "இது என் வீடு.",
+      "translit": "Ithu en veedu.",
+      "english": "This is my house."
+    },
+    {
+      "id": "rc-s5",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "அம்மா வா.",
+      "translit": "Amma vaa.",
+      "english": "Amma, please come."
+    },
+    {
+      "id": "rc-s6",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "அப்பா வா.",
+      "translit": "Appa vaa.",
+      "english": "Appa, please come."
+    },
+    {
+      "id": "rc-s7",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "பால் குடி.",
+      "translit": "Paal kudi.",
+      "english": "Drink milk."
+    },
+    {
+      "id": "rc-s8",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "நீர் குடி.",
+      "translit": "Neer kudi.",
+      "english": "Drink water."
+    },
+    {
+      "id": "rc-s9",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "இங்கே வா.",
+      "translit": "Inge vaa.",
+      "english": "Come here."
+    },
+    {
+      "id": "rc-s10",
+      "grade": 1,
+      "level": "simple",
+      "category": "Very Short Phrases",
+      "tamil": "அங்கே போ.",
+      "translit": "Ange po.",
+      "english": "Go there."
+    },
+    {
+      "id": "rc-s11",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "அம்மா பால் தருகிறார்.",
+      "translit": "Amma paal tharukiraar.",
+      "english": "Amma gives milk."
+    },
+    {
+      "id": "rc-s12",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "அப்பா வீட்டில் இருக்கிறார்.",
+      "translit": "Appa veettil irukkiraar.",
+      "english": "Appa is at home."
+    },
+    {
+      "id": "rc-s13",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "நாய் ஓடுகிறது.",
+      "translit": "Naai odukirathu.",
+      "english": "The dog is running."
+    },
+    {
+      "id": "rc-s14",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "பூனை நடக்கிறது.",
+      "translit": "Poonai nadakkirathu.",
+      "english": "The cat is walking."
+    },
+    {
+      "id": "rc-s15",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "மாடு புல் சாப்பிடுகிறது.",
+      "translit": "Maadu pul saappidukirathu.",
+      "english": "The cow eats grass."
+    },
+    {
+      "id": "rc-s16",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "குமார் பந்து விளையாடுகிறான்.",
+      "translit": "Kumaar panthu vilaiyaadukiraan.",
+      "english": "Kumar plays with a ball."
+    },
+    {
+      "id": "rc-s17",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "மீனா பூ பறிக்கிறாள்.",
+      "translit": "Meena poo parikkiraal.",
+      "english": "Meena picks flowers."
+    },
+    {
+      "id": "rc-s18",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "பறவை மரத்தில் உள்ளது.",
+      "translit": "Paravai marathil ullathu.",
+      "english": "The bird is on the tree."
+    },
+    {
+      "id": "rc-s19",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "சூரியன் உதிக்கிறது.",
+      "translit": "Sooriyan uthikkirathu.",
+      "english": "The sun is rising."
+    },
+    {
+      "id": "rc-s20",
+      "grade": 2,
+      "level": "simple",
+      "category": "Simple Sentences",
+      "tamil": "நான் பள்ளிக்குச் செல்கிறேன்.",
+      "translit": "Naan pallikkuch selgiren.",
+      "english": "I am going to school."
+    },
+    {
+      "id": "rc-s21",
+      "grade": 2,
+      "level": "simple",
+      "category": "Short Story: நாய்",
+      "tamil": "இது ஒரு நாய். நாயின் பெயர் மணி. மணி ஓடுகிறது. மணி பந்தைப் பார்க்கிறது. மணி பந்தை எடுக்கிறது. மணி மகிழ்ச்சியாக இருக்கிறது.",
+      "translit": "Ithu oru naai. Naayin peyar Mani. Mani oodukirathu. Mani panthai paarkkirathu. Mani panthai edukkirathu. Mani magizhchiyaaga irukkirathu.",
+      "english": "This is a dog. The dog's name is Mani. Mani runs. Mani sees a ball. Mani takes the ball. Mani is happy."
+    },
+    {
+      "id": "rc-s22",
+      "grade": 2,
+      "level": "simple",
+      "category": "Short Story: பூனை",
+      "tamil": "இது ஒரு பூனை. பூனை வீட்டில் உள்ளது. பூனை பால் குடிக்கிறது. பூனை மெதுவாக நடக்கிறது. பூனை தூங்குகிறது.",
+      "translit": "Ithu oru poonai. Poonai veettil ullathu. Poonai paal kudikkirathu. Poonai medhuvaaga nadakkirathu. Poonai thoongugirathu.",
+      "english": "This is a cat. The cat is inside the house. The cat drinks milk. The cat walks softly. The cat sleeps."
+    },
+    {
+      "id": "rc-s23",
+      "grade": 2,
+      "level": "simple",
+      "category": "Short Story: மீனாவின் பூ",
+      "tamil": "மீனாவிடம் ஒரு பூ உள்ளது. அது சிவப்பு பூ. மீனா பூவைப் பார்க்கிறாள். அவள் பூவுக்கு நீர் ஊற்றுகிறாள். பூ அழகாக மலர்கிறது. மீனா மகிழ்ச்சியாக இருக்கிறாள்.",
+      "translit": "Meenaavidam oru poo ullathu. Athu sivappu poo. Meena poovai paarkkiraal. Aval poovukku neer ootrukiraal. Poo azhagaaga malargirathu. Meena magizhchiyaaga irukkiraal.",
+      "english": "Meena has a flower. It is a red flower. Meena looks at the flower. She pours water on the flower. The flower blooms beautifully. Meena is happy."
+    },
+    {
+      "id": "rc-i1",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "முக்கிய சொற்கள் (Keywords)",
+      "tamil": "முயற்சி - முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
+      "translit": "Muyarchi - Muyarchi seidhaal vetri kidaikkum.",
+      "english": "Effort - If you make effort, success will follow."
+    },
+    {
+      "id": "rc-i2",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "முக்கிய சொற்கள் (Keywords)",
+      "tamil": "பயிற்சி - தினமும் தமிழ் பயிற்சி செய்கிறேன்.",
+      "translit": "Payirchi - Dinamum Tamil payirchi seigiren.",
+      "english": "Practice - I practice Tamil every day."
+    },
+    {
+      "id": "rc-i3",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "முக்கிய சொற்கள் (Keywords)",
+      "tamil": "கவனம் - பாடங்களை முழு கவனத்துடன் வாசிக்கிறேன்.",
+      "translit": "Gavanam - Paadangalai muzhu gavanathudan vaasikkiren.",
+      "english": "Attention - I read lessons with full attention."
+    },
+    {
+      "id": "rc-i4",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "முக்கிய சொற்கள் (Keywords)",
+      "tamil": "தொடரு - நல்ல பழக்கங்களை எப்போதும் தொடரு.",
+      "translit": "Thodaru - Nalla pazhakkangalai eppothum thodaru.",
+      "english": "Continue - Always continue good habits."
+    },
+    {
+      "id": "rc-i5",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "முக்கிய சொற்கள் (Keywords)",
+      "tamil": "தெளிவு - சொற்களை தெளிவுடன் உச்சரிக்க வேண்டும்.",
+      "translit": "Thelivu - Sorkalai thelivudan uchcharikka vendum.",
+      "english": "Clarity - Pronounce words with clear diction."
+    },
+    {
+      "id": "rc-i6",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "முக்கிய சொற்கள் (Keywords)",
+      "tamil": "சீக்கிரம் - காலையில் சீக்கிரம் எழ வேண்டும்.",
+      "translit": "Seekkiram - Kaalaiyil seekkiram ezha vendum.",
+      "english": "Quickly / Early - We should wake up early in the morning."
+    },
+    {
+      "id": "rc-i7",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "முக்கிய சொற்கள் (Keywords)",
+      "tamil": "மெதுவாக - நத்தை மெதுவாக நகர்ந்து சென்றது.",
+      "translit": "Medhuvaaga - Naththai medhuvaaga nagarnthu sendrathu.",
+      "english": "Slowly - The snail moved forward slowly."
+    },
+    {
+      "id": "rc-i8",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "முக்கிய சொற்கள் (Keywords)",
+      "tamil": "திரும்பவும் - தவறை உணர்ந்து திரும்பவும் முயற்சி செய்.",
+      "translit": "Thirumbavum - Thavarai unarnthu thirumbavum muyarchi sei.",
+      "english": "Again - Understand mistakes and try again."
+    },
+    {
+      "id": "rc-i9",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "கதை 1: முயல் மற்றும் நத்தை",
+      "tamil": "ஒரு நாள் முயல் வேகமாக ஓடியது. நத்தை மெதுவாகச் சென்றது. முயல் நின்று ஓய்ந்தது. நத்தை மெதுவாக முன்னேறிச் சென்றது. நீதி: முயற்சி மற்றும் தொடர்ச்சி முக்கியம்.",
+      "translit": "Oru naal muyal vegamaaga odiyathu. Naththai medhuvaaga sendrathu. Muyal nindru ointhathu. Naththai medhuvaaga munneri sendrathu. Neethi: Muyarchi matrum thodarchi mukkiyam.",
+      "english": "One day, the rabbit ran fast. The snail moved slowly. The rabbit stopped and rested. The snail kept moving forward steadily. Moral: Effort and consistency are essential."
+    },
+    {
+      "id": "rc-i10",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "கதை 2: புத்தகம் படிக்கும் மீனா",
+      "tamil": "மீனா தினமும் ஒரு பக்கத்தைப் படித்தாள். சில நாட்கள் மெதுவாகப் படித்தாள். சில நாட்கள் வேகமாகப் படித்தாள். ஆனால் அவள் ஒரு நாளும் விடவில்லை; தொடர்ந்து படித்தாள்.",
+      "translit": "Meena dinamum oru pakkathai padithaal. Sila naatkal medhuvaaga padithaal. Sila naatkal vegamaaga padithaal. Aanaal aval oru naalum vidavillai; thodarnthu padithaal.",
+      "english": "Meena read one page every day. Some days she read slowly, some days fast. But she never skipped a day; she read consistently."
+    },
+    {
+      "id": "rc-i11",
+      "grade": 3,
+      "level": "intermediate",
+      "category": "கதை 3: மழையில் குடை",
+      "tamil": "மாலிகாவிடம் ஒரு சிறிய குடை இருந்தது. மழை வந்தது. அவள் மெதுவாக நடந்து சென்றாள். குடையை நண்பனுடன் பகிர்ந்தாள்.",
+      "translit": "Maalikaavidam oru siriya kudai irunthathu. Mazhai vanthathu. Aval medhuvaaga nadanthu sendraal. Kudaiyai nanbanudan pagirnthaal.",
+      "english": "Malika had a small umbrella. Rain came. She walked gently and shared the umbrella with her friend."
+    },
+    {
+      "id": "rc-c1",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "ரவி தினமும் புத்தகம் படிக்கிறான்.",
+      "translit": "Ravi dinamum puththagam padikkiraan.",
+      "english": "Ravi reads books every single day."
+    },
+    {
+      "id": "rc-c2",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
+      "translit": "Meena pallikkuch sella paiyai eduththaal.",
+      "english": "Meena picked up her bag to go to school."
+    },
+    {
+      "id": "rc-c3",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
+      "translit": "Amma samaiyalaraiyil unavu samaikkiraar.",
+      "english": "Amma is cooking delicious food in the kitchen."
+    },
+    {
+      "id": "rc-c4",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
+      "translit": "Appa thottathil sedigalukku neer ootrukiraar.",
+      "english": "Appa is watering the plants in the home garden."
+    },
+    {
+      "id": "rc-c5",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "சிறுவன் பந்தை எடுத்து நண்பனிடம் கொடுத்தான்.",
+      "translit": "Siruvan panthai eduthu nanbanidam koduthaan.",
+      "english": "The boy picked up the ball and handed it to his friend."
+    },
+    {
+      "id": "rc-c6",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "பூனை மெதுவாக வீட்டிற்குள் சென்றது.",
+      "translit": "Poonai medhuvaaga veettirkul sendrathu.",
+      "english": "The cat quietly walked inside the house."
+    },
+    {
+      "id": "rc-c7",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "பறவை மரத்தின் கிளையில் அமர்ந்தது.",
+      "translit": "Paravai marathin kilaiyil amarnthathu.",
+      "english": "The bird perched on the branch of the tree."
+    },
+    {
+      "id": "rc-c8",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "மழை பெய்ததால் சாலை ஈரமாக இருந்தது.",
+      "translit": "Mazhai peythathaal saalai eeramaaga irunthathu.",
+      "english": "Because it rained, the road was fresh and wet."
+    },
+    {
+      "id": "rc-c9",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "குமார் காலையில் எழுந்து பல் துலக்கினான்.",
+      "translit": "Kumaar kaalaiyil ezhunthu pal thulakkinaan.",
+      "english": "Kumar woke up early in the morning and brushed his teeth."
+    },
+    {
+      "id": "rc-c10",
+      "grade": 4,
+      "level": "complex",
+      "category": "விரிவான வாக்கியங்கள்",
+      "tamil": "லதா தன் அறையைச் சுத்தமாக வைத்திருக்கிறாள்.",
+      "translit": "Latha than araiyai suththamaaga vaithirukkiraal.",
+      "english": "Latha keeps her study room clean and tidy."
+    },
+    {
+      "id": "rc-c11",
+      "grade": 5,
+      "level": "complex",
+      "category": "கதை: சிறிய விதை",
+      "tamil": "அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான். அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது. அதைப் பார்த்த அருண் மிகவும் மகிழ்ந்தான். அவன் தொடர்ந்து செடியை அன்புடன் பராமரித்தான். சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது. தன் முயற்சிக்கு நல்ல பலன் கிடைத்ததை அருண் உணர்ந்தான். நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
+      "translit": "Arun oru siriya vithaiyai thottathil nattaan. Avan dinamum atharku thanneer ootrinaan. Sila naatkalil mannilirunthu pachai thalir vanthathu. Athai paartha Arun migavum magizhnthaan. Avan thodarnthu sediyai anbudan paraamarithaan. Sila vaarangalil sediyil azhagaana poo malarnthathu. Than muyarchikku nalla palan kidaithathai Arun unarnthaan. Neethi: Muyarchi seidhaal vetri kidaikkum.",
+      "english": "Arun planted a tiny seed in the garden. He watered it daily. After a few days, a green sprout emerged from the soil. Seeing this, Arun felt immense joy. He cared for the plant with love. In a few weeks, a beautiful flower blossomed. Arun realized that dedication brings sweet rewards. Moral: Sincere effort brings success."
+    }
+  ]
+}

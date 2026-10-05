@@ -1,52 +1,46 @@
-Grade,Level,SentenceId,TamilSentence,EnglishMeaning,Transliteration,Notes
-1,2-words,RC-G1-001,பாடம் படி,Read the lesson,Paadam padi,Basic habit
-1,2-words,RC-G1-002,நன்றி சொல்,Say thank you,Nandri sol,Good manners
-1,2-words,RC-G1-003,மரம் நடு,Plant a tree,Maram nadu,Nature care
-1,2-words,RC-G1-004,நீர் குடி,Drink water,Neer kudi,Health
-1,2-words,RC-G1-005,பூ பறி,Pick a flower,Poo pari,Nature
-1,2-words,RC-G1-006,பந்து உருட்டு,Roll the ball,Panthu uruttu,Play
-1,2-words,RC-G1-007,பழம் சாப்பிடு,Eat the fruit,Pazham saappidu,Healthy food
-1,2-words,RC-G1-008,கை தட்டு,Clap your hands,Kai thattu,Fun action
-1,3-words,RC-G1-009,காலையில் சீக்கிரம் எழு,Wake up early in the morning,Kaalaiyil seekkiram ezhu,Morning routine
-1,3-words,RC-G1-010,தினமும் பள்ளி செல்,Go to school daily,Dhinamum palli sel,School
-1,3-words,RC-G1-011,நல்ல பழக்கம் கற்போம்,Let us learn good habits,Nalla pazhakkam karpom,Values
-1,3-words,RC-G1-012,பழங்கள் அதிகம் உண்,Eat more fruits,Pazhangal adhigam un,Nutrition
-1,3-words,RC-G1-013,தமிழில் பேசிப் பழகு,Practice speaking in Tamil,Thamizhil paesip pazhagu,Language
-1,3-words,RC-G1-014,அன்போடு பழக வேண்டும்,Be friendly with love,Anbodu pazhaga vaendum,Friendship
-1,4-words,RC-G1-015,அன்னை தந்தையை தினமும் வணங்கு,Respect parents every day,Annai thandhaiyai dhinamum vanangu,Respect
-1,4-words,RC-G1-016,பிறருக்கு எப்போதும் உதவி செய்,Always help other people,Pirarukku eppodhum udhavi sei,Kindness
-1,4-words,RC-G1-017,இயற்கை அழகை ரசித்து மகிழ்வோம்,Let us enjoy nature's beauty,Iyarkai azhagai rasithu magizhvomm,Nature
-1,4-words,RC-G1-018,சுத்தமான காற்றை சுவாசிக்க வேண்டும்,We must breathe fresh air,Suthamaana kaatrai suvaasikka vaendum,Health
-2,2-words,RC-G2-001,நூல் படி,Read good books,Nool padi,Learning
-2,2-words,RC-G2-002,உண்மை பேசு,Speak the truth,Unmai paesu,Honesty
-2,2-words,RC-G2-003,உடற்பயிற்சி செய்,Do physical exercise,Udar payirchi sei,Fitness
-2,2-words,RC-G2-004,அன்பாய் இரு,Be kind and loving,Anbaai iru,Morals
-2,2-words,RC-G2-005,நேரம் போற்று,Value your time,Naeram potru,Discipline
-2,2-words,RC-G2-006,தூய்மை காப்போம்,Let us maintain cleanliness,Thooimai kaappom,Cleanliness
-2,3-words,RC-G2-007,ஆசிரியர் சொல் கேள்,Listen to your teacher,Aasiriyar sol kael,Respect
-2,3-words,RC-G2-008,நண்பர்களோடு சேர்ந்து விளையாடு,Play together with friends,Nanbargalodu saerndhu vilaiyaadu,Social
-2,3-words,RC-G2-009,பறவைகளுக்கு உணவு கொடு,Feed the birds,Paravaigalukku unavu kodu,Kindness to animals
-2,3-words,RC-G2-010,புத்தகங்களை நேசித்து வாசிப்போம்,Love and read books,Puthagangalai naesithu vaasippom,Reading
-2,4-words,RC-G2-011,நாம் அனைவரும் ஒற்றுமையாய் வாழ்வோம்,Let us all live unitedly,Naam anaivarum otrumaiyaai vaazhvom,Unity
-2,4-words,RC-G2-012,தாய்மொழியை இனிமையாய் பேச வேண்டும்,Speak mother tongue sweetly,Thaaimozhiyai inimaiyaai paesa vaendum,Tamil pride
-3,2-words,RC-G3-001,கற்பவை கற்றுணர்,Understand what you learn,Karpavai katrunar,Education
-3,2-words,RC-G3-002,அறிவை பெருக்கு,Grow your knowledge,Arivai perukku,Wisdom
-3,2-words,RC-G3-003,சுறுசுறுப்பாய் செயல்படு,Act with great agility,Surusuruppaai seyalpadu,Enthusiasm
-3,3-words,RC-G3-004,நாள்தோறும் புதிதாக கற்போம்,Learn something new daily,Naaldhorum pudhidhaaga karpom,Curiosity
-3,3-words,RC-G3-005,பொய் பேசுவதை தவிர்ப்போம்,Let us avoid speaking lies,Poi paesuvadhai thavirppom,Truthfulness
-3,4-words,RC-G3-006,நல்ல நண்பர்களோடு நல்ல வழியில் நடப்போம்,Walk in good path with good friends,Nalla nanbargalodu nalla vazhiyil nadappom,Righteousness
-4,2-words,RC-G4-001,இலக்கை அடை,Reach your goal,Ilakkai adai,Ambition
-4,3-words,RC-G4-002,விடாமுயற்சி வெற்றி தரும்,Perseverance brings success,Vidaamuyarchi vetri tharum,Determination
-4,4-words,RC-G4-003,தமிழர் பண்பாட்டை நாம் என்றும் காப்போம்,We will protect Tamil culture forever,Thamizhar panbaattai naam endrum kaappom,Heritage
-5,2-words,RC-G5-001,அறநெறி போற்று,Uphold righteous moral values,Araneri potru,Ethics
-5,3-words,RC-G5-002,சிந்தனையை உயர்வாய் வைப்போம்,Keep your thoughts lofty and noble,Sindhanaiyai uyarvaai vaippom,Noble mindset
-5,4-words,RC-G5-003,அறிவியல் மனப்பான்மையோடு உலகை ஆராய்ந்து அறிவோம்,Explore the world with a scientific mindset,Ariviyal manappaanmaiyodu ulagai aaraaindhu arivom,Science & Learning
-6,2-words,RC-G6-001,பொறுமை காப்போம்,Practice patient endurance,Porumai kaappom,Patience
-6,3-words,RC-G6-002,உழைப்பே உயர்வு தரும்,Hard work yields true greatness,Uzhaippae uyarvu tharum,Diligence
-6,4-words,RC-G6-003,வையத்துள் வாழ்வாங்கு வாழும் வழியை அறிவோம்,Know the noble way to live gloriously in the world,Vaiyathul vaazhvaangu vaazhum vazhiyai arivom,Wisdom
-7,2-words,RC-G7-001,சான்றோரை போற்று,Honour the wise and virtuous,Saandrorai potru,Veneration
-7,3-words,RC-G7-002,நாட்டை நேசித்து வாழ்வோம்,Live with love for the nation,Naattai naesithu vaazhvom,Patriotism
-7,4-words,RC-G7-003,எல்லா உயிர்களிடத்தும் அன்பு செலுத்துவது பெருமை,Showing love to all living beings is noble,Ella uyirgalidathum anbu seluthuvadhu perumai,Compassion
-8,2-words,RC-G8-001,இனிமை பேசிடு,Speak with courteous sweetness,Inimai paesidu,Sweet speech
-8,3-words,RC-G8-002,உலகிற்கு வழிகாட்டியாய் திகழ்வோம்,Shine as a guiding beacon to the world,Ulagirku vazhikaattiyaai thigazhvom,Leadership
-8,4-words,RC-G8-003,எண்ணிய எண்ணியாங்கு எய்துவர் எண்ணியார் திண்ணியர் ஆகப் பெறின்,Those with resolute minds achieve whatever they envision,Enniya enniyaangu eydhuvar enniyaar thinniyar aagap perin,Thirukkural wisdom
+﻿id,grade,level,category,tamil,translit,english
+rc-s1,1,simple,Very Short Phrases,இது பூ.,Ithu poo.,This is a flower.
+rc-s2,1,simple,Very Short Phrases,இது மாடு.,Ithu maadu.,This is a cow.
+rc-s3,1,simple,Very Short Phrases,அது நாய்.,Athu naai.,That is a dog.
+rc-s4,1,simple,Very Short Phrases,இது என் வீடு.,Ithu en veedu.,This is my house.
+rc-s5,1,simple,Very Short Phrases,அம்மா வா.,Amma vaa.,"Amma, please come."
+rc-s6,1,simple,Very Short Phrases,அப்பா வா.,Appa vaa.,"Appa, please come."
+rc-s7,1,simple,Very Short Phrases,பால் குடி.,Paal kudi.,Drink milk.
+rc-s8,1,simple,Very Short Phrases,நீர் குடி.,Neer kudi.,Drink water.
+rc-s9,1,simple,Very Short Phrases,இங்கே வா.,Inge vaa.,Come here.
+rc-s10,1,simple,Very Short Phrases,அங்கே போ.,Ange po.,Go there.
+rc-s11,2,simple,Simple Sentences,அம்மா பால் தருகிறார்.,Amma paal tharukiraar.,Amma gives milk.
+rc-s12,2,simple,Simple Sentences,அப்பா வீட்டில் இருக்கிறார்.,Appa veettil irukkiraar.,Appa is at home.
+rc-s13,2,simple,Simple Sentences,நாய் ஓடுகிறது.,Naai odukirathu.,The dog is running.
+rc-s14,2,simple,Simple Sentences,பூனை நடக்கிறது.,Poonai nadakkirathu.,The cat is walking.
+rc-s15,2,simple,Simple Sentences,மாடு புல் சாப்பிடுகிறது.,Maadu pul saappidukirathu.,The cow eats grass.
+rc-s16,2,simple,Simple Sentences,குமார் பந்து விளையாடுகிறான்.,Kumaar panthu vilaiyaadukiraan.,Kumar plays with a ball.
+rc-s17,2,simple,Simple Sentences,மீனா பூ பறிக்கிறாள்.,Meena poo parikkiraal.,Meena picks flowers.
+rc-s18,2,simple,Simple Sentences,பறவை மரத்தில் உள்ளது.,Paravai marathil ullathu.,The bird is on the tree.
+rc-s19,2,simple,Simple Sentences,சூரியன் உதிக்கிறது.,Sooriyan uthikkirathu.,The sun is rising.
+rc-s20,2,simple,Simple Sentences,நான் பள்ளிக்குச் செல்கிறேன்.,Naan pallikkuch selgiren.,I am going to school.
+rc-s21,2,simple,Short Story: நாய்,இது ஒரு நாய். நாயின் பெயர் மணி. மணி ஓடுகிறது. மணி பந்தைப் பார்க்கிறது. மணி பந்தை எடுக்கிறது. மணி மகிழ்ச்சியாக இருக்கிறது.,Ithu oru naai. Naayin peyar Mani. Mani oodukirathu. Mani panthai paarkkirathu. Mani panthai edukkirathu. Mani magizhchiyaaga irukkirathu.,This is a dog. The dog's name is Mani. Mani runs. Mani sees a ball. Mani takes the ball. Mani is happy.
+rc-s22,2,simple,Short Story: பூனை,இது ஒரு பூனை. பூனை வீட்டில் உள்ளது. பூனை பால் குடிக்கிறது. பூனை மெதுவாக நடக்கிறது. பூனை தூங்குகிறது.,Ithu oru poonai. Poonai veettil ullathu. Poonai paal kudikkirathu. Poonai medhuvaaga nadakkirathu. Poonai thoongugirathu.,This is a cat. The cat is inside the house. The cat drinks milk. The cat walks softly. The cat sleeps.
+rc-s23,2,simple,Short Story: மீனாவின் பூ,மீனாவிடம் ஒரு பூ உள்ளது. அது சிவப்பு பூ. மீனா பூவைப் பார்க்கிறாள். அவள் பூவுக்கு நீர் ஊற்றுகிறாள். பூ அழகாக மலர்கிறது. மீனா மகிழ்ச்சியாக இருக்கிறாள்.,Meenaavidam oru poo ullathu. Athu sivappu poo. Meena poovai paarkkiraal. Aval poovukku neer ootrukiraal. Poo azhagaaga malargirathu. Meena magizhchiyaaga irukkiraal.,Meena has a flower. It is a red flower. Meena looks at the flower. She pours water on the flower. The flower blooms beautifully. Meena is happy.
+rc-i1,3,intermediate,முக்கிய சொற்கள் (Keywords),முயற்சி - முயற்சி செய்தால் வெற்றி கிடைக்கும்.,Muyarchi - Muyarchi seidhaal vetri kidaikkum.,"Effort - If you make effort, success will follow."
+rc-i2,3,intermediate,முக்கிய சொற்கள் (Keywords),பயிற்சி - தினமும் தமிழ் பயிற்சி செய்கிறேன்.,Payirchi - Dinamum Tamil payirchi seigiren.,Practice - I practice Tamil every day.
+rc-i3,3,intermediate,முக்கிய சொற்கள் (Keywords),கவனம் - பாடங்களை முழு கவனத்துடன் வாசிக்கிறேன்.,Gavanam - Paadangalai muzhu gavanathudan vaasikkiren.,Attention - I read lessons with full attention.
+rc-i4,3,intermediate,முக்கிய சொற்கள் (Keywords),தொடரு - நல்ல பழக்கங்களை எப்போதும் தொடரு.,Thodaru - Nalla pazhakkangalai eppothum thodaru.,Continue - Always continue good habits.
+rc-i5,3,intermediate,முக்கிய சொற்கள் (Keywords),தெளிவு - சொற்களை தெளிவுடன் உச்சரிக்க வேண்டும்.,Thelivu - Sorkalai thelivudan uchcharikka vendum.,Clarity - Pronounce words with clear diction.
+rc-i6,3,intermediate,முக்கிய சொற்கள் (Keywords),சீக்கிரம் - காலையில் சீக்கிரம் எழ வேண்டும்.,Seekkiram - Kaalaiyil seekkiram ezha vendum.,Quickly / Early - We should wake up early in the morning.
+rc-i7,3,intermediate,முக்கிய சொற்கள் (Keywords),மெதுவாக - நத்தை மெதுவாக நகர்ந்து சென்றது.,Medhuvaaga - Naththai medhuvaaga nagarnthu sendrathu.,Slowly - The snail moved forward slowly.
+rc-i8,3,intermediate,முக்கிய சொற்கள் (Keywords),திரும்பவும் - தவறை உணர்ந்து திரும்பவும் முயற்சி செய்.,Thirumbavum - Thavarai unarnthu thirumbavum muyarchi sei.,Again - Understand mistakes and try again.
+rc-i9,3,intermediate,கதை 1: முயல் மற்றும் நத்தை,ஒரு நாள் முயல் வேகமாக ஓடியது. நத்தை மெதுவாகச் சென்றது. முயல் நின்று ஓய்ந்தது. நத்தை மெதுவாக முன்னேறிச் சென்றது. நீதி: முயற்சி மற்றும் தொடர்ச்சி முக்கியம்.,Oru naal muyal vegamaaga odiyathu. Naththai medhuvaaga sendrathu. Muyal nindru ointhathu. Naththai medhuvaaga munneri sendrathu. Neethi: Muyarchi matrum thodarchi mukkiyam.,"One day, the rabbit ran fast. The snail moved slowly. The rabbit stopped and rested. The snail kept moving forward steadily. Moral: Effort and consistency are essential."
+rc-i10,3,intermediate,கதை 2: புத்தகம் படிக்கும் மீனா,மீனா தினமும் ஒரு பக்கத்தைப் படித்தாள். சில நாட்கள் மெதுவாகப் படித்தாள். சில நாட்கள் வேகமாகப் படித்தாள். ஆனால் அவள் ஒரு நாளும் விடவில்லை; தொடர்ந்து படித்தாள்.,Meena dinamum oru pakkathai padithaal. Sila naatkal medhuvaaga padithaal. Sila naatkal vegamaaga padithaal. Aanaal aval oru naalum vidavillai; thodarnthu padithaal.,"Meena read one page every day. Some days she read slowly, some days fast. But she never skipped a day; she read consistently."
+rc-i11,3,intermediate,கதை 3: மழையில் குடை,மாலிகாவிடம் ஒரு சிறிய குடை இருந்தது. மழை வந்தது. அவள் மெதுவாக நடந்து சென்றாள். குடையை நண்பனுடன் பகிர்ந்தாள்.,Maalikaavidam oru siriya kudai irunthathu. Mazhai vanthathu. Aval medhuvaaga nadanthu sendraal. Kudaiyai nanbanudan pagirnthaal.,Malika had a small umbrella. Rain came. She walked gently and shared the umbrella with her friend.
+rc-c1,4,complex,விரிவான வாக்கியங்கள்,ரவி தினமும் புத்தகம் படிக்கிறான்.,Ravi dinamum puththagam padikkiraan.,Ravi reads books every single day.
+rc-c2,4,complex,விரிவான வாக்கியங்கள்,மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.,Meena pallikkuch sella paiyai eduththaal.,Meena picked up her bag to go to school.
+rc-c3,4,complex,விரிவான வாக்கியங்கள்,அம்மா சமையலறையில் உணவு சமைக்கிறார்.,Amma samaiyalaraiyil unavu samaikkiraar.,Amma is cooking delicious food in the kitchen.
+rc-c4,4,complex,விரிவான வாக்கியங்கள்,அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.,Appa thottathil sedigalukku neer ootrukiraar.,Appa is watering the plants in the home garden.
+rc-c5,4,complex,விரிவான வாக்கியங்கள்,சிறுவன் பந்தை எடுத்து நண்பனிடம் கொடுத்தான்.,Siruvan panthai eduthu nanbanidam koduthaan.,The boy picked up the ball and handed it to his friend.
+rc-c6,4,complex,விரிவான வாக்கியங்கள்,பூனை மெதுவாக வீட்டிற்குள் சென்றது.,Poonai medhuvaaga veettirkul sendrathu.,The cat quietly walked inside the house.
+rc-c7,4,complex,விரிவான வாக்கியங்கள்,பறவை மரத்தின் கிளையில் அமர்ந்தது.,Paravai marathin kilaiyil amarnthathu.,The bird perched on the branch of the tree.
+rc-c8,4,complex,விரிவான வாக்கியங்கள்,மழை பெய்ததால் சாலை ஈரமாக இருந்தது.,Mazhai peythathaal saalai eeramaaga irunthathu.,"Because it rained, the road was fresh and wet."
+rc-c9,4,complex,விரிவான வாக்கியங்கள்,குமார் காலையில் எழுந்து பல் துலக்கினான்.,Kumaar kaalaiyil ezhunthu pal thulakkinaan.,Kumar woke up early in the morning and brushed his teeth.
+rc-c10,4,complex,விரிவான வாக்கியங்கள்,லதா தன் அறையைச் சுத்தமாக வைத்திருக்கிறாள்.,Latha than araiyai suththamaaga vaithirukkiraal.,Latha keeps her study room clean and tidy.
+rc-c11,5,complex,கதை: சிறிய விதை,அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான். அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது. அதைப் பார்த்த அருண் மிகவும் மகிழ்ந்தான். அவன் தொடர்ந்து செடியை அன்புடன் பராமரித்தான். சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது. தன் முயற்சிக்கு நல்ல பலன் கிடைத்ததை அருண் உணர்ந்தான். நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்.,Arun oru siriya vithaiyai thottathil nattaan. Avan dinamum atharku thanneer ootrinaan. Sila naatkalil mannilirunthu pachai thalir vanthathu. Athai paartha Arun migavum magizhnthaan. Avan thodarnthu sediyai anbudan paraamarithaan. Sila vaarangalil sediyil azhagaana poo malarnthathu. Than muyarchikku nalla palan kidaithathai Arun unarnthaan. Neethi: Muyarchi seidhaal vetri kidaikkum.,"Arun planted a tiny seed in the garden. He watered it daily. After a few days, a green sprout emerged from the soil. Seeing this, Arun felt immense joy. He cared for the plant with love. In a few weeks, a beautiful flower blossomed. Arun realized that dedication brings sweet rewards. Moral: Sincere effort brings success."

@@ -162,7 +162,10 @@
               <p class="login-message" id="admin-login-message" aria-live="polite"></p>
               <button class="login-continue" id="admin-continue-btn" type="submit">நிர்வாக உள்நுழைவு (Sign In) 🚀</button>
             </form>
-            <div style="margin-top: 14px; text-align: center;">
+            <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px; text-align: center;">
+              <a href="clubs-management.html" target="_blank" class="qr-link-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #065F46;">
+                <span>🏛️</span> மாணவர் மன்றப் பதிவுகள் (Club Enrollments) ➜
+              </a>
               <a href="students-qr.html" target="_blank" class="qr-link-badge">
                 <span>🖨️</span> அனைத்து மாணவர் QR அட்டைகள் (Student QR Badges) ➜
               </a>
@@ -454,14 +457,17 @@
             <option value="7">Nilai 7</option>
             <option value="8">Nilai 8</option>
           </select>
-          <label for="rc-level-select">சொல் அளவு (Level)</label>
+          <label for="rc-level-select">பயிற்சி நிலை (Level)</label>
           <select id="rc-level-select">
-            <option value="all">எல்லா தொடர்களும் (All Levels)</option>
+            <option value="all">அனைத்துப் பயிற்சிகளும் (All Levels)</option>
+            <option value="simple">🌟 எளிய நிலை (Simple - Short Phrases & Stories)</option>
+            <option value="intermediate">🚀 நடுத்தர நிலை (Intermediate - Keywords & Stories)</option>
+            <option value="complex">🏆 உயர் நிலை (Complex - Sentences & Stories)</option>
             <option value="2-words">2 சொற்கள் (2 Words)</option>
             <option value="3-words">3 சொற்கள் (3 Words)</option>
-            <option value="4-words">4 சொற்கள் (4 Words)</option>
+            <option value="4-words">4+ சொற்கள் (4+ Words)</option>
           </select>
-          <label for="rc-sentence-select">தொடர்</label>
+          <label for="rc-sentence-select">தொடர் / கதை</label>
           <select id="rc-sentence-select">
             <option>தொடர்களை ஏற்றுகிறது…</option>
           </select>
@@ -815,6 +821,15 @@
       <main class="admin-card">
         <h2>📊 Student Learning Overview & Analytics</h2>
         <p id="admin-summary">Loading saved student progress…</p>
+
+        <div style="display: flex; gap: 10px; margin: 16px 0; flex-wrap: wrap;">
+          <a href="clubs-management.html" target="_blank" class="clubs-btn primary" style="background: linear-gradient(135deg, #059669, #10B981); color: #FFF; padding: 8px 16px; border-radius: 9999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;">
+            <span>🏛️</span> மாணவர் மன்றப் பதிவுகள் (Club Enrollments) ➜
+          </a>
+          <a href="students-qr.html" target="_blank" class="clubs-btn secondary" style="background: #F1F5F9; color: #1E293B; border: 1px solid #CBD5E1; padding: 8px 16px; border-radius: 9999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;">
+            <span>🖨️</span> மாணவர் QR அட்டைகள் (Student QR Badges) ➜
+          </a>
+        </div>
         
         <!-- Analytics Metric Cards -->
         <div class="admin-metric-grid" id="admin-metric-grid">

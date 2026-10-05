@@ -1,0 +1,941 @@
+{
+  "Rithanya_Elumalai_G1": {
+    "firstName": "Rithanya",
+    "lastName": "Elumalai",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aarudh_Lakshminarasimhan_G1": {
+    "firstName": "Aarudh",
+    "lastName": "Lakshminarasimhan",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Mila_Magesh_G1": {
+    "firstName": "Mila",
+    "lastName": "Magesh",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Magizhini_Manikandan_G1": {
+    "firstName": "Magizhini",
+    "lastName": "Manikandan",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Mukhil_Manimaran_G1": {
+    "firstName": "Mukhil",
+    "lastName": "Manimaran",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Joycee_Martin_G1": {
+    "firstName": "Joycee",
+    "lastName": "Martin",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Yugan_Sakthivel_G1": {
+    "firstName": "Yugan",
+    "lastName": "Sakthivel",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Mahin Saihish_Vijay Karthik_G1": {
+    "firstName": "Mahin Saihish",
+    "lastName": "Vijay Karthik",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Nalan_Yogesh_G1": {
+    "firstName": "Nalan",
+    "lastName": "Yogesh",
+    "grade": 1,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aadhini_Ashok_G2": {
+    "firstName": "Aadhini",
+    "lastName": "Ashok",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Adheesh_Gobi Krishanthan_G2": {
+    "firstName": "Adheesh",
+    "lastName": "Gobi Krishanthan",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Mayon_Karthik_G2": {
+    "firstName": "Mayon",
+    "lastName": "Karthik",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Ved_Mani_G2": {
+    "firstName": "Ved",
+    "lastName": "Mani",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Manush_Murali_G2": {
+    "firstName": "Manush",
+    "lastName": "Murali",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Sarvesh_Prakash_G2": {
+    "firstName": "Sarvesh",
+    "lastName": "Prakash",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Madhumila_Prithivraj_G2": {
+    "firstName": "Madhumila",
+    "lastName": "Prithivraj",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Nila_Rajarajan_G2": {
+    "firstName": "Nila",
+    "lastName": "Rajarajan",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aathira_Ramesh_G2": {
+    "firstName": "Aathira",
+    "lastName": "Ramesh",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Akshaya_Ramesh Kumar_G2": {
+    "firstName": "Akshaya",
+    "lastName": "Ramesh Kumar",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Padma Priya_Ramesh Kumar_G2": {
+    "firstName": "Padma Priya",
+    "lastName": "Ramesh Kumar",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Kaniska Shree_Ravi Kumar_G2": {
+    "firstName": "Kaniska Shree",
+    "lastName": "Ravi Kumar",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aadith_Ravindran_G2": {
+    "firstName": "Aadith",
+    "lastName": "Ravindran",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Kushikaa_Saravanan_G2": {
+    "firstName": "Kushikaa",
+    "lastName": "Saravanan",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Dheeran_Sathishkumar_G2": {
+    "firstName": "Dheeran",
+    "lastName": "Sathishkumar",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Tanve_Sriman_G2": {
+    "firstName": "Tanve",
+    "lastName": "Sriman",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Mahathi_Suresh_G2": {
+    "firstName": "Mahathi",
+    "lastName": "Suresh",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Nithwik_Vairavel_G2": {
+    "firstName": "Nithwik",
+    "lastName": "Vairavel",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Niyansh_Vairavel_G2": {
+    "firstName": "Niyansh",
+    "lastName": "Vairavel",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Ananya_Viswasundar_G2": {
+    "firstName": "Ananya",
+    "lastName": "Viswasundar",
+    "grade": 2,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Jyotsnaa_Arun_G3": {
+    "firstName": "Jyotsnaa",
+    "lastName": "Arun",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Pragyasree_Gajapathy_G3": {
+    "firstName": "Pragyasree",
+    "lastName": "Gajapathy",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Advith_Gopinath_G3": {
+    "firstName": "Advith",
+    "lastName": "Gopinath",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Nidhusri_Hari Prasad_G3": {
+    "firstName": "Nidhusri",
+    "lastName": "Hari Prasad",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Mahanth_Harikumar_G3": {
+    "firstName": "Mahanth",
+    "lastName": "Harikumar",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Taittiriya_Karthik_G3": {
+    "firstName": "Taittiriya",
+    "lastName": "Karthik",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Ida Melkias_Keerthi_G3": {
+    "firstName": "Ida Melkias",
+    "lastName": "Keerthi",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aaradhana_Manivasagam_G3": {
+    "firstName": "Aaradhana",
+    "lastName": "Manivasagam",
+    "grade": 3,
+    "clubs": [
+      "reading",
+      "thirukkural"
+    ]
+  },
+  "Chharu_Meenakshi Sundaram_G3": {
+    "firstName": "Chharu",
+    "lastName": "Meenakshi Sundaram",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Sashtikesh_Mohanakumar_G3": {
+    "firstName": "Sashtikesh",
+    "lastName": "Mohanakumar",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Shahasra_Murthy_G3": {
+    "firstName": "Shahasra",
+    "lastName": "Murthy",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Fayona_Noorulhaq_G3": {
+    "firstName": "Fayona",
+    "lastName": "Noorulhaq",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Danvika_Pushgaran_G3": {
+    "firstName": "Danvika",
+    "lastName": "Pushgaran",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Iniyaal_Rajesh_G3": {
+    "firstName": "Iniyaal",
+    "lastName": "Rajesh",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Rishab_Rao_G3": {
+    "firstName": "Rishab",
+    "lastName": "Rao",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "SaheerMasood_Sheik Abdul Kadhar_G3": {
+    "firstName": "SaheerMasood",
+    "lastName": "Sheik Abdul Kadhar",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Tamanna Batool_Sheik Mohideen_G3": {
+    "firstName": "Tamanna Batool",
+    "lastName": "Sheik Mohideen",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aadhya_Suresh_G3": {
+    "firstName": "Aadhya",
+    "lastName": "Suresh",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aadhvik_Suresh Babu_G3": {
+    "firstName": "Aadhvik",
+    "lastName": "Suresh Babu",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Janani_Thirunavuklkarasu_G3": {
+    "firstName": "Janani",
+    "lastName": "Thirunavuklkarasu",
+    "grade": 3,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Rehan_Ahamed Shafi_G4": {
+    "firstName": "Rehan",
+    "lastName": "Ahamed Shafi",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Arjun_Chandrasekaran_G4": {
+    "firstName": "Arjun",
+    "lastName": "Chandrasekaran",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Venisha_Dhineshkumar_G4": {
+    "firstName": "Venisha",
+    "lastName": "Dhineshkumar",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Jayalakshmi_Duraiswamy_G4": {
+    "firstName": "Jayalakshmi",
+    "lastName": "Duraiswamy",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Arvin_Elumalai_G4": {
+    "firstName": "Arvin",
+    "lastName": "Elumalai",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Tanishka_Gobi Krishanthan_G4": {
+    "firstName": "Tanishka",
+    "lastName": "Gobi Krishanthan",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Navneeth_Jayaprakash_G4": {
+    "firstName": "Navneeth",
+    "lastName": "Jayaprakash",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Janesh_Karthick_G4": {
+    "firstName": "Janesh",
+    "lastName": "Karthick",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Vandana_Nedunchezhian_G4": {
+    "firstName": "Vandana",
+    "lastName": "Nedunchezhian",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Kavinaya_Raja_G4": {
+    "firstName": "Kavinaya",
+    "lastName": "Raja",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Abhiman_Ramesh_G4": {
+    "firstName": "Abhiman",
+    "lastName": "Ramesh",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Leo Ashok_Raviraj_G4": {
+    "firstName": "Leo Ashok",
+    "lastName": "Raviraj",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Kaniyandhraa_Sathish_G4": {
+    "firstName": "Kaniyandhraa",
+    "lastName": "Sathish",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aaswin_Selvaganapathy_G4": {
+    "firstName": "Aaswin",
+    "lastName": "Selvaganapathy",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Preshith_Senthil Kumar R_G4": {
+    "firstName": "Preshith",
+    "lastName": "Senthil Kumar R",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Adhiyan_Senthilkumar_G4": {
+    "firstName": "Adhiyan",
+    "lastName": "Senthilkumar",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Yazhini_Sriman_G4": {
+    "firstName": "Yazhini",
+    "lastName": "Sriman",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Araamudhan Sai_Sundarsingh_G4": {
+    "firstName": "Araamudhan Sai",
+    "lastName": "Sundarsingh",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Lithisa_Vasudevan_G4": {
+    "firstName": "Lithisa",
+    "lastName": "Vasudevan",
+    "grade": 4,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Goventhan_Arivazhagan_G5": {
+    "firstName": "Goventhan",
+    "lastName": "Arivazhagan",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Surya_Gowrisankar_G5": {
+    "firstName": "Surya",
+    "lastName": "Gowrisankar",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Susan_Keerthi_G5": {
+    "firstName": "Susan",
+    "lastName": "Keerthi",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Nivin_Muthukumaran_G5": {
+    "firstName": "Nivin",
+    "lastName": "Muthukumaran",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Vivaan_Panditharajan_G5": {
+    "firstName": "Vivaan",
+    "lastName": "Panditharajan",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Prithvik_Sangeeth_G5": {
+    "firstName": "Prithvik",
+    "lastName": "Sangeeth",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Adhithi_Sankaran_G5": {
+    "firstName": "Adhithi",
+    "lastName": "Sankaran",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aadya_Shankar_G5": {
+    "firstName": "Aadya",
+    "lastName": "Shankar",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Yazhini_Sundarabalan_G5": {
+    "firstName": "Yazhini",
+    "lastName": "Sundarabalan",
+    "grade": 5,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Aadya_Lakshminarasimhan_G6": {
+    "firstName": "Aadya",
+    "lastName": "Lakshminarasimhan",
+    "grade": 6,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Karthik Palaniappan_Meenakshi Sundaram_G6": {
+    "firstName": "Karthik Palaniappan",
+    "lastName": "Meenakshi Sundaram",
+    "grade": 6,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Kanishka_Mohanakumar_G6": {
+    "firstName": "Kanishka",
+    "lastName": "Mohanakumar",
+    "grade": 6,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Krishni_Murali_G6": {
+    "firstName": "Krishni",
+    "lastName": "Murali",
+    "grade": 6,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Yazhini_Sakthivel_G6": {
+    "firstName": "Yazhini",
+    "lastName": "Sakthivel",
+    "grade": 6,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Shadrica_Sathishkumar_G6": {
+    "firstName": "Shadrica",
+    "lastName": "Sathishkumar",
+    "grade": 6,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Eyal_Senthamizh_G6": {
+    "firstName": "Eyal",
+    "lastName": "Senthamizh",
+    "grade": 6,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Iniya_Senthil_G6": {
+    "firstName": "Iniya",
+    "lastName": "Senthil",
+    "grade": 6,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Allan Antony_Martin_G7": {
+    "firstName": "Allan Antony",
+    "lastName": "Martin",
+    "grade": 7,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Sana_Vinoth Kumar_G7": {
+    "firstName": "Sana",
+    "lastName": "Vinoth Kumar",
+    "grade": 7,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Ashwinth_Gopinath_G8": {
+    "firstName": "Ashwinth",
+    "lastName": "Gopinath",
+    "grade": 8,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Sushma_Gowrisankar_G8": {
+    "firstName": "Sushma",
+    "lastName": "Gowrisankar",
+    "grade": 8,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Charanideeksha_Keerthivasan_G8": {
+    "firstName": "Charanideeksha",
+    "lastName": "Keerthivasan",
+    "grade": 8,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Adithi_Raviraj_G8": {
+    "firstName": "Adithi",
+    "lastName": "Raviraj",
+    "grade": 8,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Arulkumaran_Selvaraj_G8": {
+    "firstName": "Arulkumaran",
+    "lastName": "Selvaraj",
+    "grade": 8,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "Saurish_Shankar_G8": {
+    "firstName": "Saurish",
+    "lastName": "Shankar",
+    "grade": 8,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  },
+  "SyedSameer_Sheik Abdul Kadhar_G8": {
+    "firstName": "SyedSameer",
+    "lastName": "Sheik Abdul Kadhar",
+    "grade": 8,
+    "clubs": [
+      "thirukkural",
+      "aathichudi",
+      "reading"
+    ]
+  }
+}
