@@ -1,0 +1,663 @@
+[
+  {
+    "id": "pdf-stage2-simple",
+    "pdfFile": "data/Reading Club/Stage2_Simple.pdf",
+    "title": "Stage 2 - எளிய நிலை (Stage2_Simple.pdf)",
+    "subtitle": "எளிய சொற்றொடர்கள், வாக்கியங்கள் & நாய், பூனை, மீனாவின் பூ சிறுகதைகள்",
+    "badge": "📕 எளிய நிலை · Stage 2",
+    "badgeClass": "badge-simple",
+    "grade": 2,
+    "items": [
+      {
+        "id": "s2-sim-q1",
+        "type": "reading",
+        "category": "எளிய சொற்றொடர் வாசிப்பு (Short Phrases)",
+        "questionTa": "இது பூ.",
+        "meaningEn": "This is a flower.",
+        "translit": "Ithu poo.",
+        "options": ["இது பூ.", "இது மாடு.", "அது நாய்.", "அம்மா வா."],
+        "correctAnswer": "இது பூ.",
+        "explanation": "இது பூ = This is a flower."
+      },
+      {
+        "id": "s2-sim-q2",
+        "type": "reading",
+        "category": "எளிய சொற்றொடர் வாசிப்பு (Short Phrases)",
+        "questionTa": "இது மாடு.",
+        "meaningEn": "This is a cow.",
+        "translit": "Ithu maadu.",
+        "options": ["இது மாடு.", "இது பூ.", "பால் குடி.", "நீர் குடி."],
+        "correctAnswer": "இது மாடு.",
+        "explanation": "இது மாடு = This is a cow."
+      },
+      {
+        "id": "s2-sim-q3",
+        "type": "reading",
+        "category": "எளிய சொற்றொடர் வாசிப்பு (Short Phrases)",
+        "questionTa": "அது நாய்.",
+        "meaningEn": "That is a dog.",
+        "translit": "Athu naai.",
+        "options": ["அது நாய்.", "இது பூனை.", "அம்மா வா.", "அங்கே போ."],
+        "correctAnswer": "அது நாய்.",
+        "explanation": "அது நாய் = That is a dog."
+      },
+      {
+        "id": "s2-sim-q4",
+        "type": "reading",
+        "category": "எளிய சொற்றொடர் வாசிப்பு (Short Phrases)",
+        "questionTa": "இது என் வீடு.",
+        "meaningEn": "This is my house.",
+        "translit": "Ithu en veedu.",
+        "options": ["இது என் வீடு.", "இது என் பள்ளி.", "இது என் தோட்டம்.", "இது என் ஊர்."],
+        "correctAnswer": "இது என் வீடு.",
+        "explanation": "இது என் வீடு = This is my house."
+      },
+      {
+        "id": "s2-sim-q5",
+        "type": "reading",
+        "category": "எளிய சொற்றொடர் வாசிப்பு (Short Phrases)",
+        "questionTa": "பால் குடி.",
+        "meaningEn": "Drink milk.",
+        "translit": "Paal kudi.",
+        "options": ["பால் குடி.", "நீர் குடி.", "பழம் சாப்பிடு.", "உணவு உண்."],
+        "correctAnswer": "பால் குடி.",
+        "explanation": "பால் குடி = Drink milk."
+      },
+      {
+        "id": "s2-sim-q6",
+        "type": "reading",
+        "category": "எளிய வாக்கியம் (Simple Sentence)",
+        "questionTa": "அம்மா பால் தருகிறார்.",
+        "meaningEn": "Amma gives milk.",
+        "translit": "Amma paal tharukiraar.",
+        "options": ["அம்மா பால் தருகிறார்.", "அப்பா நீர் தருகிறார்.", "அம்மா உணவு தருகிறார்.", "தம்பி பால் குடிக்கிறான்."],
+        "correctAnswer": "அம்மா பால் தருகிறார்.",
+        "explanation": "அம்மா பால் தருகிறார் = Mom gives milk."
+      },
+      {
+        "id": "s2-sim-q7",
+        "type": "reading",
+        "category": "எளிய வாக்கியம் (Simple Sentence)",
+        "questionTa": "நாய் ஓடுகிறது.",
+        "meaningEn": "The dog is running.",
+        "translit": "Naai odukirathu.",
+        "options": ["நாய் ஓடுகிறது.", "பூனை நடக்கிறது.", "மாடு புல் சாப்பிடுகிறது.", "குதிரை ஓடுகிறது."],
+        "correctAnswer": "நாய் ஓடுகிறது.",
+        "explanation": "நாய் ஓடுகிறது = The dog is running."
+      },
+      {
+        "id": "s2-sim-q8",
+        "type": "reading",
+        "category": "எளிய வாக்கியம் (Simple Sentence)",
+        "questionTa": "மீனா பூ பறிக்கிறாள்.",
+        "meaningEn": "Meena picks flowers.",
+        "translit": "Meena poo parikkiraal.",
+        "options": ["மீனா பூ பறிக்கிறாள்.", "குமார் பந்து விளையாடுகிறான்.", "மீனா பாடம் படிக்கிறாள்.", "அம்மா பூ பறிக்கிறார்."],
+        "correctAnswer": "மீனா பூ பறிக்கிறாள்.",
+        "explanation": "மீனா பூ பறிக்கிறாள் = Meena picks flowers."
+      },
+      {
+        "id": "s2-sim-q9",
+        "type": "comprehension",
+        "category": "கதை 1: நாய் (Short Story 1)",
+        "storyTitle": "கதை 1: நாய்",
+        "storyPassage": "இது ஒரு நாய். நாயின் பெயர் மணி. மணி ஓடுகிறது. மணி பந்தைப் பார்க்கிறது. மணி பந்தை எடுக்கிறது. மணி மகிழ்ச்சியாக இருக்கிறது.",
+        "questionTa": "நாயின் பெயர் என்ன?",
+        "meaningEn": "What is the dog's name?",
+        "translit": "Naayin peyar enna?",
+        "options": ["மணி (Mani)", "ராஜா (Raja)", "குமார் (Kumar)", "பூனை (Poonai)"],
+        "correctAnswer": "மணி (Mani)",
+        "explanation": "கதையில்: ‘நாயின் பெயர் மணி.’"
+      },
+      {
+        "id": "s2-sim-q10",
+        "type": "comprehension",
+        "category": "கதை 1: நாய் (Short Story 1)",
+        "storyTitle": "கதை 1: நாய்",
+        "storyPassage": "இது ஒரு நாய். நாயின் பெயர் மணி. மணி ஓடுகிறது. மணி பந்தைப் பார்க்கிறது. மணி பந்தை எடுக்கிறது. மணி மகிழ்ச்சியாக இருக்கிறது.",
+        "questionTa": "மணி எதை எடுக்கிறது?",
+        "meaningEn": "What does Mani pick up?",
+        "translit": "Mani ethai edukkirathu?",
+        "options": ["பந்தை (Ball)", "கல்லை (Stone)", "இலையை (Leaf)", "உணவை (Food)"],
+        "correctAnswer": "பந்தை (Ball)",
+        "explanation": "கதையில்: ‘மணி பந்தை எடுக்கிறது.’"
+      },
+      {
+        "id": "s2-sim-q11",
+        "type": "comprehension",
+        "category": "கதை 2: பூனை (Short Story 2)",
+        "storyTitle": "கதை 2: பூனை",
+        "storyPassage": "இது ஒரு பூனை. பூனை வீட்டில் உள்ளது. பூனை பால் குடிக்கிறது. பூனை மெதுவாக நடக்கிறது. பூனை தூங்குகிறது.",
+        "questionTa": "பூனை எங்கே உள்ளது?",
+        "meaningEn": "Where is the cat?",
+        "translit": "Poonai engae ullathu?",
+        "options": ["வீட்டில் உள்ளது (At home)", "காட்டில் உள்ளது (In forest)", "மரத்தில் உள்ளது (On tree)", "பள்ளியில் உள்ளது (At school)"],
+        "correctAnswer": "வீட்டில் உள்ளது (At home)",
+        "explanation": "கதையில்: ‘பூனை வீட்டில் உள்ளது.’"
+      },
+      {
+        "id": "s2-sim-q12",
+        "type": "comprehension",
+        "category": "கதை 2: பூனை (Short Story 2)",
+        "storyTitle": "கதை 2: பூனை",
+        "storyPassage": "இது ஒரு பூனை. பூனை வீட்டில் உள்ளது. பூனை பால் குடிக்கிறது. பூனை மெதுவாக நடக்கிறது. பூனை தூங்குகிறது.",
+        "questionTa": "பூனை என்ன குடிக்கிறது?",
+        "meaningEn": "What does the cat drink?",
+        "translit": "Poonai enna kudikkirathu?",
+        "options": ["பால் குடிக்கிறது (Milk)", "நீர் குடிக்கிறது (Water)", "பழச்சாறு குடிக்கிறது (Juice)", "தேன் குடிக்கிறது (Honey)"],
+        "correctAnswer": "பால் குடிக்கிறது (Milk)",
+        "explanation": "கதையில்: ‘பூனை பால் குடிக்கிறது.’"
+      },
+      {
+        "id": "s2-sim-q13",
+        "type": "comprehension",
+        "category": "கதை 3: மீனாவின் பூ (Short Story 3)",
+        "storyTitle": "கதை 3: மீனாவின் பூ",
+        "storyPassage": "மீனாவிடம் ஒரு பூ உள்ளது. அது சிவப்பு பூ. மீனா பூவைப் பார்க்கிறாள். அவள் பூவுக்கு நீர் ஊற்றுகிறாள். பூ அழகாக மலர்கிறது. மீனா மகிழ்ச்சியாக இருக்கிறாள்.",
+        "questionTa": "பூ என்ன நிறம்?",
+        "meaningEn": "What color is the flower?",
+        "translit": "Poo enna niram?",
+        "options": ["சிவப்பு பூ (Red flower)", "மஞ்சள் பூ (Yellow flower)", "நீலப் பூ (Blue flower)", "வெள்ளை பூ (White flower)"],
+        "correctAnswer": "சிவப்பு பூ (Red flower)",
+        "explanation": "கதையில்: ‘அது சிவப்பு பூ.’"
+      },
+      {
+        "id": "s2-sim-q14",
+        "type": "comprehension",
+        "category": "கதை 3: மீனாவின் பூ (Short Story 3)",
+        "storyTitle": "கதை 3: மீனாவின் பூ",
+        "storyPassage": "மீனாவிடம் ஒரு பூ உள்ளது. அது சிவப்பு பூ. மீனா பூவைப் பார்க்கிறாள். அவள் பூவுக்கு நீர் ஊற்றுகிறாள். பூ அழகாக மலர்கிறது. மீனா மகிழ்ச்சியாக இருக்கிறாள்.",
+        "questionTa": "மீனா பூவுக்கு என்ன ஊற்றுகிறாள்?",
+        "meaningEn": "What does Meena pour for the flower?",
+        "translit": "Meena poovukku enna ootrukiraal?",
+        "options": ["நீர் ஊற்றுகிறாள் (Water)", "பால் ஊற்றுகிறாள் (Milk)", "சாறு ஊற்றுகிறாள் (Juice)", "எண்ணெய் ஊற்றுகிறாள் (Oil)"],
+        "correctAnswer": "நீர் ஊற்றுகிறாள் (Water)",
+        "explanation": "கதையில்: ‘அவள் பூவுக்கு நீர் ஊற்றுகிறாள்.’"
+      }
+    ]
+  },
+  {
+    "id": "pdf-stage2-intermediate",
+    "pdfFile": "data/Reading Club/Stage2_Intermediate.pdf",
+    "title": "Stage 2 - நடுத்தர நிலை (Stage2_Intermediate.pdf)",
+    "subtitle": "முக்கிய சொற்கள், முயல்-நத்தை, மீனா, மழையில் குடை சிறுகதைகள் & வினாக்கள்",
+    "badge": "📗 நடுத்தர நிலை · Stage 2",
+    "badgeClass": "badge-intermediate",
+    "grade": 2,
+    "items": [
+      {
+        "id": "s2-int-q1",
+        "type": "reading",
+        "category": "முக்கிய சொற்கள் (Keywords)",
+        "questionTa": "முயற்சி - முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
+        "meaningEn": "Effort - If you make effort, success will follow.",
+        "translit": "Muyarchi - Muyarchi seidhaal vetri kidaikkum.",
+        "options": ["முயற்சி - effort", "பயிற்சி - practice", "கவனம் - attention", "தெளிவு - clarity"],
+        "correctAnswer": "முயற்சி - effort",
+        "explanation": "முயற்சி = Effort."
+      },
+      {
+        "id": "s2-int-q2",
+        "type": "reading",
+        "category": "முக்கிய சொற்கள் (Keywords)",
+        "questionTa": "பயிற்சி - தினமும் தமிழ் பயிற்சி செய்கிறேன்.",
+        "meaningEn": "Practice - I practice Tamil every day.",
+        "translit": "Payirchi - Dinamum Tamil payirchi seigiren.",
+        "options": ["பயிற்சி - practice", "முயற்சி - effort", "சீக்கிரம் - quickly", "மெதுவாக - slowly"],
+        "correctAnswer": "பயிற்சி - practice",
+        "explanation": "பயிற்சி = Practice."
+      },
+      {
+        "id": "s2-int-q3",
+        "type": "reading",
+        "category": "முக்கிய சொற்கள் (Keywords)",
+        "questionTa": "கவனம் - பாடங்களை முழு கவனத்துடன் வாசிக்கிறேன்.",
+        "meaningEn": "Attention - I read lessons with full attention.",
+        "translit": "Gavanam - Paadangalai muzhu gavanathudan vaasikkiren.",
+        "options": ["கவனம் - attention", "தெளிவு - clarity", "தொடரு - continue", "திரும்பவும் - again"],
+        "correctAnswer": "கவனம் - attention",
+        "explanation": "கவனம் = Attention / Focus."
+      },
+      {
+        "id": "s2-int-q4",
+        "type": "reading",
+        "category": "முக்கிய சொற்கள் (Keywords)",
+        "questionTa": "தொடரு - நல்ல பழக்கங்களை எப்போதும் தொடரு.",
+        "meaningEn": "Continue - Always continue good habits.",
+        "translit": "Thodaru - Nalla pazhakkangalai eppothum thodaru.",
+        "options": ["தொடரு - continue", "நிறுத்து - stop", "தொடங்கு - start", "மற - forget"],
+        "correctAnswer": "தொடரு - continue",
+        "explanation": "தொடரு = Continue / Persist."
+      },
+      {
+        "id": "s2-int-q5",
+        "type": "comprehension",
+        "category": "கதை 1: முயல் மற்றும் நத்தை (Story 1)",
+        "storyTitle": "கதை 1: முயல் மற்றும் நத்தை",
+        "storyPassage": "ஒரு நாள் முயல் வேகமாக ஓடியது. நத்தை மெதுவாகச் சென்றது. முயல் நின்று ஓய்ந்தது. நத்தை மெதுவாக முன்னேறிச் சென்றது. நீதி: முயற்சி மற்றும் தொடர்ச்சி முக்கியம்.",
+        "questionTa": "முடிவில் எது முக்கியமான பாடம்?",
+        "meaningEn": "What is the important lesson at the end?",
+        "translit": "Mudivil ethu mukkiyamaana paadam?",
+        "options": [
+          "முயற்சி மற்றும் தொடர்ச்சி முக்கியம் (Effort and consistency)",
+          "வேகமாக ஓடுவது மட்டுமே முக்கியம் (Only speed)",
+          "நடுவில் தூங்குவது நல்லது (Sleeping in between)",
+          "ஓடாமல் நிற்பது (Not running)"
+        ],
+        "correctAnswer": "முயற்சி மற்றும் தொடர்ச்சி முக்கியம் (Effort and consistency)",
+        "explanation": "கதையின் நீதி: முயற்சி மற்றும் தொடர்ச்சி முக்கியம்."
+      },
+      {
+        "id": "s2-int-q6",
+        "type": "comprehension",
+        "category": "கதை 2: புத்தகம் படிக்கும் மீனா (Story 2)",
+        "storyTitle": "கதை 2: புத்தகம் படிக்கும் மீனா",
+        "storyPassage": "மீனா தினமும் ஒரு பக்கத்தைப் படித்தாள். சில நாட்கள் மெதுவாகப் படித்தாள். சில நாட்கள் வேகமாகப் படித்தாள். ஆனால் அவள் ஒரு நாளும் விடவில்லை; தொடர்ந்து படித்தாள்.",
+        "questionTa": "மீனா எந்த பழக்கத்தைக் கடைபிடித்தாள்?",
+        "meaningEn": "Which habit did Meena follow?",
+        "translit": "Meena entha pazhakkathai kadaipidithaal?",
+        "options": [
+          "தினமும் தொடர்ந்து படிக்கும் பழக்கம் (Reading consistently every day)",
+          "படிக்காமல் இருக்கும் பழக்கம் (Not reading)",
+          "வாரத்திற்கு ஒரு நாள் மட்டும் படித்தல் (Reading once a week)",
+          "விளையாடுவது மட்டும் (Only playing)"
+        ],
+        "correctAnswer": "தினமும் தொடர்ந்து படிக்கும் பழக்கம் (Reading consistently every day)",
+        "explanation": "மீனா தினமும் தொடர்ந்து படிக்கும் பழக்கத்தைக் கடைபிடித்தாள்."
+      },
+      {
+        "id": "s2-int-q7",
+        "type": "comprehension",
+        "category": "கதை 3: மழையில் குடை (Story 3)",
+        "storyTitle": "கதை 3: மழையில் குடை",
+        "storyPassage": "மாலிகாவிடம் ஒரு சிறிய குடை இருந்தது. மழை வந்தது. அவள் மெதுவாக நடந்து சென்றாள். குடையை நண்பனுடன் பகிர்ந்தாள்.",
+        "questionTa": "மாலிகா என்ன செய்தாள்?",
+        "meaningEn": "What did Malika do?",
+        "translit": "Maalika enna seidhaal?",
+        "options": [
+          "குடையை நண்பனுடன் பகிர்ந்தாள் (Shared umbrella with friend)",
+          "தனியாக ஓடினாள் (Ran alone)",
+          "குடையை வீசி எறிந்தாள் (Threw umbrella)",
+          "மழையில் நனைந்தாள் (Got wet)"
+        ],
+        "correctAnswer": "குடையை நண்பனுடன் பகிர்ந்தாள் (Shared umbrella with friend)",
+        "explanation": "மாலிகா குடையை நண்பனுடன் அன்புடன் பகிர்ந்தாள்."
+      }
+    ]
+  },
+  {
+    "id": "pdf-stage2-complex",
+    "pdfFile": "data/Reading Club/Stage2_Complex.pdf",
+    "title": "Stage 2 - உயர் நிலை (Stage2_Complex.pdf)",
+    "subtitle": "விரிவான வாக்கியங்கள் & சிறிய விதை சிறுகதை 5 புரிதல் வினாக்களுடன்",
+    "badge": "📘 உயர் நிலை · Stage 2",
+    "badgeClass": "badge-complex",
+    "grade": 2,
+    "items": [
+      {
+        "id": "s2-cpx-q1",
+        "type": "reading",
+        "category": "விரிவான வாக்கிய வாசிப்பு (Detailed Sentences)",
+        "questionTa": "ரவி தினமும் புத்தகம் படிக்கிறான்.",
+        "meaningEn": "Ravi reads books every day.",
+        "translit": "Ravi dinamum puththagam padikkiraan.",
+        "options": ["ரவி தினமும் புத்தகம் படிக்கிறான்.", "மீனா பள்ளிக்குச் செல்கிறாள்.", "அம்மா உணவு சமைக்கிறார்.", "அப்பா தோட்டத்தில் இருக்கிறார்."],
+        "correctAnswer": "ரவி தினமும் புத்தகம் படிக்கிறான்.",
+        "explanation": "ரவி தினமும் புத்தகம் படிக்கிறான் = Ravi reads books every day."
+      },
+      {
+        "id": "s2-cpx-q2",
+        "type": "reading",
+        "category": "விரிவான வாக்கிய வாசிப்பு (Detailed Sentences)",
+        "questionTa": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
+        "meaningEn": "Meena took her bag to go to school.",
+        "translit": "Meena pallikkuch sella paiyai eduththaal.",
+        "options": ["மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.", "ரவி புத்தகம் படிக்கிறான்.", "பூனை வீட்டிற்குள் சென்றது.", "லதா அறையைச் சுத்தம் செய்கிறாள்."],
+        "correctAnswer": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
+        "explanation": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்."
+      },
+      {
+        "id": "s2-cpx-q3",
+        "type": "reading",
+        "category": "விரிவான வாக்கிய வாசிப்பு (Detailed Sentences)",
+        "questionTa": "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
+        "meaningEn": "Amma is cooking food in the kitchen.",
+        "translit": "Amma samaiyalaraiyil unavu samaikkiraar.",
+        "options": ["அம்மா சமையலறையில் உணவு சமைக்கிறார்.", "அப்பா நீர் ஊற்றுகிறார்.", "மீனா பூ பறிக்கிறாள்.", "குமார் பல் துலக்குகிறான்."],
+        "correctAnswer": "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
+        "explanation": "அம்மா சமையலறையில் உணவு சமைக்கிறார்."
+      },
+      {
+        "id": "s2-cpx-q4",
+        "type": "reading",
+        "category": "விரிவான வாக்கிய வாசிப்பு (Detailed Sentences)",
+        "questionTa": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
+        "meaningEn": "Appa is watering the plants in the garden.",
+        "translit": "Appa thottathil sedigalukku neer ootrukiraar.",
+        "options": ["அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.", "சிறுவன் பந்தை எடுக்கிறான்.", "பறவை கிளையில் அமர்ந்தது.", "மழை பெய்ததால் சாலை நனைந்தது."],
+        "correctAnswer": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
+        "explanation": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்."
+      },
+      {
+        "id": "s2-cpx-q5",
+        "type": "comprehension",
+        "category": "கதை: சிறிய விதை (Story: The Little Seed)",
+        "storyTitle": "கதை: சிறிய விதை",
+        "storyPassage": "அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான். அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது. அதைப் பார்த்த அருண் மிகவும் மகிழ்ந்தான். அவன் தொடர்ந்து செடியை அன்புடன் பராமரித்தான். சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது. தன் முயற்சிக்கு நல்ல பலன் கிடைத்ததை அருண் உணர்ந்தான். நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
+        "questionTa": "அருண் தோட்டத்தில் என்ன நட்டான்?",
+        "meaningEn": "What did Arun plant in the garden?",
+        "translit": "Arun thottathil enna nattaan?",
+        "options": ["ஒரு சிறிய விதை (A small seed)", "ஒரு பெரிய மரம் (A big tree)", "புல் (Grass)", "கல் (Stone)"],
+        "correctAnswer": "ஒரு சிறிய விதை (A small seed)",
+        "explanation": "கதையில்: ‘அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான்.’"
+      },
+      {
+        "id": "s2-cpx-q6",
+        "type": "comprehension",
+        "category": "கதை: சிறிய விதை (Story: The Little Seed)",
+        "storyTitle": "கதை: சிறிய விதை",
+        "storyPassage": "அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான். அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது. அதைப் பார்த்த அருண் மிகவும் மகிழ்ந்தான். அவன் தொடர்ந்து செடியை அன்புடன் பராமரித்தான். சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது. தன் முயற்சிக்கு நல்ல பலன் கிடைத்ததை அருண் உணர்ந்தான். நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
+        "questionTa": "அருண் தினமும் செடிக்கு என்ன செய்தான்?",
+        "meaningEn": "What did Arun do for the plant daily?",
+        "translit": "Arun dinamum sedikku enna seidhaan?",
+        "options": ["தண்ணீர் ஊற்றினான் (Watered it)", "இலைகளைப் பறித்தான் (Plucked leaves)", "செடியை வெட்டினான் (Cut it)", "கவனிக்கவில்லை (Ignored it)"],
+        "correctAnswer": "தண்ணீர் ஊற்றினான் (Watered it)",
+        "explanation": "கதையில்: ‘அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான்.’"
+      },
+      {
+        "id": "s2-cpx-q7",
+        "type": "comprehension",
+        "category": "கதை: சிறிய விதை (Story: The Little Seed)",
+        "storyTitle": "கதை: சிறிய விதை",
+        "storyPassage": "அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான். அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது. அதைப் பார்த்த அருண் மிகவும் மகிழ்ந்தான். அவன் தொடர்ந்து செடியை அன்புடன் பராமரித்தான். சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது. தன் முயற்சிக்கு நல்ல பலன் கிடைத்ததை அருண் உணர்ந்தான். நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
+        "questionTa": "சில நாட்களில் மண்ணிலிருந்து என்ன வந்தது?",
+        "meaningEn": "What emerged from the soil after a few days?",
+        "translit": "Sila naatkalil mannilirunthu enna vanthathu?",
+        "options": ["பச்சைத் தளிர் (Green sprout)", "பெரிய பழம் (Big fruit)", "மஞ்சள் பூ (Yellow flower)", "காய்ந்த இலை (Dry leaf)"],
+        "correctAnswer": "பச்சைத் தளிர் (Green sprout)",
+        "explanation": "கதையில்: ‘சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது.’"
+      },
+      {
+        "id": "s2-cpx-q8",
+        "type": "comprehension",
+        "category": "கதை: சிறிய விதை (Story: The Little Seed)",
+        "storyTitle": "கதை: சிறிய விதை",
+        "storyPassage": "அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான். அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது. அதைப் பார்த்த அருண் மிகவும் மகிழ்ந்தான். அவன் தொடர்ந்து செடியை அன்புடன் பராமரித்தான். சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது. தன் முயற்சிக்கு நல்ல பலன் கிடைத்ததை அருண் உணர்ந்தான். நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
+        "questionTa": "சில வாரங்களுக்குப் பிறகு செடியில் என்ன மலர்ந்தது?",
+        "meaningEn": "What blossomed on the plant after a few weeks?",
+        "translit": "Sila vaarangalukku piragu sediyil enna malarnthathu?",
+        "options": ["அழகான பூ (Beautiful flower)", "முட்கள் (Thorns)", "புதிய விதை (New seed)", "காய்ந்த கிளை (Dry branch)"],
+        "correctAnswer": "அழகான பூ (Beautiful flower)",
+        "explanation": "கதையில்: ‘சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது.’"
+      },
+      {
+        "id": "s2-cpx-q9",
+        "type": "comprehension",
+        "category": "கதை: சிறிய விதை (Story: The Little Seed)",
+        "storyTitle": "கதை: சிறிய விதை",
+        "storyPassage": "அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான். அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது. அதைப் பார்த்த அருண் மிகவும் மகிழ்ந்தான். அவன் தொடர்ந்து செடியை அன்புடன் பராமரித்தான். சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது. தன் முயற்சிக்கு நல்ல பலன் கிடைத்ததை அருண் உணர்ந்தான். நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
+        "questionTa": "இந்தக் கதையின் மூலம் அருண் என்ன உணர்ந்தான்?",
+        "meaningEn": "What did Arun realize from this story?",
+        "translit": "Intha kathaiyin moolam Arun enna unarnthaan?",
+        "options": [
+          "முயற்சி செய்தால் வெற்றி கிடைக்கும் (Effort brings success)",
+          "முயற்சி வீணாகும் (Effort is in vain)",
+          "செடிக்குத் தண்ணீர் தேவையில்லை (No water needed)",
+          "தோட்டம் தேவையில்லை (No garden needed)"
+        ],
+        "correctAnswer": "முயற்சி செய்தால் வெற்றி கிடைக்கும் (Effort brings success)",
+        "explanation": "நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்."
+      }
+    ]
+  },
+  {
+    "id": "pdf-stage2-assign3",
+    "pdfFile": "data/Reading Club/Stage 2-Assignment 3.pdf",
+    "title": "Stage 2 - ஒப்படைப்பு 3 (Stage 2-Assignment 3.pdf)",
+    "subtitle": "வாக்கிய வாசிப்பு & ராணி, கமல், கனி சிறுகதைகள் & வினாக்கள்",
+    "badge": "📙 ஒப்படைப்பு 3 · Stage 2",
+    "badgeClass": "badge-assign",
+    "grade": 2,
+    "items": [
+      {
+        "id": "s2-as3-q1",
+        "type": "reading",
+        "category": "வாக்கிய வாசிப்பு (Sentence Reading)",
+        "questionTa": "அந்த இடம் எங்கள் நகரம்.",
+        "meaningEn": "That place is our city.",
+        "translit": "Antha idam engal nagaram.",
+        "options": ["அந்த இடம் எங்கள் நகரம்.", "அந்த இல்லம் எங்கள் இல்லம்.", "அவர் எங்கள் அரசர்.", "இவர் என் நண்பர்."],
+        "correctAnswer": "அந்த இடம் எங்கள் நகரம்.",
+        "explanation": "அந்த இடம் எங்கள் நகரம் = That place is our city."
+      },
+      {
+        "id": "s2-as3-q2",
+        "type": "reading",
+        "category": "வாக்கிய வாசிப்பு (Sentence Reading)",
+        "questionTa": "அந்த இல்லம் எங்கள் இல்லம்.",
+        "meaningEn": "That house is our house.",
+        "translit": "Antha illam engal illam.",
+        "options": ["அந்த இல்லம் எங்கள் இல்லம்.", "அந்த இடம் எங்கள் நகரம்.", "இவள் என் மகள்.", "இவன் என் மகன்."],
+        "correctAnswer": "அந்த இல்லம் எங்கள் இல்லம்.",
+        "explanation": "அந்த இல்லம் எங்கள் இல்லம் = That home is our home."
+      },
+      {
+        "id": "s2-as3-q3",
+        "type": "reading",
+        "category": "வாக்கிய வாசிப்பு (Sentence Reading)",
+        "questionTa": "இவர் என் நண்பர்.",
+        "meaningEn": "He is my friend.",
+        "translit": "Ivar en nanbar.",
+        "options": ["இவர் என் நண்பர்.", "இவர் எங்கள் அரசர்.", "என் அண்ணன் நல்லவன்.", "இந்த மரம் உயரம்."],
+        "correctAnswer": "இவர் என் நண்பர்.",
+        "explanation": "இவர் என் நண்பர் = He is my friend."
+      },
+      {
+        "id": "s2-as3-q4",
+        "type": "reading",
+        "category": "வாக்கிய வாசிப்பு (Sentence Reading)",
+        "questionTa": "இந்த மரம் உயரம்.",
+        "meaningEn": "This tree is tall.",
+        "translit": "Intha maram uyaram.",
+        "options": ["இந்த மரம் உயரம்.", "இந்தப் பழம் உன் பழம்.", "இந்தப் படம் என் படம்.", "இவர் என் நண்பர்."],
+        "correctAnswer": "இந்த மரம் உயரம்.",
+        "explanation": "இந்த மரம் உயரம் = This tree is tall."
+      },
+      {
+        "id": "s2-as3-q5",
+        "type": "comprehension",
+        "category": "சிறுகதை 1: ராணி (Short Story 1)",
+        "storyTitle": "சிறுகதை 1: ராணி",
+        "storyPassage": "ராணி நல்ல மாணவி. அவள் பாடம் படித்தாள். அப்பா அவள் பாடம் வாசிக்கக் கண்டார். அப்பா மகிழ்ந்தார். ராணி மகிழ்ச்சியாகச் சிரித்தாள்.",
+        "questionTa": "ராணி என்ன படித்தாள்?",
+        "meaningEn": "What did Rani read?",
+        "translit": "Rani enna padithaal?",
+        "options": ["பாடம் படித்தாள் (Lesson)", "கதை எழுதினாள் (Story)", "பாட்டு பாடினாள் (Song)", "படம் வரைந்தாள் (Drawing)"],
+        "correctAnswer": "பாடம் படித்தாள் (Lesson)",
+        "explanation": "கதையில்: ‘அவள் பாடம் படித்தாள்.’"
+      },
+      {
+        "id": "s2-as3-q6",
+        "type": "comprehension",
+        "category": "சிறுகதை 2: கமல் (Short Story 2)",
+        "storyTitle": "சிறுகதை 2: கமல்",
+        "storyPassage": "கமல் நடந்தான். அவன் ஆலமரம் கண்டான். பறவைகள் மரத்தில் அமர்ந்தன. கமல் பறவைகள் பறக்கக் கண்டான். அவன் மகிழ்ந்தான்.",
+        "questionTa": "கமல் எதைக் கண்டான்?",
+        "meaningEn": "What did Kamal see?",
+        "translit": "Kamal ethai kandaan?",
+        "options": ["ஆலமரம் கண்டான் (Banyan tree)", "மாமரம் கண்டான் (Mango tree)", "குளம் கண்டான் (Pond)", "வீடு கண்டான் (House)"],
+        "correctAnswer": "ஆலமரம் கண்டான் (Banyan tree)",
+        "explanation": "கதையில்: ‘அவன் ஆலமரம் கண்டான்.’"
+      },
+      {
+        "id": "s2-as3-q7",
+        "type": "comprehension",
+        "category": "சிறுகதை 3: கனி (Short Story 3)",
+        "storyTitle": "சிறுகதை 3: கனி",
+        "storyPassage": "அம்மா கனி தந்தாள். வாணி கனி உண்டாள். அவள் அண்ணன் வந்தான். வாணி அண்ணனிடம் கனி அளித்தாள். அவன் நன்றி என்றான்.",
+        "questionTa": "அம்மா என்ன தந்தாள்?",
+        "meaningEn": "What did Mom give?",
+        "translit": "Amma enna thandhaal?",
+        "options": ["கனி தந்தாள் (Fruit)", "மலர் தந்தாள் (Flower)", "பால் தந்தாள் (Milk)", "புத்தகம் தந்தாள் (Book)"],
+        "correctAnswer": "கனி தந்தாள் (Fruit)",
+        "explanation": "கதையில்: ‘அம்மா கனி தந்தாள்.’"
+      },
+      {
+        "id": "s2-as3-q8",
+        "type": "comprehension",
+        "category": "சிறுகதை 3: கனி (Short Story 3)",
+        "storyTitle": "சிறுகதை 3: கனி",
+        "storyPassage": "அம்மா கனி தந்தாள். வாணி கனி உண்டாள். அவள் அண்ணன் வந்தான். வாணி அண்ணனிடம் கனி அளித்தாள். அவன் நன்றி என்றான்.",
+        "questionTa": "வாணியின் அண்ணன் என்ன கூறினான்?",
+        "meaningEn": "What did Vani's brother say?",
+        "translit": "Vaaniyin annan enna koorinaan?",
+        "options": ["நன்றி என்றான் (Thank you)", "வணக்கம் என்றான் (Greetings)", "போதும் என்றான் (Enough)", "வேண்டாம் என்றான் (No)"],
+        "correctAnswer": "நன்றி என்றான் (Thank you)",
+        "explanation": "கதையில்: ‘அவன் நன்றி என்றான்.’"
+      }
+    ]
+  },
+  {
+    "id": "pdf-stage2-activity",
+    "pdfFile": "data/Reading Club/Stage2_Activity part.pdf",
+    "title": "Stage 2 - செயல்பாட்டுப் பகுதி (Stage2_Activity part.pdf)",
+    "subtitle": "சொல் தேர்வு வாசிப்பு, கவி பட்டாம்பூச்சி, ரவி விதை சரி/தவறு வினாக்கள்",
+    "badge": "📓 செயல்பாட்டுப் பகுதி · Stage 2",
+    "badgeClass": "badge-activity",
+    "grade": 2,
+    "items": [
+      {
+        "id": "s2-act-q1",
+        "type": "reading",
+        "category": "சரியான சொல்லைத் தேர்ந்தெடுத்து வாசித்தல் (Word Choice & Read)",
+        "questionTa": "அருண் மரம் அருகில் நின்றான்.",
+        "meaningEn": "Arun stood near the tree.",
+        "translit": "Arun maram arukil nindraan.",
+        "options": ["மரம் (Tree)", "மலை (Mountain)", "வீடு (House)", "பள்ளி (School)"],
+        "correctAnswer": "மரம் (Tree)",
+        "explanation": "சரியான வாக்கியம்: அருண் மரம் அருகில் நின்றான்."
+      },
+      {
+        "id": "s2-act-q2",
+        "type": "reading",
+        "category": "சரியான சொல்லைத் தேர்ந்தெடுத்து வாசித்தல் (Word Choice & Read)",
+        "questionTa": "வானத்தில் பறவை பறந்தது.",
+        "meaningEn": "The bird flew in the sky.",
+        "translit": "Vaanathil paravai paranthathu.",
+        "options": ["பறவை (Bird)", "மீன் (Fish)", "மான் (Deer)", "யானை (Elephant)"],
+        "correctAnswer": "பறவை (Bird)",
+        "explanation": "சரியான வாக்கியம்: வானத்தில் பறவை பறந்தது."
+      },
+      {
+        "id": "s2-act-q3",
+        "type": "reading",
+        "category": "சரியான சொல்லைத் தேர்ந்தெடுத்து வாசித்தல் (Word Choice & Read)",
+        "questionTa": "தோட்டத்தில் அழகான மலர் மலர்ந்தது.",
+        "meaningEn": "A beautiful flower bloomed in the garden.",
+        "translit": "Thottathil azhagaana malar malarnthathu.",
+        "options": ["மலர் (Flower)", "கல் (Stone)", "மண் (Soil)", "முள் (Thorn)"],
+        "correctAnswer": "மலர் (Flower)",
+        "explanation": "சரியான வாக்கியம்: தோட்டத்தில் அழகான மலர் மலர்ந்தது."
+      },
+      {
+        "id": "s2-act-q4",
+        "type": "reading",
+        "category": "சரியான சொல்லைத் தேர்ந்தெடுத்து வாசித்தல் (Word Choice & Read)",
+        "questionTa": "மழைக்குப் பிறகு மண் ஈரமாக இருந்தது.",
+        "meaningEn": "After rain, the soil was wet.",
+        "translit": "Mazhaikku piragu man eeramaaga irunthathu.",
+        "options": ["மண் (Soil)", "நிலா (Moon)", "சூரியன் (Sun)", "வானம் (Sky)"],
+        "correctAnswer": "மண் (Soil)",
+        "explanation": "சரியான வாக்கியம்: மழைக்குப் பிறகு மண் ஈரமாக இருந்தது."
+      },
+      {
+        "id": "s2-act-q5",
+        "type": "comprehension",
+        "category": "புரிதல் வினா: கவி (Comprehension)",
+        "storyTitle": "கவி மற்றும் பட்டாம்பூச்சி",
+        "storyPassage": "கவி தோட்டத்திற்குச் சென்றாள். அங்கு ஒரு சிறிய பட்டாம்பூச்சியைப் பார்த்தாள். அது மலரின் மீது அமர்ந்திருந்தது.",
+        "questionTa": "கவி எங்கு சென்றாள்?",
+        "meaningEn": "Where did Kavi go?",
+        "translit": "Kavi engu sendraal?",
+        "options": ["தோட்டத்திற்குச் சென்றாள் (Garden)", "பள்ளிக்குச் சென்றாள் (School)", "கடைக்குச் சென்றாள் (Shop)", "வீட்டிற்குச் சென்றாள் (Home)"],
+        "correctAnswer": "தோட்டத்திற்குச் சென்றாள் (Garden)",
+        "explanation": "கதையில்: ‘கவி தோட்டத்திற்குச் சென்றாள்.’"
+      },
+      {
+        "id": "s2-act-q6",
+        "type": "comprehension",
+        "category": "புரிதல் வினா: கவி (Comprehension)",
+        "storyTitle": "கவி மற்றும் பட்டாம்பூச்சி",
+        "storyPassage": "கவி தோட்டத்திற்குச் சென்றாள். அங்கு ஒரு சிறிய பட்டாம்பூச்சியைப் பார்த்தாள். அது மலரின் மீது அமர்ந்திருந்தது.",
+        "questionTa": "அவள் எதைப் பார்த்தாள்?",
+        "meaningEn": "What did she see?",
+        "translit": "Aval ethai paarthaal?",
+        "options": [
+          "ஒரு சிறிய பட்டாம்பூச்சியை (A small butterfly)",
+          "ஒரு பெரிய பறவையை (A big bird)",
+          "ஒரு பூனையை (A cat)",
+          "ஒரு மாட்டை (A cow)"
+        ],
+        "correctAnswer": "ஒரு சிறிய பட்டாம்பூச்சியை (A small butterfly)",
+        "explanation": "கதையில்: ‘அங்கு ஒரு சிறிய பட்டாம்பூச்சியைப் பார்த்தாள்.’"
+      },
+      {
+        "id": "s2-act-q7",
+        "type": "comprehension",
+        "category": "புரிதல் வினா: கவி (Comprehension)",
+        "storyTitle": "கவி மற்றும் பட்டாம்பூச்சி",
+        "storyPassage": "கவி தோட்டத்திற்குச் சென்றாள். அங்கு ஒரு சிறிய பட்டாம்பூச்சியைப் பார்த்தாள். அது மலரின் மீது அமர்ந்திருந்தது.",
+        "questionTa": "பட்டாம்பூச்சி எங்கு அமர்ந்திருந்தது?",
+        "meaningEn": "Where was the butterfly sitting?",
+        "translit": "Pattaampoochi engu amarnthirunthathu?",
+        "options": [
+          "மலரின் மீது (On the flower)",
+          "இலையின் மீது (On the leaf)",
+          "மரத்தின் மீது (On the tree)",
+          "தரையின் மீது (On the ground)"
+        ],
+        "correctAnswer": "மலரின் மீது (On the flower)",
+        "explanation": "கதையில்: ‘அது மலரின் மீது அமர்ந்திருந்தது.’"
+      },
+      {
+        "id": "s2-act-q8",
+        "type": "true-false",
+        "category": "சரி / தவறு வினா: ரவி (True or False)",
+        "storyTitle": "ரவியின் சிறிய விதை",
+        "storyPassage": "ரவி ஒரு சிறிய விதையை மண்ணில் விதைத்தான். தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களுக்குப் பிறகு பச்சைத் தளிர் வந்தது.",
+        "questionTa": "1. ரவி ஒரு விதையை விதைத்தான்.",
+        "meaningEn": "Ravi sowed a seed.",
+        "translit": "Ravi oru vithaiyai vithaithaan.",
+        "options": ["சரி (True)", "தவறு (False)"],
+        "correctAnswer": "சரி (True)",
+        "explanation": "சரி: ரவி ஒரு சிறிய விதையை மண்ணில் விதைத்தான்."
+      },
+      {
+        "id": "s2-act-q9",
+        "type": "true-false",
+        "category": "சரி / தவறு வினா: ரவி (True or False)",
+        "storyTitle": "ரவியின் சிறிய விதை",
+        "storyPassage": "ரவி ஒரு சிறிய விதையை மண்ணில் விதைத்தான். தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களுக்குப் பிறகு பச்சைத் தளிர் வந்தது.",
+        "questionTa": "2. ரவி விதைக்குத் தண்ணீர் ஊற்றவில்லை.",
+        "meaningEn": "Ravi did not water the seed.",
+        "translit": "Ravi vithaikku thanneer ootravillai.",
+        "options": ["தவறு (False)", "சரி (True)"],
+        "correctAnswer": "தவறு (False)",
+        "explanation": "தவறு: ரவி தினமும் அதற்குத் தண்ணீர் ஊற்றினான்."
+      },
+      {
+        "id": "s2-act-q10",
+        "type": "true-false",
+        "category": "சரி / தவறு வினா: ரவி (True or False)",
+        "storyTitle": "ரவியின் சிறிய விதை",
+        "storyPassage": "ரவி ஒரு சிறிய விதையை மண்ணில் விதைத்தான். தினமும் அதற்குத் தண்ணீர் ஊற்றினான். சில நாட்களுக்குப் பிறகு பச்சைத் தளிர் வந்தது.",
+        "questionTa": "3. விதையிலிருந்து பச்சைத் தளிர் வந்தது.",
+        "meaningEn": "Green sprout emerged from the seed.",
+        "translit": "Vithaiyilirunthu pachai thalir vanthathu.",
+        "options": ["சரி (True)", "தவறு (False)"],
+        "correctAnswer": "சரி (True)",
+        "explanation": "சரி: சில நாட்களுக்குப் பிறகு பச்சைத் தளிர் வந்தது."
+      }
+    ]
+  }
+]

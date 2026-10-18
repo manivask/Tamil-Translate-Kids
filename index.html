@@ -93,6 +93,7 @@
           <fieldset class="role-picker">
             <legend>Continue as</legend>
             <label><input type="radio" name="user-role" value="student" checked> <span>Student (மாணவர்)</span></label>
+            <label><input type="radio" name="user-role" value="teacher"> <span>Teacher (ஆசிரியர்)</span></label>
             <label><input type="radio" name="user-role" value="admin"> <span>Admin (நிர்வாகம்)</span></label>
           </fieldset>
 
@@ -119,7 +120,7 @@
 
             <div class="qr-view-badges-row">
               <a href="students-qr.html" target="_blank" class="qr-link-badge">
-                <span>🖨️</span> அனைத்து மாணவர் QR அட்டைகள் (View QR Badges) ➜
+                <span>🖨️</span> அனைத்து மாணவர் & ஆசிரியர் QR அட்டைகள் (View QR Badges) ➜
               </a>
             </div>
 
@@ -152,22 +153,45 @@
             </form>
           </div>
 
+          <!-- Teacher Login Panel -->
+          <div id="teacher-login-panel" hidden>
+            <form id="teacher-login-form">
+              <label for="teacher-username">ஆசிரியர் பயனர்பெயர் (Username)</label>
+              <input type="text" id="teacher-username" placeholder="teacher" value="teacher" required autocomplete="username">
+              <label for="teacher-password">கடவுச்சொல் (Password)</label>
+              <input type="password" id="teacher-password" placeholder="TBTA_teacher" value="TBTA_teacher" required autocomplete="current-password">
+              <p class="login-message" id="teacher-login-message" aria-live="polite"></p>
+              <button class="login-continue" id="teacher-continue-btn" type="submit">ஆசிரியர் உள்நுழைவு (Sign In as Teacher) 🚀</button>
+            </form>
+            <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px; text-align: center;">
+              <button type="button" class="qr-action-btn" id="teacher-toggle-cam-btn" style="width: 100%;">
+                📸 கேமரா QR ஸ்கேனர் வழி ஆசிரியர் உள்நுழைவு
+              </button>
+              <a href="students-qr.html#teacher" target="_blank" class="qr-link-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #065F46;">
+                <span>👩‍🏫</span> ஆசிரியர் QR அட்டை பெறுக (Teacher QR Badge) ➜
+              </a>
+            </div>
+          </div>
+
           <!-- Admin Login Panel with Credentials (admin / TBTA_admin) -->
           <div id="admin-login-panel" hidden>
             <form id="admin-login-form">
               <label for="admin-username">பயனர்பெயர் (Username)</label>
-              <input type="text" id="admin-username" placeholder="Enter username (admin)" required autocomplete="username">
+              <input type="text" id="admin-username" placeholder="Enter username (admin)" value="admin" required autocomplete="username">
               <label for="admin-password">கடவுச்சொல் (Password)</label>
-              <input type="password" id="admin-password" placeholder="Enter password (TBTA_admin)" required autocomplete="current-password">
+              <input type="password" id="admin-password" placeholder="Enter password (TBTA_admin)" value="TBTA_admin" required autocomplete="current-password">
               <p class="login-message" id="admin-login-message" aria-live="polite"></p>
-              <button class="login-continue" id="admin-continue-btn" type="submit">நிர்வாக உள்நுழைவு (Sign In) 🚀</button>
+              <button class="login-continue" id="admin-continue-btn" type="submit">நிர்வாக உள்நுழைவு (Sign In as Admin) 🚀</button>
             </form>
             <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px; text-align: center;">
+              <button type="button" class="qr-action-btn" id="admin-toggle-cam-btn" style="width: 100%;">
+                📸 கேமரா QR ஸ்கேனர் வழி நிர்வாக உள்நுழைவு
+              </button>
               <a href="clubs-management.html" target="_blank" class="qr-link-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #065F46;">
                 <span>🏛️</span> மாணவர் மன்றப் பதிவுகள் (Club Enrollments) ➜
               </a>
-              <a href="students-qr.html" target="_blank" class="qr-link-badge">
-                <span>🖨️</span> அனைத்து மாணவர் QR அட்டைகள் (Student QR Badges) ➜
+              <a href="students-qr.html#admin" target="_blank" class="qr-link-badge" style="background: rgba(124, 58, 237, 0.15); border-color: rgba(124, 58, 237, 0.4); color: #5B21B6;">
+                <span>🛡️</span> நிர்வாக QR அட்டை பெறுக (Admin QR Badge) ➜
               </a>
             </div>
           </div>
@@ -433,8 +457,59 @@
         <div class="current-grade-badge">📖 வாசிப்பு மன்றம் (Reading Club)</div>
       </div>
       
+      <!-- ================= PDF PACKAGE SELECTOR AT THE TOP ================= -->
+      <div class="rc-pdf-selection-card">
+        <div class="rc-pdf-header-row">
+          <div class="rc-pdf-label-group">
+            <span class="rc-pdf-icon">📑</span>
+            <div>
+              <label for="rc-pdf-select" class="rc-pdf-title">பயில வேண்டிய PDF பாடம் (Select PDF / Lesson to Study):</label>
+              <div class="rc-pdf-sub-text">நீங்கள் படிக்க விரும்பும் PDF பாடத்தைத் தேர்ந்தெடுக்கவும்</div>
+            </div>
+          </div>
+          <div class="rc-pdf-actions-wrap">
+            <a href="#" id="rc-view-pdf-link" target="_blank" class="rc-view-pdf-link-btn" style="display: none;">
+              <span>👁️</span> அசல் PDF காண்க (View PDF)
+            </a>
+          </div>
+        </div>
+
+        <div class="rc-pdf-dropdown-row">
+          <select id="rc-pdf-select" class="rc-pdf-select-field">
+            <option value="all-graded">🌟 அனைத்து அடிப்படைப் பாடங்கள் (All Graded Lessons - Nilai 1 to 8)</option>
+            <option value="pdf-stage2-simple">📕 Stage 2 - எளிய நிலை (Stage2_Simple.pdf)</option>
+            <option value="pdf-stage2-intermediate">📗 Stage 2 - நடுத்தர நிலை (Stage2_Intermediate.pdf)</option>
+            <option value="pdf-stage2-complex">📘 Stage 2 - உயர் நிலை (Stage2_Complex.pdf)</option>
+            <option value="pdf-stage2-assign3">📙 Stage 2 - ஒப்படைப்பு 3 (Stage 2-Assignment 3.pdf)</option>
+            <option value="pdf-stage2-activity">📓 Stage 2 - செயல்பாட்டுப் பகுதி (Stage2_Activity part.pdf)</option>
+          </select>
+        </div>
+
+        <!-- Fast 1-click PDF Selection Pills -->
+        <div class="rc-pdf-pills-bar" id="rc-pdf-pills-bar">
+          <button type="button" class="rc-pdf-pill active" data-pdf="all-graded">🌟 அனைத்து பாடங்கள்</button>
+          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-simple">📕 Stage 2 எளிய நிலை</button>
+          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-intermediate">📗 Stage 2 நடுத்தர நிலை</button>
+          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-complex">📘 Stage 2 உயர் நிலை</button>
+          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-assign3">📙 Stage 2 ஒப்படைப்பு 3</button>
+          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-activity">📓 Stage 2 செயல்பாட்டுப் பகுதி</button>
+        </div>
+
+        <!-- Active PDF Unit Progress Bar (Shown when a PDF is selected) -->
+        <div class="rc-unit-progress-container" id="rc-unit-progress-bar-wrap" style="display: none;">
+          <div class="rc-unit-progress-header">
+            <span class="rc-unit-title" id="rc-unit-pdf-title">Stage2_Simple.pdf</span>
+            <span class="rc-unit-step-label" id="rc-unit-step-count">வினா 1 / 14</span>
+            <span class="rc-unit-score-badge" id="rc-unit-score-badge">⭐ 0 நட்சத்திரங்கள்</span>
+          </div>
+          <div class="rc-unit-track">
+            <div class="rc-unit-bar" id="rc-unit-progress-bar" style="width: 7%;"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- Studio Mode Switcher Tabs -->
-      <div class="studio-mode-tabs">
+      <div class="studio-mode-tabs" id="rc-studio-mode-tabs">
         <button class="studio-tab-btn active" id="rc-tab-read-btn">
           🎙️ குரல் வாசிப்புப் பயிற்சி (Voice Reading)
         </button>
@@ -445,7 +520,7 @@
 
       <!-- READ VIEW -->
       <div class="studio-view" id="rc-read-view">
-        <div class="rc-browser compact" aria-label="Reading Club filter chooser">
+        <div class="rc-browser compact" id="rc-default-browser" aria-label="Reading Club filter chooser">
           <label for="rc-grade-select">வகுப்பு (Nilai)</label>
           <select id="rc-grade-select">
             <option value="1">Nilai 1</option>
@@ -473,14 +548,37 @@
           </select>
         </div>
 
-        <main class="rc-card compact">
+        <main class="rc-card compact" id="rc-main-card">
           <div class="rc-header-meta">
             <span class="rc-number" id="rc-sentence-number">Nilai 1 · தொடர் 1</span>
             <span class="rc-level-pill-badge" id="rc-level-tag">இரு சொல் தொடர்</span>
           </div>
+
+          <!-- Story Passage Context Box (Shown when the question is part of a story) -->
+          <div class="rc-story-context-box" id="rc-story-context-box" style="display: none;">
+            <div class="story-header-row">
+              <span class="story-badge" id="rc-story-badge">📖 சிறுகதை (Story Passage)</span>
+              <button type="button" class="btn-listen-story" id="rc-story-audio-btn">🔊 கதையைக் கேளுங்கள்</button>
+            </div>
+            <h3 class="story-title" id="rc-story-title">கதை 1: நாய்</h3>
+            <p class="story-passage-text" id="rc-story-text">இது ஒரு நாய்...</p>
+          </div>
+
+          <!-- Question / Target Header -->
+          <div class="rc-question-header" id="rc-question-header" style="display: none;">
+            <span class="rc-question-badge" id="rc-question-badge">❓ கேள்வி 1</span>
+          </div>
+
           <h1 class="rc-text-ta" id="rc-sentence-ta">பாடம் படி</h1>
           <p class="rc-meaning-en" id="rc-meaning-en">Read the lesson</p>
           <p class="rc-translit" id="rc-translit">Paadam padi</p>
+
+          <!-- Interactive Comprehension Options Grid (When question has choices) -->
+          <div class="rc-options-container" id="rc-options-container" style="display: none;">
+            <div class="rc-options-label">👇 சரியான விடையைத் தேர்வு செய்க (Select Answer) அல்லது குரலில் கூறுக:</div>
+            <div class="rc-options-grid" id="rc-options-grid"></div>
+            <div class="rc-option-feedback" id="rc-option-feedback" style="display: none;"></div>
+          </div>
           
           <div class="rc-actions">
             <button class="listen-ta-btn" id="listen-rc-btn">🔊 கேளுங்கள்</button>
@@ -503,10 +601,35 @@
 
           <!-- Integrated Navigation inside card to stay completely visible on one screen -->
           <div class="studio-card-nav">
-            <button class="nav-btn" id="prev-rc-btn">◀ முந்தைய தொடர்</button>
-            <button class="nav-btn primary" id="next-rc-btn">அடுத்த தொடர் ▶</button>
+            <button class="nav-btn" id="prev-rc-btn">◀ முந்தைய வினா</button>
+            <button class="nav-btn primary" id="next-rc-btn">அடுத்த வினா ▶</button>
           </div>
         </main>
+
+        <!-- PDF Completed Celebration Card -->
+        <div class="rc-pdf-completed-card" id="rc-pdf-completed-card" style="display: none;">
+          <div class="completed-icon">🏆 🎉</div>
+          <h2 class="completed-title">அற்புதம்! வாழ்த்துகள்!</h2>
+          <p class="completed-sub" id="rc-completed-pdf-name">நீங்கள் இந்த PDF பாடத்தின் அனைத்து வினாக்களையும் வெற்றிகரமாக முடித்துவிட்டீர்கள்!</p>
+          <div class="completed-stats-row">
+            <div class="completed-stat-box">
+              <span class="stat-big-val" id="rc-completed-count">14 / 14</span>
+              <span class="stat-small-lbl">முடித்த வினாக்கள்</span>
+            </div>
+            <div class="completed-stat-box">
+              <span class="stat-big-val" id="rc-completed-stars">⭐ 0</span>
+              <span class="stat-small-lbl">பெற்ற நட்சத்திரங்கள்</span>
+            </div>
+            <div class="completed-stat-box">
+              <span class="stat-big-val" id="rc-completed-score">100%</span>
+              <span class="stat-small-lbl">சராசரி துல்லியம்</span>
+            </div>
+          </div>
+          <div class="completed-actions-row">
+            <button type="button" class="btn-repeat-pdf" id="rc-repeat-pdf-btn">🔄 மீண்டும் பயிற்சி செய்க</button>
+            <button type="button" class="btn-next-pdf" id="rc-next-pdf-btn">📑 அடுத்த PDF பாடத்திற்குச் செல்க ➜</button>
+          </div>
+        </div>
       </div>
 
       <!-- QUIZ VIEW -->
@@ -812,72 +935,519 @@
       </main>
     </section>
 
-    <!-- ================= ADMIN SCREEN ================= -->
-    <section class="screen" id="screen-admin">
-      <div class="screen-nav-bar">
-        <button class="screen-back-btn" id="admin-logout-btn">◀ Sign out</button>
-        <div class="current-grade-badge">Admin Dashboard</div>
+    <!-- ================= TEACHER SCREEN (ஆசிரியர் பணியகம்) ================= -->
+    <section class="screen" id="screen-teacher">
+      <div class="screen-nav-bar staff-nav-bar">
+        <button class="screen-back-btn" id="teacher-logout-btn">◀ வெளியேறு (Sign out)</button>
+        <div class="current-grade-badge teacher-badge">👩‍🏫 ஆசிரியர் பணியகம் (Teacher Dashboard)</div>
+        <button class="screen-action-btn primary-action" id="teacher-open-rc-btn">📖 வாசிப்பு மன்றம் திற ➜</button>
       </div>
-      <main class="admin-card">
-        <h2>📊 Student Learning Overview & Analytics</h2>
-        <p id="admin-summary">Loading saved student progress…</p>
 
-        <div style="display: flex; gap: 10px; margin: 16px 0; flex-wrap: wrap;">
-          <a href="clubs-management.html" target="_blank" class="clubs-btn primary" style="background: linear-gradient(135deg, #059669, #10B981); color: #FFF; padding: 8px 16px; border-radius: 9999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;">
-            <span>🏛️</span> மாணவர் மன்றப் பதிவுகள் (Club Enrollments) ➜
-          </a>
-          <a href="students-qr.html" target="_blank" class="clubs-btn secondary" style="background: #F1F5F9; color: #1E293B; border: 1px solid #CBD5E1; padding: 8px 16px; border-radius: 9999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;">
-            <span>🖨️</span> மாணவர் QR அட்டைகள் (Student QR Badges) ➜
-          </a>
-        </div>
-        
-        <!-- Analytics Metric Cards -->
-        <div class="admin-metric-grid" id="admin-metric-grid">
-          <div class="admin-metric-card">
-            <div class="metric-icon">👥</div>
-            <div class="metric-data">
-              <span class="metric-value" id="metric-students-count">0</span>
-              <span class="metric-label">Registered Students</span>
-            </div>
+      <main class="staff-dashboard-container">
+        <!-- Teacher Hero Banner -->
+        <div class="staff-hero-card teacher-theme">
+          <div class="staff-hero-info">
+            <div class="staff-role-pill">👩‍🏫 TBTA TAMIL TEACHER</div>
+            <h2 class="staff-hero-title">வணக்கம் ஆசிரியர்! நல்வரவு</h2>
+            <p class="staff-hero-desc">மாணவர்களின் வாசிப்பு மன்றப் பயிற்சிகள், மதிப்பெண்கள் மற்றும் நட்சத்திரங்களை இங்கே கண்காணிக்கலாம். புதிய வாசிப்புப் பாடங்களை உடனுக்குடன் பதிவேற்றலாம்.</p>
           </div>
-          <div class="admin-metric-card">
-            <div class="metric-icon">🎯</div>
-            <div class="metric-data">
-              <span class="metric-value" id="metric-attempts-count">0</span>
-              <span class="metric-label">Total Learning Activities</span>
+          <div class="staff-metric-strip">
+            <div class="staff-metric-cell">
+              <span class="cell-num" id="teacher-stat-students-count">94</span>
+              <span class="cell-lbl">பதிவுசெய்த மாணவர்கள்</span>
             </div>
-          </div>
-          <div class="admin-metric-card">
-            <div class="metric-icon">📜</div>
-            <div class="metric-data">
-              <span class="metric-value" id="metric-kural-count">0</span>
-              <span class="metric-label">Thirukkural Activities</span>
+            <div class="staff-metric-cell">
+              <span class="cell-num" id="teacher-stat-rc-count">0</span>
+              <span class="cell-lbl">வாசிப்புப் பயிற்சிகள்</span>
             </div>
-          </div>
-          <div class="admin-metric-card">
-            <div class="metric-icon">🪶</div>
-            <div class="metric-data">
-              <span class="metric-value" id="metric-aathichudi-count">0</span>
-              <span class="metric-label">Aathichudi Activities</span>
+            <div class="staff-metric-cell">
+              <span class="cell-num" id="teacher-stat-stars-count">0</span>
+              <span class="cell-lbl">வகுப்பு நட்சத்திரங்கள்</span>
+            </div>
+            <div class="staff-metric-cell">
+              <span class="cell-num" id="teacher-stat-materials-count">0</span>
+              <span class="cell-lbl">பதிவேற்றிய பாடங்கள்</span>
             </div>
           </div>
         </div>
 
-        <div class="admin-filter-bar">
-          <label for="admin-filter-select">Activity Filter:</label>
-          <select id="admin-filter-select">
-            <option value="all">All Activities</option>
-            <option value="thirukkural">Thirukkural Voice Practice</option>
-            <option value="kural-quiz">Thirukkural Quick Check</option>
-            <option value="aathichudi">Aathichudi Voice Practice</option>
-            <option value="aathichudi-quiz">Aathichudi Quick Check</option>
-            <option value="translation">Grade Sentence Translations</option>
-          </select>
+        <!-- Teacher Section Navigation Tabs -->
+        <div class="staff-view-tabs" id="teacher-view-tabs">
+          <button class="staff-tab-btn active" data-tab="progress">
+            <span>👥</span> மாணவர் தனிநபர் முன்னேற்றம் (Student Progress)
+          </button>
+          <button class="staff-tab-btn" data-tab="upload">
+            <span>📤</span> புதிய வாசிப்புப் பாடங்கள் பதிவேற்றம் (Upload Materials)
+          </button>
         </div>
 
-        <div id="admin-progress-list" class="admin-progress-list"></div>
+        <!-- TAB 1: Student Progress Tracker (Requirement 3 & 6) -->
+        <div class="staff-tab-content active" id="teacher-tab-progress">
+          <div class="staff-card">
+            <div class="card-section-header">
+              <div>
+                <h3 class="card-section-title">👥 மாணவர் வாரியான வாசிப்பு மன்ற முன்னேற்றம்</h3>
+                <p class="card-section-subtitle">ஒவ்வொரு குழந்தையின் வாசிப்புத் துல்லியம், நட்சத்திரங்கள் மற்றும் வினாடி வினா செயல்திறன்.</p>
+              </div>
+              <div class="card-header-aux">
+                <span class="roster-badge" id="teacher-roster-count-badge">காட்டுவது: 94 மாணவர்கள்</span>
+              </div>
+            </div>
+
+            <!-- Filters & Search Toolbar -->
+            <div class="staff-filters-row">
+              <div class="staff-search-wrap">
+                <input type="text" id="teacher-student-search" class="staff-search-input" placeholder="🔍 மாணவர் பெயரைத் தேடுக (Search by student name)..." aria-label="Search student">
+              </div>
+              <div class="staff-grade-pills" id="teacher-grade-filter-pills">
+                <button class="filter-pill active" data-grade="all">அனைத்தும் (All)</button>
+                <button class="filter-pill" data-grade="1">Nilai 1</button>
+                <button class="filter-pill" data-grade="2">Nilai 2</button>
+                <button class="filter-pill" data-grade="3">Nilai 3</button>
+                <button class="filter-pill" data-grade="4">Nilai 4</button>
+                <button class="filter-pill" data-grade="5">Nilai 5</button>
+                <button class="filter-pill" data-grade="6">Nilai 6</button>
+                <button class="filter-pill" data-grade="7">Nilai 7</button>
+                <button class="filter-pill" data-grade="8">Nilai 8</button>
+              </div>
+            </div>
+
+            <!-- Student Roster Table -->
+            <div class="staff-table-container">
+              <table class="staff-progress-table">
+                <thead>
+                  <tr>
+                    <th>மாணவர் பெயர் (Student)</th>
+                    <th>வகுப்பு (Grade)</th>
+                    <th>வாசிப்பு மன்றம் (Reading Club)</th>
+                    <th>சராசரி துல்லியம் (Avg Score)</th>
+                    <th>வினாடி வினா (Quiz)</th>
+                    <th>நட்சத்திரங்கள் (Stars)</th>
+                    <th>கடைசி செயல்பாடு (Last Active)</th>
+                    <th>முழு விவரம் (Details)</th>
+                  </tr>
+                </thead>
+                <tbody id="teacher-students-tbody">
+                  <!-- Populated by renderStudentProgressTable -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Reading Club Material Upload (Requirement 4 & 6) -->
+        <div class="staff-tab-content" id="teacher-tab-upload" style="display: none;">
+          <div class="staff-card">
+            <div class="card-section-header">
+              <div>
+                <h3 class="card-section-title">📤 புதிய வாசிப்பு மன்ற பாடங்கள் பதிவேற்றம் (Upload Reading Club Materials)</h3>
+                <p class="card-section-subtitle">PDF, Word (.docx), Excel (.xlsx, .csv), அல்லது Text (.txt) கோப்பைப் பதிவேற்றி அனைத்து மாணவர்களுக்கும் வெளியிடலாம்.</p>
+              </div>
+              <div class="supported-formats-pills">
+                <span class="fmt-pill pdf">PDF 📕</span>
+                <span class="fmt-pill docx">WORD 📘</span>
+                <span class="fmt-pill xlsx">EXCEL 📗</span>
+                <span class="fmt-pill txt">TEXT 📄</span>
+              </div>
+            </div>
+
+            <!-- Drag & Drop File Upload Area -->
+            <div class="upload-dropzone" id="teacher-upload-dropzone">
+              <input type="file" id="teacher-file-uploader" accept=".pdf,.docx,.doc,.xlsx,.xls,.csv,.txt" style="display:none;">
+              <div class="dropzone-icon">📤</div>
+              <h4 class="dropzone-main-text">கோப்பை இங்கே இழுத்து விடவும் அல்லது கிளிக் செய்து தேர்வு செய்க</h4>
+              <p class="dropzone-sub-text">ஏற்றுக்கொள்ளப்படும் வடிவங்கள்: PDF (.pdf), Word (.docx), Excel (.xlsx, .csv), Text (.txt)</p>
+              <button type="button" class="dropzone-browse-btn" id="teacher-browse-files-btn">
+                📂 கணினியிலிருந்து கோப்பைத் தேர்வு செய்க (Browse File)
+              </button>
+              <div class="file-loaded-banner" id="teacher-file-loaded-banner" style="display: none;"></div>
+            </div>
+
+            <!-- Upload Meta Settings -->
+            <div class="upload-settings-grid">
+              <div class="upload-setting-col">
+                <label for="teacher-upload-grade">இலக்கு வகுப்பு (Target Nilai / Grade)</label>
+                <select id="teacher-upload-grade" class="upload-select">
+                  <option value="1">1-ஆம் வகுப்பு (Nilai 1)</option>
+                  <option value="2">2-ஆம் வகுப்பு (Nilai 2)</option>
+                  <option value="3">3-ஆம் வகுப்பு (Nilai 3)</option>
+                  <option value="4">4-ஆம் வகுப்பு (Nilai 4)</option>
+                  <option value="5">5-ஆம் வகுப்பு (Nilai 5)</option>
+                  <option value="6">6-ஆம் வகுப்பு (Nilai 6)</option>
+                  <option value="7">7-ஆம் வகுப்பு (Nilai 7)</option>
+                  <option value="8">8-ஆம் வகுப்பு (Nilai 8)</option>
+                  <option value="all">அனைத்து வகுப்புகளும் (All Nilai 1 - 8)</option>
+                </select>
+              </div>
+              <div class="upload-setting-col">
+                <label for="teacher-upload-level">பயிற்சி நிலை (Sentence Level)</label>
+                <select id="teacher-upload-level" class="upload-select">
+                  <option value="2-words">இரு சொல் தொடர் (2 Words)</option>
+                  <option value="3-words">முச்சொல் தொடர் (3 Words)</option>
+                  <option value="4-words">நான்கு+ சொல் தொடர் (4+ Words)</option>
+                  <option value="simple">🌟 எளிய நிலை (Simple Phrases / Stories)</option>
+                  <option value="intermediate">🚀 நடுத்தர நிலை (Intermediate)</option>
+                  <option value="complex">🏆 உயர் நிலை (Complex Stories)</option>
+                </select>
+              </div>
+              <div class="upload-setting-col">
+                <label for="teacher-upload-title">பாடத் தலைப்பு (Lesson Title)</label>
+                <input type="text" id="teacher-upload-title" class="upload-text-input" placeholder="எ.கா: காலை பழக்கங்கள் / இயற்கை வனப்பு">
+              </div>
+            </div>
+
+            <!-- Parsed Sentences Preview & Inline Editor -->
+            <div class="parsed-preview-panel" id="teacher-parsed-preview" style="display: none;">
+              <div class="preview-panel-header">
+                <div>
+                  <h4 class="preview-title">📋 பிரித்தெடுக்கப்பட்ட வாசிப்புத் தொடர்கள் (Extracted Sentences: <span id="teacher-extracted-count">0</span>)</h4>
+                  <small style="color: #64748B;">கீழே உள்ள தொடர்களைத் திருத்தலாம், தேவைப்பட்டால் புதிய தொடரைச் சேர்க்கலாம்.</small>
+                </div>
+                <button type="button" class="btn-add-row" id="teacher-add-row-btn">➕ புதிய தொடர் சேர்</button>
+              </div>
+
+              <div class="preview-table-wrapper">
+                <table class="preview-edit-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 45px;">#</th>
+                      <th>தமிழ் தொடர் (Tamil Sentence)*</th>
+                      <th>ஆங்கிலப் பொருள் (English Meaning)</th>
+                      <th>ஒலிபெயர்ப்பு (Transliteration)</th>
+                      <th style="width: 50px;">நீக்கு</th>
+                    </tr>
+                  </thead>
+                  <tbody id="teacher-preview-tbody"></tbody>
+                </table>
+              </div>
+
+              <div class="preview-action-bar">
+                <button type="button" class="btn-publish-all" id="teacher-publish-btn">
+                  🚀 வாசிப்பு மன்றத்தில் வெளியிடு (Publish to Reading Club for All Students)
+                </button>
+                <button type="button" class="btn-cancel-preview" id="teacher-cancel-preview-btn">ரத்து செய்க (Cancel)</button>
+              </div>
+            </div>
+
+            <!-- Published Materials Manager -->
+            <div class="active-materials-section">
+              <h4 class="active-materials-title">📚 தற்போது வெளியிடப்பட்ட ஆசிரியர் வாசிப்புப் பாடங்கள்</h4>
+              <div id="teacher-materials-cards-grid" class="materials-cards-grid">
+                <p class="empty-note">இன்னும் ஆசிரியர் பாடங்கள் எதுவும் பதிவேற்றப்படவில்லை.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </section>
+
+    <!-- ================= ADMIN SCREEN (நிர்வாக பணியகம்) ================= -->
+    <section class="screen" id="screen-admin">
+      <div class="screen-nav-bar staff-nav-bar">
+        <button class="screen-back-btn" id="admin-logout-btn">◀ வெளியேறு (Sign out)</button>
+        <div class="current-grade-badge admin-badge">🛡️ தலைமை நிர்வாக பணியகம் (Admin Dashboard)</div>
+        <button class="screen-action-btn primary-action" id="admin-open-rc-btn">📖 வாசிப்பு மன்றம் திற ➜</button>
+      </div>
+
+      <main class="staff-dashboard-container">
+        <!-- Admin Quick Links Strip -->
+        <div class="admin-quick-links-strip">
+          <a href="clubs-management.html" target="_blank" class="clubs-btn primary" style="background: linear-gradient(135deg, #059669, #10B981); color: #FFF; padding: 8px 18px; border-radius: 9999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+            <span>🏛️</span> மாணவர் மன்றப் பதிவுகள் (Club Enrollments) ➜
+          </a>
+          <a href="students-qr.html" target="_blank" class="clubs-btn secondary" style="background: #F1F5F9; color: #1E293B; border: 1px solid #CBD5E1; padding: 8px 18px; border-radius: 9999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;">
+            <span>🖨️</span> அனைத்து QR அடையாள அட்டைகள் (View QR Badges) ➜
+          </a>
+        </div>
+
+        <!-- Admin View Tabs (Requirement 5: Full Access like Teacher + System Overview) -->
+        <div class="staff-view-tabs" id="admin-view-tabs">
+          <button class="staff-tab-btn active" data-tab="overview">
+            <span>📊</span> பொது அமைப்பு புள்ளிவிவரம் & செயல்பாடுகள் (System Overview)
+          </button>
+          <button class="staff-tab-btn" data-tab="progress">
+            <span>👥</span> மாணவர் தனிநபர் முன்னேற்றம் (Student Progress by Child)
+          </button>
+          <button class="staff-tab-btn" data-tab="upload">
+            <span>📤</span> வாசிப்பு மன்ற பாடங்கள் பதிவேற்றம் (Materials Upload & Manager)
+          </button>
+        </div>
+
+        <!-- TAB 1: System Learning Overview & Activity Stream -->
+        <div class="staff-tab-content active" id="admin-tab-overview">
+          <div class="staff-card">
+            <h3 class="card-section-title">📊 கற்றல் அமைப்பு புள்ளிவிவரங்கள்</h3>
+            <p id="admin-summary" style="color: #64748B; margin-bottom: 16px;">Loading saved student progress…</p>
+
+            <!-- Metrics Cards Grid -->
+            <div class="admin-metric-grid" id="admin-metric-grid">
+              <div class="admin-metric-card">
+                <div class="metric-icon">👥</div>
+                <div class="metric-data">
+                  <span class="metric-value" id="metric-students-count">0</span>
+                  <span class="metric-label">பதிவுசெய்த மாணவர்கள்</span>
+                </div>
+              </div>
+              <div class="admin-metric-card">
+                <div class="metric-icon">🎯</div>
+                <div class="metric-data">
+                  <span class="metric-value" id="metric-attempts-count">0</span>
+                  <span class="metric-label">மொத்த கற்றல் முயற்சிகள்</span>
+                </div>
+              </div>
+              <div class="admin-metric-card">
+                <div class="metric-icon">📖</div>
+                <div class="metric-data">
+                  <span class="metric-value" id="metric-rc-count">0</span>
+                  <span class="metric-label">வாசிப்பு மன்ற செயல்பாடுகள்</span>
+                </div>
+              </div>
+              <div class="admin-metric-card">
+                <div class="metric-icon">📜</div>
+                <div class="metric-data">
+                  <span class="metric-value" id="metric-kural-count">0</span>
+                  <span class="metric-label">திருக்குறள் பயிற்சிகள்</span>
+                </div>
+              </div>
+              <div class="admin-metric-card">
+                <div class="metric-icon">🪶</div>
+                <div class="metric-data">
+                  <span class="metric-value" id="metric-aathichudi-count">0</span>
+                  <span class="metric-label">ஆத்திசூடி பயிற்சிகள்</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-filter-bar">
+              <label for="admin-filter-select">செயல்பாடு வடிகட்டி (Activity Filter):</label>
+              <select id="admin-filter-select">
+                <option value="all">அனைத்து செயல்பாடுகளும் (All Activities)</option>
+                <option value="reading-club">📖 வாசிப்பு மன்றம் (Reading Club Reads)</option>
+                <option value="reading-club-quiz">⚡ வாசிப்பு மன்ற Quick Check</option>
+                <option value="thirukkural">📜 திருக்குறள் குரல் பயிற்சி</option>
+                <option value="kural-quiz">⚡ திருக்குறள் Quick Check</option>
+                <option value="aathichudi">🪶 ஆத்திசூடி குரல் பயிற்சி</option>
+                <option value="aathichudi-quiz">⚡ ஆத்திசூடி Quick Check</option>
+                <option value="translation">வகுப்பு மொழிபெயர்ப்பு பயிற்சிகள்</option>
+              </select>
+            </div>
+
+            <div id="admin-progress-list" class="admin-progress-list"></div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Student Progress by Child (Admin Access) -->
+        <div class="staff-tab-content" id="admin-tab-progress" style="display: none;">
+          <div class="staff-card">
+            <div class="card-section-header">
+              <div>
+                <h3 class="card-section-title">👥 மாணவர் தனிநபர் முன்னேற்றம் (Admin Child Progress View)</h3>
+                <p class="card-section-subtitle">அனைத்து 94 மாணவர்களின் விரிவான வாசிப்பு முன்னேற்றம், மதிப்பெண்கள் மற்றும் பதிவுகள்.</p>
+              </div>
+              <div class="card-header-aux">
+                <span class="roster-badge" id="admin-roster-count-badge">94 மாணவர்கள்</span>
+              </div>
+            </div>
+
+            <div class="staff-filters-row">
+              <div class="staff-search-wrap">
+                <input type="text" id="admin-student-search" class="staff-search-input" placeholder="🔍 மாணவர் பெயரைத் தேடுக..." aria-label="Search student">
+              </div>
+              <div class="staff-grade-pills" id="admin-grade-filter-pills">
+                <button class="filter-pill active" data-grade="all">அனைத்தும் (All)</button>
+                <button class="filter-pill" data-grade="1">Nilai 1</button>
+                <button class="filter-pill" data-grade="2">Nilai 2</button>
+                <button class="filter-pill" data-grade="3">Nilai 3</button>
+                <button class="filter-pill" data-grade="4">Nilai 4</button>
+                <button class="filter-pill" data-grade="5">Nilai 5</button>
+                <button class="filter-pill" data-grade="6">Nilai 6</button>
+                <button class="filter-pill" data-grade="7">Nilai 7</button>
+                <button class="filter-pill" data-grade="8">Nilai 8</button>
+              </div>
+            </div>
+
+            <div class="staff-table-container">
+              <table class="staff-progress-table">
+                <thead>
+                  <tr>
+                    <th>மாணவர் பெயர் (Student)</th>
+                    <th>வகுப்பு (Grade)</th>
+                    <th>வாசிப்பு மன்றம் (Reading Club)</th>
+                    <th>சராசரி துல்லியம் (Avg Score)</th>
+                    <th>வினாடி வினா (Quiz)</th>
+                    <th>நட்சத்திரங்கள் (Stars)</th>
+                    <th>கடைசி செயல்பாடு (Last Active)</th>
+                    <th>முழு விவரம் (Details)</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-students-tbody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: Materials Upload & Manager (Admin Access) -->
+        <div class="staff-tab-content" id="admin-tab-upload" style="display: none;">
+          <div class="staff-card">
+            <div class="card-section-header">
+              <div>
+                <h3 class="card-section-title">📤 வாசிப்பு மன்ற பாடங்கள் பதிவேற்றம் & மேலாண்மை</h3>
+                <p class="card-section-subtitle">நிர்வாகியால் புதிய வாசிப்புப் பாடங்களைப் பதிவேற்றி மாணவர்களுக்கு வெளியிடலாம் அல்லது நீக்கலாம்.</p>
+              </div>
+            </div>
+
+            <!-- Upload Dropzone for Admin -->
+            <div class="upload-dropzone" id="admin-upload-dropzone">
+              <input type="file" id="admin-file-uploader" accept=".pdf,.docx,.doc,.xlsx,.xls,.csv,.txt" style="display:none;">
+              <div class="dropzone-icon">📤</div>
+              <h4 class="dropzone-main-text">கோப்பை இங்கே இழுத்து விடவும் அல்லது கிளிக் செய்து தேர்வு செய்க</h4>
+              <p class="dropzone-sub-text">Supported: PDF, Word (.docx), Excel (.xlsx, .csv), Text (.txt)</p>
+              <button type="button" class="dropzone-browse-btn" id="admin-browse-files-btn">
+                📂 கணினியிலிருந்து கோப்பைத் தேர்வு செய்க (Browse File)
+              </button>
+              <div class="file-loaded-banner" id="admin-file-loaded-banner" style="display: none;"></div>
+            </div>
+
+            <!-- Upload Settings for Admin -->
+            <div class="upload-settings-grid">
+              <div class="upload-setting-col">
+                <label for="admin-upload-grade">இலக்கு வகுப்பு (Target Nilai / Grade)</label>
+                <select id="admin-upload-grade" class="upload-select">
+                  <option value="1">1-ஆம் வகுப்பு (Nilai 1)</option>
+                  <option value="2">2-ஆம் வகுப்பு (Nilai 2)</option>
+                  <option value="3">3-ஆம் வகுப்பு (Nilai 3)</option>
+                  <option value="4">4-ஆம் வகுப்பு (Nilai 4)</option>
+                  <option value="5">5-ஆம் வகுப்பு (Nilai 5)</option>
+                  <option value="6">6-ஆம் வகுப்பு (Nilai 6)</option>
+                  <option value="7">7-ஆம் வகுப்பு (Nilai 7)</option>
+                  <option value="8">8-ஆம் வகுப்பு (Nilai 8)</option>
+                  <option value="all">அனைத்து வகுப்புகளும் (All Nilai 1 - 8)</option>
+                </select>
+              </div>
+              <div class="upload-setting-col">
+                <label for="admin-upload-level">பயிற்சி நிலை (Sentence Level)</label>
+                <select id="admin-upload-level" class="upload-select">
+                  <option value="2-words">இரு சொல் தொடர் (2 Words)</option>
+                  <option value="3-words">முச்சொல் தொடர் (3 Words)</option>
+                  <option value="4-words">நான்கு+ சொல் தொடர் (4+ Words)</option>
+                  <option value="simple">🌟 எளிய நிலை (Simple Phrases / Stories)</option>
+                  <option value="intermediate">🚀 நடுத்தர நிலை (Intermediate)</option>
+                  <option value="complex">🏆 உயர் நிலை (Complex Stories)</option>
+                </select>
+              </div>
+              <div class="upload-setting-col">
+                <label for="admin-upload-title">பாடத் தலைப்பு (Lesson Title)</label>
+                <input type="text" id="admin-upload-title" class="upload-text-input" placeholder="எ.கா: வாசிப்புப் பயிற்சிகள்">
+              </div>
+            </div>
+
+            <!-- Admin Parsed Preview -->
+            <div class="parsed-preview-panel" id="admin-parsed-preview" style="display: none;">
+              <div class="preview-panel-header">
+                <div>
+                  <h4 class="preview-title">📋 பிரித்தெடுக்கப்பட்ட வாசிப்புத் தொடர்கள் (Extracted: <span id="admin-extracted-count">0</span>)</h4>
+                </div>
+                <button type="button" class="btn-add-row" id="admin-add-row-btn">➕ புதிய தொடர் சேர்</button>
+              </div>
+
+              <div class="preview-table-wrapper">
+                <table class="preview-edit-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 45px;">#</th>
+                      <th>தமிழ் தொடர் (Tamil Sentence)*</th>
+                      <th>ஆங்கிலப் பொருள் (English Meaning)</th>
+                      <th>ஒலிபெயர்ப்பு (Transliteration)</th>
+                      <th style="width: 50px;">நீக்கு</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-preview-tbody"></tbody>
+                </table>
+              </div>
+
+              <div class="preview-action-bar">
+                <button type="button" class="btn-publish-all" id="admin-publish-btn">
+                  🚀 வாசிப்பு மன்றத்தில் வெளியிடு (Publish to Reading Club)
+                </button>
+                <button type="button" class="btn-cancel-preview" id="admin-cancel-preview-btn">ரத்து செய்க (Cancel)</button>
+              </div>
+            </div>
+
+            <div class="active-materials-section">
+              <h4 class="active-materials-title">📚 தற்போது வெளியிடப்பட்ட ஆசிரியர் வாசிப்புப் பாடங்கள்</h4>
+              <div id="admin-materials-cards-grid" class="materials-cards-grid">
+                <p class="empty-note">இன்னும் பாடங்கள் எதுவும் பதிவேற்றப்படவில்லை.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <!-- ================= CHILD DETAILED PROGRESS MODAL ================= -->
+  <div class="child-modal-backdrop" id="child-progress-modal" style="display: none;" aria-hidden="true">
+    <div class="child-modal-card" role="dialog" aria-labelledby="modal-child-name">
+      <div class="child-modal-header">
+        <div class="child-modal-profile">
+          <div class="child-modal-avatar" id="modal-child-avatar">👤</div>
+          <div>
+            <h3 class="child-modal-name" id="modal-child-name">மாணவர் பெயர்</h3>
+            <div class="child-modal-meta">
+              <span class="modal-grade-pill" id="modal-child-grade">Nilai 1</span>
+              <span class="modal-clubs-pill" id="modal-child-clubs">மன்றங்கள்</span>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="child-modal-close-btn" id="close-child-modal-btn" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="child-modal-stats-grid">
+        <div class="modal-stat-box">
+          <span class="modal-stat-val" id="modal-stat-stars">⭐ 0</span>
+          <span class="modal-stat-lbl">நட்சத்திரங்கள்</span>
+        </div>
+        <div class="modal-stat-box">
+          <span class="modal-stat-val" id="modal-stat-rc-count">0</span>
+          <span class="modal-stat-lbl">RC வாசிப்புகள்</span>
+        </div>
+        <div class="modal-stat-box">
+          <span class="modal-stat-val" id="modal-stat-avg-score">0%</span>
+          <span class="modal-stat-lbl">சராசரி துல்லியம்</span>
+        </div>
+        <div class="modal-stat-box">
+          <span class="modal-stat-val" id="modal-stat-quiz-count">0</span>
+          <span class="modal-stat-lbl">வினாடி வினாக்கள்</span>
+        </div>
+      </div>
+
+      <div class="child-modal-history-wrap">
+        <h4 class="modal-history-title">📖 வாசிப்பு மன்ற செயல்பாட்டு வரலாறு (Reading Club Attempts)</h4>
+        <div class="modal-table-scroll">
+          <table class="modal-history-table">
+            <thead>
+              <tr>
+                <th>தொடர் (Sentence ID / Text)</th>
+                <th>வகை (Category)</th>
+                <th>மதிப்பெண் (Score)</th>
+                <th>நட்சத்திரங்கள் (Stars)</th>
+                <th>தேதி & நேரம் (Timestamp)</th>
+              </tr>
+            </thead>
+            <tbody id="modal-rc-history-tbody">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="child-modal-footer">
+        <button type="button" class="btn-print-report" id="modal-print-report-btn">🖨️ அறிக்கை அச்சிடுக (Print Report)</button>
+        <button type="button" class="btn-close-modal" id="modal-dismiss-btn">மூடுக (Close)</button>
+      </div>
+    </div>
   </div>
 
   <button class="chat-fab" id="chat-fab" aria-label="Open Tamil voice friend" title="தமிழ் பேசும் நண்பர்">💬<span>பேசலாம்</span></button>
@@ -892,16 +1462,24 @@
   <!-- Application Scripts -->
   <script src="js/lib/jsqr.min.js"></script>
   <script src="js/lib/qrcode.min.js"></script>
-  <script src="js/logger.js?v=20261004-qr-v1"></script>
-  <script src="js/voice_recorder.js?v=20261004-qr-v1"></script>
-  <script src="js/sentences.js?v=20261004-qr-v1"></script>
-  <script src="js/matcher.js?v=20261004-qr-v1"></script>
-  <script src="js/audio.js?v=20261004-qr-v1"></script>
-  <script src="js/speech.js?v=20261004-qr-v1"></script>
-  <script src="js/thirukkural.js?v=20261004-qr-v1"></script>
-  <script src="js/aathichudi.js?v=20261004-qr-v1"></script>
-  <script src="js/reading-club.js?v=20261004-qr-v1"></script>
-  <script src="js/chat-agent.js?v=20261004-qr-v1"></script>
-  <script src="js/app.js?v=20261004-qr-v1"></script>
+  <script src="js/lib/xlsx.full.min.js"></script>
+  <script src="js/lib/mammoth.browser.min.js"></script>
+  <script src="js/lib/pdf.min.js"></script>
+  <script>
+    if (window.pdfjsLib) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'js/lib/pdf.worker.min.js';
+    }
+  </script>
+  <script src="js/logger.js?v=20261004-qr-v2"></script>
+  <script src="js/voice_recorder.js?v=20261004-qr-v2"></script>
+  <script src="js/sentences.js?v=20261004-qr-v2"></script>
+  <script src="js/matcher.js?v=20261004-qr-v2"></script>
+  <script src="js/audio.js?v=20261004-qr-v2"></script>
+  <script src="js/speech.js?v=20261004-qr-v2"></script>
+  <script src="js/thirukkural.js?v=20261004-qr-v2"></script>
+  <script src="js/aathichudi.js?v=20261004-qr-v2"></script>
+  <script src="js/reading-club.js?v=20261004-qr-v2"></script>
+  <script src="js/chat-agent.js?v=20261004-qr-v2"></script>
+  <script src="js/app.js?v=20261004-qr-v2"></script>
 </body>
 </html>

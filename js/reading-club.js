@@ -2,6 +2,8 @@
  * Tamil-Translate-Kids - Reading Club (வாசிப்பு மன்றம்) Engine
  * Multi-level graded reading practice (2-word, 3-word, 4-word sentences)
  * Live Speech-to-Text, Voice synthesis, Adaptive Quick Check, & Progress tracking.
+ * PDF Study Packages (Stage 2 Simple, Intermediate, Complex, Assign 3, Activity, Teacher Uploads)
+ * 1-by-1 Question Walkthrough with Stories, Comprehension Choices, and Speech Scoring.
  */
 
 (function () {
@@ -67,14 +69,24 @@
   ];
 
   let allSentences = [...DEFAULT_SENTENCES];
+  let baseSentences = [...DEFAULT_SENTENCES];
   let currentGrade = 1;
-  let currentLevel = "all"; // 'all' | 'simple' | 'intermediate' | 'complex' | '2-words' | '3-words' | '4-words'
+  let currentLevel = "all";
   let currentIndex = 0;
   let filteredSentences = [];
   let isListening = false;
   let lastSpokenTranscript = "";
   let hasEvaluated = false;
   let dataLoaded = false;
+
+  // PDF Modules State
+  let pdfModules = [];
+  let currentPdfModuleId = "all-graded";
+  let currentPdfModule = null;
+  let pdfCurrentIndex = 0;
+  let pdfItems = [];
+  let pdfCompletedStats = { count: 0, stars: 0, scoreSum: 0 };
+  let pdfAnsweredCurrent = false;
 
   // Quick Check State
   let quizQuestions = [];
@@ -83,23 +95,52 @@
   let quizAnswered = false;
 
   const ui = () => ({
+    // PDF Selector UI at the Top
+    pdfSelect: document.getElementById("rc-pdf-select"),
+    pdfPillsBar: document.getElementById("rc-pdf-pills-bar"),
+    pdfViewLink: document.getElementById("rc-view-pdf-link"),
+    unitProgressWrap: document.getElementById("rc-unit-progress-bar-wrap"),
+    unitPdfTitle: document.getElementById("rc-unit-pdf-title"),
+    unitStepCount: document.getElementById("rc-unit-step-count"),
+    unitScoreBadge: document.getElementById("rc-unit-score-badge"),
+    unitProgressBar: document.getElementById("rc-unit-progress-bar"),
+
+    // Studio Tabs & Navigation
     gradeSelect: document.getElementById("rc-grade-select"),
     levelSelect: document.getElementById("rc-level-select"),
     sentenceSelect: document.getElementById("rc-sentence-select"),
-    levelPills: document.querySelectorAll(".rc-level-pill"),
-
-    // Studio Tabs & Views
+    defaultBrowser: document.getElementById("rc-default-browser"),
+    studioModeTabs: document.getElementById("rc-studio-mode-tabs"),
     tabReadBtn: document.getElementById("rc-tab-read-btn"),
     tabQuizBtn: document.getElementById("rc-tab-quiz-btn"),
     readView: document.getElementById("rc-read-view"),
     quizView: document.getElementById("rc-quiz-view"),
 
-    // Flashcard UI
+    // Main Card & Question Flow
+    mainCard: document.getElementById("rc-main-card"),
     numberBadge: document.getElementById("rc-sentence-number"),
     tagBadge: document.getElementById("rc-level-tag"),
+
+    // Story Context Box
+    storyBox: document.getElementById("rc-story-context-box"),
+    storyBadge: document.getElementById("rc-story-badge"),
+    storyTitle: document.getElementById("rc-story-title"),
+    storyText: document.getElementById("rc-story-text"),
+    storyAudioBtn: document.getElementById("rc-story-audio-btn"),
+
+    // Question / Target
+    questionHeader: document.getElementById("rc-question-header"),
+    questionBadge: document.getElementById("rc-question-badge"),
     textTa: document.getElementById("rc-sentence-ta"),
     meaningEn: document.getElementById("rc-meaning-en"),
     translitText: document.getElementById("rc-translit"),
+
+    // Comprehension Options Grid
+    optionsContainer: document.getElementById("rc-options-container"),
+    optionsGrid: document.getElementById("rc-options-grid"),
+    optionFeedback: document.getElementById("rc-option-feedback"),
+
+    // Actions & Speech
     listenBtn: document.getElementById("listen-rc-btn"),
     micBtn: document.getElementById("rc-mic-btn"),
     spokenBox: document.getElementById("rc-spoken"),
@@ -108,6 +149,15 @@
     nextBtn: document.getElementById("next-rc-btn"),
     manualInput: document.getElementById("rc-manual-input"),
     manualSubmit: document.getElementById("rc-manual-submit"),
+
+    // PDF Completion Card
+    completedCard: document.getElementById("rc-pdf-completed-card"),
+    completedPdfName: document.getElementById("rc-completed-pdf-name"),
+    completedCount: document.getElementById("rc-completed-count"),
+    completedStars: document.getElementById("rc-completed-stars"),
+    completedScore: document.getElementById("rc-completed-score"),
+    repeatPdfBtn: document.getElementById("rc-repeat-pdf-btn"),
+    nextPdfBtn: document.getElementById("rc-next-pdf-btn"),
 
     // Quick Check UI
     quizCard: document.getElementById("rc-quiz-card"),
@@ -122,28 +172,423 @@
     quizNextBtn: document.getElementById("rc-quiz-next-btn")
   });
 
-  async function loadData() {
-    if (dataLoaded) return;
+  async function loadPdfLessons() {
+    let loaded = [];
     try {
-      const res = await fetch("data/reading_club/reading_club_data.json");
+      const res = await fetch("data/reading_club/pdf_lessons.json");
       if (res.ok) {
-        const json = await res.json();
-        if (json.sentences && json.sentences.length) {
-          allSentences = json.sentences.map(item => ({
-            id: item.id,
-            grade: Number(item.grade),
-            level: item.level,
-            category: item.category || "",
-            sentenceTa: item.tamil || item.sentenceTa,
-            meaningEn: item.english || item.meaningEn,
-            translit: item.translit || ""
-          }));
-          dataLoaded = true;
+        loaded = await res.json();
+      }
+    } catch (_) {}
+
+    // Check teacher uploaded materials from server or localStorage
+    let teacherMaterials = [];
+    try {
+      const r = await fetch("/api/reading-materials");
+      if (r.ok) teacherMaterials = await r.json();
+    } catch (_) {}
+
+    if (!teacherMaterials || !teacherMaterials.length) {
+      try {
+        teacherMaterials = JSON.parse(localStorage.getItem("tbta_custom_reading_materials") || "[]");
+      } catch (_) {}
+    }
+
+    if (Array.isArray(teacherMaterials)) {
+      teacherMaterials.forEach(mat => {
+        const sentences = mat.sentences || [];
+        if (sentences.length > 0) {
+          loaded.push({
+            id: `teacher-${mat.id || Date.now()}`,
+            title: `👩‍🏫 ${mat.title || mat.fileName || "ஆசிரியர் பாடம்"}`,
+            subtitle: `ஆசிரியர் பதிவேற்றிய பாடம் (${sentences.length} தொடர்கள்)`,
+            badge: "👩‍🏫 ஆசிரியர் பாடம்",
+            badgeClass: "badge-teacher",
+            grade: Number(mat.grade || 1),
+            pdfFile: mat.fileName && mat.fileName.endsWith(".pdf") ? `data/Reading Club/${mat.fileName}` : null,
+            items: sentences.map((s, idx) => ({
+              id: s.id || `t-item-${idx + 1}`,
+              type: "reading",
+              category: mat.title || "ஆசிரியர் தொடர்",
+              questionTa: (s.tamil || s.sentenceTa || "").trim(),
+              meaningEn: (s.english || s.meaningEn || "").trim(),
+              translit: (s.translit || "").trim(),
+              options: [],
+              correctAnswer: (s.tamil || s.sentenceTa || "").trim(),
+              explanation: s.english || ""
+            }))
+          });
+        }
+      });
+    }
+
+    pdfModules = loaded;
+    populatePdfSelector();
+  }
+
+  function populatePdfSelector() {
+    const controls = ui();
+    if (!controls.pdfSelect) return;
+
+    let optionsHtml = `<option value="all-graded">🌟 அனைத்து அடிப்படைப் பாடங்கள் (All Graded Lessons - Nilai 1 to 8)</option>`;
+    let pillsHtml = `<button type="button" class="rc-pdf-pill ${currentPdfModuleId === 'all-graded' ? 'active' : ''}" data-pdf="all-graded">🌟 அனைத்து பாடங்கள்</button>`;
+
+    pdfModules.forEach(mod => {
+      const isSelected = mod.id === currentPdfModuleId;
+      optionsHtml += `<option value="${mod.id}" ${isSelected ? 'selected' : ''}>${mod.title}</option>`;
+      const shortTitle = mod.title.split("(")[0].trim();
+      pillsHtml += `<button type="button" class="rc-pdf-pill ${isSelected ? 'active' : ''}" data-pdf="${mod.id}">${shortTitle}</button>`;
+    });
+
+    controls.pdfSelect.innerHTML = optionsHtml;
+    controls.pdfSelect.value = currentPdfModuleId;
+
+    if (controls.pdfPillsBar) {
+      controls.pdfPillsBar.innerHTML = pillsHtml;
+    }
+  }
+
+  function selectPdfModule(moduleId) {
+    currentPdfModuleId = moduleId;
+    const controls = ui();
+
+    if (controls.pdfSelect) controls.pdfSelect.value = moduleId;
+    if (controls.pdfPillsBar) {
+      const pills = controls.pdfPillsBar.querySelectorAll(".rc-pdf-pill");
+      pills.forEach(p => {
+        p.classList.toggle("active", p.getAttribute("data-pdf") === moduleId);
+      });
+    }
+
+    if (moduleId === "all-graded") {
+      currentPdfModule = null;
+      pdfItems = [];
+      if (controls.unitProgressWrap) controls.unitProgressWrap.style.display = "none";
+      if (controls.pdfViewLink) controls.pdfViewLink.style.display = "none";
+      if (controls.defaultBrowser) controls.defaultBrowser.style.display = "grid";
+      if (controls.storyBox) controls.storyBox.style.display = "none";
+      if (controls.questionHeader) controls.questionHeader.style.display = "none";
+      if (controls.optionsContainer) controls.optionsContainer.style.display = "none";
+      if (controls.completedCard) controls.completedCard.style.display = "none";
+      if (controls.mainCard) controls.mainCard.style.display = "block";
+      updateFiltered();
+      return;
+    }
+
+    const mod = pdfModules.find(m => m.id === moduleId);
+    if (!mod) return;
+
+    currentPdfModule = mod;
+    pdfItems = mod.items || [];
+    pdfCurrentIndex = 0;
+    pdfCompletedStats = { count: 0, stars: 0, scoreSum: 0 };
+    pdfAnsweredCurrent = false;
+
+    if (controls.defaultBrowser) controls.defaultBrowser.style.display = "none";
+    if (controls.unitProgressWrap) controls.unitProgressWrap.style.display = "flex";
+    if (controls.completedCard) controls.completedCard.style.display = "none";
+    if (controls.mainCard) controls.mainCard.style.display = "block";
+
+    if (controls.pdfViewLink) {
+      if (mod.pdfFile) {
+        controls.pdfViewLink.href = encodeURI(mod.pdfFile);
+        controls.pdfViewLink.style.display = "inline-flex";
+      } else {
+        controls.pdfViewLink.style.display = "none";
+      }
+    }
+
+    renderCurrentPdfQuestion();
+  }
+
+  function renderCurrentPdfQuestion() {
+    const controls = ui();
+    if (!currentPdfModule || !pdfItems.length) return;
+
+    if (pdfCurrentIndex >= pdfItems.length) {
+      showPdfCompletion();
+      return;
+    }
+
+    pdfAnsweredCurrent = false;
+    const item = pdfItems[pdfCurrentIndex];
+    const total = pdfItems.length;
+    const progressPercent = Math.round(((pdfCurrentIndex + 1) / total) * 100);
+
+    if (controls.unitPdfTitle) controls.unitPdfTitle.textContent = currentPdfModule.title.split("(")[0].trim();
+    if (controls.unitStepCount) controls.unitStepCount.textContent = `வினா ${pdfCurrentIndex + 1} / ${total}`;
+    if (controls.unitProgressBar) controls.unitProgressBar.style.width = `${progressPercent}%`;
+    if (controls.unitScoreBadge) controls.unitScoreBadge.textContent = `⭐ ${pdfCompletedStats.stars} நட்சத்திரங்கள்`;
+
+    if (controls.numberBadge) {
+      controls.numberBadge.textContent = `${currentPdfModule.badge || 'PDF பாடம்'} · வினா ${pdfCurrentIndex + 1} / ${total}`;
+    }
+    if (controls.tagBadge) {
+      controls.tagBadge.textContent = item.category || "வாசிப்பு";
+    }
+
+    // Story Context Box
+    if (controls.storyBox) {
+      if (item.storyPassage) {
+        controls.storyBox.style.display = "block";
+        if (controls.storyTitle) controls.storyTitle.textContent = item.storyTitle || "கதைப் பகுதி";
+        if (controls.storyText) controls.storyText.textContent = item.storyPassage;
+      } else {
+        controls.storyBox.style.display = "none";
+      }
+    }
+
+    // Question Header
+    if (controls.questionHeader) {
+      controls.questionHeader.style.display = "block";
+      if (controls.questionBadge) {
+        if (item.type === "comprehension") {
+          controls.questionBadge.textContent = `❓ புரிதல் வினா ${pdfCurrentIndex + 1}`;
+        } else if (item.type === "true-false") {
+          controls.questionBadge.textContent = `✅ சரி / தவறு வினா ${pdfCurrentIndex + 1}`;
+        } else {
+          controls.questionBadge.textContent = `📖 வாசிப்புத் தொடர் ${pdfCurrentIndex + 1}`;
         }
       }
-    } catch (_) {
-      // Fallback remains with DEFAULT_SENTENCES
     }
+
+    // Target Tamil text
+    if (controls.textTa) controls.textTa.textContent = item.questionTa;
+    if (controls.meaningEn) controls.meaningEn.textContent = item.meaningEn || "";
+    if (controls.translitText) controls.translitText.textContent = item.translit || "";
+
+    // Reset spoken & result boxes
+    if (controls.spokenBox) {
+      controls.spokenBox.textContent = "மைக்ரோஃபோனை அழுத்தி வாசியுங்கள் அல்லது சரியான விடையைத் தேர்வு செய்க...";
+      controls.spokenBox.classList.add("empty");
+    }
+    if (controls.resultBox) {
+      controls.resultBox.textContent = "கேள்வியைப் படித்து விடையளிக்கவும் அல்லது வாசிக்கவும்.";
+      controls.resultBox.className = "rc-result";
+    }
+
+    // Interactive Options Grid
+    if (controls.optionsContainer && controls.optionsGrid) {
+      if (item.options && item.options.length > 0) {
+        controls.optionsContainer.style.display = "block";
+        if (controls.optionFeedback) controls.optionFeedback.style.display = "none";
+
+        const alphabet = ["A", "B", "C", "D", "E"];
+        controls.optionsGrid.innerHTML = item.options.map((opt, optIdx) => `
+          <button type="button" class="rc-option-btn" data-option="${opt.replace(/"/g, '&quot;')}" onclick="ReadingClubPractice.handleOptionClick(this, '${opt.replace(/'/g, "\\'")}')">
+            <span class="rc-option-prefix">${item.type === 'true-false' ? (optIdx === 0 ? '✓' : '✗') : (alphabet[optIdx] || optIdx + 1)}</span>
+            <span>${opt}</span>
+          </button>
+        `).join("");
+      } else {
+        controls.optionsContainer.style.display = "none";
+      }
+    }
+
+    // Navigation Buttons
+    if (controls.prevBtn) {
+      controls.prevBtn.textContent = "◀ முந்தைய வினா";
+      controls.prevBtn.disabled = (pdfCurrentIndex === 0);
+    }
+    if (controls.nextBtn) {
+      controls.nextBtn.textContent = (pdfCurrentIndex === total - 1) ? "🏆 பாடத்தை முடி (Finish) ➔" : "அடுத்த வினா ▶";
+    }
+  }
+
+  function handleOptionClick(btn, selectedOpt) {
+    if (!currentPdfModule || !pdfItems[pdfCurrentIndex]) return;
+    const item = pdfItems[pdfCurrentIndex];
+    const controls = ui();
+
+    const cleanSelected = (selectedOpt || "").trim().toLowerCase();
+    const cleanCorrect = (item.correctAnswer || "").trim().toLowerCase();
+
+    const isMatch = cleanSelected === cleanCorrect ||
+                    cleanSelected.includes(cleanCorrect) ||
+                    cleanCorrect.includes(cleanSelected);
+
+    const allBtns = controls.optionsGrid ? controls.optionsGrid.querySelectorAll(".rc-option-btn") : [];
+    allBtns.forEach(b => b.classList.remove("correct", "wrong"));
+
+    if (isMatch) {
+      btn.classList.add("correct");
+      if (!pdfAnsweredCurrent) {
+        pdfAnsweredCurrent = true;
+        pdfCompletedStats.stars += 3;
+        pdfCompletedStats.scoreSum += 100;
+        pdfCompletedStats.count++;
+      }
+      if (controls.unitScoreBadge) controls.unitScoreBadge.textContent = `⭐ ${pdfCompletedStats.stars} நட்சத்திரங்கள்`;
+
+      if (window.KidAudioFX) {
+        KidAudioFX.playSuccessFanfare();
+        KidAudioFX.playStarDing(3);
+      }
+      if (window.App) App.triggerConfetti();
+
+      if (controls.optionFeedback) {
+        controls.optionFeedback.style.display = "block";
+        controls.optionFeedback.className = "rc-option-feedback success";
+        controls.optionFeedback.innerHTML = `🎉 <strong>மிகச் சரி!</strong> ${item.explanation || ''}`;
+      }
+
+      if (controls.resultBox) {
+        controls.resultBox.className = "rc-result success";
+        controls.resultBox.innerHTML = `🎉 <strong>மிக நன்று!</strong> விடை சரியானது. அடுத்த வினாவிற்குச் செல்லவும்.`;
+      }
+
+      if (window.App) {
+        App.saveProgress({
+          sentenceId: `${currentPdfModule.id}-${item.id}`,
+          category: `reading-club-pdf:${currentPdfModule.title}`,
+          score: 100,
+          stars: 3,
+          passed: true
+        });
+      }
+    } else {
+      btn.classList.add("wrong");
+      if (window.KidAudioFX) KidAudioFX.playTryAgain();
+
+      if (controls.optionFeedback) {
+        controls.optionFeedback.style.display = "block";
+        controls.optionFeedback.className = "rc-option-feedback error";
+        controls.optionFeedback.innerHTML = `❌ <strong>மன்னிக்கவும். மீண்டும் முயற்சிக்கவும்!</strong>`;
+      }
+
+      if (controls.resultBox) {
+        controls.resultBox.className = "rc-result retry";
+        controls.resultBox.innerHTML = `👍 <strong>நல்ல முயற்சி!</strong> சரியான விடையைத் தேர்ந்தெடுக்கவும் அல்லது குரலில் கூறவும்.`;
+      }
+    }
+  }
+
+  function completeCurrentPdfQuestion() {
+    if (!currentPdfModule || !pdfItems[pdfCurrentIndex]) return;
+
+    if (!pdfAnsweredCurrent) {
+      pdfCompletedStats.stars += 1;
+      pdfCompletedStats.scoreSum += 70;
+      pdfCompletedStats.count++;
+      if (window.App) {
+        const item = pdfItems[pdfCurrentIndex];
+        App.saveProgress({
+          sentenceId: `${currentPdfModule.id}-${item.id}`,
+          category: `reading-club-pdf:${currentPdfModule.title}`,
+          score: 80,
+          stars: 1,
+          passed: true
+        });
+      }
+    }
+
+    if (pdfCurrentIndex < pdfItems.length - 1) {
+      pdfCurrentIndex++;
+      renderCurrentPdfQuestion();
+    } else {
+      showPdfCompletion();
+    }
+  }
+
+  function prevPdfQuestion() {
+    if (pdfCurrentIndex > 0) {
+      pdfCurrentIndex--;
+      renderCurrentPdfQuestion();
+    }
+  }
+
+  function showPdfCompletion() {
+    const controls = ui();
+    if (!currentPdfModule) return;
+
+    if (controls.mainCard) controls.mainCard.style.display = "none";
+    if (controls.completedCard) controls.completedCard.style.display = "block";
+
+    if (controls.completedPdfName) {
+      controls.completedPdfName.textContent = `நீங்கள் ${currentPdfModule.title} பாடத்தின் அனைத்து வினாக்களையும் வெற்றிகரமாக முடித்துவிட்டீர்கள்!`;
+    }
+    if (controls.completedCount) {
+      controls.completedCount.textContent = `${pdfItems.length} / ${pdfItems.length}`;
+    }
+    if (controls.completedStars) {
+      controls.completedStars.textContent = `⭐ ${pdfCompletedStats.stars}`;
+    }
+    if (controls.completedScore) {
+      const avg = pdfCompletedStats.count > 0 ? Math.round(pdfCompletedStats.scoreSum / pdfCompletedStats.count) : 100;
+      controls.completedScore.textContent = `${avg}%`;
+    }
+
+    if (window.KidAudioFX) {
+      KidAudioFX.playSuccessFanfare();
+      KidAudioFX.playStarDing(3);
+    }
+    if (window.App) App.triggerConfetti();
+  }
+
+  async function loadCustomMaterials() {
+    let customMaterials = [];
+    try {
+      const res = await fetch("/api/reading-materials");
+      if (res.ok) customMaterials = await res.json();
+    } catch (_) {}
+
+    if (!customMaterials || !customMaterials.length) {
+      try {
+        customMaterials = JSON.parse(localStorage.getItem("tbta_custom_reading_materials") || "[]");
+      } catch (_) {}
+    }
+
+    let customSentences = [];
+    if (Array.isArray(customMaterials)) {
+      customMaterials.forEach(mat => {
+        const sentences = mat.sentences || [];
+        sentences.forEach((s, sIdx) => {
+          if (s.tamil || s.sentenceTa) {
+            customSentences.push({
+              id: s.id || `${mat.id || 'mat'}-${sIdx + 1}`,
+              grade: Number(s.grade || mat.grade || 1),
+              level: s.level || mat.level || "simple",
+              category: mat.title || mat.fileName || "ஆசிரியர் பாடம்",
+              sentenceTa: (s.tamil || s.sentenceTa || "").trim(),
+              meaningEn: (s.english || s.meaningEn || "").trim(),
+              translit: (s.translit || "").trim(),
+              isTeacherUploaded: true,
+              materialTitle: mat.title || mat.fileName || "Teacher Upload"
+            });
+          }
+        });
+      });
+    }
+
+    allSentences = [...baseSentences, ...customSentences];
+    return customSentences;
+  }
+
+  async function loadData() {
+    if (!dataLoaded) {
+      try {
+        const res = await fetch("data/reading_club/reading_club_data.json");
+        if (res.ok) {
+          const json = await res.json();
+          if (json.sentences && json.sentences.length) {
+            baseSentences = json.sentences.map(item => ({
+              id: item.id,
+              grade: Number(item.grade),
+              level: item.level,
+              category: item.category || "",
+              sentenceTa: item.tamil || item.sentenceTa,
+              meaningEn: item.english || item.meaningEn,
+              translit: item.translit || ""
+            }));
+            dataLoaded = true;
+          }
+        }
+      } catch (_) {
+        // Fallback remains with DEFAULT_SENTENCES
+      }
+    }
+    await loadCustomMaterials();
+    await loadPdfLessons();
   }
 
   function getStudentKey() {
@@ -200,9 +645,11 @@
     const controls = ui();
     if (!controls.sentenceSelect) return;
 
-    controls.sentenceSelect.innerHTML = filteredSentences.map((s, idx) => `
-      <option value="${idx}">தொடர் ${idx + 1}: ${s.sentenceTa.length > 32 ? s.sentenceTa.slice(0, 30) + '…' : s.sentenceTa}</option>
-    `).join("");
+    controls.sentenceSelect.innerHTML = filteredSentences.map((s, idx) => {
+      const prefix = s.isTeacherUploaded ? "🏷️ [ஆசிரியர்] " : "";
+      const text = s.sentenceTa.length > 28 ? s.sentenceTa.slice(0, 26) + "…" : s.sentenceTa;
+      return `<option value="${idx}">${prefix}தொடர் ${idx + 1}: ${text}</option>`;
+    }).join("");
     controls.sentenceSelect.value = String(currentIndex);
   }
 
@@ -222,9 +669,17 @@
       "4-words": "நான்கு சொல் தொடர் (4 Words)"
     };
 
-    const catInfo = item.category ? ` · ${item.category}` : "";
-    if (controls.numberBadge) controls.numberBadge.textContent = `Nilai ${item.grade} · தொடர் ${currentIndex + 1} / ${filteredSentences.length}${catInfo}`;
-    if (controls.tagBadge) controls.tagBadge.textContent = levelNames[item.level] || item.level;
+    const catInfo = item.isTeacherUploaded ? ` · 🏷️ ஆசிரியர் பதிவேற்றம்: ${item.category}` : (item.category ? ` · ${item.category}` : "");
+    if (controls.numberBadge) {
+      controls.numberBadge.textContent = `Nilai ${item.grade} · தொடர் ${currentIndex + 1} / ${filteredSentences.length}${catInfo}`;
+    }
+    if (controls.tagBadge) {
+      if (item.isTeacherUploaded) {
+        controls.tagBadge.textContent = `🏷️ ஆசிரியர் பாடம் · ${levelNames[item.level] || item.level}`;
+      } else {
+        controls.tagBadge.textContent = levelNames[item.level] || item.level;
+      }
+    }
     if (controls.textTa) controls.textTa.textContent = item.sentenceTa;
     if (controls.meaningEn) controls.meaningEn.textContent = item.meaningEn || "";
     if (controls.translitText) controls.translitText.textContent = item.translit || "";
@@ -239,6 +694,8 @@
     }
 
     if (controls.sentenceSelect) controls.sentenceSelect.value = String(currentIndex);
+    if (controls.nextBtn) controls.nextBtn.textContent = "அடுத்த தொடர் ▶";
+    if (controls.prevBtn) controls.prevBtn.textContent = "◀ முந்தைய தொடர்";
   }
 
   function switchMode(mode = "read") {
@@ -252,18 +709,85 @@
     if (mode === "quiz") {
       startQuiz();
     } else {
-      renderCurrentSentence();
+      if (currentPdfModuleId !== "all-graded") {
+        renderCurrentPdfQuestion();
+      } else {
+        renderCurrentSentence();
+      }
     }
   }
 
   function evaluateTranscript(transcript) {
-    const item = filteredSentences[currentIndex];
     const controls = ui();
+    const cleanSpoken = (transcript || "").trim();
+
+    if (currentPdfModuleId !== "all-graded" && pdfItems && pdfItems[pdfCurrentIndex]) {
+      const item = pdfItems[pdfCurrentIndex];
+      const target = item.questionTa.trim();
+      const correctTarget = (item.correctAnswer || "").trim();
+
+      let score = 0;
+      if (window.KidSpeechMatcher) {
+        const matchQ = KidSpeechMatcher.score(cleanSpoken, [target]);
+        const matchAns = correctTarget ? KidSpeechMatcher.score(cleanSpoken, [correctTarget]) : { score: 0 };
+        score = Math.max(matchQ.score || 0, matchAns.score || 0);
+      } else {
+        score = (cleanSpoken === target || cleanSpoken === correctTarget) ? 100 :
+                (cleanSpoken.includes(target) || cleanSpoken.includes(correctTarget) ? 80 : 50);
+      }
+
+      const passed = score >= 65;
+      const stars = score >= 85 ? 3 : (score >= 65 ? 2 : 1);
+
+      if (controls.resultBox) {
+        if (passed) {
+          pdfAnsweredCurrent = true;
+          pdfCompletedStats.stars += stars;
+          pdfCompletedStats.scoreSum += score;
+          pdfCompletedStats.count++;
+          if (controls.unitScoreBadge) controls.unitScoreBadge.textContent = `⭐ ${pdfCompletedStats.stars} நட்சத்திரங்கள்`;
+
+          controls.resultBox.className = "rc-result success";
+          controls.resultBox.innerHTML = `
+            <div class="result-feedback-card">
+              🎉 <strong>மிக நன்று! அருமையாக வாசித்தீர்கள்!</strong><br>
+              <span class="rc-score">மதிப்பெண்: ${score}% (${"★".repeat(stars)})</span>
+            </div>
+          `;
+          if (window.KidAudioFX) {
+            KidAudioFX.playSuccessFanfare();
+            KidAudioFX.playStarDing(stars);
+          }
+          if (window.App) App.triggerConfetti();
+        } else {
+          controls.resultBox.className = "rc-result retry";
+          controls.resultBox.innerHTML = `
+            <div class="result-feedback-card">
+              👍 <strong>நல்ல முயற்சி!</strong> மீண்டும் ஒருமுறை தெளிவாக வாசியுங்கள்.<br>
+              <span class="rc-score" style="color: #b45309; background: #fef3c7;">மதிப்பெண்: ${score}%</span>
+            </div>
+          `;
+          if (window.KidAudioFX) KidAudioFX.playTryAgain();
+        }
+      }
+
+      if (window.App) {
+        App.saveProgress({
+          sentenceId: `${currentPdfModule.id}-${item.id}`,
+          category: `reading-club-pdf:${currentPdfModule.title}`,
+          score,
+          stars: passed ? stars : 0,
+          passed
+        });
+      }
+      return;
+    }
+
+    // Default sentence reading evaluation
+    const item = filteredSentences[currentIndex];
     if (!item) return;
 
     const target = item.sentenceTa.trim();
-    const cleanSpoken = (transcript || "").trim();
-
     let score = 0;
     if (window.KidSpeechMatcher) {
       const matchRes = KidSpeechMatcher.score(cleanSpoken, [target]);
@@ -396,50 +920,34 @@
     if (controls.quizStepLabel) controls.quizStepLabel.textContent = `கேள்வி ${quizCurrentIndex + 1} / ${total}`;
     if (controls.quizScoreBadge) controls.quizScoreBadge.textContent = `⭐ ${quizScore} புள்ளிகள்`;
     if (controls.quizBar) controls.quizBar.style.width = `${progressPercent}%`;
-    if (controls.quizBadge) controls.quizBadge.textContent = q.badge || "வாசிப்பு வினாடி வினா";
+    if (controls.quizBadge) controls.quizBadge.textContent = q.badge;
     if (controls.quizQuestion) controls.quizQuestion.textContent = q.question;
-    if (controls.quizFeedback) {
-      controls.quizFeedback.style.display = "none";
-      controls.quizFeedback.className = "quiz-feedback-box";
-      controls.quizFeedback.innerHTML = "";
-    }
-    if (controls.quizNextBtn) {
-      controls.quizNextBtn.disabled = true;
-      controls.quizNextBtn.textContent = (quizCurrentIndex === total - 1) ? "வினாடி வினா நிறைவு 🎉" : "அடுத்த கேள்வி ▶";
-    }
+    if (controls.quizFeedback) controls.quizFeedback.style.display = "none";
+    if (controls.quizNextBtn) controls.quizNextBtn.disabled = true;
 
     if (controls.quizOptions) {
       controls.quizOptions.innerHTML = q.options.map((opt, idx) => `
-        <button class="quiz-option-btn" data-index="${idx}">
-          <span>🔹</span><span>${opt}</span>
+        <button class="quiz-option-btn" data-idx="${idx}" onclick="ReadingClubPractice.handleQuizOption(${idx})">
+          <span class="option-letter">${String.fromCharCode(65 + idx)}</span>
+          <span class="option-text">${opt}</span>
         </button>
       `).join("");
-
-      controls.quizOptions.querySelectorAll(".quiz-option-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          if (quizAnswered) return;
-          const selectedIdx = Number(btn.getAttribute("data-index"));
-          answerQuizQuestion(selectedIdx);
-        });
-      });
     }
   }
 
-  function answerQuizQuestion(selectedIdx) {
+  function handleQuizOption(idx) {
     if (quizAnswered) return;
     quizAnswered = true;
-    const controls = ui();
-    const q = quizQuestions[quizCurrentIndex];
-    const isCorrect = (selectedIdx === q.answerIndex);
 
-    const optionBtns = controls.quizOptions.querySelectorAll(".quiz-option-btn");
-    optionBtns.forEach((btn, idx) => {
+    const q = quizQuestions[quizCurrentIndex];
+    const controls = ui();
+    const isCorrect = (idx === q.answerIndex);
+
+    const buttons = controls.quizOptions ? controls.quizOptions.querySelectorAll(".quiz-option-btn") : [];
+    buttons.forEach((btn, i) => {
       btn.disabled = true;
-      if (idx === q.answerIndex) {
-        btn.classList.add("correct");
-      } else if (idx === selectedIdx && !isCorrect) {
-        btn.classList.add("wrong");
-      }
+      if (i === q.answerIndex) btn.classList.add("correct");
+      if (i === idx && !isCorrect) btn.classList.add("wrong");
     });
 
     if (isCorrect) {
@@ -523,14 +1031,31 @@
       }
       const controls = ui();
       if (controls.gradeSelect) controls.gradeSelect.value = String(currentGrade);
-      updateFiltered();
       switchMode(mode);
     },
     switchMode,
+    selectPdfModule,
+    handleOptionClick,
+    handleQuizOption,
     speak() {
+      if (currentPdfModuleId !== "all-graded" && pdfItems && pdfItems[pdfCurrentIndex]) {
+        const item = pdfItems[pdfCurrentIndex];
+        if (item && window.KidSpeechService) {
+          KidSpeechService.speakTamil(item.questionTa);
+        }
+        return;
+      }
       const item = filteredSentences[currentIndex];
       if (item && window.KidSpeechService) {
         KidSpeechService.speakTamil(item.sentenceTa);
+      }
+    },
+    speakStory() {
+      if (currentPdfModuleId !== "all-graded" && pdfItems && pdfItems[pdfCurrentIndex]) {
+        const item = pdfItems[pdfCurrentIndex];
+        if (item && item.storyPassage && window.KidSpeechService) {
+          KidSpeechService.speakTamil(item.storyPassage);
+        }
       }
     },
     speakQuizQuestion() {
@@ -540,7 +1065,7 @@
       }
     },
     listen() {
-      const item = filteredSentences[currentIndex];
+      const item = (currentPdfModuleId !== "all-graded") ? pdfItems[pdfCurrentIndex] : filteredSentences[currentIndex];
       const controls = ui();
       if (!item) return;
 
@@ -585,7 +1110,7 @@
               }
             }
           },
-          onError: (err) => {
+          onError: () => {
             isListening = false;
             if (controls.micBtn) controls.micBtn.classList.remove("listening");
             if (controls.resultBox) {
@@ -605,6 +1130,10 @@
       }
     },
     next() {
+      if (currentPdfModuleId !== "all-graded") {
+        completeCurrentPdfQuestion();
+        return;
+      }
       if (currentIndex < filteredSentences.length - 1) {
         currentIndex++;
       } else {
@@ -613,6 +1142,10 @@
       renderCurrentSentence();
     },
     prev() {
+      if (currentPdfModuleId !== "all-graded") {
+        prevPdfQuestion();
+        return;
+      }
       if (currentIndex > 0) {
         currentIndex--;
       } else {
@@ -620,9 +1153,62 @@
       }
       renderCurrentSentence();
     },
+    async reloadCustomMaterials() {
+      await loadCustomMaterials();
+      await loadPdfLessons();
+      updateFiltered();
+      return allSentences;
+    },
+    getAllSentences() {
+      return allSentences;
+    },
     init() {
       loadData();
       const controls = ui();
+
+      // PDF selection events
+      if (controls.pdfSelect) {
+        controls.pdfSelect.addEventListener("change", (e) => {
+          selectPdfModule(e.target.value);
+        });
+      }
+
+      if (controls.pdfPillsBar) {
+        controls.pdfPillsBar.addEventListener("click", (e) => {
+          const btn = e.target.closest(".rc-pdf-pill");
+          if (btn) {
+            const moduleId = btn.getAttribute("data-pdf");
+            selectPdfModule(moduleId);
+          }
+        });
+      }
+
+      if (controls.storyAudioBtn) {
+        controls.storyAudioBtn.addEventListener("click", () => this.speakStory());
+      }
+
+      if (controls.repeatPdfBtn) {
+        controls.repeatPdfBtn.addEventListener("click", () => {
+          pdfCurrentIndex = 0;
+          pdfCompletedStats = { count: 0, stars: 0, scoreSum: 0 };
+          if (controls.completedCard) controls.completedCard.style.display = "none";
+          if (controls.mainCard) controls.mainCard.style.display = "block";
+          renderCurrentPdfQuestion();
+        });
+      }
+
+      if (controls.nextPdfBtn) {
+        controls.nextPdfBtn.addEventListener("click", () => {
+          const curIdx = pdfModules.findIndex(m => m.id === currentPdfModuleId);
+          const nextMod = (curIdx >= 0 && curIdx < pdfModules.length - 1) ? pdfModules[curIdx + 1] : pdfModules[0];
+          if (nextMod) {
+            selectPdfModule(nextMod.id);
+          } else {
+            selectPdfModule("all-graded");
+          }
+        });
+      }
+
       if (controls.tabReadBtn) controls.tabReadBtn.addEventListener("click", () => switchMode("read"));
       if (controls.tabQuizBtn) controls.tabQuizBtn.addEventListener("click", () => switchMode("quiz"));
 

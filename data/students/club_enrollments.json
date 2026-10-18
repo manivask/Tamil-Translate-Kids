@@ -359,13 +359,24 @@
       "reading"
     ]
   },
+  "Aaradhan_Manivasagam_G3": {
+    "firstName": "Aaradhan",
+    "lastName": "Manivasagam",
+    "grade": 3,
+    "clubs": [
+      "reading",
+      "thirukkural",
+      "aathichudi"
+    ]
+  },
   "Aaradhana_Manivasagam_G3": {
     "firstName": "Aaradhana",
     "lastName": "Manivasagam",
     "grade": 3,
     "clubs": [
       "reading",
-      "thirukkural"
+      "thirukkural",
+      "aathichudi"
     ]
   },
   "Chharu_Meenakshi Sundaram_G3": {

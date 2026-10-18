@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>மாணவர் QR அடையாள அட்டைகள் | Student QR Badges - TBTA</title>
-  <meta name="description" content="Printable and interactive QR Code Badges for all 94 students across Nilai 1 to Nilai 8.">
+  <title>QR அடையாள அட்டைகள் | Student, Teacher & Admin QR Badges - TBTA</title>
+  <meta name="description" content="Printable and interactive QR Code Badges for Students, Teachers, and Admin across Nilai 1 to Nilai 8.">
   <meta name="theme-color" content="#2B1055">
   
-  <link rel="stylesheet" href="css/style.css?v=20261004-qr-v1">
+  <link rel="stylesheet" href="css/style.css?v=20261004-qr-v2">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪪</text></svg>">
 
   <style>
-    /* QR Badges Page Specific Styles */
     body {
       background: var(--bg-gradient);
       min-height: 100vh;
@@ -20,7 +19,7 @@
     }
 
     .qr-page-container {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
       width: 100%;
     }
@@ -98,12 +97,7 @@
     .qr-btn.primary {
       background: linear-gradient(135deg, var(--secondary), var(--primary));
       color: #FFF;
-      box-shadow: 0 4px 14px rgba(108, 92, 231, 0.35);
-    }
-
-    .qr-btn.primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(108, 92, 231, 0.45);
+      box-shadow: 0 4px 14px rgba(108, 92, 231, 0.4);
     }
 
     .qr-btn.secondary {
@@ -112,46 +106,84 @@
       border: 1px solid #CBD5E1;
     }
 
-    .qr-btn.secondary:hover {
-      background: #E2E8F0;
-      transform: translateY(-1px);
+    .qr-btn:hover {
+      transform: translateY(-2px);
     }
 
-    /* Filter & Search Bar */
+    /* Controls card */
     .qr-controls-card {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--text-dark);
       border-radius: var(--radius-lg);
-      padding: 16px 20px;
+      padding: 20px 24px;
       margin-bottom: 24px;
+      box-shadow: var(--glass-shadow);
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
+    }
+
+    .qr-role-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #E2E8F0;
+    }
+
+    .role-tab-btn {
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      border: 2px solid #CBD5E1;
+      background: #FFFFFF;
+      color: #334155;
+      font-family: var(--font-tamil);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .role-tab-btn.active {
+      background: linear-gradient(135deg, #2563EB, #7C3AED);
+      color: #FFFFFF;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+    }
+
+    .role-tab-btn.teacher-tab.active {
+      background: linear-gradient(135deg, #059669, #10B981);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .role-tab-btn.admin-tab.active {
+      background: linear-gradient(135deg, #7C3AED, #9333EA);
+      box-shadow: 0 4px 12px rgba(147, 51, 234, 0.4);
     }
 
     .qr-search-row {
       display: flex;
-      align-items: center;
       gap: 12px;
+      align-items: center;
     }
 
     .qr-search-input {
       flex: 1;
       padding: 12px 18px;
       border-radius: var(--radius-full);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      background: rgba(255, 255, 255, 0.95);
-      font-family: var(--font-main);
-      font-size: 0.95rem;
-      color: var(--text-dark);
+      border: 2px solid #E2E8F0;
+      font-family: var(--font-tamil);
+      font-size: 1rem;
       outline: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .qr-search-input:focus {
-      border-color: var(--accent-yellow);
-      background: #FFF;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.15);
     }
 
     .qr-grade-tabs {
@@ -161,34 +193,29 @@
     }
 
     .grade-tab-btn {
-      background: rgba(255, 255, 255, 0.18);
-      color: #FFF;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 14px;
       border-radius: var(--radius-full);
-      padding: 6px 14px;
+      border: 1px solid #CBD5E1;
+      background: #F8FAFC;
+      color: #334155;
       font-family: var(--font-tamil);
-      font-weight: 700;
+      font-weight: 600;
       font-size: 0.85rem;
       cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .grade-tab-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.2s ease;
     }
 
     .grade-tab-btn.active {
-      background: #FFF;
-      color: #1E1B4B;
-      font-weight: 800;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      background: var(--secondary);
+      color: #FFF;
+      border-color: var(--secondary);
     }
 
     /* Badges Grid */
     .qr-badges-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 22px;
     }
 
     /* Badge Card */
@@ -196,7 +223,7 @@
       background: #FFFFFF;
       color: #1E293B;
       border-radius: 20px;
-      padding: 16px;
+      padding: 18px 16px;
       box-shadow: 0 10px 24px rgba(0,0,0,0.18);
       display: flex;
       flex-direction: column;
@@ -212,6 +239,17 @@
     .student-badge-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 16px 32px rgba(0,0,0,0.28);
+    }
+
+    /* Distinct Staff Cards */
+    .student-badge-card.card-teacher {
+      border: 2.5px solid #10B981;
+      background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 60%);
+    }
+
+    .student-badge-card.card-admin {
+      border: 2.5px solid #8B5CF6;
+      background: linear-gradient(180deg, #F5F3FF 0%, #FFFFFF 60%);
     }
 
     .badge-top-strip {
@@ -245,6 +283,18 @@
       color: #5B21B6;
     }
 
+    .badge-grade-pill.pill-teacher {
+      background: #D1FAE5;
+      color: #065F46;
+      font-size: 0.82rem;
+    }
+
+    .badge-grade-pill.pill-admin {
+      background: #EDE9FE;
+      color: #6D28D9;
+      font-size: 0.82rem;
+    }
+
     .badge-grade-pill.grade-1 { background: #FEF3C7; color: #92400E; }
     .badge-grade-pill.grade-2 { background: #EDE9FE; color: #5B21B6; }
     .badge-grade-pill.grade-3 { background: #DCFCE7; color: #166534; }
@@ -260,11 +310,18 @@
       font-weight: 800;
       color: #0F172A;
       line-height: 1.2;
-      margin: 2px 0 8px;
+      margin: 2px 0 4px;
       min-height: 34px;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .badge-sub-title {
+      font-family: var(--font-tamil);
+      font-size: 0.78rem;
+      color: #64748B;
+      margin-bottom: 8px;
     }
 
     .badge-qr-container {
@@ -278,6 +335,16 @@
       justify-content: center;
       width: 170px;
       height: 170px;
+    }
+
+    .card-teacher .badge-qr-container {
+      border-color: #10B981;
+      background: #ECFDF5;
+    }
+
+    .card-admin .badge-qr-container {
+      border-color: #8B5CF6;
+      background: #F5F3FF;
     }
 
     .badge-qr-container canvas, .badge-qr-container img {
@@ -296,10 +363,47 @@
 
     .badge-scan-hint {
       font-family: var(--font-tamil);
-      font-size: 0.72rem;
+      font-size: 0.76rem;
       color: #059669;
       font-weight: 700;
       margin-top: 4px;
+    }
+
+    .badge-quick-launch-btn {
+      margin-top: 10px;
+      width: 100%;
+      padding: 7px 12px;
+      border-radius: var(--radius-full);
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      color: #1E293B;
+      font-size: 0.8rem;
+      font-family: var(--font-tamil);
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .badge-quick-launch-btn:hover {
+      background: #E2E8F0;
+      color: #0F172A;
+    }
+
+    .card-teacher .badge-quick-launch-btn {
+      background: #ECFDF5;
+      color: #065F46;
+      border-color: #A7F3D0;
+    }
+
+    .card-admin .badge-quick-launch-btn {
+      background: #F5F3FF;
+      color: #5B21B6;
+      border-color: #DDD6FE;
     }
 
     .no-results-box {
@@ -319,7 +423,7 @@
         padding: 0 !important;
       }
 
-      .bg-bubbles, #confetti-canvas, .qr-controls-card, .qr-header-actions {
+      .bg-bubbles, #confetti-canvas, .qr-controls-card, .qr-header-actions, .badge-quick-launch-btn {
         display: none !important;
       }
 
@@ -356,30 +460,39 @@
       <div class="qr-header-titles">
         <div class="qr-brand-logo">🪪</div>
         <div>
-          <h1 class="qr-page-title">மாணவர் QR அடையாள அட்டைகள் (Student QR Badges)</h1>
-          <p class="qr-page-sub">அனைத்து 94 மாணவர்களுக்கான தனித்துவமான QR உள்நுழைவு அடையாள அட்டைகள் (Nilai 1 - 8)</p>
+          <h1 class="qr-page-title">QR அடையாள அட்டைகள் (ID Badges Portal)</h1>
+          <p class="qr-page-sub">மாணவர், ஆசிரியர் மற்றும் நிர்வாகத்திற்கான உடனடி QR உள்நுழைவு அட்டைகள்</p>
         </div>
       </div>
       <div class="qr-header-actions">
         <a href="clubs-management.html" class="qr-btn" style="background: linear-gradient(135deg, #059669, #10B981); color: #FFF; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);">
-          <span>🏛️</span> மாணவர் மன்றப் பதிவுகள் (Club Enrollments)
+          <span>🏛️</span> மாணவர் மன்றப் பதிவுகள்
         </a>
         <button class="qr-btn primary" id="print-badges-btn">
           <span>🖨️</span> அச்சிடுக (Print Badges)
         </button>
         <a href="index.html" class="qr-btn secondary">
-          <span>🚀</span> மாணவர் உள்நுழைவு (App Login)
+          <span>🚀</span> முகப்பு உள்நுழைவு (App Login)
         </a>
       </div>
     </header>
 
     <!-- Filter & Search Controls -->
     <section class="qr-controls-card" aria-label="Student Filters">
-      <div class="qr-search-row">
-        <input type="text" id="qr-search-input" class="qr-search-input" placeholder="🔍 மாணவர் பெயரைத் தேடவும் (Search student by name)..." aria-label="Search student">
+      <!-- Main Category Tabs -->
+      <div class="qr-role-tabs" id="qr-role-tabs">
+        <button class="role-tab-btn active" data-role="all">✨ அனைத்து அட்டைகளும் (All Badges)</button>
+        <button class="role-tab-btn teacher-tab" data-role="teacher">👩‍🏫 ஆசிரியர் QR (Teacher QR)</button>
+        <button class="role-tab-btn admin-tab" data-role="admin">🛡️ நிர்வாகம் QR (Admin QR)</button>
+        <button class="role-tab-btn" data-role="students">👨‍🎓 மாணவர்கள் மட்டும் (Students - 94)</button>
       </div>
+
+      <div class="qr-search-row">
+        <input type="text" id="qr-search-input" class="qr-search-input" placeholder="🔍 மாணவர் / ஆசிரியர் / நிர்வாக பெயரைத் தேடவும்..." aria-label="Search badge">
+      </div>
+
       <div class="qr-grade-tabs" id="qr-grade-tabs">
-        <button class="grade-tab-btn active" data-grade="all">அனைத்தும் (All 94)</button>
+        <button class="grade-tab-btn active" data-grade="all">அனைத்து வகுப்புகள் (All)</button>
         <button class="grade-tab-btn" data-grade="1">1-ஆம் வகுப்பு (Nilai 1 · 9)</button>
         <button class="grade-tab-btn" data-grade="2">2-ஆம் வகுப்பு (Nilai 2 · 20)</button>
         <button class="grade-tab-btn" data-grade="3">3-ஆம் வகுப்பு (Nilai 3 · 20)</button>
@@ -394,7 +507,7 @@
     <!-- Badges Grid Container -->
     <main class="qr-badges-grid" id="qr-badges-grid">
       <div class="no-results-box">
-        <h3>மாணவர் பட்டியலை ஏற்றுகிறது (Loading student badges)...</h3>
+        <h3>அடையாள அட்டைகளை ஏற்றுகிறது (Loading badges)...</h3>
       </div>
     </main>
   </div>
@@ -404,12 +517,52 @@
   <script>
     (function () {
       let allStudents = [];
+      let currentRoleTab = "all"; // 'all' | 'teacher' | 'admin' | 'students'
       let currentGradeFilter = "all";
       let currentSearchQuery = "";
 
+      const STAFF_BADGES = [
+        {
+          type: "TBTA_TEACHER",
+          role: "teacher",
+          fullName: "தமிழ் ஆசிரியர் (Tamil Teacher)",
+          subtitle: "வாசிப்பு மன்றம் & தமிழ் மொழி ஆசிரியர் (Nilai 1 - 8)",
+          pillText: "👩‍🏫 ஆசிரியர் (Teacher)",
+          pillClass: "pill-teacher",
+          cardClass: "card-teacher",
+          id: "TBTA-TEACHER-01",
+          loginUrl: "index.html#teacher",
+          qrPayload: JSON.stringify({
+            type: "TBTA_TEACHER",
+            role: "teacher",
+            name: "Tamil Teacher",
+            id: "TBTA-TEACHER-01"
+          })
+        },
+        {
+          type: "TBTA_ADMIN",
+          role: "admin",
+          fullName: "தலைமை நிர்வாகி (Administrator)",
+          subtitle: "கல்வி மற்றும் அமைப்பு மேலாண்மை (Admin)",
+          pillText: "🛡️ நிர்வாகம் (Admin)",
+          pillClass: "pill-admin",
+          cardClass: "card-admin",
+          id: "TBTA-ADMIN-01",
+          loginUrl: "index.html#admin",
+          qrPayload: JSON.stringify({
+            type: "TBTA_ADMIN",
+            role: "admin",
+            name: "TBTA Administrator",
+            id: "TBTA-ADMIN-01"
+          })
+        }
+      ];
+
       const grid = document.getElementById("qr-badges-grid");
       const searchInput = document.getElementById("qr-search-input");
+      const roleTabs = document.querySelectorAll(".role-tab-btn");
       const gradeTabs = document.querySelectorAll(".grade-tab-btn");
+      const gradeTabsContainer = document.getElementById("qr-grade-tabs");
       const printBtn = document.getElementById("print-badges-btn");
 
       async function init() {
@@ -420,12 +573,30 @@
           renderBadges();
         } catch (err) {
           console.error("Failed to load roster:", err);
-          grid.innerHTML = `<div class="no-results-box"><h3>மாணவர் பட்டியலை ஏற்ற முடியவில்லை.</h3></div>`;
+          allStudents = [];
+          renderBadges();
         }
 
         searchInput.addEventListener("input", (e) => {
           currentSearchQuery = e.target.value.trim().toLowerCase();
           renderBadges();
+        });
+
+        roleTabs.forEach(tab => {
+          tab.addEventListener("click", () => {
+            roleTabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            currentRoleTab = tab.getAttribute("data-role");
+
+            // Show or hide grade tabs when viewing teacher or admin
+            if (currentRoleTab === "teacher" || currentRoleTab === "admin") {
+              gradeTabsContainer.style.display = "none";
+            } else {
+              gradeTabsContainer.style.display = "flex";
+            }
+
+            renderBadges();
+          });
         });
 
         gradeTabs.forEach(tab => {
@@ -440,62 +611,138 @@
         if (printBtn) {
           printBtn.addEventListener("click", () => window.print());
         }
+
+        // Check URL hash for direct filter
+        if (window.location.hash === "#teacher") {
+          const tTab = document.querySelector('.role-tab-btn[data-role="teacher"]');
+          if (tTab) tTab.click();
+        } else if (window.location.hash === "#admin") {
+          const aTab = document.querySelector('.role-tab-btn[data-role="admin"]');
+          if (aTab) aTab.click();
+        }
       }
 
       function renderBadges() {
-        let filtered = allStudents.filter(s => {
-          const matchesGrade = (currentGradeFilter === "all" || String(s.grade) === String(currentGradeFilter));
-          const fullName = `${s.firstName} ${s.lastName}`.toLowerCase();
-          const matchesSearch = !currentSearchQuery || fullName.includes(currentSearchQuery);
-          return matchesGrade && matchesSearch;
-        });
+        grid.innerHTML = "";
+        let itemsToRender = [];
 
-        if (!filtered.length) {
-          grid.innerHTML = `<div class="no-results-box"><h3>பொருத்தமான மாணவர்கள் எவரும் இல்லை (No students found)</h3></div>`;
+        // 1. Staff Badges
+        if (currentRoleTab === "all" || currentRoleTab === "teacher" || currentRoleTab === "admin") {
+          STAFF_BADGES.forEach(staff => {
+            if (currentRoleTab === "teacher" && staff.role !== "teacher") return;
+            if (currentRoleTab === "admin" && staff.role !== "admin") return;
+            
+            const matchSearch = !currentSearchQuery || 
+              staff.fullName.toLowerCase().includes(currentSearchQuery) || 
+              staff.id.toLowerCase().includes(currentSearchQuery) ||
+              staff.role.toLowerCase().includes(currentSearchQuery);
+
+            if (matchSearch) {
+              itemsToRender.push({
+                isStaff: true,
+                staff
+              });
+            }
+          });
+        }
+
+        // 2. Student Badges
+        if (currentRoleTab === "all" || currentRoleTab === "students") {
+          allStudents.forEach((student, index) => {
+            const matchesGrade = (currentGradeFilter === "all" || String(student.grade) === String(currentGradeFilter));
+            const fullName = `${student.firstName} ${student.lastName}`.toLowerCase();
+            const matchesSearch = !currentSearchQuery || fullName.includes(currentSearchQuery);
+
+            if (matchesGrade && matchesSearch) {
+              itemsToRender.push({
+                isStaff: false,
+                student,
+                index
+              });
+            }
+          });
+        }
+
+        if (!itemsToRender.length) {
+          grid.innerHTML = `<div class="no-results-box"><h3>பொருத்தமான அடையாள அட்டைகள் எவையும் இல்லை (No badges found)</h3></div>`;
           return;
         }
 
-        grid.innerHTML = "";
+        itemsToRender.forEach((item, idx) => {
+          if (item.isStaff) {
+            const staff = item.staff;
+            const card = document.createElement("div");
+            card.className = `student-badge-card ${staff.cardClass}`;
+            const qrBoxId = `qr-box-staff-${staff.role}-${idx}`;
 
-        filtered.forEach((student, index) => {
-          const fullName = `${student.firstName} ${student.lastName}`;
-          const studentId = `TBTA-G${student.grade}-${String(index + 1).padStart(2, "0")}`;
-          
-          // QR payload contains structured identification
-          const qrPayload = JSON.stringify({
-            type: "TBTA_STUDENT",
-            firstName: student.firstName,
-            lastName: student.lastName,
-            grade: student.grade,
-            id: studentId
-          });
+            card.innerHTML = `
+              <div class="badge-top-strip">
+                <span class="badge-school-tag">🦜 TBTA TAMIL</span>
+                <span class="badge-grade-pill ${staff.pillClass}">${staff.pillText}</span>
+              </div>
+              <div class="badge-student-name">${staff.fullName}</div>
+              <div class="badge-sub-title">${staff.subtitle}</div>
+              <div class="badge-qr-container" id="${qrBoxId}"></div>
+              <div class="badge-id-tag">ID: ${staff.id}</div>
+              <div class="badge-scan-hint">📸 Scan in App Camera to Login</div>
+              <a href="${staff.loginUrl}" class="badge-quick-launch-btn">🚀 இந்த கணக்கில் உள்நுழை (Launch in App)</a>
+            `;
 
-          const card = document.createElement("div");
-          card.className = "student-badge-card";
-          card.innerHTML = `
-            <div class="badge-top-strip">
-              <span class="badge-school-tag">🦜 TBTA TAMIL</span>
-              <span class="badge-grade-pill grade-${student.grade}">${student.grade}-ஆம் வகுப்பு</span>
-            </div>
-            <div class="badge-student-name">${fullName}</div>
-            <div class="badge-qr-container" id="qr-box-${student.grade}-${index}"></div>
-            <div class="badge-id-tag">ID: ${studentId}</div>
-            <div class="badge-scan-hint">📸 Scan to Login</div>
-          `;
+            grid.appendChild(card);
 
-          grid.appendChild(card);
+            const qrBox = card.querySelector(`#${qrBoxId}`);
+            if (window.QRCode && qrBox) {
+              new QRCode(qrBox, {
+                text: staff.qrPayload,
+                width: 140,
+                height: 140,
+                colorDark: staff.role === "teacher" ? "#065F46" : "#4C1D95",
+                colorLight: "#FFFFFF",
+                correctLevel: QRCode.CorrectLevel.M
+              });
+            }
+          } else {
+            const student = item.student;
+            const fullName = `${student.firstName} ${student.lastName}`;
+            const studentId = `TBTA-G${student.grade}-${String(item.index + 1).padStart(2, "0")}`;
+            const qrBoxId = `qr-box-student-${student.grade}-${idx}`;
 
-          // Generate QR Code into container
-          const qrBox = card.querySelector(`#qr-box-${student.grade}-${index}`);
-          if (window.QRCode && qrBox) {
-            new QRCode(qrBox, {
-              text: qrPayload,
-              width: 140,
-              height: 140,
-              colorDark: "#1E1B4B",
-              colorLight: "#FFFFFF",
-              correctLevel: QRCode.CorrectLevel.M
+            const qrPayload = JSON.stringify({
+              type: "TBTA_STUDENT",
+              firstName: student.firstName,
+              lastName: student.lastName,
+              grade: student.grade,
+              id: studentId
             });
+
+            const card = document.createElement("div");
+            card.className = "student-badge-card";
+            card.innerHTML = `
+              <div class="badge-top-strip">
+                <span class="badge-school-tag">🦜 TBTA TAMIL</span>
+                <span class="badge-grade-pill grade-${student.grade}">${student.grade}-ஆம் வகுப்பு</span>
+              </div>
+              <div class="badge-student-name">${fullName}</div>
+              <div class="badge-sub-title">Nilai ${student.grade} மாணவர்</div>
+              <div class="badge-qr-container" id="${qrBoxId}"></div>
+              <div class="badge-id-tag">ID: ${studentId}</div>
+              <div class="badge-scan-hint">📸 Scan to Login</div>
+              <a href="index.html#student=${encodeURIComponent(student.firstName)}|${encodeURIComponent(student.lastName)}|${student.grade}&screen=reading-club&pdf=pdf-stage2-assign3" class="badge-quick-launch-btn">🚀 வாசிப்பு மன்றத்தில் தொடங்கு ➜</a>
+            `;
+
+            grid.appendChild(card);
+
+            const qrBox = card.querySelector(`#${qrBoxId}`);
+            if (window.QRCode && qrBox) {
+              new QRCode(qrBox, {
+                text: qrPayload,
+                width: 140,
+                height: 140,
+                colorDark: "#1E1B4B",
+                colorLight: "#FFFFFF",
+                correctLevel: QRCode.CorrectLevel.M
+              });
+            }
           }
         });
       }
