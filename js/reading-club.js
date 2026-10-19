@@ -83,6 +83,7 @@
   let pdfModules = [];
   let currentPdfModuleId = "all-graded";
   let currentPdfModule = null;
+  let currentSectionFilter = "all";
   let pdfCurrentIndex = 0;
   let pdfItems = [];
   let pdfCompletedStats = { count: 0, stars: 0, scoreSum: 0 };
@@ -98,6 +99,9 @@
     // PDF Selector UI at the Top
     pdfSelect: document.getElementById("rc-pdf-select"),
     pdfPillsBar: document.getElementById("rc-pdf-pills-bar"),
+    pdfSectionsWrap: document.getElementById("rc-pdf-sections-wrap"),
+    pdfSectionsBar: document.getElementById("rc-pdf-sections-bar"),
+    sectionsCountLbl: document.getElementById("rc-sections-count-lbl"),
     pdfViewLink: document.getElementById("rc-view-pdf-link"),
     unitProgressWrap: document.getElementById("rc-unit-progress-bar-wrap"),
     unitPdfTitle: document.getElementById("rc-unit-pdf-title"),
@@ -205,17 +209,20 @@
             badge: "👩‍🏫 ஆசிரியர் பாடம்",
             badgeClass: "badge-teacher",
             grade: Number(mat.grade || 1),
+            sections: mat.sections || null,
             pdfFile: mat.fileName && mat.fileName.endsWith(".pdf") ? `data/Reading Club/${mat.fileName}` : null,
             items: sentences.map((s, idx) => ({
               id: s.id || `t-item-${idx + 1}`,
-              type: "reading",
-              category: mat.title || "ஆசிரியர் தொடர்",
+              sectionId: s.sectionId || null,
+              sectionTitle: s.sectionTitle || null,
+              type: s.type || "reading",
+              category: s.category || mat.title || "ஆசிரியர் தொடர்",
               questionTa: (s.tamil || s.sentenceTa || "").trim(),
               meaningEn: (s.english || s.meaningEn || "").trim(),
               translit: (s.translit || "").trim(),
-              options: [],
-              correctAnswer: (s.tamil || s.sentenceTa || "").trim(),
-              explanation: s.english || ""
+              options: s.options || [],
+              correctAnswer: (s.correctAnswer || s.tamil || s.sentenceTa || "").trim(),
+              explanation: s.explanation || s.english || ""
             }))
           });
         }
@@ -250,6 +257,7 @@
 
   function selectPdfModule(moduleId) {
     currentPdfModuleId = moduleId;
+    currentSectionFilter = "all";
     const controls = ui();
 
     if (controls.pdfSelect) controls.pdfSelect.value = moduleId;
@@ -263,6 +271,7 @@
     if (moduleId === "all-graded") {
       currentPdfModule = null;
       pdfItems = [];
+      if (controls.pdfSectionsWrap) controls.pdfSectionsWrap.style.display = "none";
       if (controls.unitProgressWrap) controls.unitProgressWrap.style.display = "none";
       if (controls.pdfViewLink) controls.pdfViewLink.style.display = "none";
       if (controls.defaultBrowser) controls.defaultBrowser.style.display = "grid";
@@ -289,6 +298,24 @@
     if (controls.completedCard) controls.completedCard.style.display = "none";
     if (controls.mainCard) controls.mainCard.style.display = "block";
 
+    // Multi-Section Navigation Bar population
+    if (controls.pdfSectionsWrap && controls.pdfSectionsBar) {
+      if (mod.sections && mod.sections.length > 0) {
+        controls.pdfSectionsWrap.style.display = "flex";
+        if (controls.sectionsCountLbl) {
+          controls.sectionsCountLbl.textContent = `${mod.sections.length} பிரிவுகள் (${mod.items.length} வினாக்கள்)`;
+        }
+        let secHtml = `<button type="button" class="rc-section-pill active" data-sec="all">🌟 அனைத்துப் பிரிவுகளும் (${mod.items.length})</button>`;
+        mod.sections.forEach(sec => {
+          const count = mod.items.filter(it => it.sectionId === sec.id).length;
+          secHtml += `<button type="button" class="rc-section-pill" data-sec="${sec.id}">${sec.icon || '📌'} ${sec.shortTitle || sec.title} (${count})</button>`;
+        });
+        controls.pdfSectionsBar.innerHTML = secHtml;
+      } else {
+        controls.pdfSectionsWrap.style.display = "none";
+      }
+    }
+
     if (controls.pdfViewLink) {
       if (mod.pdfFile) {
         controls.pdfViewLink.href = encodeURI(mod.pdfFile);
@@ -298,6 +325,28 @@
       }
     }
 
+    renderCurrentPdfQuestion();
+  }
+
+  function selectSectionFilter(sectionId) {
+    if (!currentPdfModule) return;
+    currentSectionFilter = sectionId;
+    const controls = ui();
+
+    if (controls.pdfSectionsBar) {
+      const pills = controls.pdfSectionsBar.querySelectorAll(".rc-section-pill");
+      pills.forEach(p => {
+        p.classList.toggle("active", p.getAttribute("data-sec") === sectionId);
+      });
+    }
+
+    if (sectionId === "all") {
+      pdfItems = currentPdfModule.items || [];
+    } else {
+      pdfItems = (currentPdfModule.items || []).filter(item => item.sectionId === sectionId);
+    }
+
+    pdfCurrentIndex = 0;
     renderCurrentPdfQuestion();
   }
 
@@ -321,7 +370,8 @@
     if (controls.unitScoreBadge) controls.unitScoreBadge.textContent = `⭐ ${pdfCompletedStats.stars} நட்சத்திரங்கள்`;
 
     if (controls.numberBadge) {
-      controls.numberBadge.textContent = `${currentPdfModule.badge || 'PDF பாடம்'} · வினா ${pdfCurrentIndex + 1} / ${total}`;
+      const secInfo = item.sectionTitle ? `${item.sectionTitle}` : (currentPdfModule.badge || 'PDF பாடம்');
+      controls.numberBadge.textContent = `${secInfo} · வினா ${pdfCurrentIndex + 1} / ${total}`;
     }
     if (controls.tagBadge) {
       controls.tagBadge.textContent = item.category || "வாசிப்பு";
@@ -1159,6 +1209,12 @@
       updateFiltered();
       return allSentences;
     },
+    selectSection(secId) {
+      selectSectionFilter(secId);
+    },
+    selectPdf(pdfId) {
+      selectPdfModule(pdfId);
+    },
     getAllSentences() {
       return allSentences;
     },
@@ -1179,6 +1235,16 @@
           if (btn) {
             const moduleId = btn.getAttribute("data-pdf");
             selectPdfModule(moduleId);
+          }
+        });
+      }
+
+      if (controls.pdfSectionsBar) {
+        controls.pdfSectionsBar.addEventListener("click", (e) => {
+          const btn = e.target.closest(".rc-section-pill");
+          if (btn) {
+            const secId = btn.getAttribute("data-sec");
+            selectSectionFilter(secId);
           }
         });
       }

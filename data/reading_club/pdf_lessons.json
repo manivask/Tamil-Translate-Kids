@@ -15,7 +15,12 @@
         "questionTa": "இது பூ.",
         "meaningEn": "This is a flower.",
         "translit": "Ithu poo.",
-        "options": ["இது பூ.", "இது மாடு.", "அது நாய்.", "அம்மா வா."],
+        "options": [
+          "இது பூ.",
+          "இது மாடு.",
+          "அது நாய்.",
+          "அம்மா வா."
+        ],
         "correctAnswer": "இது பூ.",
         "explanation": "இது பூ = This is a flower."
       },
@@ -26,7 +31,12 @@
         "questionTa": "இது மாடு.",
         "meaningEn": "This is a cow.",
         "translit": "Ithu maadu.",
-        "options": ["இது மாடு.", "இது பூ.", "பால் குடி.", "நீர் குடி."],
+        "options": [
+          "இது மாடு.",
+          "இது பூ.",
+          "பால் குடி.",
+          "நீர் குடி."
+        ],
         "correctAnswer": "இது மாடு.",
         "explanation": "இது மாடு = This is a cow."
       },
@@ -37,7 +47,12 @@
         "questionTa": "அது நாய்.",
         "meaningEn": "That is a dog.",
         "translit": "Athu naai.",
-        "options": ["அது நாய்.", "இது பூனை.", "அம்மா வா.", "அங்கே போ."],
+        "options": [
+          "அது நாய்.",
+          "இது பூனை.",
+          "அம்மா வா.",
+          "அங்கே போ."
+        ],
         "correctAnswer": "அது நாய்.",
         "explanation": "அது நாய் = That is a dog."
       },
@@ -48,7 +63,12 @@
         "questionTa": "இது என் வீடு.",
         "meaningEn": "This is my house.",
         "translit": "Ithu en veedu.",
-        "options": ["இது என் வீடு.", "இது என் பள்ளி.", "இது என் தோட்டம்.", "இது என் ஊர்."],
+        "options": [
+          "இது என் வீடு.",
+          "இது என் பள்ளி.",
+          "இது என் தோட்டம்.",
+          "இது என் ஊர்."
+        ],
         "correctAnswer": "இது என் வீடு.",
         "explanation": "இது என் வீடு = This is my house."
       },
@@ -59,7 +79,12 @@
         "questionTa": "பால் குடி.",
         "meaningEn": "Drink milk.",
         "translit": "Paal kudi.",
-        "options": ["பால் குடி.", "நீர் குடி.", "பழம் சாப்பிடு.", "உணவு உண்."],
+        "options": [
+          "பால் குடி.",
+          "நீர் குடி.",
+          "பழம் சாப்பிடு.",
+          "உணவு உண்."
+        ],
         "correctAnswer": "பால் குடி.",
         "explanation": "பால் குடி = Drink milk."
       },
@@ -70,7 +95,12 @@
         "questionTa": "அம்மா பால் தருகிறார்.",
         "meaningEn": "Amma gives milk.",
         "translit": "Amma paal tharukiraar.",
-        "options": ["அம்மா பால் தருகிறார்.", "அப்பா நீர் தருகிறார்.", "அம்மா உணவு தருகிறார்.", "தம்பி பால் குடிக்கிறான்."],
+        "options": [
+          "அம்மா பால் தருகிறார்.",
+          "அப்பா நீர் தருகிறார்.",
+          "அம்மா உணவு தருகிறார்.",
+          "தம்பி பால் குடிக்கிறான்."
+        ],
         "correctAnswer": "அம்மா பால் தருகிறார்.",
         "explanation": "அம்மா பால் தருகிறார் = Mom gives milk."
       },
@@ -81,7 +111,12 @@
         "questionTa": "நாய் ஓடுகிறது.",
         "meaningEn": "The dog is running.",
         "translit": "Naai odukirathu.",
-        "options": ["நாய் ஓடுகிறது.", "பூனை நடக்கிறது.", "மாடு புல் சாப்பிடுகிறது.", "குதிரை ஓடுகிறது."],
+        "options": [
+          "நாய் ஓடுகிறது.",
+          "பூனை நடக்கிறது.",
+          "மாடு புல் சாப்பிடுகிறது.",
+          "குதிரை ஓடுகிறது."
+        ],
         "correctAnswer": "நாய் ஓடுகிறது.",
         "explanation": "நாய் ஓடுகிறது = The dog is running."
       },
@@ -92,7 +127,12 @@
         "questionTa": "மீனா பூ பறிக்கிறாள்.",
         "meaningEn": "Meena picks flowers.",
         "translit": "Meena poo parikkiraal.",
-        "options": ["மீனா பூ பறிக்கிறாள்.", "குமார் பந்து விளையாடுகிறான்.", "மீனா பாடம் படிக்கிறாள்.", "அம்மா பூ பறிக்கிறார்."],
+        "options": [
+          "மீனா பூ பறிக்கிறாள்.",
+          "குமார் பந்து விளையாடுகிறான்.",
+          "மீனா பாடம் படிக்கிறாள்.",
+          "அம்மா பூ பறிக்கிறார்."
+        ],
         "correctAnswer": "மீனா பூ பறிக்கிறாள்.",
         "explanation": "மீனா பூ பறிக்கிறாள் = Meena picks flowers."
       },
@@ -105,7 +145,12 @@
         "questionTa": "நாயின் பெயர் என்ன?",
         "meaningEn": "What is the dog's name?",
         "translit": "Naayin peyar enna?",
-        "options": ["மணி (Mani)", "ராஜா (Raja)", "குமார் (Kumar)", "பூனை (Poonai)"],
+        "options": [
+          "மணி (Mani)",
+          "ராஜா (Raja)",
+          "குமார் (Kumar)",
+          "பூனை (Poonai)"
+        ],
         "correctAnswer": "மணி (Mani)",
         "explanation": "கதையில்: ‘நாயின் பெயர் மணி.’"
       },
@@ -118,7 +163,12 @@
         "questionTa": "மணி எதை எடுக்கிறது?",
         "meaningEn": "What does Mani pick up?",
         "translit": "Mani ethai edukkirathu?",
-        "options": ["பந்தை (Ball)", "கல்லை (Stone)", "இலையை (Leaf)", "உணவை (Food)"],
+        "options": [
+          "பந்தை (Ball)",
+          "கல்லை (Stone)",
+          "இலையை (Leaf)",
+          "உணவை (Food)"
+        ],
         "correctAnswer": "பந்தை (Ball)",
         "explanation": "கதையில்: ‘மணி பந்தை எடுக்கிறது.’"
       },
@@ -131,7 +181,12 @@
         "questionTa": "பூனை எங்கே உள்ளது?",
         "meaningEn": "Where is the cat?",
         "translit": "Poonai engae ullathu?",
-        "options": ["வீட்டில் உள்ளது (At home)", "காட்டில் உள்ளது (In forest)", "மரத்தில் உள்ளது (On tree)", "பள்ளியில் உள்ளது (At school)"],
+        "options": [
+          "வீட்டில் உள்ளது (At home)",
+          "காட்டில் உள்ளது (In forest)",
+          "மரத்தில் உள்ளது (On tree)",
+          "பள்ளியில் உள்ளது (At school)"
+        ],
         "correctAnswer": "வீட்டில் உள்ளது (At home)",
         "explanation": "கதையில்: ‘பூனை வீட்டில் உள்ளது.’"
       },
@@ -144,7 +199,12 @@
         "questionTa": "பூனை என்ன குடிக்கிறது?",
         "meaningEn": "What does the cat drink?",
         "translit": "Poonai enna kudikkirathu?",
-        "options": ["பால் குடிக்கிறது (Milk)", "நீர் குடிக்கிறது (Water)", "பழச்சாறு குடிக்கிறது (Juice)", "தேன் குடிக்கிறது (Honey)"],
+        "options": [
+          "பால் குடிக்கிறது (Milk)",
+          "நீர் குடிக்கிறது (Water)",
+          "பழச்சாறு குடிக்கிறது (Juice)",
+          "தேன் குடிக்கிறது (Honey)"
+        ],
         "correctAnswer": "பால் குடிக்கிறது (Milk)",
         "explanation": "கதையில்: ‘பூனை பால் குடிக்கிறது.’"
       },
@@ -157,7 +217,12 @@
         "questionTa": "பூ என்ன நிறம்?",
         "meaningEn": "What color is the flower?",
         "translit": "Poo enna niram?",
-        "options": ["சிவப்பு பூ (Red flower)", "மஞ்சள் பூ (Yellow flower)", "நீலப் பூ (Blue flower)", "வெள்ளை பூ (White flower)"],
+        "options": [
+          "சிவப்பு பூ (Red flower)",
+          "மஞ்சள் பூ (Yellow flower)",
+          "நீலப் பூ (Blue flower)",
+          "வெள்ளை பூ (White flower)"
+        ],
         "correctAnswer": "சிவப்பு பூ (Red flower)",
         "explanation": "கதையில்: ‘அது சிவப்பு பூ.’"
       },
@@ -170,7 +235,12 @@
         "questionTa": "மீனா பூவுக்கு என்ன ஊற்றுகிறாள்?",
         "meaningEn": "What does Meena pour for the flower?",
         "translit": "Meena poovukku enna ootrukiraal?",
-        "options": ["நீர் ஊற்றுகிறாள் (Water)", "பால் ஊற்றுகிறாள் (Milk)", "சாறு ஊற்றுகிறாள் (Juice)", "எண்ணெய் ஊற்றுகிறாள் (Oil)"],
+        "options": [
+          "நீர் ஊற்றுகிறாள் (Water)",
+          "பால் ஊற்றுகிறாள் (Milk)",
+          "சாறு ஊற்றுகிறாள் (Juice)",
+          "எண்ணெய் ஊற்றுகிறாள் (Oil)"
+        ],
         "correctAnswer": "நீர் ஊற்றுகிறாள் (Water)",
         "explanation": "கதையில்: ‘அவள் பூவுக்கு நீர் ஊற்றுகிறாள்.’"
       }
@@ -192,7 +262,12 @@
         "questionTa": "முயற்சி - முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
         "meaningEn": "Effort - If you make effort, success will follow.",
         "translit": "Muyarchi - Muyarchi seidhaal vetri kidaikkum.",
-        "options": ["முயற்சி - effort", "பயிற்சி - practice", "கவனம் - attention", "தெளிவு - clarity"],
+        "options": [
+          "முயற்சி - effort",
+          "பயிற்சி - practice",
+          "கவனம் - attention",
+          "தெளிவு - clarity"
+        ],
         "correctAnswer": "முயற்சி - effort",
         "explanation": "முயற்சி = Effort."
       },
@@ -203,7 +278,12 @@
         "questionTa": "பயிற்சி - தினமும் தமிழ் பயிற்சி செய்கிறேன்.",
         "meaningEn": "Practice - I practice Tamil every day.",
         "translit": "Payirchi - Dinamum Tamil payirchi seigiren.",
-        "options": ["பயிற்சி - practice", "முயற்சி - effort", "சீக்கிரம் - quickly", "மெதுவாக - slowly"],
+        "options": [
+          "பயிற்சி - practice",
+          "முயற்சி - effort",
+          "சீக்கிரம் - quickly",
+          "மெதுவாக - slowly"
+        ],
         "correctAnswer": "பயிற்சி - practice",
         "explanation": "பயிற்சி = Practice."
       },
@@ -214,7 +294,12 @@
         "questionTa": "கவனம் - பாடங்களை முழு கவனத்துடன் வாசிக்கிறேன்.",
         "meaningEn": "Attention - I read lessons with full attention.",
         "translit": "Gavanam - Paadangalai muzhu gavanathudan vaasikkiren.",
-        "options": ["கவனம் - attention", "தெளிவு - clarity", "தொடரு - continue", "திரும்பவும் - again"],
+        "options": [
+          "கவனம் - attention",
+          "தெளிவு - clarity",
+          "தொடரு - continue",
+          "திரும்பவும் - again"
+        ],
         "correctAnswer": "கவனம் - attention",
         "explanation": "கவனம் = Attention / Focus."
       },
@@ -225,7 +310,12 @@
         "questionTa": "தொடரு - நல்ல பழக்கங்களை எப்போதும் தொடரு.",
         "meaningEn": "Continue - Always continue good habits.",
         "translit": "Thodaru - Nalla pazhakkangalai eppothum thodaru.",
-        "options": ["தொடரு - continue", "நிறுத்து - stop", "தொடங்கு - start", "மற - forget"],
+        "options": [
+          "தொடரு - continue",
+          "நிறுத்து - stop",
+          "தொடங்கு - start",
+          "மற - forget"
+        ],
         "correctAnswer": "தொடரு - continue",
         "explanation": "தொடரு = Continue / Persist."
       },
@@ -301,7 +391,12 @@
         "questionTa": "ரவி தினமும் புத்தகம் படிக்கிறான்.",
         "meaningEn": "Ravi reads books every day.",
         "translit": "Ravi dinamum puththagam padikkiraan.",
-        "options": ["ரவி தினமும் புத்தகம் படிக்கிறான்.", "மீனா பள்ளிக்குச் செல்கிறாள்.", "அம்மா உணவு சமைக்கிறார்.", "அப்பா தோட்டத்தில் இருக்கிறார்."],
+        "options": [
+          "ரவி தினமும் புத்தகம் படிக்கிறான்.",
+          "மீனா பள்ளிக்குச் செல்கிறாள்.",
+          "அம்மா உணவு சமைக்கிறார்.",
+          "அப்பா தோட்டத்தில் இருக்கிறார்."
+        ],
         "correctAnswer": "ரவி தினமும் புத்தகம் படிக்கிறான்.",
         "explanation": "ரவி தினமும் புத்தகம் படிக்கிறான் = Ravi reads books every day."
       },
@@ -312,7 +407,12 @@
         "questionTa": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
         "meaningEn": "Meena took her bag to go to school.",
         "translit": "Meena pallikkuch sella paiyai eduththaal.",
-        "options": ["மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.", "ரவி புத்தகம் படிக்கிறான்.", "பூனை வீட்டிற்குள் சென்றது.", "லதா அறையைச் சுத்தம் செய்கிறாள்."],
+        "options": [
+          "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
+          "ரவி புத்தகம் படிக்கிறான்.",
+          "பூனை வீட்டிற்குள் சென்றது.",
+          "லதா அறையைச் சுத்தம் செய்கிறாள்."
+        ],
         "correctAnswer": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
         "explanation": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்."
       },
@@ -323,7 +423,12 @@
         "questionTa": "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
         "meaningEn": "Amma is cooking food in the kitchen.",
         "translit": "Amma samaiyalaraiyil unavu samaikkiraar.",
-        "options": ["அம்மா சமையலறையில் உணவு சமைக்கிறார்.", "அப்பா நீர் ஊற்றுகிறார்.", "மீனா பூ பறிக்கிறாள்.", "குமார் பல் துலக்குகிறான்."],
+        "options": [
+          "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
+          "அப்பா நீர் ஊற்றுகிறார்.",
+          "மீனா பூ பறிக்கிறாள்.",
+          "குமார் பல் துலக்குகிறான்."
+        ],
         "correctAnswer": "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
         "explanation": "அம்மா சமையலறையில் உணவு சமைக்கிறார்."
       },
@@ -334,7 +439,12 @@
         "questionTa": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
         "meaningEn": "Appa is watering the plants in the garden.",
         "translit": "Appa thottathil sedigalukku neer ootrukiraar.",
-        "options": ["அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.", "சிறுவன் பந்தை எடுக்கிறான்.", "பறவை கிளையில் அமர்ந்தது.", "மழை பெய்ததால் சாலை நனைந்தது."],
+        "options": [
+          "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
+          "சிறுவன் பந்தை எடுக்கிறான்.",
+          "பறவை கிளையில் அமர்ந்தது.",
+          "மழை பெய்ததால் சாலை நனைந்தது."
+        ],
         "correctAnswer": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
         "explanation": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்."
       },
@@ -347,7 +457,12 @@
         "questionTa": "அருண் தோட்டத்தில் என்ன நட்டான்?",
         "meaningEn": "What did Arun plant in the garden?",
         "translit": "Arun thottathil enna nattaan?",
-        "options": ["ஒரு சிறிய விதை (A small seed)", "ஒரு பெரிய மரம் (A big tree)", "புல் (Grass)", "கல் (Stone)"],
+        "options": [
+          "ஒரு சிறிய விதை (A small seed)",
+          "ஒரு பெரிய மரம் (A big tree)",
+          "புல் (Grass)",
+          "கல் (Stone)"
+        ],
         "correctAnswer": "ஒரு சிறிய விதை (A small seed)",
         "explanation": "கதையில்: ‘அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான்.’"
       },
@@ -360,7 +475,12 @@
         "questionTa": "அருண் தினமும் செடிக்கு என்ன செய்தான்?",
         "meaningEn": "What did Arun do for the plant daily?",
         "translit": "Arun dinamum sedikku enna seidhaan?",
-        "options": ["தண்ணீர் ஊற்றினான் (Watered it)", "இலைகளைப் பறித்தான் (Plucked leaves)", "செடியை வெட்டினான் (Cut it)", "கவனிக்கவில்லை (Ignored it)"],
+        "options": [
+          "தண்ணீர் ஊற்றினான் (Watered it)",
+          "இலைகளைப் பறித்தான் (Plucked leaves)",
+          "செடியை வெட்டினான் (Cut it)",
+          "கவனிக்கவில்லை (Ignored it)"
+        ],
         "correctAnswer": "தண்ணீர் ஊற்றினான் (Watered it)",
         "explanation": "கதையில்: ‘அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான்.’"
       },
@@ -373,7 +493,12 @@
         "questionTa": "சில நாட்களில் மண்ணிலிருந்து என்ன வந்தது?",
         "meaningEn": "What emerged from the soil after a few days?",
         "translit": "Sila naatkalil mannilirunthu enna vanthathu?",
-        "options": ["பச்சைத் தளிர் (Green sprout)", "பெரிய பழம் (Big fruit)", "மஞ்சள் பூ (Yellow flower)", "காய்ந்த இலை (Dry leaf)"],
+        "options": [
+          "பச்சைத் தளிர் (Green sprout)",
+          "பெரிய பழம் (Big fruit)",
+          "மஞ்சள் பூ (Yellow flower)",
+          "காய்ந்த இலை (Dry leaf)"
+        ],
         "correctAnswer": "பச்சைத் தளிர் (Green sprout)",
         "explanation": "கதையில்: ‘சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது.’"
       },
@@ -386,7 +511,12 @@
         "questionTa": "சில வாரங்களுக்குப் பிறகு செடியில் என்ன மலர்ந்தது?",
         "meaningEn": "What blossomed on the plant after a few weeks?",
         "translit": "Sila vaarangalukku piragu sediyil enna malarnthathu?",
-        "options": ["அழகான பூ (Beautiful flower)", "முட்கள் (Thorns)", "புதிய விதை (New seed)", "காய்ந்த கிளை (Dry branch)"],
+        "options": [
+          "அழகான பூ (Beautiful flower)",
+          "முட்கள் (Thorns)",
+          "புதிய விதை (New seed)",
+          "காய்ந்த கிளை (Dry branch)"
+        ],
         "correctAnswer": "அழகான பூ (Beautiful flower)",
         "explanation": "கதையில்: ‘சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது.’"
       },
@@ -414,106 +544,1268 @@
     "id": "pdf-stage2-assign3",
     "pdfFile": "data/Reading Club/Stage 2-Assignment 3.pdf",
     "title": "Stage 2 - ஒப்படைப்பு 3 (Stage 2-Assignment 3.pdf)",
-    "subtitle": "வாக்கிய வாசிப்பு & ராணி, கமல், கனி சிறுகதைகள் & வினாக்கள்",
-    "badge": "📙 ஒப்படைப்பு 3 · Stage 2",
+    "subtitle": "7 முழுப் பிரிவுகள்: உயிர்மெய் எழுத்துகள், சொற்கள், வாக்கியங்கள், கதைகள், புணர்ச்சி, இலக்கணம், நாநெகிழ் பயிற்சி",
+    "badge": "📙 ஒப்படைப்பு 3 · 7 பிரிவுகள்",
     "badgeClass": "badge-assign",
     "grade": 2,
     "items": [
       {
-        "id": "s2-as3-q1",
+        "id": "s2-as3-s1-q1",
+        "sectionId": "sec-1",
+        "sectionTitle": "பிரிவு 1: உயிர்மெய் எழுத்துகள் (ஆ, இ, ஈ வரிசை)",
         "type": "reading",
-        "category": "வாக்கிய வாசிப்பு (Sentence Reading)",
+        "category": "பிரிவு 1: ஆ வரிசை உயிர்மெய் எழுத்துகள்",
+        "questionTa": "கா  ஙா  சா  ஞா  டா  ணா  தா  நா  பா  மா  யா  ரா  லா  வா  ழா  ளா  றா  னா",
+        "meaningEn": "Uyirmei Letters: 'Aa' vowel sound series (கா to னா)",
+        "translit": "Kaa, Ngaa, Chaa, Nyaa, Taa, Nnaa, Thaa, Naa, Paa, Maa, Yaa, Raa, Laa, Vaa, Zhaa, Llaa, Rraa, Nnaa",
+        "options": [
+          "கா ஙா சா ஞா தா நா பா மா",
+          "கி ஙி சி ஞி தி நி பி மி",
+          "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
+          "க ங ச ஞ த ந ப ம"
+        ],
+        "correctAnswer": "கா ஙா சா ஞா தா நா பா மா",
+        "explanation": "ஆ வரிசை: க் + ஆ = கா, த் + ஆ = தா, ப் + ஆ = பா."
+      },
+      {
+        "id": "s2-as3-s1-q2",
+        "sectionId": "sec-1",
+        "sectionTitle": "பிரிவு 1: உயிர்மெய் எழுத்துகள் (ஆ, இ, ஈ வரிசை)",
+        "type": "reading",
+        "category": "பிரிவு 1: இ வரிசை உயிர்மெய் எழுத்துகள்",
+        "questionTa": "கி  ஙி  சி  ஞி  டி  ணி  தி  நி  பி  மி  யி  ரி  லி  வி  ழி  ளி  றி  னி",
+        "meaningEn": "Uyirmei Letters: 'I' vowel sound series (கி to னி)",
+        "translit": "Ki, Ngi, Chi, Nyi, Ti, Nni, Thi, Ni, Pi, Mi, Yi, Ri, Li, Vi, Zhi, Lli, Rri, Nni",
+        "options": [
+          "கி ஙி சி ஞி தி நி பி மி",
+          "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
+          "கா ஙா சா ஞா தா நா பா மா",
+          "கு ஙு சு ஞு து நு பு மு"
+        ],
+        "correctAnswer": "கி ஙி சி ஞி தி நி பி மி",
+        "explanation": "இ வரிசை: க் + இ = கி, த் + இ = தி, ப் + இ = பி."
+      },
+      {
+        "id": "s2-as3-s1-q3",
+        "sectionId": "sec-1",
+        "sectionTitle": "பிரிவு 1: உயிர்மெய் எழுத்துகள் (ஆ, இ, ஈ வரிசை)",
+        "type": "reading",
+        "category": "பிரிவு 1: ஈ வரிசை உயிர்மெய் எழுத்துகள்",
+        "questionTa": "கீ  ஙீ  சீ  ஞீ  டீ  ணீ  தீ  நீ  பீ  மீ  யீ  ரீ  லீ  வீ  ழீ  ளீ  றீ  னீ",
+        "meaningEn": "Uyirmei Letters: 'Ee' vowel sound series (கீ to னீ)",
+        "translit": "Kee, Ngee, Chee, Nyee, Tee, Nnee, Thee, Nee, Pee, Mee, Yee, Ree, Lee, Vee, Zhee, Llee, Rree, Nnee",
+        "options": [
+          "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
+          "கி ஙி சி ஞி தி நி பி மி",
+          "கா ஙா சா ஞா தா நா பா மா",
+          "கை ஙை சை ஞை தை நை பை மை"
+        ],
+        "correctAnswer": "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
+        "explanation": "ஈ வரிசை: க் + ஈ = கீ, த் + ஈ = தீ, ப் + ஈ = பீ."
+      },
+      {
+        "id": "s2-as3-s2-q1",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 1",
+        "questionTa": "இலவசப் பயணம்",
+        "meaningEn": "Free travel / Journey",
+        "translit": "Ilavasap payanam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "மணல்"
+        ],
+        "correctAnswer": "இலவசப் பயணம்",
+        "explanation": "இலவசப் பயணம் = Free travel / Journey"
+      },
+      {
+        "id": "s2-as3-s2-q2",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 2",
+        "questionTa": "ஆரம்பக் கல்வி",
+        "meaningEn": "Primary education",
+        "translit": "Aarambak kalvi",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "மணல்"
+        ],
+        "correctAnswer": "ஆரம்பக் கல்வி",
+        "explanation": "ஆரம்பக் கல்வி = Primary education"
+      },
+      {
+        "id": "s2-as3-s2-q3",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 3",
+        "questionTa": "ஆற்றல்",
+        "meaningEn": "Potential / Energy",
+        "translit": "Aatral",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "மணல்"
+        ],
+        "correctAnswer": "ஆற்றல்",
+        "explanation": "ஆற்றல் = Potential / Energy"
+      },
+      {
+        "id": "s2-as3-s2-q4",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 4",
+        "questionTa": "மணல்",
+        "meaningEn": "Sand",
+        "translit": "Manal",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "மணல்"
+        ],
+        "correctAnswer": "மணல்",
+        "explanation": "மணல் = Sand"
+      },
+      {
+        "id": "s2-as3-s2-q5",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 5",
+        "questionTa": "மலர்",
+        "meaningEn": "Flower",
+        "translit": "Malar",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "மலர்"
+        ],
+        "correctAnswer": "மலர்",
+        "explanation": "மலர் = Flower"
+      },
+      {
+        "id": "s2-as3-s2-q6",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 6",
+        "questionTa": "மண்",
+        "meaningEn": "Soil / Earth",
+        "translit": "Mann",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "மண்"
+        ],
+        "correctAnswer": "மண்",
+        "explanation": "மண் = Soil / Earth"
+      },
+      {
+        "id": "s2-as3-s2-q7",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 7",
+        "questionTa": "வர்த்தகம்",
+        "meaningEn": "Commerce / Trade",
+        "translit": "Varthagam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "வர்த்தகம்"
+        ],
+        "correctAnswer": "வர்த்தகம்",
+        "explanation": "வர்த்தகம் = Commerce / Trade"
+      },
+      {
+        "id": "s2-as3-s2-q8",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 8",
+        "questionTa": "பயம்",
+        "meaningEn": "Fear",
+        "translit": "Bayam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "பயம்"
+        ],
+        "correctAnswer": "பயம்",
+        "explanation": "பயம் = Fear"
+      },
+      {
+        "id": "s2-as3-s2-q9",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 9",
+        "questionTa": "பந்தயம்",
+        "meaningEn": "Race / Contest",
+        "translit": "Panthayam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "பந்தயம்"
+        ],
+        "correctAnswer": "பந்தயம்",
+        "explanation": "பந்தயம் = Race / Contest"
+      },
+      {
+        "id": "s2-as3-s2-q10",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 10",
+        "questionTa": "பட்டம்",
+        "meaningEn": "Kite",
+        "translit": "Pattam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "பட்டம்"
+        ],
+        "correctAnswer": "பட்டம்",
+        "explanation": "பட்டம் = Kite"
+      },
+      {
+        "id": "s2-as3-s2-q11",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 11",
+        "questionTa": "வந்தனம்",
+        "meaningEn": "Salutation / Greetings",
+        "translit": "Vandhanam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "வந்தனம்"
+        ],
+        "correctAnswer": "வந்தனம்",
+        "explanation": "வந்தனம் = Salutation / Greetings"
+      },
+      {
+        "id": "s2-as3-s2-q12",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 12",
+        "questionTa": "பந்தம்",
+        "meaningEn": "Bond / Torch",
+        "translit": "Pantham",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "பந்தம்"
+        ],
+        "correctAnswer": "பந்தம்",
+        "explanation": "பந்தம் = Bond / Torch"
+      },
+      {
+        "id": "s2-as3-s2-q13",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 13",
+        "questionTa": "அண்ணன்",
+        "meaningEn": "Elder brother",
+        "translit": "Annan",
+        "options": [
+          "அண்ணன்",
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்"
+        ],
+        "correctAnswer": "அண்ணன்",
+        "explanation": "அண்ணன் = Elder brother"
+      },
+      {
+        "id": "s2-as3-s2-q14",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 14",
+        "questionTa": "அர்த்தம்",
+        "meaningEn": "Meaning",
+        "translit": "Artham",
+        "options": [
+          "அர்த்தம்",
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்"
+        ],
+        "correctAnswer": "அர்த்தம்",
+        "explanation": "அர்த்தம் = Meaning"
+      },
+      {
+        "id": "s2-as3-s2-q15",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 15",
+        "questionTa": "படம்",
+        "meaningEn": "Picture",
+        "translit": "Padam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "படம்"
+        ],
+        "correctAnswer": "படம்",
+        "explanation": "படம் = Picture"
+      },
+      {
+        "id": "s2-as3-s2-q16",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 16",
+        "questionTa": "உலகம்",
+        "meaningEn": "World",
+        "translit": "Ulagam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "உலகம்"
+        ],
+        "correctAnswer": "உலகம்",
+        "explanation": "உலகம் = World"
+      },
+      {
+        "id": "s2-as3-s2-q17",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 17",
+        "questionTa": "என்ன பழம்",
+        "meaningEn": "What fruit",
+        "translit": "Enna pazham",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "என்ன பழம்"
+        ],
+        "correctAnswer": "என்ன பழம்",
+        "explanation": "என்ன பழம் = What fruit"
+      },
+      {
+        "id": "s2-as3-s2-q18",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 18",
+        "questionTa": "எங்கள் உள்ளம்",
+        "meaningEn": "Our heart / mind",
+        "translit": "Engal ullam",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "எங்கள் உள்ளம்"
+        ],
+        "correctAnswer": "எங்கள் உள்ளம்",
+        "explanation": "எங்கள் உள்ளம் = Our heart / mind"
+      },
+      {
+        "id": "s2-as3-s2-q19",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 19",
+        "questionTa": "மக்கள்",
+        "meaningEn": "People",
+        "translit": "Makkal",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "மக்கள்"
+        ],
+        "correctAnswer": "மக்கள்",
+        "explanation": "மக்கள் = People"
+      },
+      {
+        "id": "s2-as3-s2-q20",
+        "sectionId": "sec-2",
+        "sectionTitle": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 2: சொல் வாசிப்பு 20",
+        "questionTa": "கண்",
+        "meaningEn": "Eye",
+        "translit": "Kann",
+        "options": [
+          "ஆரம்பக் கல்வி",
+          "ஆற்றல்",
+          "இலவசப் பயணம்",
+          "கண்"
+        ],
+        "correctAnswer": "கண்",
+        "explanation": "கண் = Eye"
+      },
+      {
+        "id": "s2-as3-s3-q1",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 1",
         "questionTa": "அந்த இடம் எங்கள் நகரம்.",
         "meaningEn": "That place is our city.",
         "translit": "Antha idam engal nagaram.",
-        "options": ["அந்த இடம் எங்கள் நகரம்.", "அந்த இல்லம் எங்கள் இல்லம்.", "அவர் எங்கள் அரசர்.", "இவர் என் நண்பர்."],
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இவர் என் நண்பர்."
+        ],
         "correctAnswer": "அந்த இடம் எங்கள் நகரம்.",
-        "explanation": "அந்த இடம் எங்கள் நகரம் = That place is our city."
+        "explanation": "அந்த இடம் எங்கள் நகரம். = That place is our city."
       },
       {
-        "id": "s2-as3-q2",
+        "id": "s2-as3-s3-q2",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
         "type": "reading",
-        "category": "வாக்கிய வாசிப்பு (Sentence Reading)",
+        "category": "பிரிவு 3: வாக்கியம் 2",
         "questionTa": "அந்த இல்லம் எங்கள் இல்லம்.",
         "meaningEn": "That house is our house.",
         "translit": "Antha illam engal illam.",
-        "options": ["அந்த இல்லம் எங்கள் இல்லம்.", "அந்த இடம் எங்கள் நகரம்.", "இவள் என் மகள்.", "இவன் என் மகன்."],
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இவர் என் நண்பர்."
+        ],
         "correctAnswer": "அந்த இல்லம் எங்கள் இல்லம்.",
-        "explanation": "அந்த இல்லம் எங்கள் இல்லம் = That home is our home."
+        "explanation": "அந்த இல்லம் எங்கள் இல்லம். = That house is our house."
       },
       {
-        "id": "s2-as3-q3",
+        "id": "s2-as3-s3-q3",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
         "type": "reading",
-        "category": "வாக்கிய வாசிப்பு (Sentence Reading)",
+        "category": "பிரிவு 3: வாக்கியம் 3",
+        "questionTa": "அவர் எங்கள் அரசர்.",
+        "meaningEn": "He is our king.",
+        "translit": "Avar engal arasar.",
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இவர் என் நண்பர்."
+        ],
+        "correctAnswer": "அவர் எங்கள் அரசர்.",
+        "explanation": "அவர் எங்கள் அரசர். = He is our king."
+      },
+      {
+        "id": "s2-as3-s3-q4",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 4",
         "questionTa": "இவர் என் நண்பர்.",
         "meaningEn": "He is my friend.",
         "translit": "Ivar en nanbar.",
-        "options": ["இவர் என் நண்பர்.", "இவர் எங்கள் அரசர்.", "என் அண்ணன் நல்லவன்.", "இந்த மரம் உயரம்."],
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இவர் என் நண்பர்."
+        ],
         "correctAnswer": "இவர் என் நண்பர்.",
-        "explanation": "இவர் என் நண்பர் = He is my friend."
+        "explanation": "இவர் என் நண்பர். = He is my friend."
       },
       {
-        "id": "s2-as3-q4",
+        "id": "s2-as3-s3-q5",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
         "type": "reading",
-        "category": "வாக்கிய வாசிப்பு (Sentence Reading)",
+        "category": "பிரிவு 3: வாக்கியம் 5",
+        "questionTa": "இவள் என் மகள்.",
+        "meaningEn": "She is my daughter.",
+        "translit": "Ival en magal.",
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இவள் என் மகள்."
+        ],
+        "correctAnswer": "இவள் என் மகள்.",
+        "explanation": "இவள் என் மகள். = She is my daughter."
+      },
+      {
+        "id": "s2-as3-s3-q6",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 6",
+        "questionTa": "இவன் என் மகன்.",
+        "meaningEn": "He is my son.",
+        "translit": "Ivan en magan.",
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இவன் என் மகன்."
+        ],
+        "correctAnswer": "இவன் என் மகன்.",
+        "explanation": "இவன் என் மகன். = He is my son."
+      },
+      {
+        "id": "s2-as3-s3-q7",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 7",
+        "questionTa": "இவர் எங்கள் அண்ணன்.",
+        "meaningEn": "He is our elder brother.",
+        "translit": "Ivar engal annan.",
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இவர் எங்கள் அண்ணன்."
+        ],
+        "correctAnswer": "இவர் எங்கள் அண்ணன்.",
+        "explanation": "இவர் எங்கள் அண்ணன். = He is our elder brother."
+      },
+      {
+        "id": "s2-as3-s3-q8",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 8",
+        "questionTa": "என் அண்ணன் நல்லவன்.",
+        "meaningEn": "My elder brother is a good person.",
+        "translit": "En annan nallavan.",
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "என் அண்ணன் நல்லவன்."
+        ],
+        "correctAnswer": "என் அண்ணன் நல்லவன்.",
+        "explanation": "என் அண்ணன் நல்லவன். = My elder brother is a good person."
+      },
+      {
+        "id": "s2-as3-s3-q9",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 9",
+        "questionTa": "என் நண்பன் நல்லவன்.",
+        "meaningEn": "My friend is a good person.",
+        "translit": "En nanban nallavan.",
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "என் நண்பன் நல்லவன்."
+        ],
+        "correctAnswer": "என் நண்பன் நல்லவன்.",
+        "explanation": "என் நண்பன் நல்லவன். = My friend is a good person."
+      },
+      {
+        "id": "s2-as3-s3-q10",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 10",
         "questionTa": "இந்த மரம் உயரம்.",
         "meaningEn": "This tree is tall.",
         "translit": "Intha maram uyaram.",
-        "options": ["இந்த மரம் உயரம்.", "இந்தப் பழம் உன் பழம்.", "இந்தப் படம் என் படம்.", "இவர் என் நண்பர்."],
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இந்த மரம் உயரம்."
+        ],
         "correctAnswer": "இந்த மரம் உயரம்.",
-        "explanation": "இந்த மரம் உயரம் = This tree is tall."
+        "explanation": "இந்த மரம் உயரம். = This tree is tall."
       },
       {
-        "id": "s2-as3-q5",
+        "id": "s2-as3-s3-q11",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 11",
+        "questionTa": "இந்தப் பழம் உன் பழம்.",
+        "meaningEn": "This fruit is your fruit.",
+        "translit": "Intha pazham un pazham.",
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இந்தப் பழம் உன் பழம்."
+        ],
+        "correctAnswer": "இந்தப் பழம் உன் பழம்.",
+        "explanation": "இந்தப் பழம் உன் பழம். = This fruit is your fruit."
+      },
+      {
+        "id": "s2-as3-s3-q12",
+        "sectionId": "sec-3",
+        "sectionTitle": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக",
+        "type": "reading",
+        "category": "பிரிவு 3: வாக்கியம் 12",
+        "questionTa": "இந்தப் படம் என் படம்.",
+        "meaningEn": "This picture is my picture.",
+        "translit": "Intha padam en padam.",
+        "options": [
+          "அந்த இடம் எங்கள் நகரம்.",
+          "அந்த இல்லம் எங்கள் இல்லம்.",
+          "அவர் எங்கள் அரசர்.",
+          "இந்தப் படம் என் படம்."
+        ],
+        "correctAnswer": "இந்தப் படம் என் படம்.",
+        "explanation": "இந்தப் படம் என் படம். = This picture is my picture."
+      },
+      {
+        "id": "s2-as3-s4-q1",
+        "sectionId": "sec-4",
+        "sectionTitle": "பிரிவு 4: சிறுகதைகள் & வினாக்கள்",
         "type": "comprehension",
-        "category": "சிறுகதை 1: ராணி (Short Story 1)",
+        "category": "பிரிவு 4: சிறுகதை 1 - ராணி",
         "storyTitle": "சிறுகதை 1: ராணி",
         "storyPassage": "ராணி நல்ல மாணவி. அவள் பாடம் படித்தாள். அப்பா அவள் பாடம் வாசிக்கக் கண்டார். அப்பா மகிழ்ந்தார். ராணி மகிழ்ச்சியாகச் சிரித்தாள்.",
         "questionTa": "ராணி என்ன படித்தாள்?",
         "meaningEn": "What did Rani read?",
         "translit": "Rani enna padithaal?",
-        "options": ["பாடம் படித்தாள் (Lesson)", "கதை எழுதினாள் (Story)", "பாட்டு பாடினாள் (Song)", "படம் வரைந்தாள் (Drawing)"],
+        "options": [
+          "பாடம் படித்தாள் (Lesson)",
+          "கதை எழுதினாள் (Story)",
+          "பாட்டு பாடினாள் (Song)",
+          "படம் வரைந்தாள் (Drawing)"
+        ],
         "correctAnswer": "பாடம் படித்தாள் (Lesson)",
         "explanation": "கதையில்: ‘அவள் பாடம் படித்தாள்.’"
       },
       {
-        "id": "s2-as3-q6",
+        "id": "s2-as3-s4-q2",
+        "sectionId": "sec-4",
+        "sectionTitle": "பிரிவு 4: சிறுகதைகள் & வினாக்கள்",
         "type": "comprehension",
-        "category": "சிறுகதை 2: கமல் (Short Story 2)",
+        "category": "பிரிவு 4: சிறுகதை 2 - கமல்",
         "storyTitle": "சிறுகதை 2: கமல்",
         "storyPassage": "கமல் நடந்தான். அவன் ஆலமரம் கண்டான். பறவைகள் மரத்தில் அமர்ந்தன. கமல் பறவைகள் பறக்கக் கண்டான். அவன் மகிழ்ந்தான்.",
         "questionTa": "கமல் எதைக் கண்டான்?",
         "meaningEn": "What did Kamal see?",
         "translit": "Kamal ethai kandaan?",
-        "options": ["ஆலமரம் கண்டான் (Banyan tree)", "மாமரம் கண்டான் (Mango tree)", "குளம் கண்டான் (Pond)", "வீடு கண்டான் (House)"],
+        "options": [
+          "ஆலமரம் கண்டான் (Banyan tree)",
+          "மாமரம் கண்டான் (Mango tree)",
+          "குளம் கண்டான் (Pond)",
+          "வீடு கண்டான் (House)"
+        ],
         "correctAnswer": "ஆலமரம் கண்டான் (Banyan tree)",
         "explanation": "கதையில்: ‘அவன் ஆலமரம் கண்டான்.’"
       },
       {
-        "id": "s2-as3-q7",
+        "id": "s2-as3-s4-q3",
+        "sectionId": "sec-4",
+        "sectionTitle": "பிரிவு 4: சிறுகதைகள் & வினாக்கள்",
         "type": "comprehension",
-        "category": "சிறுகதை 3: கனி (Short Story 3)",
+        "category": "பிரிவு 4: சிறுகதை 3 - கனி",
         "storyTitle": "சிறுகதை 3: கனி",
-        "storyPassage": "அம்மா கனி தந்தாள். வாணி கனி உண்டாள். அவள் அண்ணன் வந்தான். வாணி அண்ணனிடம் கனி அளித்தாள். அவன் நன்றி என்றான்.",
-        "questionTa": "அம்மா என்ன தந்தாள்?",
+        "storyPassage": "அம்மா கனி தந்தாள். வாணி கனி உண்டாள். அவள் அண்ணன் வந்தான். வாணி அண்ணனிடம் கனி அளித்தாள். அவன் “நன்றி” என்றான்.",
+        "questionTa": "அம்மா என்ன கொடுத்தாள்?",
         "meaningEn": "What did Mom give?",
-        "translit": "Amma enna thandhaal?",
-        "options": ["கனி தந்தாள் (Fruit)", "மலர் தந்தாள் (Flower)", "பால் தந்தாள் (Milk)", "புத்தகம் தந்தாள் (Book)"],
+        "translit": "Amma enna koduthaal?",
+        "options": [
+          "கனி தந்தாள் (Fruit)",
+          "மலர் தந்தாள் (Flower)",
+          "பால் தந்தாள் (Milk)",
+          "புத்தகம் தந்தாள் (Book)"
+        ],
         "correctAnswer": "கனி தந்தாள் (Fruit)",
         "explanation": "கதையில்: ‘அம்மா கனி தந்தாள்.’"
       },
       {
-        "id": "s2-as3-q8",
+        "id": "s2-as3-s4-q4",
+        "sectionId": "sec-4",
+        "sectionTitle": "பிரிவு 4: சிறுகதைகள் & வினாக்கள்",
         "type": "comprehension",
-        "category": "சிறுகதை 3: கனி (Short Story 3)",
+        "category": "பிரிவு 4: சிறுகதை 3 - கனி",
         "storyTitle": "சிறுகதை 3: கனி",
-        "storyPassage": "அம்மா கனி தந்தாள். வாணி கனி உண்டாள். அவள் அண்ணன் வந்தான். வாணி அண்ணனிடம் கனி அளித்தாள். அவன் நன்றி என்றான்.",
+        "storyPassage": "அம்மா கனி தந்தாள். வாணி கனி உண்டாள். அவள் அண்ணன் வந்தான். வாணி அண்ணனிடம் கனி அளித்தாள். அவன் “நன்றி” என்றான்.",
         "questionTa": "வாணியின் அண்ணன் என்ன கூறினான்?",
         "meaningEn": "What did Vani's brother say?",
         "translit": "Vaaniyin annan enna koorinaan?",
-        "options": ["நன்றி என்றான் (Thank you)", "வணக்கம் என்றான் (Greetings)", "போதும் என்றான் (Enough)", "வேண்டாம் என்றான் (No)"],
-        "correctAnswer": "நன்றி என்றான் (Thank you)",
-        "explanation": "கதையில்: ‘அவன் நன்றி என்றான்.’"
+        "options": [
+          "“நன்றி” என்றான் (Thank you)",
+          "வணக்கம் என்றான் (Greetings)",
+          "போதும் என்றான் (Enough)",
+          "வேண்டாம் என்றான் (No)"
+        ],
+        "correctAnswer": "“நன்றி” என்றான் (Thank you)",
+        "explanation": "கதையில்: ‘அவன் “நன்றி” என்றான்.’"
+      },
+      {
+        "id": "s2-as3-s5-q1",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 1",
+        "questionTa": "இடப்பக்கம் = இடம் + பக்கம்",
+        "meaningEn": "இடப்பக்கம் (Left side) → பிரித்து எழுதுக: இடம் + பக்கம்",
+        "translit": "இடப்பக்கம் = இடம் + பக்கம்",
+        "options": [
+          "இட + பக்கம்",
+          "இடப் + பக்கம்",
+          "இடம் + அக்கம்",
+          "இடம் + பக்கம்"
+        ],
+        "correctAnswer": "இடம் + பக்கம்",
+        "explanation": "இடப்பக்கம் என்பதை 'இடம் + பக்கம்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q2",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 2",
+        "questionTa": "வலப்பக்கம் = வலம் + பக்கம்",
+        "meaningEn": "வலப்பக்கம் (Right side) → பிரித்து எழுதுக: வலம் + பக்கம்",
+        "translit": "வலப்பக்கம் = வலம் + பக்கம்",
+        "options": [
+          "வல + பக்கம்",
+          "வலப் + பக்கம்",
+          "வலம் + அக்கம்",
+          "வலம் + பக்கம்"
+        ],
+        "correctAnswer": "வலம் + பக்கம்",
+        "explanation": "வலப்பக்கம் என்பதை 'வலம் + பக்கம்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q3",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 3",
+        "questionTa": "பக்கபலம் = பக்கம் + பலம்",
+        "meaningEn": "பக்கபலம் (Support / Strength) → பிரித்து எழுதுக: பக்கம் + பலம்",
+        "translit": "பக்கபலம் = பக்கம் + பலம்",
+        "options": [
+          "பக்க + பலம்",
+          "பக்கப் + பலம்",
+          "பக்கம் + கலம்",
+          "பக்கம் + பலம்"
+        ],
+        "correctAnswer": "பக்கம் + பலம்",
+        "explanation": "பக்கபலம் என்பதை 'பக்கம் + பலம்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q4",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 4",
+        "questionTa": "தங்கப்பல் = தங்கம் + பல்",
+        "meaningEn": "தங்கப்பல் (Gold tooth) → பிரித்து எழுதுக: தங்கம் + பல்",
+        "translit": "தங்கப்பல் = தங்கம் + பல்",
+        "options": [
+          "தங்க + பல்",
+          "தங்கப் + பல்",
+          "தங்கம் + சொல்",
+          "தங்கம் + பல்"
+        ],
+        "correctAnswer": "தங்கம் + பல்",
+        "explanation": "தங்கப்பல் என்பதை 'தங்கம் + பல்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q5",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 5",
+        "questionTa": "தங்கவளையல் = தங்கம் + வளையல்",
+        "meaningEn": "தங்கவளையல் (Gold bangle) → பிரித்து எழுதுக: தங்கம் + வளையல்",
+        "translit": "தங்கவளையல் = தங்கம் + வளையல்",
+        "options": [
+          "தங்க + வளையல்",
+          "தங்கப் + வளையல்",
+          "தங்கம் + தையல்",
+          "தங்கம் + வளையல்"
+        ],
+        "correctAnswer": "தங்கம் + வளையல்",
+        "explanation": "தங்கவளையல் என்பதை 'தங்கம் + வளையல்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q6",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 6",
+        "questionTa": "மரப்பந்தல் = மரம் + பந்தல்",
+        "meaningEn": "மரப்பந்தல் (Wooden shed / canopy) → பிரித்து எழுதுக: மரம் + பந்தல்",
+        "translit": "மரப்பந்தல் = மரம் + பந்தல்",
+        "options": [
+          "மர + பந்தல்",
+          "மரப் + பந்தல்",
+          "மரம் + கந்தல்",
+          "மரம் + பந்தல்"
+        ],
+        "correctAnswer": "மரம் + பந்தல்",
+        "explanation": "மரப்பந்தல் என்பதை 'மரம் + பந்தல்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q7",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 7",
+        "questionTa": "மணப்பந்தல் = மணம் + பந்தல்",
+        "meaningEn": "மணப்பந்தல் (Wedding canopy) → பிரித்து எழுதுக: மணம் + பந்தல்",
+        "translit": "மணப்பந்தல் = மணம் + பந்தல்",
+        "options": [
+          "மண + பந்தல்",
+          "மணப் + பந்தல்",
+          "மணம் + தளம்",
+          "மணம் + பந்தல்"
+        ],
+        "correctAnswer": "மணம் + பந்தல்",
+        "explanation": "மணப்பந்தல் என்பதை 'மணம் + பந்தல்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q8",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 8",
+        "questionTa": "மணமகன் = மணம் + மகன்",
+        "meaningEn": "மணமகன் (Bridegroom) → பிரித்து எழுதுக: மணம் + மகன்",
+        "translit": "மணமகன் = மணம் + மகன்",
+        "options": [
+          "மண + மகன்",
+          "மணப் + மகன்",
+          "மணம் + நகன்",
+          "மணம் + மகன்"
+        ],
+        "correctAnswer": "மணம் + மகன்",
+        "explanation": "மணமகன் என்பதை 'மணம் + மகன்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q9",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 9",
+        "questionTa": "மணமகள் = மணம் + மகள்",
+        "meaningEn": "மணமகள் (Bride) → பிரித்து எழுதுக: மணம் + மகள்",
+        "translit": "மணமகள் = மணம் + மகள்",
+        "options": [
+          "மண + மகள்",
+          "மணப் + மகள்",
+          "மணம் + பகல்",
+          "மணம் + மகள்"
+        ],
+        "correctAnswer": "மணம் + மகள்",
+        "explanation": "மணமகள் என்பதை 'மணம் + மகள்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s5-q10",
+        "sectionId": "sec-5",
+        "sectionTitle": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க",
+        "type": "reading",
+        "category": "பிரிவு 5: புணர்ச்சிச் சொல் 10",
+        "questionTa": "மக்கள் நலம் = மக்கள் + நலம்",
+        "meaningEn": "மக்கள் நலம் (Public welfare) → பிரித்து எழுதுக: மக்கள் + நலம்",
+        "translit": "மக்கள் நலம் = மக்கள் + நலம்",
+        "options": [
+          "மக்க + நலம்",
+          "மக்கப் + நலம்",
+          "மக்கள் + நலம்",
+          "மக்கள் + பலம்"
+        ],
+        "correctAnswer": "மக்கள் + நலம்",
+        "explanation": "மக்கள் நலம் என்பதை 'மக்கள் + நலம்' எனப் பிரிக்க வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s6-q1",
+        "sectionId": "sec-6",
+        "sectionTitle": "பிரிவு 6: ர, ற மற்றும் ல, ள, ழ இலக்கண வேறுபாடுகள்",
+        "type": "reading",
+        "category": "பிரிவு 6: 'ர' (ரகரம் - இடையினம்)",
+        "questionTa": "'ர' (ரகரம்): இடையின மெய்யெழுத்து. இது சொல்லின் முதலெழுத்தாக வராது, ஆனால் சொல்லின் ஈற்றெழுத்தாக வரும் (எ.கா: பார், நீர்).",
+        "meaningEn": "'ra' is an Idaiyinam consonant. Never starts a word, but can end words (e.g. பார், நீர்).",
+        "translit": "'ra' (ragaram): Idaiyinam meiyyezhuthu. Sol muthalil varaathu, eetril varum (Paar, Neer).",
+        "options": [
+          "இடையின மெய்யெழுத்து (சொல் ஈற்றில் வரும்)",
+          "வல்லின மெய்யெழுத்து (சொல் முதலிலும் வரும்)",
+          "மெல்லின மெய்யெழுத்து",
+          "உயிர் எழுத்து"
+        ],
+        "correctAnswer": "இடையின மெய்யெழுத்து (சொல் ஈற்றில் வரும்)",
+        "explanation": "'ர' இடையின மெய்யெழுத்து ஆகும். எ.கா: பார், நீர்."
+      },
+      {
+        "id": "s2-as3-s6-q2",
+        "sectionId": "sec-6",
+        "sectionTitle": "பிரிவு 6: ர, ற மற்றும் ல, ள, ழ இலக்கண வேறுபாடுகள்",
+        "type": "reading",
+        "category": "பிரிவு 6: 'ற' (றகரம் - வல்லினம்)",
+        "questionTa": "'ற' (றகரம்): வல்லின மெய்யெழுத்து. இது சொல்லின் முதலெழுத்தாகவும் வராது, ஈற்றெழுத்தாகவும் வராது. னகரமெய்க்குப் பின் வரும் (எ.கா: மன்றம்).",
+        "meaningEn": "'Rra' is a Vallinam consonant. Never starts or ends words; follows 'n' (e.g. மன்றம்).",
+        "translit": "'Rra' (rragaram): Vallinam meiyyezhuthu. Sol muthalilum eetrilum varaathu (Manram).",
+        "options": [
+          "வல்லின மெய்யெழுத்து (னகரமெய்க்குப் பின் வரும்)",
+          "இடையின மெய்யெழுத்து",
+          "மெல்லின மெய்யெழுத்து",
+          "முதலெழுத்தாக வரும்"
+        ],
+        "correctAnswer": "வல்லின மெய்யெழுத்து (னகரமெய்க்குப் பின் வரும்)",
+        "explanation": "'ற' வல்லின மெய்யெழுத்து. சொல்லின் முதலிலும் ஈற்றிலும் வராது. எ.கா: மன்றம், தென்றல்."
+      },
+      {
+        "id": "s2-as3-s6-q3",
+        "sectionId": "sec-6",
+        "sectionTitle": "பிரிவு 6: ர, ற மற்றும் ல, ள, ழ இலக்கண வேறுபாடுகள்",
+        "type": "reading",
+        "category": "பிரிவு 6: 'ல' (மேல்நோக்கு லகரம்)",
+        "questionTa": "'ல' (மேல்நோக்கு லகரம் / ஒற்றை லகரம்): நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது (எ.கா: மல்லி, வேலை).",
+        "meaningEn": "'la' is produced when the tongue tip touches the base of the upper front teeth (e.g. மல்லி, வேலை).",
+        "translit": "'la' (Melnokku lagaram): Naavin nuni melvaai pallin adiyai thoduvathaal pirakkirathu (Malli, Velai).",
+        "options": [
+          "நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது",
+          "நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது",
+          "நாக்கு மேல்நோக்கி வளைந்து காற்றில் பிறக்கிறது",
+          "இதழ்கள் குவிவதால் பிறக்கிறது"
+        ],
+        "correctAnswer": "நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது",
+        "explanation": "'ல' உச்சரிக்கும் போது நாக்கு மேல்வரிசைப் பல்லின் அடியைத் தொடும்."
+      },
+      {
+        "id": "s2-as3-s6-q4",
+        "sectionId": "sec-6",
+        "sectionTitle": "பிரிவு 6: ர, ற மற்றும் ல, ள, ழ இலக்கண வேறுபாடுகள்",
+        "type": "reading",
+        "category": "பிரிவு 6: 'ள' (கீழ்நோக்கு ளகரம் / பொது ளகரம்)",
+        "questionTa": "'ள' (கீழ்நோக்கு ளகரம் / பொது ளகரம்): நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் (வருடுவதால்) பிறக்கிறது (எ.கா: குளம், வேளை).",
+        "meaningEn": "'lla' is produced when the tongue tip rubs against the middle palate (e.g. குளம், வேளை).",
+        "translit": "'lla' (Keezhnokku lagaram): Naavin nuni melvaayin naduppagudhiyai varuduvathaal pirakkirathu.",
+        "options": [
+          "நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது",
+          "பல்லின் அடியைத் தொடுவதால் பிறக்கிறது",
+          "நாக்கு மேல்நோக்கி வளைந்து காற்றில் பிறக்கிறது",
+          "தொண்டையிலிருந்து பிறக்கிறது"
+        ],
+        "correctAnswer": "நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது",
+        "explanation": "'ள' உச்சரிக்கும் போது நாவின் நுனி மேல்வாயின் நடுப்பகுதியை வருட வேண்டும்."
+      },
+      {
+        "id": "s2-as3-s6-q5",
+        "sectionId": "sec-6",
+        "sectionTitle": "பிரிவு 6: ர, ற மற்றும் ல, ள, ழ இலக்கண வேறுபாடுகள்",
+        "type": "reading",
+        "category": "பிரிவு 6: 'ழ' (சிறப்பு ழகரம்)",
+        "questionTa": "'ழ' (சிறப்பு ழகரம்): நாவின் நுனி மேல்நோக்கி வளைந்து, மேல்வாய் அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது. இது தமிழின் சிறப்பு எழுத்து! (எ.கா: தமிழ், பழம்)",
+        "meaningEn": "'zha' is the unique Tamil retroflex consonant, produced by curling the tongue tip upwards without touching the palate (e.g. தமிழ், பழம்).",
+        "translit": "'zha' (Sirappu zhagaram): Naavin nuni melnokki valainthu thodamal kaatril pirakkirathu (Thamizh, Pazham).",
+        "options": [
+          "நாக்கு அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது",
+          "பல்லின் அடியைத் தொடுகிறது",
+          "மேல்வாயின் நடுப்பகுதியைத் தொடுகிறது",
+          "இதழ்களை மூடிப் பிறக்கிறது"
+        ],
+        "correctAnswer": "நாக்கு அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது",
+        "explanation": "'ழ' தமிழ்மொழிக்கே உரிய தனிச்சிறப்பு எழுத்து ஆகும்!"
+      },
+      {
+        "id": "s2-as3-s7-q1",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: நாநெகிழ் பயிற்சி (Tongue Twister)",
+        "questionTa": "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
+        "meaningEn": "He slipped on a banana peel, fell down, got up, and cried. (Tamil Tongue Twister)",
+        "translit": "Vaazhaippazhath thol vazhukki veezhnthaan, ezhunthaan, azhuthaan.",
+        "options": [
+          "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
+          "வாழைப்பழத் தோல் தழுவி நின்றான், சிரித்தான்.",
+          "ஆலமரத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான்.",
+          "மாம்பழத் தோல் வழுக்கி விழுந்தான், எழுந்தான்."
+        ],
+        "correctAnswer": "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
+        "explanation": "ழ கர உச்சரிப்புக்கான புகழ்மிக்க நாநெகிழ் பயிற்சி வாக்கியம்!"
+      },
+      {
+        "id": "s2-as3-s7-q2",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி அரம் — அறம்",
+        "questionTa": "அரம் (Filing tool) — அறம் (Virtue / Righteousness)",
+        "meaningEn": "Aram (Tool) vs Aram (Virtue)",
+        "translit": "அரம் — அறம்",
+        "options": [
+          "அரம் = அரம் / கருவி, அறம் = நற்செயல்",
+          "அரம் = ஆசை, அறம் = பாசம்",
+          "அரம் = பயம், அறம் = கோபம்",
+          "அரம் = மரம், அறம் = பழம்"
+        ],
+        "correctAnswer": "அரம் = அரம் / கருவி, அறம் = நற்செயல்",
+        "explanation": "அரம் — அறம் வேறுபாடு: அரம் = அரம் / கருவி, அறம் = நற்செயல்"
+      },
+      {
+        "id": "s2-as3-s7-q3",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி மரம் — மறம்",
+        "questionTa": "மரம் (Tree) — மறம் (Valor / Bravery)",
+        "meaningEn": "Maram (Tree) vs Maram (Valor)",
+        "translit": "மரம் — மறம்",
+        "options": [
+          "மரம் = கடல், மறம் = ஆறு",
+          "மரம் = கல், மறம் = மண்",
+          "மரம் = காற்று, மறம் = நிலம்",
+          "மரம் = தாவர மரம், மறம் = வீரம்"
+        ],
+        "correctAnswer": "மரம் = தாவர மரம், மறம் = வீரம்",
+        "explanation": "மரம் — மறம் வேறுபாடு: மரம் = தாவர மரம், மறம் = வீரம்"
+      },
+      {
+        "id": "s2-as3-s7-q4",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி அர — அற",
+        "questionTa": "அர (Grind / Sharpen) — அற (Cut / Severely)",
+        "meaningEn": "Ara (Grind) vs Arra (Cut)",
+        "translit": "அர — அற",
+        "options": [
+          "அர = அரைத்தல், அற = அறுத்தல் / முற்றிலும்",
+          "அர = ஓடுதல், அற = நடத்தல்",
+          "அர = தூங்குதல், அற = விழித்தல்",
+          "அர = பாடுதல், அற = ஆடுதல்"
+        ],
+        "correctAnswer": "அர = அரைத்தல், அற = அறுத்தல் / முற்றிலும்",
+        "explanation": "அர — அற வேறுபாடு: அர = அரைத்தல், அற = அறுத்தல் / முற்றிலும்"
+      },
+      {
+        "id": "s2-as3-s7-q5",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி இர — இற",
+        "questionTa": "இர (Beg / Seek aid) — இற (Die / Pass away)",
+        "meaningEn": "Ira (Beg) vs Irra (Die)",
+        "translit": "இர — இற",
+        "options": [
+          "இர = இரந்து கேட்பது, இற = இறந்து போதல்",
+          "இர = ஓடுதல், இற = நிற்பது",
+          "இர = சிரித்தல், இற = அழுதல்",
+          "இர = பிறத்தல், இற = வாழ்தல்"
+        ],
+        "correctAnswer": "இர = இரந்து கேட்பது, இற = இறந்து போதல்",
+        "explanation": "இர — இற வேறுபாடு: இர = இரந்து கேட்பது, இற = இறந்து போதல்"
+      },
+      {
+        "id": "s2-as3-s7-q6",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி ஈரம் — ஈறம்",
+        "questionTa": "ஈரம் (Wet / Moisture) — ஈறம் (Gums of teeth)",
+        "meaningEn": "Eeram (Wet) vs Eeram (Gums)",
+        "translit": "ஈரம் — ஈறம்",
+        "options": [
+          "ஈரம் = இனிப்பு, ஈறம் = கசப்பு",
+          "ஈரம் = குளிர்ச்சி / நீர்மை, ஈறம் = பல் ஈறு",
+          "ஈரம் = தீ, ஈறம் = காற்று",
+          "ஈரம் = வெளிச்சம், ஈறம் = இருள்"
+        ],
+        "correctAnswer": "ஈரம் = குளிர்ச்சி / நீர்மை, ஈறம் = பல் ஈறு",
+        "explanation": "ஈரம் — ஈறம் வேறுபாடு: ஈரம் = குளிர்ச்சி / நீர்மை, ஈறம் = பல் ஈறு"
+      },
+      {
+        "id": "s2-as3-s7-q7",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி கர — கற",
+        "questionTa": "கர (To hide) — கற (Milk from cow)",
+        "meaningEn": "Kara (To hide) vs Karra (Milk)",
+        "translit": "கர — கற",
+        "options": [
+          "கர = ஏறுதல், கற = இறங்குதல்",
+          "கர = கொடுத்தல், கற = வாங்குதல்",
+          "கர = திறத்தல், கற = மூடுதல்",
+          "கர = மறைத்தல், கற = பால் கறத்தல்"
+        ],
+        "correctAnswer": "கர = மறைத்தல், கற = பால் கறத்தல்",
+        "explanation": "கர — கற வேறுபாடு: கர = மறைத்தல், கற = பால் கறத்தல்"
+      },
+      {
+        "id": "s2-as3-s7-q8",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி பலம் — பழம்",
+        "questionTa": "பலம் (Power / Strength) — பழம் (Fruit)",
+        "meaningEn": "Balam (Power) vs Pazham (Fruit)",
+        "translit": "பலம் — பழம்",
+        "options": [
+          "பலம் = காய், பழம் = இலை",
+          "பலம் = காற்று, பழம் = நீர்",
+          "பலம் = குளம், பழம் = ஏரி",
+          "பலம் = வலிமை, பழம் = கனி"
+        ],
+        "correctAnswer": "பலம் = வலிமை, பழம் = கனி",
+        "explanation": "பலம் — பழம் வேறுபாடு: பலம் = வலிமை, பழம் = கனி"
+      },
+      {
+        "id": "s2-as3-s7-q9",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி அலம் — அளம்",
+        "questionTa": "அலம் (Plough) — அளம் (Salt pan)",
+        "meaningEn": "Alam (Plough) vs Allam (Salt pan)",
+        "translit": "அலம் — அளம்",
+        "options": [
+          "அலம் = கலப்பை, அளம் = உப்பளம்",
+          "அலம் = சக்கரம், அளம் = கயிறு",
+          "அலம் = மலர், அளம் = பழம்",
+          "அலம் = வீடு, அளம் = காடு"
+        ],
+        "correctAnswer": "அலம் = கலப்பை, அளம் = உப்பளம்",
+        "explanation": "அலம் — அளம் வேறுபாடு: அலம் = கலப்பை, அளம் = உப்பளம்"
+      },
+      {
+        "id": "s2-as3-s7-q10",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி கலம் — களம்",
+        "questionTa": "கலம் (Vessel / Ship) — களம் (Field / Arena)",
+        "meaningEn": "Kalam (Ship/Vessel) vs Kallam (Field)",
+        "translit": "கலம் — களம்",
+        "options": [
+          "கலம் = இரவு, களம் = பகல்",
+          "கலம் = கல், களம் = மணல்",
+          "கலம் = காடு, களம் = மலை",
+          "கலம் = பாத்திரம் / கப்பல், களம் = போர்க்களம் / மைதானம்"
+        ],
+        "correctAnswer": "கலம் = பாத்திரம் / கப்பல், களம் = போர்க்களம் / மைதானம்",
+        "explanation": "கலம் — களம் வேறுபாடு: கலம் = பாத்திரம் / கப்பல், களம் = போர்க்களம் / மைதானம்"
+      },
+      {
+        "id": "s2-as3-s7-q11",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி வலம் — வளம்",
+        "questionTa": "வலம் (Right side) — வளம் (Prosperity)",
+        "meaningEn": "Valam (Right) vs Vallam (Prosperity)",
+        "translit": "வலம் — வளம்",
+        "options": [
+          "வலம் = இடப்பக்கம், வளம் = வறுமை",
+          "வலம் = உள்ளே, வளம் = வெளியே",
+          "வலம் = மேல், வளம் = கீழ்",
+          "வலம் = வலப்பக்கம், வளம் = செல்வம் / செழிப்பு"
+        ],
+        "correctAnswer": "வலம் = வலப்பக்கம், வளம் = செல்வம் / செழிப்பு",
+        "explanation": "வலம் — வளம் வேறுபாடு: வலம் = வலப்பக்கம், வளம் = செல்வம் / செழிப்பு"
+      },
+      {
+        "id": "s2-as3-s7-q12",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி தலம் — தளம்",
+        "questionTa": "தலம் (Place / Holy spot) — தளம் (Floor / Platform)",
+        "meaningEn": "Thalam (Place) vs Thallam (Floor)",
+        "translit": "தலம் — தளம்",
+        "options": [
+          "தலம் = நிலவு, தளம் = சூரியன்",
+          "தலம் = புண்ணிய இடம், தளம் = மாடித்தளம் / மேடை",
+          "தலம் = மேகம், தளம் = மழை",
+          "தலம் = விதை, தளம் = செடி"
+        ],
+        "correctAnswer": "தலம் = புண்ணிய இடம், தளம் = மாடித்தளம் / மேடை",
+        "explanation": "தலம் — தளம் வேறுபாடு: தலம் = புண்ணிய இடம், தளம் = மாடித்தளம் / மேடை"
+      },
+      {
+        "id": "s2-as3-s7-q13",
+        "sectionId": "sec-7",
+        "sectionTitle": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "type": "reading",
+        "category": "பிரிவு 7: மயங்கொலி கழம் — தழம்",
+        "questionTa": "கழம் (Ancient weight) — தழம் (Scar / Mark)",
+        "meaningEn": "Kazham (Ancient weight) vs Thazham (Scar)",
+        "translit": "கழம் — தழம்",
+        "options": [
+          "கழம் = ஆடை, தழம் = நகை",
+          "கழம் = கண், தழம் = காது",
+          "கழம் = பண்டைய எடை அளவு, தழம் = தழும்பு / அடையாளம்",
+          "கழம் = மரம், தழம் = செடி"
+        ],
+        "correctAnswer": "கழம் = பண்டைய எடை அளவு, தழம் = தழும்பு / அடையாளம்",
+        "explanation": "கழம் — தழம் வேறுபாடு: கழம் = பண்டைய எடை அளவு, தழம் = தழும்பு / அடையாளம்"
+      }
+    ],
+    "sections": [
+      {
+        "id": "sec-1",
+        "title": "பிரிவு 1: உயிர்மெய் எழுத்துகள் (ஆ, இ, ஈ வரிசை)",
+        "shortTitle": "பிரிவு 1: உயிர்மெய்",
+        "icon": "🔤"
+      },
+      {
+        "id": "sec-2",
+        "title": "பிரிவு 2: சொற்கள் வாசித்துப் பழகுக (20 சொற்கள்)",
+        "shortTitle": "பிரிவு 2: சொற்கள்",
+        "icon": "📖"
+      },
+      {
+        "id": "sec-3",
+        "title": "பிரிவு 3: வாக்கிய வாசித்துப் பழகுக (12 வாக்கியங்கள்)",
+        "shortTitle": "பிரிவு 3: வாக்கியங்கள்",
+        "icon": "💬"
+      },
+      {
+        "id": "sec-4",
+        "title": "பிரிவு 4: சிறுகதைகள் & வினாக்கள் (ராணி, கமல், கனி)",
+        "shortTitle": "பிரிவு 4: கதைகள்",
+        "icon": "📚"
+      },
+      {
+        "id": "sec-5",
+        "title": "பிரிவு 5: புணர்ச்சிச் சொல் பிரித்துப் படிக்க (10 சொற்கள்)",
+        "shortTitle": "பிரிவு 5: புணர்ச்சி",
+        "icon": "🧩"
+      },
+      {
+        "id": "sec-6",
+        "title": "பிரிவு 6: ர, ற மற்றும் ல, ள, ழ இலக்கண வேறுபாடுகள்",
+        "shortTitle": "பிரிவு 6: இலக்கணம்",
+        "icon": "⚖️"
+      },
+      {
+        "id": "sec-7",
+        "title": "பிரிவு 7: நாநெகிழ் பயிற்சி & மயங்கொலிச் சொற்கள்",
+        "shortTitle": "பிரிவு 7: நாநெகிழ்",
+        "icon": "🗣️"
       }
     ]
   },
@@ -533,7 +1825,12 @@
         "questionTa": "அருண் மரம் அருகில் நின்றான்.",
         "meaningEn": "Arun stood near the tree.",
         "translit": "Arun maram arukil nindraan.",
-        "options": ["மரம் (Tree)", "மலை (Mountain)", "வீடு (House)", "பள்ளி (School)"],
+        "options": [
+          "மரம் (Tree)",
+          "மலை (Mountain)",
+          "வீடு (House)",
+          "பள்ளி (School)"
+        ],
         "correctAnswer": "மரம் (Tree)",
         "explanation": "சரியான வாக்கியம்: அருண் மரம் அருகில் நின்றான்."
       },
@@ -544,7 +1841,12 @@
         "questionTa": "வானத்தில் பறவை பறந்தது.",
         "meaningEn": "The bird flew in the sky.",
         "translit": "Vaanathil paravai paranthathu.",
-        "options": ["பறவை (Bird)", "மீன் (Fish)", "மான் (Deer)", "யானை (Elephant)"],
+        "options": [
+          "பறவை (Bird)",
+          "மீன் (Fish)",
+          "மான் (Deer)",
+          "யானை (Elephant)"
+        ],
         "correctAnswer": "பறவை (Bird)",
         "explanation": "சரியான வாக்கியம்: வானத்தில் பறவை பறந்தது."
       },
@@ -555,7 +1857,12 @@
         "questionTa": "தோட்டத்தில் அழகான மலர் மலர்ந்தது.",
         "meaningEn": "A beautiful flower bloomed in the garden.",
         "translit": "Thottathil azhagaana malar malarnthathu.",
-        "options": ["மலர் (Flower)", "கல் (Stone)", "மண் (Soil)", "முள் (Thorn)"],
+        "options": [
+          "மலர் (Flower)",
+          "கல் (Stone)",
+          "மண் (Soil)",
+          "முள் (Thorn)"
+        ],
         "correctAnswer": "மலர் (Flower)",
         "explanation": "சரியான வாக்கியம்: தோட்டத்தில் அழகான மலர் மலர்ந்தது."
       },
@@ -566,7 +1873,12 @@
         "questionTa": "மழைக்குப் பிறகு மண் ஈரமாக இருந்தது.",
         "meaningEn": "After rain, the soil was wet.",
         "translit": "Mazhaikku piragu man eeramaaga irunthathu.",
-        "options": ["மண் (Soil)", "நிலா (Moon)", "சூரியன் (Sun)", "வானம் (Sky)"],
+        "options": [
+          "மண் (Soil)",
+          "நிலா (Moon)",
+          "சூரியன் (Sun)",
+          "வானம் (Sky)"
+        ],
         "correctAnswer": "மண் (Soil)",
         "explanation": "சரியான வாக்கியம்: மழைக்குப் பிறகு மண் ஈரமாக இருந்தது."
       },
@@ -579,7 +1891,12 @@
         "questionTa": "கவி எங்கு சென்றாள்?",
         "meaningEn": "Where did Kavi go?",
         "translit": "Kavi engu sendraal?",
-        "options": ["தோட்டத்திற்குச் சென்றாள் (Garden)", "பள்ளிக்குச் சென்றாள் (School)", "கடைக்குச் சென்றாள் (Shop)", "வீட்டிற்குச் சென்றாள் (Home)"],
+        "options": [
+          "தோட்டத்திற்குச் சென்றாள் (Garden)",
+          "பள்ளிக்குச் சென்றாள் (School)",
+          "கடைக்குச் சென்றாள் (Shop)",
+          "வீட்டிற்குச் சென்றாள் (Home)"
+        ],
         "correctAnswer": "தோட்டத்திற்குச் சென்றாள் (Garden)",
         "explanation": "கதையில்: ‘கவி தோட்டத்திற்குச் சென்றாள்.’"
       },
@@ -628,7 +1945,10 @@
         "questionTa": "1. ரவி ஒரு விதையை விதைத்தான்.",
         "meaningEn": "Ravi sowed a seed.",
         "translit": "Ravi oru vithaiyai vithaithaan.",
-        "options": ["சரி (True)", "தவறு (False)"],
+        "options": [
+          "சரி (True)",
+          "தவறு (False)"
+        ],
         "correctAnswer": "சரி (True)",
         "explanation": "சரி: ரவி ஒரு சிறிய விதையை மண்ணில் விதைத்தான்."
       },
@@ -641,7 +1961,10 @@
         "questionTa": "2. ரவி விதைக்குத் தண்ணீர் ஊற்றவில்லை.",
         "meaningEn": "Ravi did not water the seed.",
         "translit": "Ravi vithaikku thanneer ootravillai.",
-        "options": ["தவறு (False)", "சரி (True)"],
+        "options": [
+          "தவறு (False)",
+          "சரி (True)"
+        ],
         "correctAnswer": "தவறு (False)",
         "explanation": "தவறு: ரவி தினமும் அதற்குத் தண்ணீர் ஊற்றினான்."
       },
@@ -654,7 +1977,10 @@
         "questionTa": "3. விதையிலிருந்து பச்சைத் தளிர் வந்தது.",
         "meaningEn": "Green sprout emerged from the seed.",
         "translit": "Vithaiyilirunthu pachai thalir vanthathu.",
-        "options": ["சரி (True)", "தவறு (False)"],
+        "options": [
+          "சரி (True)",
+          "தவறு (False)"
+        ],
         "correctAnswer": "சரி (True)",
         "explanation": "சரி: சில நாட்களுக்குப் பிறகு பச்சைத் தளிர் வந்தது."
       }

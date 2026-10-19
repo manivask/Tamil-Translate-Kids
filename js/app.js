@@ -1613,20 +1613,68 @@ const App = {
     const ext = file.name.split('.').pop().toLowerCase();
     const extractedRows = [];
 
+    function processLinesWithSections(lines) {
+      const rows = [];
+      let currentSecId = null;
+      let currentSecTitle = null;
+      let secCounter = 0;
+
+      lines.forEach(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+
+        // Check if line is a section header:
+        // Examples: "1. ஆ, இ, ஈ வரிசை...", "பிரிவு 1: ...", "Section 1 - ...", "Part 1: ..."
+        const isSec = trimmed.match(/^(\d+)[\.\)\-:]\s*([^\d].*)$/) ||
+                      trimmed.match(/^(பிரிவு|Section|Part)\s*(\d+)[\.\:\-]?\s*(.*)$/i);
+        
+        if (isSec && (trimmed.startsWith("பிரிவு") || trimmed.toLowerCase().startsWith("section") || trimmed.toLowerCase().startsWith("part") || (isSec[2] && isSec[2].length < 70 && !trimmed.includes("|")))) {
+          secCounter++;
+          currentSecId = `sec-${secCounter}`;
+          currentSecTitle = trimmed;
+          return;
+        }
+
+        let tamil = "";
+        let english = "";
+        let translit = "";
+
+        if (trimmed.includes("|")) {
+          const parts = trimmed.split("|").map(p => p.trim());
+          tamil = parts[0] || "";
+          english = parts[1] || "";
+          translit = parts[2] || "";
+        } else if (trimmed.includes("\t")) {
+          const parts = trimmed.split("\t").map(p => p.trim());
+          tamil = parts[0] || "";
+          english = parts[1] || "";
+          translit = parts[2] || "";
+        } else if (trimmed.includes(" - ") && /[a-zA-Z]/.test(trimmed)) {
+          const parts = trimmed.split(" - ").map(p => p.trim());
+          tamil = parts[0] || "";
+          english = parts.slice(1).join(" - ") || "";
+        } else {
+          tamil = trimmed;
+        }
+
+        if (tamil) {
+          rows.push({
+            tamil,
+            english,
+            translit,
+            sectionId: currentSecId,
+            sectionTitle: currentSecTitle
+          });
+        }
+      });
+
+      return rows;
+    }
+
     if (ext === "txt") {
       const text = await file.text();
       const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-      lines.forEach(line => {
-        if (line.includes("|")) {
-          const parts = line.split("|").map(p => p.trim());
-          extractedRows.push({ tamil: parts[0] || "", english: parts[1] || "", translit: parts[2] || "" });
-        } else if (line.includes("\t")) {
-          const parts = line.split("\t").map(p => p.trim());
-          extractedRows.push({ tamil: parts[0] || "", english: parts[1] || "", translit: parts[2] || "" });
-        } else {
-          extractedRows.push({ tamil: line, english: "", translit: "" });
-        }
-      });
+      extractedRows.push(...processLinesWithSections(lines));
     } else if (ext === "csv" || ext === "xlsx" || ext === "xls") {
       const arrayBuffer = await file.arrayBuffer();
       if (window.XLSX) {
@@ -1656,19 +1704,7 @@ const App = {
         const result = await window.mammoth.extractRawText({ arrayBuffer });
         const text = result.value || "";
         const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-        lines.forEach(line => {
-          if (line.includes("|")) {
-            const parts = line.split("|").map(p => p.trim());
-            extractedRows.push({ tamil: parts[0] || "", english: parts[1] || "", translit: parts[2] || "" });
-          } else {
-            const sentences = line.split(/[.。]\s*/).map(s => s.trim()).filter(Boolean);
-            if (sentences.length > 1) {
-              sentences.forEach(s => extractedRows.push({ tamil: s, english: "", translit: "" }));
-            } else {
-              extractedRows.push({ tamil: line, english: "", translit: "" });
-            }
-          }
-        });
+        extractedRows.push(...processLinesWithSections(lines));
       } else {
         throw new Error("Word parser library not loaded");
       }
@@ -1685,19 +1721,7 @@ const App = {
           fullText += pageStrings.join(" ") + "\n";
         }
         const lines = fullText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-        lines.forEach(line => {
-          if (line.includes("|")) {
-            const parts = line.split("|").map(p => p.trim());
-            extractedRows.push({ tamil: parts[0] || "", english: parts[1] || "", translit: parts[2] || "" });
-          } else {
-            const sentences = line.split(/[.。]\s*/).map(s => s.trim()).filter(Boolean);
-            if (sentences.length > 1) {
-              sentences.forEach(s => extractedRows.push({ tamil: s, english: "", translit: "" }));
-            } else {
-              extractedRows.push({ tamil: line, english: "", translit: "" });
-            }
-          }
-        });
+        extractedRows.push(...processLinesWithSections(lines));
       } else {
         throw new Error("PDF parser library not loaded");
       }
@@ -1709,8 +1733,11 @@ const App = {
   renderPreviewRows(tbody, countEl, rows) {
     if (!tbody) return;
     tbody.innerHTML = rows.map((r, i) => `
-      <tr data-index="${i}">
-        <td style="text-align: center; font-weight: 700; color: #64748b;">${i + 1}</td>
+      <tr data-index="${i}" data-sec-id="${r.sectionId || ''}" data-sec-title="${(r.sectionTitle || '').replace(/"/g, '&quot;')}">
+        <td style="text-align: center; font-weight: 700; color: #64748b;">
+          ${i + 1}
+          ${r.sectionTitle ? `<div style="font-size: 0.68rem; color: #2563EB; font-weight: 800; margin-top: 2px;">📌 ${r.sectionTitle.length > 18 ? r.sectionTitle.slice(0, 16) + '…' : r.sectionTitle}</div>` : ''}
+        </td>
         <td><input type="text" class="preview-edit-input row-tamil" value="${(r.tamil || '').replace(/"/g, '&quot;')}" placeholder="தமிழ் தொடர் (Tamil)"></td>
         <td><input type="text" class="preview-edit-input row-english" value="${(r.english || '').replace(/"/g, '&quot;')}" placeholder="ஆங்கிலப் பொருள் (English)"></td>
         <td><input type="text" class="preview-edit-input row-translit" value="${(r.translit || '').replace(/"/g, '&quot;')}" placeholder="ஒலிபெயர்ப்பு (Transliteration)"></td>
@@ -1758,7 +1785,10 @@ const App = {
     const rows = [...tbody.querySelectorAll("tr")].map(tr => ({
       tamil: tr.querySelector(".row-tamil")?.value.trim() || "",
       english: tr.querySelector(".row-english")?.value.trim() || "",
-      translit: tr.querySelector(".row-translit")?.value.trim() || ""
+      translit: tr.querySelector(".row-translit")?.value.trim() || "",
+      sectionId: tr.getAttribute("data-sec-id") || null,
+      sectionTitle: tr.getAttribute("data-sec-title") || null,
+      category: tr.getAttribute("data-sec-title") || null
     })).filter(r => r.tamil.length > 0);
 
     if (!rows.length) {
@@ -1770,6 +1800,21 @@ const App = {
     const levelVal = levelSelect ? levelSelect.value : "simple";
     const titleVal = (titleInput && titleInput.value.trim()) || "புதிய வாசிப்பு பாடம்";
 
+    // Auto-detect sections if present
+    const secMap = new Map();
+    rows.forEach(r => {
+      if (r.sectionId && r.sectionTitle && !secMap.has(r.sectionId)) {
+        secMap.set(r.sectionId, {
+          id: r.sectionId,
+          title: r.sectionTitle,
+          shortTitle: r.sectionTitle.length > 20 ? r.sectionTitle.slice(0, 18) + '…' : r.sectionTitle,
+          icon: "📌"
+        });
+      }
+    });
+
+    const detectedSections = Array.from(secMap.values());
+
     const newMaterial = {
       id: `TBTA-MAT-${Date.now()}`,
       title: titleVal,
@@ -1779,6 +1824,7 @@ const App = {
       level: levelVal,
       uploadedAt: new Date().toISOString(),
       uploadedBy: role,
+      sections: detectedSections.length > 0 ? detectedSections : null,
       sentences: rows
     };
 

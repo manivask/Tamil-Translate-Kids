@@ -3324,6 +3324,77 @@ body {
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Multi-Section Navigation Bar */
+.rc-pdf-sections-container {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.rc-pdf-sections-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-tamil);
+  font-size: 0.82rem;
+}
+
+.rc-sections-label {
+  font-weight: 800;
+  color: #1E40AF;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rc-sections-sub {
+  font-size: 0.76rem;
+  color: #2563EB;
+  font-weight: 700;
+}
+
+.rc-pdf-sections-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.rc-section-pill {
+  white-space: nowrap;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid #BFDBFE;
+  background: #FFFFFF;
+  color: #1E3A8A;
+  font-family: var(--font-tamil);
+  font-size: 0.80rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rc-section-pill:hover {
+  background: #DBEAFE;
+  transform: translateY(-1px);
+}
+
+.rc-section-pill.active {
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+}
+
 /* Story Passage Context Box */
 .rc-story-context-box {
   background: #FFFBEB;
