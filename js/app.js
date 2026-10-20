@@ -206,6 +206,11 @@ const App = {
       adminToggleCamBtn: document.getElementById("admin-toggle-cam-btn"),
       adminLogoutBtn: document.getElementById("admin-logout-btn"),
       adminOpenRcBtn: document.getElementById("admin-open-rc-btn"),
+      developerLoginPanel: document.getElementById("developer-login-panel"),
+      developerLoginForm: document.getElementById("developer-login-form"),
+      devUsername: document.getElementById("dev-username"),
+      devGrade: document.getElementById("dev-grade"),
+      devContinueBtn: document.getElementById("dev-continue-btn"),
       adminSummary: document.getElementById("admin-summary"),
       adminProgressList: document.getElementById("admin-progress-list"),
       adminFilterSelect: document.getElementById("admin-filter-select"),
@@ -275,6 +280,15 @@ const App = {
     }
     if (this.elements.adminContinueBtn) {
       this.elements.adminContinueBtn.addEventListener("click", () => this.handleAdminAuth());
+    }
+    if (this.elements.developerLoginForm) {
+      this.elements.developerLoginForm.addEventListener("submit", event => {
+        event.preventDefault();
+        this.handleDeveloperAuth();
+      });
+    }
+    if (this.elements.devContinueBtn) {
+      this.elements.devContinueBtn.addEventListener("click", () => this.handleDeveloperAuth());
     }
     if (this.elements.adminToggleCamBtn) {
       this.elements.adminToggleCamBtn.addEventListener("click", () => {
@@ -682,10 +696,12 @@ const App = {
     const isStudent = role === "student";
     const isTeacher = role === "teacher";
     const isAdmin = role === "admin";
+    const isDev = role === "developer";
 
     if (this.elements.studentQrPanel) this.elements.studentQrPanel.hidden = !isStudent;
     if (this.elements.teacherLoginPanel) this.elements.teacherLoginPanel.hidden = !isTeacher;
     if (this.elements.adminLoginPanel) this.elements.adminLoginPanel.hidden = !isAdmin;
+    if (this.elements.developerLoginPanel) this.elements.developerLoginPanel.hidden = !isDev;
 
     if (this.elements.loginMessage) this.elements.loginMessage.textContent = "";
     if (this.elements.teacherLoginMessage) this.elements.teacherLoginMessage.textContent = "";
@@ -948,6 +964,40 @@ const App = {
         msg.textContent = "❌ தவறான பயனர்பெயர் அல்லது கடவுச்சொல் (Invalid admin credentials)";
         msg.className = "login-message";
       }
+    }
+  },
+
+  handleDeveloperAuth() {
+    const devName = (this.elements.devUsername ? this.elements.devUsername.value.trim() : "") || "Developer Tester";
+    const parts = devName.split(" ");
+    const firstName = parts[0] || "Developer";
+    const lastName = parts.slice(1).join(" ") || "Tester";
+    const grade = Number(this.elements.devGrade ? this.elements.devGrade.value : 3) || 3;
+
+    const devStudent = {
+      firstName,
+      lastName,
+      grade,
+      isDeveloper: true,
+      role: "developer"
+    };
+
+    this.currentStudent = devStudent;
+    this.currentGrade = grade;
+    this.stopQrScanner();
+    KidAudioFX.playSuccessFanfare();
+    this.triggerConfetti();
+
+    this.selectGrade(this.currentGrade);
+
+    if (this.elements.studentGreetingText) {
+      this.elements.studentGreetingText.textContent = `வணக்கம், ${firstName} ${lastName}! 🛠️ (Dev Mode)`;
+    }
+    if (this.elements.studentGradeBadge) {
+      this.elements.studentGradeBadge.textContent = `Nilai ${grade} · Tester`;
+    }
+    if (this.elements.studentStatusText) {
+      this.elements.studentStatusText.textContent = `சோதனை முறை (Testing Sandbox)`;
     }
   },
 

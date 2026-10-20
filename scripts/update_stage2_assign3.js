@@ -27,7 +27,7 @@ items.push({
   questionTa: "கா  ஙா  சா  ஞா  டா  ணா  தா  நா  பா  மா  யா  ரா  லா  வா  ழா  ளா  றா  னா",
   meaningEn: "Uyirmei Letters: 'Aa' vowel sound series (கா to னா)",
   translit: "Kaa, Ngaa, Chaa, Nyaa, Taa, Nnaa, Thaa, Naa, Paa, Maa, Yaa, Raa, Laa, Vaa, Zhaa, Llaa, Rraa, Nnaa",
-  options: ["கா ஙா சா ஞா தா நா பா மா", "கி ஙி சி ஞி தி நி பி மி", "கீ ஙீ சீ ஞீ தீ நீ பீ மீ", "க ங ச ஞ த ந ப ம"],
+  options: [],
   correctAnswer: "கா ஙா சா ஞா தா நா பா மா",
   explanation: "ஆ வரிசை: க் + ஆ = கா, த் + ஆ = தா, ப் + ஆ = பா."
 });
@@ -41,7 +41,7 @@ items.push({
   questionTa: "கி  ஙி  சி  ஞி  டி  ணி  தி  நி  பி  மி  யி  ரி  லி  வி  ழி  ளி  றி  னி",
   meaningEn: "Uyirmei Letters: 'I' vowel sound series (கி to னி)",
   translit: "Ki, Ngi, Chi, Nyi, Ti, Nni, Thi, Ni, Pi, Mi, Yi, Ri, Li, Vi, Zhi, Lli, Rri, Nni",
-  options: ["கி ஙி சி ஞி தி நி பி மி", "கீ ஙீ சீ ஞீ தீ நீ பீ மீ", "கா ஙா சா ஞா தா நா பா மா", "கு ஙு சு ஞு து நு பு மு"],
+  options: [],
   correctAnswer: "கி ஙி சி ஞி தி நி பி மி",
   explanation: "இ வரிசை: க் + இ = கி, த் + இ = தி, ப் + இ = பி."
 });
@@ -55,7 +55,7 @@ items.push({
   questionTa: "கீ  ஙீ  சீ  ஞீ  டீ  ணீ  தீ  நீ  பீ  மீ  யீ  ரீ  லீ  வீ  ழீ  ளீ  றீ  னீ",
   meaningEn: "Uyirmei Letters: 'Ee' vowel sound series (கீ to னீ)",
   translit: "Kee, Ngee, Chee, Nyee, Tee, Nnee, Thee, Nee, Pee, Mee, Yee, Ree, Lee, Vee, Zhee, Llee, Rree, Nnee",
-  options: ["கீ ஙீ சீ ஞீ தீ நீ பீ மீ", "கி ஙி சி ஞி தி நி பி மி", "கா ஙா சா ஞா தா நா பா மா", "கை ஙை சை ஞை தை நை பை மை"],
+  options: [],
   correctAnswer: "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
   explanation: "ஈ வரிசை: க் + ஈ = கீ, த் + ஈ = தீ, ப் + ஈ = பீ."
 });
@@ -149,7 +149,7 @@ items.push({
   questionTa: "ராணி என்ன படித்தாள்?",
   meaningEn: "What did Rani read?",
   translit: "Rani enna padithaal?",
-  options: ["பாடம் படித்தாள் (Lesson)", "கதை எழுதினாள் (Story)", "பாட்டு பாடினாள் (Song)", "படம் வரைந்தாள் (Drawing)"],
+  options: [],
   correctAnswer: "பாடம் படித்தாள் (Lesson)",
   explanation: "கதையில்: ‘அவள் பாடம் படித்தாள்.’"
 });
@@ -166,7 +166,7 @@ items.push({
   questionTa: "கமல் எதைக் கண்டான்?",
   meaningEn: "What did Kamal see?",
   translit: "Kamal ethai kandaan?",
-  options: ["ஆலமரம் கண்டான் (Banyan tree)", "மாமரம் கண்டான் (Mango tree)", "குளம் கண்டான் (Pond)", "வீடு கண்டான் (House)"],
+  options: [],
   correctAnswer: "ஆலமரம் கண்டான் (Banyan tree)",
   explanation: "கதையில்: ‘அவன் ஆலமரம் கண்டான்.’"
 });
@@ -183,7 +183,7 @@ items.push({
   questionTa: "அம்மா என்ன கொடுத்தாள்?",
   meaningEn: "What did Mom give?",
   translit: "Amma enna koduthaal?",
-  options: ["கனி தந்தாள் (Fruit)", "மலர் தந்தாள் (Flower)", "பால் தந்தாள் (Milk)", "புத்தகம் தந்தாள் (Book)"],
+  options: [],
   correctAnswer: "கனி தந்தாள் (Fruit)",
   explanation: "கதையில்: ‘அம்மா கனி தந்தாள்.’"
 });
@@ -199,7 +199,7 @@ items.push({
   questionTa: "வாணியின் அண்ணன் என்ன கூறினான்?",
   meaningEn: "What did Vani's brother say?",
   translit: "Vaaniyin annan enna koorinaan?",
-  options: ["“நன்றி” என்றான் (Thank you)", "வணக்கம் என்றான் (Greetings)", "போதும் என்றான் (Enough)", "வேண்டாம் என்றான் (No)"],
+  options: [],
   correctAnswer: "“நன்றி” என்றான் (Thank you)",
   explanation: "கதையில்: ‘அவன் “நன்றி” என்றான்.’"
 });
@@ -245,7 +245,7 @@ items.push({
   questionTa: "'ர' (ரகரம்): இடையின மெய்யெழுத்து. இது சொல்லின் முதலெழுத்தாக வராது, ஆனால் சொல்லின் ஈற்றெழுத்தாக வரும் (எ.கா: பார், நீர்).",
   meaningEn: "'ra' is an Idaiyinam consonant. Never starts a word, but can end words (e.g. பார், நீர்).",
   translit: "'ra' (ragaram): Idaiyinam meiyyezhuthu. Sol muthalil varaathu, eetril varum (Paar, Neer).",
-  options: ["இடையின மெய்யெழுத்து (சொல் ஈற்றில் வரும்)", "வல்லின மெய்யெழுத்து (சொல் முதலிலும் வரும்)", "மெல்லின மெய்யெழுத்து", "உயிர் எழுத்து"],
+  options: [],
   correctAnswer: "இடையின மெய்யெழுத்து (சொல் ஈற்றில் வரும்)",
   explanation: "'ர' இடையின மெய்யெழுத்து ஆகும். எ.கா: பார், நீர்."
 });
@@ -259,7 +259,7 @@ items.push({
   questionTa: "'ற' (றகரம்): வல்லின மெய்யெழுத்து. இது சொல்லின் முதலெழுத்தாகவும் வராது, ஈற்றெழுத்தாகவும் வராது. னகரமெய்க்குப் பின் வரும் (எ.கா: மன்றம்).",
   meaningEn: "'Rra' is a Vallinam consonant. Never starts or ends words; follows 'n' (e.g. மன்றம்).",
   translit: "'Rra' (rragaram): Vallinam meiyyezhuthu. Sol muthalilum eetrilum varaathu (Manram).",
-  options: ["வல்லின மெய்யெழுத்து (னகரமெய்க்குப் பின் வரும்)", "இடையின மெய்யெழுத்து", "மெல்லின மெய்யெழுத்து", "முதலெழுத்தாக வரும்"],
+  options: [],
   correctAnswer: "வல்லின மெய்யெழுத்து (னகரமெய்க்குப் பின் வரும்)",
   explanation: "'ற' வல்லின மெய்யெழுத்து. சொல்லின் முதலிலும் ஈற்றிலும் வராது. எ.கா: மன்றம், தென்றல்."
 });
@@ -273,7 +273,7 @@ items.push({
   questionTa: "'ல' (மேல்நோக்கு லகரம் / ஒற்றை லகரம்): நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது (எ.கா: மல்லி, வேலை).",
   meaningEn: "'la' is produced when the tongue tip touches the base of the upper front teeth (e.g. மல்லி, வேலை).",
   translit: "'la' (Melnokku lagaram): Naavin nuni melvaai pallin adiyai thoduvathaal pirakkirathu (Malli, Velai).",
-  options: ["நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது", "நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது", "நாக்கு மேல்நோக்கி வளைந்து காற்றில் பிறக்கிறது", "இதழ்கள் குவிவதால் பிறக்கிறது"],
+  options: [],
   correctAnswer: "நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது",
   explanation: "'ல' உச்சரிக்கும் போது நாக்கு மேல்வரிசைப் பல்லின் அடியைத் தொடும்."
 });
@@ -287,7 +287,7 @@ items.push({
   questionTa: "'ள' (கீழ்நோக்கு ளகரம் / பொது ளகரம்): நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் (வருடுவதால்) பிறக்கிறது (எ.கா: குளம், வேளை).",
   meaningEn: "'lla' is produced when the tongue tip rubs against the middle palate (e.g. குளம், வேளை).",
   translit: "'lla' (Keezhnokku lagaram): Naavin nuni melvaayin naduppagudhiyai varuduvathaal pirakkirathu.",
-  options: ["நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது", "பல்லின் அடியைத் தொடுவதால் பிறக்கிறது", "நாக்கு மேல்நோக்கி வளைந்து காற்றில் பிறக்கிறது", "தொண்டையிலிருந்து பிறக்கிறது"],
+  options: [],
   correctAnswer: "நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது",
   explanation: "'ள' உச்சரிக்கும் போது நாவின் நுனி மேல்வாயின் நடுப்பகுதியை வருட வேண்டும்."
 });
@@ -301,7 +301,7 @@ items.push({
   questionTa: "'ழ' (சிறப்பு ழகரம்): நாவின் நுனி மேல்நோக்கி வளைந்து, மேல்வாய் அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது. இது தமிழின் சிறப்பு எழுத்து! (எ.கா: தமிழ், பழம்)",
   meaningEn: "'zha' is the unique Tamil retroflex consonant, produced by curling the tongue tip upwards without touching the palate (e.g. தமிழ், பழம்).",
   translit: "'zha' (Sirappu zhagaram): Naavin nuni melnokki valainthu thodamal kaatril pirakkirathu (Thamizh, Pazham).",
-  options: ["நாக்கு அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது", "பல்லின் அடியைத் தொடுகிறது", "மேல்வாயின் நடுப்பகுதியைத் தொடுகிறது", "இதழ்களை மூடிப் பிறக்கிறது"],
+  options: [],
   correctAnswer: "நாக்கு அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது",
   explanation: "'ழ' தமிழ்மொழிக்கே உரிய தனிச்சிறப்பு எழுத்து ஆகும்!"
 });
@@ -317,12 +317,7 @@ items.push({
   questionTa: "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
   meaningEn: "He slipped on a banana peel, fell down, got up, and cried. (Tamil Tongue Twister)",
   translit: "Vaazhaippazhath thol vazhukki veezhnthaan, ezhunthaan, azhuthaan.",
-  options: [
-    "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
-    "வாழைப்பழத் தோல் தழுவி நின்றான், சிரித்தான்.",
-    "ஆலமரத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான்.",
-    "மாம்பழத் தோல் வழுக்கி விழுந்தான், எழுந்தான்."
-  ],
+  options: [],
   correctAnswer: "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
   explanation: "ழ கர உச்சரிப்புக்கான புகழ்மிக்க நாநெகிழ் பயிற்சி வாக்கியம்!"
 });

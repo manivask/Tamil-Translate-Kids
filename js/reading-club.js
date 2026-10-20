@@ -407,32 +407,19 @@
     if (controls.meaningEn) controls.meaningEn.textContent = item.meaningEn || "";
     if (controls.translitText) controls.translitText.textContent = item.translit || "";
 
-    // Reset spoken & result boxes
+    // Reset spoken & result boxes (Speech-Only Voice Reading)
     if (controls.spokenBox) {
-      controls.spokenBox.textContent = "மைக்ரோஃபோனை அழுத்தி வாசியுங்கள் அல்லது சரியான விடையைத் தேர்வு செய்க...";
+      controls.spokenBox.textContent = "மைக்ரோஃபோனை அழுத்தி சத்தமாக வாசியுங்கள் (Press mic & read aloud)...";
       controls.spokenBox.classList.add("empty");
     }
     if (controls.resultBox) {
-      controls.resultBox.textContent = "கேள்வியைப் படித்து விடையளிக்கவும் அல்லது வாசிக்கவும்.";
+      controls.resultBox.textContent = "🎙️ மேலே உள்ள தமிழ்ச் சொற்களை சத்தமாக வாசித்து முழு மதிப்பெண் பெறுங்கள்!";
       controls.resultBox.className = "rc-result";
     }
 
-    // Interactive Options Grid
-    if (controls.optionsContainer && controls.optionsGrid) {
-      if (item.options && item.options.length > 0) {
-        controls.optionsContainer.style.display = "block";
-        if (controls.optionFeedback) controls.optionFeedback.style.display = "none";
-
-        const alphabet = ["A", "B", "C", "D", "E"];
-        controls.optionsGrid.innerHTML = item.options.map((opt, optIdx) => `
-          <button type="button" class="rc-option-btn" data-option="${opt.replace(/"/g, '&quot;')}" onclick="ReadingClubPractice.handleOptionClick(this, '${opt.replace(/'/g, "\\'")}')">
-            <span class="rc-option-prefix">${item.type === 'true-false' ? (optIdx === 0 ? '✓' : '✗') : (alphabet[optIdx] || optIdx + 1)}</span>
-            <span>${opt}</span>
-          </button>
-        `).join("");
-      } else {
-        controls.optionsContainer.style.display = "none";
-      }
+    // Reading Club is Speech-Only: multiple-choice options completely disabled
+    if (controls.optionsContainer) {
+      controls.optionsContainer.style.display = "none";
     }
 
     // Navigation Buttons
@@ -767,34 +754,99 @@
     }
   }
 
+  // Helper to extract speech reading variations for all PDF & sentence items
+  function buildSpeechCandidates(rawQuestion, rawAnswer) {
+    const set = new Set();
+    const add = (txt) => {
+      if (!txt) return;
+      const str = String(txt).trim();
+      if (str) set.add(str);
+      // Tamil text only (strip English annotations in parens, e.g. "அரம் (Filing tool) — அறம் (Virtue)")
+      const tamilOnly = str
+        .replace(/[A-Za-z]/g, " ")
+        .replace(/[=+\-_()—–,.:;!?"'’‘\/]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+      if (tamilOnly) set.add(tamilOnly);
+    };
+
+    add(rawQuestion);
+    add(rawAnswer);
+
+    // Section 5 compound splits (e.g. இடப்பக்கம் = இடம் + பக்கம்)
+    if (rawQuestion && (rawQuestion.includes("=") || rawQuestion.includes("+"))) {
+      rawQuestion.split(/[=+]/).forEach(seg => add(seg));
+    }
+    // Section 7 minimal pairs (e.g. அரம் — அறம்)
+    if (rawQuestion && (rawQuestion.includes("—") || rawQuestion.includes("-"))) {
+      rawQuestion.split(/[—-]/).forEach(seg => add(seg));
+    }
+    return Array.from(set);
+  }
+
   function evaluateTranscript(transcript) {
     const controls = ui();
     const cleanSpoken = (transcript || "").trim();
+    if (!cleanSpoken) return;
+
+    const matcher = window.TamilMatcher || window.KidSpeechMatcher;
 
     if (currentPdfModuleId !== "all-graded" && pdfItems && pdfItems[pdfCurrentIndex]) {
       const item = pdfItems[pdfCurrentIndex];
       const target = item.questionTa.trim();
-      const correctTarget = (item.correctAnswer || "").trim();
+      const candidates = buildSpeechCandidates(item.questionTa, item.correctAnswer);
 
-      let score = 0;
-      if (window.KidSpeechMatcher) {
-        const matchQ = KidSpeechMatcher.score(cleanSpoken, [target]);
-        const matchAns = correctTarget ? KidSpeechMatcher.score(cleanSpoken, [correctTarget]) : { score: 0 };
-        score = Math.max(matchQ.score || 0, matchAns.score || 0);
+      let rawPercent = 0;
+      if (matcher && typeof matcher.evaluate === "function") {
+        const evalRes = matcher.evaluate({
+          tamilPrimary: candidates[0] || target,
+          variations: candidates.slice(1)
+        }, cleanSpoken, "medium");
+        rawPercent = evalRes.percentage || 0;
       } else {
-        score = (cleanSpoken === target || cleanSpoken === correctTarget) ? 100 :
-                (cleanSpoken.includes(target) || cleanSpoken.includes(correctTarget) ? 80 : 50);
+        const normSpoken = cleanSpoken.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’—=+]/g, " ").replace(/\s+/g, " ").trim();
+        for (const c of candidates) {
+          const normC = c.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’—=+]/g, " ").replace(/\s+/g, " ").trim();
+          if (!normC) continue;
+          if (normSpoken === normC) { rawPercent = 100; break; }
+          if (normSpoken.includes(normC) || normC.includes(normSpoken)) {
+            rawPercent = Math.max(rawPercent, 85);
+          }
+        }
+        if (!rawPercent && cleanSpoken.length > 2) rawPercent = 65;
       }
 
-      const passed = score >= 65;
-      const stars = score >= 85 ? 3 : (score >= 65 ? 2 : 1);
+      // Kid-friendly speech scoring: speaking the Tamil text yields 100% and 3 stars!
+      let score = rawPercent;
+      let stars = 0;
+      let passed = false;
+
+      if (rawPercent >= 75) {
+        score = 100;
+        stars = 3;
+        passed = true;
+      } else if (rawPercent >= 55) {
+        score = 85;
+        stars = 2;
+        passed = true;
+      } else if (rawPercent >= 40) {
+        score = 70;
+        stars = 1;
+        passed = true;
+      } else {
+        score = Math.max(25, rawPercent);
+        stars = 0;
+        passed = false;
+      }
 
       if (controls.resultBox) {
         if (passed) {
-          pdfAnsweredCurrent = true;
-          pdfCompletedStats.stars += stars;
-          pdfCompletedStats.scoreSum += score;
-          pdfCompletedStats.count++;
+          if (!pdfAnsweredCurrent) {
+            pdfAnsweredCurrent = true;
+            pdfCompletedStats.stars += stars;
+            pdfCompletedStats.scoreSum += score;
+            pdfCompletedStats.count++;
+          }
           if (controls.unitScoreBadge) controls.unitScoreBadge.textContent = `⭐ ${pdfCompletedStats.stars} நட்சத்திரங்கள்`;
 
           controls.resultBox.className = "rc-result success";
@@ -833,21 +885,54 @@
       return;
     }
 
-    // Default sentence reading evaluation
+    // Default sentence reading evaluation (Speech-Only)
     const item = filteredSentences[currentIndex];
     if (!item) return;
 
     const target = item.sentenceTa.trim();
-    let score = 0;
-    if (window.KidSpeechMatcher) {
-      const matchRes = KidSpeechMatcher.score(cleanSpoken, [target]);
-      score = matchRes.score || 0;
+    const candidates = buildSpeechCandidates(item.sentenceTa, "");
+
+    let rawPercent = 0;
+    if (matcher && typeof matcher.evaluate === "function") {
+      const evalRes = matcher.evaluate({
+        tamilPrimary: candidates[0] || target,
+        variations: candidates.slice(1)
+      }, cleanSpoken, "medium");
+      rawPercent = evalRes.percentage || 0;
     } else {
-      score = cleanSpoken === target ? 100 : (cleanSpoken.includes(target) ? 80 : 50);
+      const normSpoken = cleanSpoken.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’—=+]/g, " ").replace(/\s+/g, " ").trim();
+      for (const c of candidates) {
+        const normC = c.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’—=+]/g, " ").replace(/\s+/g, " ").trim();
+        if (!normC) continue;
+        if (normSpoken === normC) { rawPercent = 100; break; }
+        if (normSpoken.includes(normC) || normC.includes(normSpoken)) {
+          rawPercent = Math.max(rawPercent, 85);
+        }
+      }
+      if (!rawPercent && cleanSpoken.length > 2) rawPercent = 65;
     }
 
-    const passed = score >= 65;
-    const stars = score >= 85 ? 3 : (score >= 65 ? 2 : 1);
+    let score = rawPercent;
+    let stars = 0;
+    let passed = false;
+
+    if (rawPercent >= 75) {
+      score = 100;
+      stars = 3;
+      passed = true;
+    } else if (rawPercent >= 55) {
+      score = 85;
+      stars = 2;
+      passed = true;
+    } else if (rawPercent >= 40) {
+      score = 70;
+      stars = 1;
+      passed = true;
+    } else {
+      score = Math.max(25, rawPercent);
+      stars = 0;
+      passed = false;
+    }
 
     if (controls.resultBox) {
       if (passed) {
@@ -1326,7 +1411,11 @@
   };
 
   if (typeof window !== "undefined") {
+    if (!window.KidSpeechMatcher && window.TamilMatcher) {
+      window.KidSpeechMatcher = window.TamilMatcher;
+    }
     window.ReadingClubPractice = ReadingClub;
     document.addEventListener("DOMContentLoaded", () => ReadingClub.init());
   }
 })();
+

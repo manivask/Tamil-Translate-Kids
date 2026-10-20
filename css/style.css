@@ -3472,8 +3472,34 @@ body {
   border: 1px solid #BFDBFE;
 }
 
-/* Interactive Comprehension Options Grid */
+/* Voice Reading Instruction Card (Replaces Options Selection) */
+.rc-voice-reading-instruction-card {
+  background: linear-gradient(135deg, rgba(238, 242, 255, 0.95), rgba(243, 232, 255, 0.95));
+  border: 1.5px dashed #818CF8;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin: 12px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.rc-vri-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.rc-vri-text {
+  font-family: var(--font-tamil);
+  font-size: 0.86rem;
+  color: #3730A3;
+  line-height: 1.4;
+}
+
+/* Interactive Comprehension Options Grid (Disabled in Reading Club: Speech Only) */
 .rc-options-container {
+  display: none !important;
   margin: 14px 0 10px;
   text-align: left;
 }

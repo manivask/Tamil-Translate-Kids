@@ -15,12 +15,7 @@
         "questionTa": "இது பூ.",
         "meaningEn": "This is a flower.",
         "translit": "Ithu poo.",
-        "options": [
-          "இது பூ.",
-          "இது மாடு.",
-          "அது நாய்.",
-          "அம்மா வா."
-        ],
+        "options": [],
         "correctAnswer": "இது பூ.",
         "explanation": "இது பூ = This is a flower."
       },
@@ -31,12 +26,7 @@
         "questionTa": "இது மாடு.",
         "meaningEn": "This is a cow.",
         "translit": "Ithu maadu.",
-        "options": [
-          "இது மாடு.",
-          "இது பூ.",
-          "பால் குடி.",
-          "நீர் குடி."
-        ],
+        "options": [],
         "correctAnswer": "இது மாடு.",
         "explanation": "இது மாடு = This is a cow."
       },
@@ -47,12 +37,7 @@
         "questionTa": "அது நாய்.",
         "meaningEn": "That is a dog.",
         "translit": "Athu naai.",
-        "options": [
-          "அது நாய்.",
-          "இது பூனை.",
-          "அம்மா வா.",
-          "அங்கே போ."
-        ],
+        "options": [],
         "correctAnswer": "அது நாய்.",
         "explanation": "அது நாய் = That is a dog."
       },
@@ -63,12 +48,7 @@
         "questionTa": "இது என் வீடு.",
         "meaningEn": "This is my house.",
         "translit": "Ithu en veedu.",
-        "options": [
-          "இது என் வீடு.",
-          "இது என் பள்ளி.",
-          "இது என் தோட்டம்.",
-          "இது என் ஊர்."
-        ],
+        "options": [],
         "correctAnswer": "இது என் வீடு.",
         "explanation": "இது என் வீடு = This is my house."
       },
@@ -79,12 +59,7 @@
         "questionTa": "பால் குடி.",
         "meaningEn": "Drink milk.",
         "translit": "Paal kudi.",
-        "options": [
-          "பால் குடி.",
-          "நீர் குடி.",
-          "பழம் சாப்பிடு.",
-          "உணவு உண்."
-        ],
+        "options": [],
         "correctAnswer": "பால் குடி.",
         "explanation": "பால் குடி = Drink milk."
       },
@@ -95,12 +70,7 @@
         "questionTa": "அம்மா பால் தருகிறார்.",
         "meaningEn": "Amma gives milk.",
         "translit": "Amma paal tharukiraar.",
-        "options": [
-          "அம்மா பால் தருகிறார்.",
-          "அப்பா நீர் தருகிறார்.",
-          "அம்மா உணவு தருகிறார்.",
-          "தம்பி பால் குடிக்கிறான்."
-        ],
+        "options": [],
         "correctAnswer": "அம்மா பால் தருகிறார்.",
         "explanation": "அம்மா பால் தருகிறார் = Mom gives milk."
       },
@@ -111,12 +81,7 @@
         "questionTa": "நாய் ஓடுகிறது.",
         "meaningEn": "The dog is running.",
         "translit": "Naai odukirathu.",
-        "options": [
-          "நாய் ஓடுகிறது.",
-          "பூனை நடக்கிறது.",
-          "மாடு புல் சாப்பிடுகிறது.",
-          "குதிரை ஓடுகிறது."
-        ],
+        "options": [],
         "correctAnswer": "நாய் ஓடுகிறது.",
         "explanation": "நாய் ஓடுகிறது = The dog is running."
       },
@@ -127,12 +92,7 @@
         "questionTa": "மீனா பூ பறிக்கிறாள்.",
         "meaningEn": "Meena picks flowers.",
         "translit": "Meena poo parikkiraal.",
-        "options": [
-          "மீனா பூ பறிக்கிறாள்.",
-          "குமார் பந்து விளையாடுகிறான்.",
-          "மீனா பாடம் படிக்கிறாள்.",
-          "அம்மா பூ பறிக்கிறார்."
-        ],
+        "options": [],
         "correctAnswer": "மீனா பூ பறிக்கிறாள்.",
         "explanation": "மீனா பூ பறிக்கிறாள் = Meena picks flowers."
       },
@@ -145,12 +105,7 @@
         "questionTa": "நாயின் பெயர் என்ன?",
         "meaningEn": "What is the dog's name?",
         "translit": "Naayin peyar enna?",
-        "options": [
-          "மணி (Mani)",
-          "ராஜா (Raja)",
-          "குமார் (Kumar)",
-          "பூனை (Poonai)"
-        ],
+        "options": [],
         "correctAnswer": "மணி (Mani)",
         "explanation": "கதையில்: ‘நாயின் பெயர் மணி.’"
       },
@@ -163,12 +118,7 @@
         "questionTa": "மணி எதை எடுக்கிறது?",
         "meaningEn": "What does Mani pick up?",
         "translit": "Mani ethai edukkirathu?",
-        "options": [
-          "பந்தை (Ball)",
-          "கல்லை (Stone)",
-          "இலையை (Leaf)",
-          "உணவை (Food)"
-        ],
+        "options": [],
         "correctAnswer": "பந்தை (Ball)",
         "explanation": "கதையில்: ‘மணி பந்தை எடுக்கிறது.’"
       },
@@ -181,12 +131,7 @@
         "questionTa": "பூனை எங்கே உள்ளது?",
         "meaningEn": "Where is the cat?",
         "translit": "Poonai engae ullathu?",
-        "options": [
-          "வீட்டில் உள்ளது (At home)",
-          "காட்டில் உள்ளது (In forest)",
-          "மரத்தில் உள்ளது (On tree)",
-          "பள்ளியில் உள்ளது (At school)"
-        ],
+        "options": [],
         "correctAnswer": "வீட்டில் உள்ளது (At home)",
         "explanation": "கதையில்: ‘பூனை வீட்டில் உள்ளது.’"
       },
@@ -199,12 +144,7 @@
         "questionTa": "பூனை என்ன குடிக்கிறது?",
         "meaningEn": "What does the cat drink?",
         "translit": "Poonai enna kudikkirathu?",
-        "options": [
-          "பால் குடிக்கிறது (Milk)",
-          "நீர் குடிக்கிறது (Water)",
-          "பழச்சாறு குடிக்கிறது (Juice)",
-          "தேன் குடிக்கிறது (Honey)"
-        ],
+        "options": [],
         "correctAnswer": "பால் குடிக்கிறது (Milk)",
         "explanation": "கதையில்: ‘பூனை பால் குடிக்கிறது.’"
       },
@@ -217,12 +157,7 @@
         "questionTa": "பூ என்ன நிறம்?",
         "meaningEn": "What color is the flower?",
         "translit": "Poo enna niram?",
-        "options": [
-          "சிவப்பு பூ (Red flower)",
-          "மஞ்சள் பூ (Yellow flower)",
-          "நீலப் பூ (Blue flower)",
-          "வெள்ளை பூ (White flower)"
-        ],
+        "options": [],
         "correctAnswer": "சிவப்பு பூ (Red flower)",
         "explanation": "கதையில்: ‘அது சிவப்பு பூ.’"
       },
@@ -235,12 +170,7 @@
         "questionTa": "மீனா பூவுக்கு என்ன ஊற்றுகிறாள்?",
         "meaningEn": "What does Meena pour for the flower?",
         "translit": "Meena poovukku enna ootrukiraal?",
-        "options": [
-          "நீர் ஊற்றுகிறாள் (Water)",
-          "பால் ஊற்றுகிறாள் (Milk)",
-          "சாறு ஊற்றுகிறாள் (Juice)",
-          "எண்ணெய் ஊற்றுகிறாள் (Oil)"
-        ],
+        "options": [],
         "correctAnswer": "நீர் ஊற்றுகிறாள் (Water)",
         "explanation": "கதையில்: ‘அவள் பூவுக்கு நீர் ஊற்றுகிறாள்.’"
       }
@@ -262,12 +192,7 @@
         "questionTa": "முயற்சி - முயற்சி செய்தால் வெற்றி கிடைக்கும்.",
         "meaningEn": "Effort - If you make effort, success will follow.",
         "translit": "Muyarchi - Muyarchi seidhaal vetri kidaikkum.",
-        "options": [
-          "முயற்சி - effort",
-          "பயிற்சி - practice",
-          "கவனம் - attention",
-          "தெளிவு - clarity"
-        ],
+        "options": [],
         "correctAnswer": "முயற்சி - effort",
         "explanation": "முயற்சி = Effort."
       },
@@ -278,12 +203,7 @@
         "questionTa": "பயிற்சி - தினமும் தமிழ் பயிற்சி செய்கிறேன்.",
         "meaningEn": "Practice - I practice Tamil every day.",
         "translit": "Payirchi - Dinamum Tamil payirchi seigiren.",
-        "options": [
-          "பயிற்சி - practice",
-          "முயற்சி - effort",
-          "சீக்கிரம் - quickly",
-          "மெதுவாக - slowly"
-        ],
+        "options": [],
         "correctAnswer": "பயிற்சி - practice",
         "explanation": "பயிற்சி = Practice."
       },
@@ -294,12 +214,7 @@
         "questionTa": "கவனம் - பாடங்களை முழு கவனத்துடன் வாசிக்கிறேன்.",
         "meaningEn": "Attention - I read lessons with full attention.",
         "translit": "Gavanam - Paadangalai muzhu gavanathudan vaasikkiren.",
-        "options": [
-          "கவனம் - attention",
-          "தெளிவு - clarity",
-          "தொடரு - continue",
-          "திரும்பவும் - again"
-        ],
+        "options": [],
         "correctAnswer": "கவனம் - attention",
         "explanation": "கவனம் = Attention / Focus."
       },
@@ -310,12 +225,7 @@
         "questionTa": "தொடரு - நல்ல பழக்கங்களை எப்போதும் தொடரு.",
         "meaningEn": "Continue - Always continue good habits.",
         "translit": "Thodaru - Nalla pazhakkangalai eppothum thodaru.",
-        "options": [
-          "தொடரு - continue",
-          "நிறுத்து - stop",
-          "தொடங்கு - start",
-          "மற - forget"
-        ],
+        "options": [],
         "correctAnswer": "தொடரு - continue",
         "explanation": "தொடரு = Continue / Persist."
       },
@@ -328,12 +238,7 @@
         "questionTa": "முடிவில் எது முக்கியமான பாடம்?",
         "meaningEn": "What is the important lesson at the end?",
         "translit": "Mudivil ethu mukkiyamaana paadam?",
-        "options": [
-          "முயற்சி மற்றும் தொடர்ச்சி முக்கியம் (Effort and consistency)",
-          "வேகமாக ஓடுவது மட்டுமே முக்கியம் (Only speed)",
-          "நடுவில் தூங்குவது நல்லது (Sleeping in between)",
-          "ஓடாமல் நிற்பது (Not running)"
-        ],
+        "options": [],
         "correctAnswer": "முயற்சி மற்றும் தொடர்ச்சி முக்கியம் (Effort and consistency)",
         "explanation": "கதையின் நீதி: முயற்சி மற்றும் தொடர்ச்சி முக்கியம்."
       },
@@ -346,12 +251,7 @@
         "questionTa": "மீனா எந்த பழக்கத்தைக் கடைபிடித்தாள்?",
         "meaningEn": "Which habit did Meena follow?",
         "translit": "Meena entha pazhakkathai kadaipidithaal?",
-        "options": [
-          "தினமும் தொடர்ந்து படிக்கும் பழக்கம் (Reading consistently every day)",
-          "படிக்காமல் இருக்கும் பழக்கம் (Not reading)",
-          "வாரத்திற்கு ஒரு நாள் மட்டும் படித்தல் (Reading once a week)",
-          "விளையாடுவது மட்டும் (Only playing)"
-        ],
+        "options": [],
         "correctAnswer": "தினமும் தொடர்ந்து படிக்கும் பழக்கம் (Reading consistently every day)",
         "explanation": "மீனா தினமும் தொடர்ந்து படிக்கும் பழக்கத்தைக் கடைபிடித்தாள்."
       },
@@ -364,12 +264,7 @@
         "questionTa": "மாலிகா என்ன செய்தாள்?",
         "meaningEn": "What did Malika do?",
         "translit": "Maalika enna seidhaal?",
-        "options": [
-          "குடையை நண்பனுடன் பகிர்ந்தாள் (Shared umbrella with friend)",
-          "தனியாக ஓடினாள் (Ran alone)",
-          "குடையை வீசி எறிந்தாள் (Threw umbrella)",
-          "மழையில் நனைந்தாள் (Got wet)"
-        ],
+        "options": [],
         "correctAnswer": "குடையை நண்பனுடன் பகிர்ந்தாள் (Shared umbrella with friend)",
         "explanation": "மாலிகா குடையை நண்பனுடன் அன்புடன் பகிர்ந்தாள்."
       }
@@ -391,12 +286,7 @@
         "questionTa": "ரவி தினமும் புத்தகம் படிக்கிறான்.",
         "meaningEn": "Ravi reads books every day.",
         "translit": "Ravi dinamum puththagam padikkiraan.",
-        "options": [
-          "ரவி தினமும் புத்தகம் படிக்கிறான்.",
-          "மீனா பள்ளிக்குச் செல்கிறாள்.",
-          "அம்மா உணவு சமைக்கிறார்.",
-          "அப்பா தோட்டத்தில் இருக்கிறார்."
-        ],
+        "options": [],
         "correctAnswer": "ரவி தினமும் புத்தகம் படிக்கிறான்.",
         "explanation": "ரவி தினமும் புத்தகம் படிக்கிறான் = Ravi reads books every day."
       },
@@ -407,12 +297,7 @@
         "questionTa": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
         "meaningEn": "Meena took her bag to go to school.",
         "translit": "Meena pallikkuch sella paiyai eduththaal.",
-        "options": [
-          "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
-          "ரவி புத்தகம் படிக்கிறான்.",
-          "பூனை வீட்டிற்குள் சென்றது.",
-          "லதா அறையைச் சுத்தம் செய்கிறாள்."
-        ],
+        "options": [],
         "correctAnswer": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்.",
         "explanation": "மீனா பள்ளிக்குச் செல்ல பையை எடுத்தாள்."
       },
@@ -423,12 +308,7 @@
         "questionTa": "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
         "meaningEn": "Amma is cooking food in the kitchen.",
         "translit": "Amma samaiyalaraiyil unavu samaikkiraar.",
-        "options": [
-          "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
-          "அப்பா நீர் ஊற்றுகிறார்.",
-          "மீனா பூ பறிக்கிறாள்.",
-          "குமார் பல் துலக்குகிறான்."
-        ],
+        "options": [],
         "correctAnswer": "அம்மா சமையலறையில் உணவு சமைக்கிறார்.",
         "explanation": "அம்மா சமையலறையில் உணவு சமைக்கிறார்."
       },
@@ -439,12 +319,7 @@
         "questionTa": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
         "meaningEn": "Appa is watering the plants in the garden.",
         "translit": "Appa thottathil sedigalukku neer ootrukiraar.",
-        "options": [
-          "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
-          "சிறுவன் பந்தை எடுக்கிறான்.",
-          "பறவை கிளையில் அமர்ந்தது.",
-          "மழை பெய்ததால் சாலை நனைந்தது."
-        ],
+        "options": [],
         "correctAnswer": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்.",
         "explanation": "அப்பா தோட்டத்தில் செடிகளுக்கு நீர் ஊற்றுகிறார்."
       },
@@ -457,12 +332,7 @@
         "questionTa": "அருண் தோட்டத்தில் என்ன நட்டான்?",
         "meaningEn": "What did Arun plant in the garden?",
         "translit": "Arun thottathil enna nattaan?",
-        "options": [
-          "ஒரு சிறிய விதை (A small seed)",
-          "ஒரு பெரிய மரம் (A big tree)",
-          "புல் (Grass)",
-          "கல் (Stone)"
-        ],
+        "options": [],
         "correctAnswer": "ஒரு சிறிய விதை (A small seed)",
         "explanation": "கதையில்: ‘அருண் ஒரு சிறிய விதையைத் தோட்டத்தில் நட்டான்.’"
       },
@@ -475,12 +345,7 @@
         "questionTa": "அருண் தினமும் செடிக்கு என்ன செய்தான்?",
         "meaningEn": "What did Arun do for the plant daily?",
         "translit": "Arun dinamum sedikku enna seidhaan?",
-        "options": [
-          "தண்ணீர் ஊற்றினான் (Watered it)",
-          "இலைகளைப் பறித்தான் (Plucked leaves)",
-          "செடியை வெட்டினான் (Cut it)",
-          "கவனிக்கவில்லை (Ignored it)"
-        ],
+        "options": [],
         "correctAnswer": "தண்ணீர் ஊற்றினான் (Watered it)",
         "explanation": "கதையில்: ‘அவன் தினமும் அதற்குத் தண்ணீர் ஊற்றினான்.’"
       },
@@ -493,12 +358,7 @@
         "questionTa": "சில நாட்களில் மண்ணிலிருந்து என்ன வந்தது?",
         "meaningEn": "What emerged from the soil after a few days?",
         "translit": "Sila naatkalil mannilirunthu enna vanthathu?",
-        "options": [
-          "பச்சைத் தளிர் (Green sprout)",
-          "பெரிய பழம் (Big fruit)",
-          "மஞ்சள் பூ (Yellow flower)",
-          "காய்ந்த இலை (Dry leaf)"
-        ],
+        "options": [],
         "correctAnswer": "பச்சைத் தளிர் (Green sprout)",
         "explanation": "கதையில்: ‘சில நாட்களில் மண்ணிலிருந்து பச்சைத் தளிர் வந்தது.’"
       },
@@ -511,12 +371,7 @@
         "questionTa": "சில வாரங்களுக்குப் பிறகு செடியில் என்ன மலர்ந்தது?",
         "meaningEn": "What blossomed on the plant after a few weeks?",
         "translit": "Sila vaarangalukku piragu sediyil enna malarnthathu?",
-        "options": [
-          "அழகான பூ (Beautiful flower)",
-          "முட்கள் (Thorns)",
-          "புதிய விதை (New seed)",
-          "காய்ந்த கிளை (Dry branch)"
-        ],
+        "options": [],
         "correctAnswer": "அழகான பூ (Beautiful flower)",
         "explanation": "கதையில்: ‘சில வாரங்களில் செடியில் அழகான பூ மலர்ந்தது.’"
       },
@@ -529,12 +384,7 @@
         "questionTa": "இந்தக் கதையின் மூலம் அருண் என்ன உணர்ந்தான்?",
         "meaningEn": "What did Arun realize from this story?",
         "translit": "Intha kathaiyin moolam Arun enna unarnthaan?",
-        "options": [
-          "முயற்சி செய்தால் வெற்றி கிடைக்கும் (Effort brings success)",
-          "முயற்சி வீணாகும் (Effort is in vain)",
-          "செடிக்குத் தண்ணீர் தேவையில்லை (No water needed)",
-          "தோட்டம் தேவையில்லை (No garden needed)"
-        ],
+        "options": [],
         "correctAnswer": "முயற்சி செய்தால் வெற்றி கிடைக்கும் (Effort brings success)",
         "explanation": "நீதி: முயற்சி செய்தால் வெற்றி கிடைக்கும்."
       }
@@ -558,12 +408,7 @@
         "questionTa": "கா  ஙா  சா  ஞா  டா  ணா  தா  நா  பா  மா  யா  ரா  லா  வா  ழா  ளா  றா  னா",
         "meaningEn": "Uyirmei Letters: 'Aa' vowel sound series (கா to னா)",
         "translit": "Kaa, Ngaa, Chaa, Nyaa, Taa, Nnaa, Thaa, Naa, Paa, Maa, Yaa, Raa, Laa, Vaa, Zhaa, Llaa, Rraa, Nnaa",
-        "options": [
-          "கா ஙா சா ஞா தா நா பா மா",
-          "கி ஙி சி ஞி தி நி பி மி",
-          "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
-          "க ங ச ஞ த ந ப ம"
-        ],
+        "options": [],
         "correctAnswer": "கா ஙா சா ஞா தா நா பா மா",
         "explanation": "ஆ வரிசை: க் + ஆ = கா, த் + ஆ = தா, ப் + ஆ = பா."
       },
@@ -576,12 +421,7 @@
         "questionTa": "கி  ஙி  சி  ஞி  டி  ணி  தி  நி  பி  மி  யி  ரி  லி  வி  ழி  ளி  றி  னி",
         "meaningEn": "Uyirmei Letters: 'I' vowel sound series (கி to னி)",
         "translit": "Ki, Ngi, Chi, Nyi, Ti, Nni, Thi, Ni, Pi, Mi, Yi, Ri, Li, Vi, Zhi, Lli, Rri, Nni",
-        "options": [
-          "கி ஙி சி ஞி தி நி பி மி",
-          "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
-          "கா ஙா சா ஞா தா நா பா மா",
-          "கு ஙு சு ஞு து நு பு மு"
-        ],
+        "options": [],
         "correctAnswer": "கி ஙி சி ஞி தி நி பி மி",
         "explanation": "இ வரிசை: க் + இ = கி, த் + இ = தி, ப் + இ = பி."
       },
@@ -594,12 +434,7 @@
         "questionTa": "கீ  ஙீ  சீ  ஞீ  டீ  ணீ  தீ  நீ  பீ  மீ  யீ  ரீ  லீ  வீ  ழீ  ளீ  றீ  னீ",
         "meaningEn": "Uyirmei Letters: 'Ee' vowel sound series (கீ to னீ)",
         "translit": "Kee, Ngee, Chee, Nyee, Tee, Nnee, Thee, Nee, Pee, Mee, Yee, Ree, Lee, Vee, Zhee, Llee, Rree, Nnee",
-        "options": [
-          "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
-          "கி ஙி சி ஞி தி நி பி மி",
-          "கா ஙா சா ஞா தா நா பா மா",
-          "கை ஙை சை ஞை தை நை பை மை"
-        ],
+        "options": [],
         "correctAnswer": "கீ ஙீ சீ ஞீ தீ நீ பீ மீ",
         "explanation": "ஈ வரிசை: க் + ஈ = கீ, த் + ஈ = தீ, ப் + ஈ = பீ."
       },
@@ -1190,12 +1025,7 @@
         "questionTa": "ராணி என்ன படித்தாள்?",
         "meaningEn": "What did Rani read?",
         "translit": "Rani enna padithaal?",
-        "options": [
-          "பாடம் படித்தாள் (Lesson)",
-          "கதை எழுதினாள் (Story)",
-          "பாட்டு பாடினாள் (Song)",
-          "படம் வரைந்தாள் (Drawing)"
-        ],
+        "options": [],
         "correctAnswer": "பாடம் படித்தாள் (Lesson)",
         "explanation": "கதையில்: ‘அவள் பாடம் படித்தாள்.’"
       },
@@ -1210,12 +1040,7 @@
         "questionTa": "கமல் எதைக் கண்டான்?",
         "meaningEn": "What did Kamal see?",
         "translit": "Kamal ethai kandaan?",
-        "options": [
-          "ஆலமரம் கண்டான் (Banyan tree)",
-          "மாமரம் கண்டான் (Mango tree)",
-          "குளம் கண்டான் (Pond)",
-          "வீடு கண்டான் (House)"
-        ],
+        "options": [],
         "correctAnswer": "ஆலமரம் கண்டான் (Banyan tree)",
         "explanation": "கதையில்: ‘அவன் ஆலமரம் கண்டான்.’"
       },
@@ -1230,12 +1055,7 @@
         "questionTa": "அம்மா என்ன கொடுத்தாள்?",
         "meaningEn": "What did Mom give?",
         "translit": "Amma enna koduthaal?",
-        "options": [
-          "கனி தந்தாள் (Fruit)",
-          "மலர் தந்தாள் (Flower)",
-          "பால் தந்தாள் (Milk)",
-          "புத்தகம் தந்தாள் (Book)"
-        ],
+        "options": [],
         "correctAnswer": "கனி தந்தாள் (Fruit)",
         "explanation": "கதையில்: ‘அம்மா கனி தந்தாள்.’"
       },
@@ -1250,12 +1070,7 @@
         "questionTa": "வாணியின் அண்ணன் என்ன கூறினான்?",
         "meaningEn": "What did Vani's brother say?",
         "translit": "Vaaniyin annan enna koorinaan?",
-        "options": [
-          "“நன்றி” என்றான் (Thank you)",
-          "வணக்கம் என்றான் (Greetings)",
-          "போதும் என்றான் (Enough)",
-          "வேண்டாம் என்றான் (No)"
-        ],
+        "options": [],
         "correctAnswer": "“நன்றி” என்றான் (Thank you)",
         "explanation": "கதையில்: ‘அவன் “நன்றி” என்றான்.’"
       },
@@ -1448,12 +1263,7 @@
         "questionTa": "'ர' (ரகரம்): இடையின மெய்யெழுத்து. இது சொல்லின் முதலெழுத்தாக வராது, ஆனால் சொல்லின் ஈற்றெழுத்தாக வரும் (எ.கா: பார், நீர்).",
         "meaningEn": "'ra' is an Idaiyinam consonant. Never starts a word, but can end words (e.g. பார், நீர்).",
         "translit": "'ra' (ragaram): Idaiyinam meiyyezhuthu. Sol muthalil varaathu, eetril varum (Paar, Neer).",
-        "options": [
-          "இடையின மெய்யெழுத்து (சொல் ஈற்றில் வரும்)",
-          "வல்லின மெய்யெழுத்து (சொல் முதலிலும் வரும்)",
-          "மெல்லின மெய்யெழுத்து",
-          "உயிர் எழுத்து"
-        ],
+        "options": [],
         "correctAnswer": "இடையின மெய்யெழுத்து (சொல் ஈற்றில் வரும்)",
         "explanation": "'ர' இடையின மெய்யெழுத்து ஆகும். எ.கா: பார், நீர்."
       },
@@ -1466,12 +1276,7 @@
         "questionTa": "'ற' (றகரம்): வல்லின மெய்யெழுத்து. இது சொல்லின் முதலெழுத்தாகவும் வராது, ஈற்றெழுத்தாகவும் வராது. னகரமெய்க்குப் பின் வரும் (எ.கா: மன்றம்).",
         "meaningEn": "'Rra' is a Vallinam consonant. Never starts or ends words; follows 'n' (e.g. மன்றம்).",
         "translit": "'Rra' (rragaram): Vallinam meiyyezhuthu. Sol muthalilum eetrilum varaathu (Manram).",
-        "options": [
-          "வல்லின மெய்யெழுத்து (னகரமெய்க்குப் பின் வரும்)",
-          "இடையின மெய்யெழுத்து",
-          "மெல்லின மெய்யெழுத்து",
-          "முதலெழுத்தாக வரும்"
-        ],
+        "options": [],
         "correctAnswer": "வல்லின மெய்யெழுத்து (னகரமெய்க்குப் பின் வரும்)",
         "explanation": "'ற' வல்லின மெய்யெழுத்து. சொல்லின் முதலிலும் ஈற்றிலும் வராது. எ.கா: மன்றம், தென்றல்."
       },
@@ -1484,12 +1289,7 @@
         "questionTa": "'ல' (மேல்நோக்கு லகரம் / ஒற்றை லகரம்): நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது (எ.கா: மல்லி, வேலை).",
         "meaningEn": "'la' is produced when the tongue tip touches the base of the upper front teeth (e.g. மல்லி, வேலை).",
         "translit": "'la' (Melnokku lagaram): Naavin nuni melvaai pallin adiyai thoduvathaal pirakkirathu (Malli, Velai).",
-        "options": [
-          "நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது",
-          "நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது",
-          "நாக்கு மேல்நோக்கி வளைந்து காற்றில் பிறக்கிறது",
-          "இதழ்கள் குவிவதால் பிறக்கிறது"
-        ],
+        "options": [],
         "correctAnswer": "நாவின் நுனி மேல்வாய் பல்லின் அடியைத் தொடுவதால் பிறக்கிறது",
         "explanation": "'ல' உச்சரிக்கும் போது நாக்கு மேல்வரிசைப் பல்லின் அடியைத் தொடும்."
       },
@@ -1502,12 +1302,7 @@
         "questionTa": "'ள' (கீழ்நோக்கு ளகரம் / பொது ளகரம்): நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் (வருடுவதால்) பிறக்கிறது (எ.கா: குளம், வேளை).",
         "meaningEn": "'lla' is produced when the tongue tip rubs against the middle palate (e.g. குளம், வேளை).",
         "translit": "'lla' (Keezhnokku lagaram): Naavin nuni melvaayin naduppagudhiyai varuduvathaal pirakkirathu.",
-        "options": [
-          "நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது",
-          "பல்லின் அடியைத் தொடுவதால் பிறக்கிறது",
-          "நாக்கு மேல்நோக்கி வளைந்து காற்றில் பிறக்கிறது",
-          "தொண்டையிலிருந்து பிறக்கிறது"
-        ],
+        "options": [],
         "correctAnswer": "நாவின் நுனி மேல்வாயின் நடுப்பகுதியைத் தடவுவதால் பிறக்கிறது",
         "explanation": "'ள' உச்சரிக்கும் போது நாவின் நுனி மேல்வாயின் நடுப்பகுதியை வருட வேண்டும்."
       },
@@ -1520,12 +1315,7 @@
         "questionTa": "'ழ' (சிறப்பு ழகரம்): நாவின் நுனி மேல்நோக்கி வளைந்து, மேல்வாய் அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது. இது தமிழின் சிறப்பு எழுத்து! (எ.கா: தமிழ், பழம்)",
         "meaningEn": "'zha' is the unique Tamil retroflex consonant, produced by curling the tongue tip upwards without touching the palate (e.g. தமிழ், பழம்).",
         "translit": "'zha' (Sirappu zhagaram): Naavin nuni melnokki valainthu thodamal kaatril pirakkirathu (Thamizh, Pazham).",
-        "options": [
-          "நாக்கு அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது",
-          "பல்லின் அடியைத் தொடுகிறது",
-          "மேல்வாயின் நடுப்பகுதியைத் தொடுகிறது",
-          "இதழ்களை மூடிப் பிறக்கிறது"
-        ],
+        "options": [],
         "correctAnswer": "நாக்கு அண்ணத்தைத் தொடாமல் காற்று இடைவெளியில் பிறக்கிறது",
         "explanation": "'ழ' தமிழ்மொழிக்கே உரிய தனிச்சிறப்பு எழுத்து ஆகும்!"
       },
@@ -1538,12 +1328,7 @@
         "questionTa": "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
         "meaningEn": "He slipped on a banana peel, fell down, got up, and cried. (Tamil Tongue Twister)",
         "translit": "Vaazhaippazhath thol vazhukki veezhnthaan, ezhunthaan, azhuthaan.",
-        "options": [
-          "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
-          "வாழைப்பழத் தோல் தழுவி நின்றான், சிரித்தான்.",
-          "ஆலமரத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான்.",
-          "மாம்பழத் தோல் வழுக்கி விழுந்தான், எழுந்தான்."
-        ],
+        "options": [],
         "correctAnswer": "வாழைப்பழத் தோல் வழுக்கி வீழ்ந்தான், எழுந்தான், அழுதான்.",
         "explanation": "ழ கர உச்சரிப்புக்கான புகழ்மிக்க நாநெகிழ் பயிற்சி வாக்கியம்!"
       },
@@ -1825,12 +1610,7 @@
         "questionTa": "அருண் மரம் அருகில் நின்றான்.",
         "meaningEn": "Arun stood near the tree.",
         "translit": "Arun maram arukil nindraan.",
-        "options": [
-          "மரம் (Tree)",
-          "மலை (Mountain)",
-          "வீடு (House)",
-          "பள்ளி (School)"
-        ],
+        "options": [],
         "correctAnswer": "மரம் (Tree)",
         "explanation": "சரியான வாக்கியம்: அருண் மரம் அருகில் நின்றான்."
       },
@@ -1841,12 +1621,7 @@
         "questionTa": "வானத்தில் பறவை பறந்தது.",
         "meaningEn": "The bird flew in the sky.",
         "translit": "Vaanathil paravai paranthathu.",
-        "options": [
-          "பறவை (Bird)",
-          "மீன் (Fish)",
-          "மான் (Deer)",
-          "யானை (Elephant)"
-        ],
+        "options": [],
         "correctAnswer": "பறவை (Bird)",
         "explanation": "சரியான வாக்கியம்: வானத்தில் பறவை பறந்தது."
       },
@@ -1857,12 +1632,7 @@
         "questionTa": "தோட்டத்தில் அழகான மலர் மலர்ந்தது.",
         "meaningEn": "A beautiful flower bloomed in the garden.",
         "translit": "Thottathil azhagaana malar malarnthathu.",
-        "options": [
-          "மலர் (Flower)",
-          "கல் (Stone)",
-          "மண் (Soil)",
-          "முள் (Thorn)"
-        ],
+        "options": [],
         "correctAnswer": "மலர் (Flower)",
         "explanation": "சரியான வாக்கியம்: தோட்டத்தில் அழகான மலர் மலர்ந்தது."
       },
@@ -1873,12 +1643,7 @@
         "questionTa": "மழைக்குப் பிறகு மண் ஈரமாக இருந்தது.",
         "meaningEn": "After rain, the soil was wet.",
         "translit": "Mazhaikku piragu man eeramaaga irunthathu.",
-        "options": [
-          "மண் (Soil)",
-          "நிலா (Moon)",
-          "சூரியன் (Sun)",
-          "வானம் (Sky)"
-        ],
+        "options": [],
         "correctAnswer": "மண் (Soil)",
         "explanation": "சரியான வாக்கியம்: மழைக்குப் பிறகு மண் ஈரமாக இருந்தது."
       },
@@ -1891,12 +1656,7 @@
         "questionTa": "கவி எங்கு சென்றாள்?",
         "meaningEn": "Where did Kavi go?",
         "translit": "Kavi engu sendraal?",
-        "options": [
-          "தோட்டத்திற்குச் சென்றாள் (Garden)",
-          "பள்ளிக்குச் சென்றாள் (School)",
-          "கடைக்குச் சென்றாள் (Shop)",
-          "வீட்டிற்குச் சென்றாள் (Home)"
-        ],
+        "options": [],
         "correctAnswer": "தோட்டத்திற்குச் சென்றாள் (Garden)",
         "explanation": "கதையில்: ‘கவி தோட்டத்திற்குச் சென்றாள்.’"
       },
@@ -1909,12 +1669,7 @@
         "questionTa": "அவள் எதைப் பார்த்தாள்?",
         "meaningEn": "What did she see?",
         "translit": "Aval ethai paarthaal?",
-        "options": [
-          "ஒரு சிறிய பட்டாம்பூச்சியை (A small butterfly)",
-          "ஒரு பெரிய பறவையை (A big bird)",
-          "ஒரு பூனையை (A cat)",
-          "ஒரு மாட்டை (A cow)"
-        ],
+        "options": [],
         "correctAnswer": "ஒரு சிறிய பட்டாம்பூச்சியை (A small butterfly)",
         "explanation": "கதையில்: ‘அங்கு ஒரு சிறிய பட்டாம்பூச்சியைப் பார்த்தாள்.’"
       },
@@ -1927,12 +1682,7 @@
         "questionTa": "பட்டாம்பூச்சி எங்கு அமர்ந்திருந்தது?",
         "meaningEn": "Where was the butterfly sitting?",
         "translit": "Pattaampoochi engu amarnthirunthathu?",
-        "options": [
-          "மலரின் மீது (On the flower)",
-          "இலையின் மீது (On the leaf)",
-          "மரத்தின் மீது (On the tree)",
-          "தரையின் மீது (On the ground)"
-        ],
+        "options": [],
         "correctAnswer": "மலரின் மீது (On the flower)",
         "explanation": "கதையில்: ‘அது மலரின் மீது அமர்ந்திருந்தது.’"
       },
@@ -1945,10 +1695,7 @@
         "questionTa": "1. ரவி ஒரு விதையை விதைத்தான்.",
         "meaningEn": "Ravi sowed a seed.",
         "translit": "Ravi oru vithaiyai vithaithaan.",
-        "options": [
-          "சரி (True)",
-          "தவறு (False)"
-        ],
+        "options": [],
         "correctAnswer": "சரி (True)",
         "explanation": "சரி: ரவி ஒரு சிறிய விதையை மண்ணில் விதைத்தான்."
       },
@@ -1961,10 +1708,7 @@
         "questionTa": "2. ரவி விதைக்குத் தண்ணீர் ஊற்றவில்லை.",
         "meaningEn": "Ravi did not water the seed.",
         "translit": "Ravi vithaikku thanneer ootravillai.",
-        "options": [
-          "தவறு (False)",
-          "சரி (True)"
-        ],
+        "options": [],
         "correctAnswer": "தவறு (False)",
         "explanation": "தவறு: ரவி தினமும் அதற்குத் தண்ணீர் ஊற்றினான்."
       },
@@ -1977,10 +1721,7 @@
         "questionTa": "3. விதையிலிருந்து பச்சைத் தளிர் வந்தது.",
         "meaningEn": "Green sprout emerged from the seed.",
         "translit": "Vithaiyilirunthu pachai thalir vanthathu.",
-        "options": [
-          "சரி (True)",
-          "தவறு (False)"
-        ],
+        "options": [],
         "correctAnswer": "சரி (True)",
         "explanation": "சரி: சில நாட்களுக்குப் பிறகு பச்சைத் தளிர் வந்தது."
       }

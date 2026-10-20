@@ -95,6 +95,7 @@
             <label><input type="radio" name="user-role" value="student" checked> <span>Student (மாணவர்)</span></label>
             <label><input type="radio" name="user-role" value="teacher"> <span>Teacher (ஆசிரியர்)</span></label>
             <label><input type="radio" name="user-role" value="admin"> <span>Admin (நிர்வாகம்)</span></label>
+            <label><input type="radio" name="user-role" value="developer"> <span>🛠️ Developer (Testing)</span></label>
           </fieldset>
 
           <!-- Student Camera QR Scanner Panel -->
@@ -194,6 +195,35 @@
                 <span>🛡️</span> நிர்வாக QR அட்டை பெறுக (Admin QR Badge) ➜
               </a>
             </div>
+          </div>
+
+          <!-- Developer / Tester Sandbox Login Panel -->
+          <div id="developer-login-panel" hidden>
+            <div style="background: rgba(99, 102, 241, 0.1); border: 1.5px dashed #6366F1; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; text-align: left;">
+              <div style="font-weight: 800; color: #4338CA; font-size: 0.88rem; margin-bottom: 4px;">🛠️ Developer Test Sandbox (பரிசோதனை நிலை)</div>
+              <p style="font-size: 0.78rem; color: #475569; margin: 0; line-height: 1.4;">
+                Full testing access to all lessons (Reading Club all PDFs, Thirukkural, Aathichudi) without password. Use this for testing all activities. Can be disabled later.
+              </p>
+            </div>
+            <form id="developer-login-form">
+              <label for="dev-username">டெவலப்பர் ID (Developer Username)</label>
+              <input type="text" id="dev-username" value="developer" required autocomplete="username">
+              <label for="dev-grade">சோதனை வகுப்பு (Test Grade / Nilai)</label>
+              <select id="dev-grade">
+                <option value="1">Nilai 1</option>
+                <option value="2">Nilai 2</option>
+                <option value="3" selected>Nilai 3 (Reading Club Test)</option>
+                <option value="4">Nilai 4</option>
+                <option value="5">Nilai 5</option>
+                <option value="6">Nilai 6</option>
+                <option value="7">Nilai 7</option>
+                <option value="8">Nilai 8</option>
+              </select>
+              <p class="login-message" id="dev-login-message" aria-live="polite"></p>
+              <button class="login-continue" id="dev-continue-btn" type="submit" style="background: linear-gradient(135deg, #4F46E5, #7C3AED);">
+                🛠️ டெவலப்பர் சோதனை உள்நுழைவு (Sign In as Developer) ➔
+              </button>
+            </form>
           </div>
         </main>
       </div>
@@ -584,11 +614,12 @@
           <p class="rc-meaning-en" id="rc-meaning-en">Read the lesson</p>
           <p class="rc-translit" id="rc-translit">Paadam padi</p>
 
-          <!-- Interactive Comprehension Options Grid (When question has choices) -->
-          <div class="rc-options-container" id="rc-options-container" style="display: none;">
-            <div class="rc-options-label">👇 சரியான விடையைத் தேர்வு செய்க (Select Answer) அல்லது குரலில் கூறுக:</div>
-            <div class="rc-options-grid" id="rc-options-grid"></div>
-            <div class="rc-option-feedback" id="rc-option-feedback" style="display: none;"></div>
+          <!-- Voice Reading Prompt (Speech-to-Score, No Options) -->
+          <div class="rc-voice-reading-instruction-card">
+            <span class="rc-vri-icon">🎙️</span>
+            <div class="rc-vri-text">
+              <strong>குரல் வாசிப்புப் பயிற்சி (Speak & Read Aloud):</strong> 'வாசிக்கத் தொடங்கு' பொத்தானை அழுத்தி, மேலே உள்ள தமிழ்ச் சொற்களை சத்தமாக வாசிக்கவும்! முழு மதிப்பெண் பெற பேசவும்.
+            </div>
           </div>
           
           <div class="rc-actions">
