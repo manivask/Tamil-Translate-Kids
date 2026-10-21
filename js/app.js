@@ -608,6 +608,8 @@ const App = {
 
   // Screen Switcher
   showScreen(screenName) {
+    const requiredClub = { practice: "school", "reading-club": "reading", kural: "thirukkural", aathichudi: "aathichudi" }[screenName];
+    if (requiredClub && this.currentStudent && !this.getStudentClubs(this.currentStudent).includes(requiredClub)) screenName = "topic";
     KidSpeechService.cancelListening();
     KidSpeechService.stopSpeaking();
     this.handleSpeechStateChange(false);
@@ -622,6 +624,8 @@ const App = {
     if (this.elements.screenKural) this.elements.screenKural.classList.toggle("active", screenName === "kural");
     if (this.elements.screenAathichudi) this.elements.screenAathichudi.classList.toggle("active", screenName === "aathichudi");
     if (this.elements.screenReadingClub) this.elements.screenReadingClub.classList.toggle("active", screenName === "reading-club");
+
+    if (screenName === "reading-club" && window.ReadingClubPractice) ReadingClubPractice.syncStudentLevel();
 
     if (screenName === "login") {
       this.startQrScanner();
@@ -1144,6 +1148,8 @@ const App = {
     const hasKural = enrolledClubs.includes("thirukkural");
     const hasAathichudi = enrolledClubs.includes("aathichudi");
     const hasReading = enrolledClubs.includes("reading");
+    const school = document.getElementById("school-topic-section");
+    if (school) school.hidden = !enrolledClubs.includes("school");
 
     const kuralCard = document.querySelector(".heritage-studio-card.kural-theme");
     const aathichudiCard = document.querySelector(".heritage-studio-card.aathichudi-theme");
@@ -2032,6 +2038,7 @@ const App = {
 
   // Page 2 -> Page 3: Select Topic
   selectTopic(categoryKey) {
+    if (this.currentStudent && !this.getStudentClubs(this.currentStudent).includes("school")) return;
     this.currentCategory = categoryKey;
     if (window.KidAppLogger) KidAppLogger.log("NAV", `Selected Topic: ${categoryKey}`);
     this.filterSentences();

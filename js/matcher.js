@@ -9,6 +9,7 @@ const TamilMatcher = {
   normalize(text) {
     if (!text) return "";
     return text
+      .normalize("NFC")
       .toLowerCase()
       .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’]/g, " ")
       .replace(/\s+/g, " ")
@@ -167,55 +168,23 @@ const TamilMatcher = {
       };
     }
 
-    // List all candidate translations to check (both Tamil script & Tanglish transliteration)
-    const candidates = [
-      sentenceObj.tamilPrimary,
-      ...(sentenceObj.variations || [])
-    ];
-
-    if (sentenceObj.transliteration) {
-      candidates.push(sentenceObj.transliteration);
-    }
-
+    // Complete words in their original order are required for a pass.
+    const candidates = [sentenceObj.tamilPrimary, ...(sentenceObj.variations || [])].filter(Boolean);
+    const spokenWords = this.tokenize(spokenText);
     let maxScore = 0;
     let bestMatched = sentenceObj.tamilPrimary;
-
+    let exact = false;
     for (const variant of candidates) {
-      const score = this.evaluateAgainstSingle(variant, spokenText, sentenceObj.keywords);
-      if (score > maxScore) {
-        maxScore = score;
-        bestMatched = variant;
-      }
+      const words = this.tokenize(variant);
+      const matches = words.filter((word, i) => word === spokenWords[i]).length;
+      const score = matches / Math.max(words.length, spokenWords.length, 1);
+      if (score > maxScore) { maxScore = score; bestMatched = variant; }
+      if (words.length > 0 && score === 1) exact = true;
     }
-
-    // Apply difficulty scaling
-    let adjustedPercentage = 0;
-    let threshold = 70;
-
-    if (mode === "easy") {
-      threshold = 50;
-      // Friendly curve for beginners
-      adjustedPercentage = Math.round(Math.min(100, Math.pow(maxScore, 0.75) * 100));
-    } else if (mode === "hard") {
-      threshold = 85;
-      // Strict linear to slight penalty
-      adjustedPercentage = Math.round(Math.min(100, Math.pow(maxScore, 1.15) * 100));
-    } else {
-      // Medium mode (default)
-      threshold = 70;
-      adjustedPercentage = Math.round(Math.min(100, Math.pow(maxScore, 0.90) * 100));
-    }
-
-    // Direct match safety boost
-    const normSpoken = this.normalize(spokenText);
-    for (const variant of candidates) {
-      if (this.normalize(variant) === normSpoken) {
-        adjustedPercentage = 100;
-        break;
-      }
-    }
-
-    const isPass = adjustedPercentage >= threshold;
+    const threshold = 100;
+    const partialCredit = { easy: 49, medium: 39, hard: 24 }[mode] ?? 39;
+    const adjustedPercentage = exact ? 100 : Math.floor(maxScore * partialCredit);
+    const isPass = exact;
 
     // Stars rating (0 to 3)
     let stars = 0;

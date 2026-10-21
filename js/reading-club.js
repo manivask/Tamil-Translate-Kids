@@ -88,6 +88,7 @@
   let pdfItems = [];
   let pdfCompletedStats = { count: 0, stars: 0, scoreSum: 0 };
   let pdfAnsweredCurrent = false;
+  const passedPdfItems = new Set();
 
   // Quick Check State
   let quizQuestions = [];
@@ -230,14 +231,16 @@
     }
 
     pdfModules = loaded;
+    if (!pdfModules.some(mod => mod.id === currentPdfModuleId) && pdfModules.length) currentPdfModuleId = pdfModules[0].id;
     populatePdfSelector();
+    selectPdfModule(currentPdfModuleId);
   }
 
   function populatePdfSelector() {
     const controls = ui();
     if (!controls.pdfSelect) return;
 
-    let optionsHtml = `<option value="all-graded">🌟 அனைத்து அடிப்படைப் பாடங்கள் (All Graded Lessons - Nilai 1 to 8)</option>`;
+    let optionsHtml = "";
     let pillsHtml = `<button type="button" class="rc-pdf-pill ${currentPdfModuleId === 'all-graded' ? 'active' : ''}" data-pdf="all-graded">🌟 அனைத்து பாடங்கள்</button>`;
 
     pdfModules.forEach(mod => {
@@ -288,6 +291,7 @@
     if (!mod) return;
 
     currentPdfModule = mod;
+    passedPdfItems.clear();
     pdfItems = mod.items || [];
     pdfCurrentIndex = 0;
     pdfCompletedStats = { count: 0, stars: 0, scoreSum: 0 };
@@ -359,8 +363,9 @@
       return;
     }
 
-    pdfAnsweredCurrent = false;
     const item = pdfItems[pdfCurrentIndex];
+    pdfAnsweredCurrent = passedPdfItems.has(`${getStudentKey()}:${currentPdfModuleId}:${item.id}`);
+    getStudentDifficulty();
     const total = pdfItems.length;
     const progressPercent = Math.round(((pdfCurrentIndex + 1) / total) * 100);
 
@@ -440,9 +445,7 @@
     const cleanSelected = (selectedOpt || "").trim().toLowerCase();
     const cleanCorrect = (item.correctAnswer || "").trim().toLowerCase();
 
-    const isMatch = cleanSelected === cleanCorrect ||
-                    cleanSelected.includes(cleanCorrect) ||
-                    cleanCorrect.includes(cleanSelected);
+    const isMatch = !!cleanCorrect && cleanSelected === cleanCorrect;
 
     const allBtns = controls.optionsGrid ? controls.optionsGrid.querySelectorAll(".rc-option-btn") : [];
     allBtns.forEach(b => b.classList.remove("correct", "wrong"));
@@ -451,6 +454,7 @@
       btn.classList.add("correct");
       if (!pdfAnsweredCurrent) {
         pdfAnsweredCurrent = true;
+        passedPdfItems.add(`${getStudentKey()}:${currentPdfModuleId}:${item.id}`);
         pdfCompletedStats.stars += 3;
         pdfCompletedStats.scoreSum += 100;
         pdfCompletedStats.count++;
@@ -504,19 +508,9 @@
     if (!currentPdfModule || !pdfItems[pdfCurrentIndex]) return;
 
     if (!pdfAnsweredCurrent) {
-      pdfCompletedStats.stars += 1;
-      pdfCompletedStats.scoreSum += 70;
-      pdfCompletedStats.count++;
-      if (window.App) {
-        const item = pdfItems[pdfCurrentIndex];
-        App.saveProgress({
-          sentenceId: `${currentPdfModule.id}-${item.id}`,
-          category: `reading-club-pdf:${currentPdfModule.title}`,
-          score: 80,
-          stars: 1,
-          passed: true
-        });
-      }
+      const controls = ui();
+      if (controls.resultBox) controls.resultBox.textContent = "Read every word correctly or select the correct answer before continuing.";
+      return;
     }
 
     if (pdfCurrentIndex < pdfItems.length - 1) {
@@ -773,15 +767,22 @@
     add(rawQuestion);
     add(rawAnswer);
 
-    // Section 5 compound splits (e.g. இடப்பக்கம் = இடம் + பக்கம்)
-    if (rawQuestion && (rawQuestion.includes("=") || rawQuestion.includes("+"))) {
-      rawQuestion.split(/[=+]/).forEach(seg => add(seg));
-    }
-    // Section 7 minimal pairs (e.g. அரம் — அறம்)
-    if (rawQuestion && (rawQuestion.includes("—") || rawQuestion.includes("-"))) {
-      rawQuestion.split(/[—-]/).forEach(seg => add(seg));
-    }
     return Array.from(set);
+  }
+
+  function getStudentDifficulty() {
+    const select = document.getElementById("rc-difficulty-select");
+    const key = `rc_difficulty_${getStudentKey()}`;
+    const saved = localStorage.getItem(key) || "medium";
+    if (select && select.dataset.student !== key) {
+      select.dataset.student = key;
+      select.value = ["easy", "medium", "hard"].includes(saved) ? saved : "medium";
+      select.onchange = () => {
+        localStorage.setItem(key, select.value);
+        selectPdfModule(currentPdfModuleId);
+      };
+    }
+    return select ? select.value : saved;
   }
 
   function evaluateTranscript(transcript) {
@@ -793,15 +794,15 @@
 
     if (currentPdfModuleId !== "all-graded" && pdfItems && pdfItems[pdfCurrentIndex]) {
       const item = pdfItems[pdfCurrentIndex];
-      const target = item.questionTa.trim();
-      const candidates = buildSpeechCandidates(item.questionTa, item.correctAnswer);
+      const target = (item.type === "reading" ? item.questionTa : item.correctAnswer || item.questionTa).trim();
+      const candidates = buildSpeechCandidates(target, "");
 
       let rawPercent = 0;
       if (matcher && typeof matcher.evaluate === "function") {
         const evalRes = matcher.evaluate({
           tamilPrimary: candidates[0] || target,
           variations: candidates.slice(1)
-        }, cleanSpoken, "medium");
+        }, cleanSpoken, getStudentDifficulty());
         rawPercent = evalRes.percentage || 0;
       } else {
         const normSpoken = cleanSpoken.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’—=+]/g, " ").replace(/\s+/g, " ").trim();
@@ -809,11 +810,7 @@
           const normC = c.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’—=+]/g, " ").replace(/\s+/g, " ").trim();
           if (!normC) continue;
           if (normSpoken === normC) { rawPercent = 100; break; }
-          if (normSpoken.includes(normC) || normC.includes(normSpoken)) {
-            rawPercent = Math.max(rawPercent, 85);
-          }
         }
-        if (!rawPercent && cleanSpoken.length > 2) rawPercent = 65;
       }
 
       // Kid-friendly speech scoring: speaking the Tamil text yields 100% and 3 stars!
@@ -821,28 +818,15 @@
       let stars = 0;
       let passed = false;
 
-      if (rawPercent >= 75) {
-        score = 100;
-        stars = 3;
-        passed = true;
-      } else if (rawPercent >= 55) {
-        score = 85;
-        stars = 2;
-        passed = true;
-      } else if (rawPercent >= 40) {
-        score = 70;
-        stars = 1;
-        passed = true;
-      } else {
-        score = Math.max(25, rawPercent);
-        stars = 0;
-        passed = false;
+      if (rawPercent === 100) {
+        score = 100; stars = 3; passed = true;
       }
 
       if (controls.resultBox) {
         if (passed) {
           if (!pdfAnsweredCurrent) {
             pdfAnsweredCurrent = true;
+        passedPdfItems.add(`${getStudentKey()}:${currentPdfModuleId}:${item.id}`);
             pdfCompletedStats.stars += stars;
             pdfCompletedStats.scoreSum += score;
             pdfCompletedStats.count++;
@@ -897,7 +881,7 @@
       const evalRes = matcher.evaluate({
         tamilPrimary: candidates[0] || target,
         variations: candidates.slice(1)
-      }, cleanSpoken, "medium");
+      }, cleanSpoken, getStudentDifficulty());
       rawPercent = evalRes.percentage || 0;
     } else {
       const normSpoken = cleanSpoken.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’—=+]/g, " ").replace(/\s+/g, " ").trim();
@@ -905,34 +889,16 @@
         const normC = c.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?"'!’—=+]/g, " ").replace(/\s+/g, " ").trim();
         if (!normC) continue;
         if (normSpoken === normC) { rawPercent = 100; break; }
-        if (normSpoken.includes(normC) || normC.includes(normSpoken)) {
-          rawPercent = Math.max(rawPercent, 85);
-        }
       }
-      if (!rawPercent && cleanSpoken.length > 2) rawPercent = 65;
     }
 
     let score = rawPercent;
     let stars = 0;
     let passed = false;
 
-    if (rawPercent >= 75) {
-      score = 100;
-      stars = 3;
-      passed = true;
-    } else if (rawPercent >= 55) {
-      score = 85;
-      stars = 2;
-      passed = true;
-    } else if (rawPercent >= 40) {
-      score = 70;
-      stars = 1;
-      passed = true;
-    } else {
-      score = Math.max(25, rawPercent);
-      stars = 0;
-      passed = false;
-    }
+    if (rawPercent === 100) {
+        score = 100; stars = 3; passed = true;
+      }
 
     if (controls.resultBox) {
       if (passed) {
@@ -1300,6 +1266,7 @@
     selectPdf(pdfId) {
       selectPdfModule(pdfId);
     },
+    syncStudentLevel() { getStudentDifficulty(); },
     getAllSentences() {
       return allSentences;
     },

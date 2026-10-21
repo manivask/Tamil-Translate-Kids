@@ -352,11 +352,12 @@
             <th style="text-align: center;">📜 திருக்குறள்</th>
             <th style="text-align: center;">🪶 ஆத்திசூடி</th>
             <th style="text-align: center;">📖 வாசிப்பு மன்றம்</th>
+            <th>School Topic</th>
             <th>சேர்க்கை சுருக்கம் (Enrolled Clubs)</th>
           </tr>
         </thead>
         <tbody id="clubs-table-body">
-          <tr><td colspan="7" style="text-align: center; padding: 30px;">மாணவர் பட்டியல் ஏற்றப்படுகிறது...</td></tr>
+          <tr><td colspan="8" style="text-align: center; padding: 30px;">மாணவர் பட்டியல் ஏற்றப்படுகிறது...</td></tr>
         </tbody>
       </table>
     </main>
@@ -409,7 +410,7 @@
           renderTable();
         } catch (err) {
           console.error("Failed to load data:", err);
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">தரவுகளை ஏற்ற முடியவில்லை.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">தரவுகளை ஏற்ற முடியவில்லை.</td></tr>`;
         }
 
         searchInput.addEventListener("input", (e) => {
@@ -450,7 +451,7 @@
         });
 
         if (!filtered.length) {
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 24px; color: #64748B;">பொருத்தமான மாணவர்கள் எவரும் இல்லை.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 24px; color: #64748B;">பொருத்தமான மாணவர்கள் எவரும் இல்லை.</td></tr>`;
           return;
         }
 
@@ -464,6 +465,7 @@
           const hasKural = clubs.includes("thirukkural");
           const hasAathichudi = clubs.includes("aathichudi");
           const hasReading = clubs.includes("reading");
+          const hasSchool = clubs.includes("school");
 
           const isAaradhana = (student.firstName.toLowerCase() === "aaradhana");
 
@@ -492,11 +494,13 @@
                 <input type="checkbox" data-key="${key}" data-club="reading" ${hasReading ? 'checked' : ''}>
               </label>
             </td>
+            <td><label class="club-checkbox-label"><input type="checkbox" data-key="${key}" data-club="school" ${hasSchool ? 'checked' : ''}> School Topic</label></td>
             <td>
+              ${hasSchool ? '<span class="club-pill-tag reading">School Topic</span>' : ''}
               ${hasKural ? '<span class="club-pill-tag kural">📜 திருக்குறள்</span>' : ''}
               ${hasAathichudi ? '<span class="club-pill-tag aathichudi">🪶 ஆத்திசூடி</span>' : ''}
               ${hasReading ? '<span class="club-pill-tag reading">📖 வாசிப்பு மன்றம்</span>' : ''}
-              ${(!hasKural && !hasAathichudi && !hasReading) ? '<span class="club-pill-tag none">பதிவு இல்லை (None)</span>' : ''}
+              ${(!hasKural && !hasAathichudi && !hasReading && !hasSchool) ? '<span class="club-pill-tag none">பதிவு இல்லை (None)</span>' : ''}
             </td>
           `;
 
@@ -546,7 +550,7 @@
         const visibleKeys = getVisibleKeys();
         visibleKeys.forEach(key => {
           if (!enrollments[key]) enrollments[key] = { clubs: [] };
-          enrollments[key].clubs = state ? ["thirukkural", "aathichudi", "reading"] : [];
+          enrollments[key].clubs = state ? ["thirukkural", "aathichudi", "reading", "school"] : [];
         });
         saveEnrollments(true);
         renderTable();

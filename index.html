@@ -7,10 +7,10 @@
   <title>Tamil Translate for Kids | தமிழ் குரல் மொழிபெயர்ப்பு</title>
   <meta name="description" content="A fun, voice-interactive Tamil translation learning app for kids aged 7-9 (Grades 1-3). Read English statements and speak the Tamil translation with instant percentage match!">
   <meta name="theme-color" content="#2B1055">
-  
+
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="css/style.css?v=20261004-tts-v5">
-  
+
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦜</text></svg>">
 </head>
@@ -52,7 +52,7 @@
           <div class="login-hero-badge">🦜 தமிழ் கற்றல் தளம்</div>
           <h1 class="login-hero-title">தமிழ் குரல் வழி கற்றல் கூடம்</h1>
           <p class="login-hero-sub">தமிழை எளிமையாகவும், இனிமையாகவும், குரல் வழியிலும் விளையாட்டாகவும் கற்று மகிழுங்கள்!</p>
-          
+
           <div class="login-hero-features">
             <div class="hero-feature-item">
               <span class="feature-icon">📜</span>
@@ -313,7 +313,7 @@
         <button class="screen-back-btn" id="back-from-kural-btn">◀ மாணவர் முகப்பு</button>
         <div class="current-grade-badge">📜 திருக்குறள் கூடம்</div>
       </div>
-      
+
       <!-- Studio Mode Switcher Tabs -->
       <div class="studio-mode-tabs">
         <button class="studio-tab-btn active" id="kural-tab-read-btn">
@@ -324,6 +324,13 @@
         </button>
       </div>
 
+      <div class="rc-browser compact">
+        <label for="rc-difficulty-select">Student level</label>
+        <select id="rc-difficulty-select">
+          <option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option>
+        </select>
+        <small>Read every word correctly to pass. Incomplete words need another try.</small>
+      </div>
       <!-- READ VIEW -->
       <div class="studio-view" id="kural-read-view">
         <div class="kural-browser compact" aria-label="Thirukkural topic chooser">
@@ -343,7 +350,7 @@
             <button class="listen-ta-btn" id="listen-kural-btn">🔊 கேளுங்கள்</button>
             <button class="kural-mic-btn" id="kural-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button>
           </div>
-          
+
           <!-- Live Speech-to-Text Transcript -->
           <div class="kural-transcript-card compact">
             <div class="kural-transcript-label">நீங்கள் பேசியது (Live speech transcript):</div>
@@ -398,7 +405,7 @@
         <button class="screen-back-btn" id="back-from-aathichudi-btn">◀ மாணவர் முகப்பு</button>
         <div class="current-grade-badge">🪶 ஆத்திசூடி கூடம்</div>
       </div>
-      
+
       <!-- Studio Mode Switcher Tabs -->
       <div class="studio-mode-tabs">
         <button class="studio-tab-btn active" id="aathichudi-tab-read-btn">
@@ -409,6 +416,13 @@
         </button>
       </div>
 
+      <div class="rc-browser compact">
+        <label for="rc-difficulty-select">Student level</label>
+        <select id="rc-difficulty-select">
+          <option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option>
+        </select>
+        <small>Read every word correctly to pass. Incomplete words need another try.</small>
+      </div>
       <!-- READ VIEW -->
       <div class="studio-view" id="aathichudi-read-view">
         <div class="aathichudi-browser compact" aria-label="Aathichudi section and verse chooser">
@@ -486,7 +500,7 @@
         <button class="screen-back-btn" id="back-from-rc-btn">◀ மாணவர் முகப்பு</button>
         <div class="current-grade-badge">📖 வாசிப்பு மன்றம் (Reading Club)</div>
       </div>
-      
+
       <!-- ================= PDF PACKAGE SELECTOR AT THE TOP ================= -->
       <div class="rc-pdf-selection-card">
         <div class="rc-pdf-header-row">
@@ -506,23 +520,13 @@
 
         <div class="rc-pdf-dropdown-row">
           <select id="rc-pdf-select" class="rc-pdf-select-field">
-            <option value="all-graded">🌟 அனைத்து அடிப்படைப் பாடங்கள் (All Graded Lessons - Nilai 1 to 8)</option>
+
             <option value="pdf-stage2-simple">📕 Stage 2 - எளிய நிலை (Stage2_Simple.pdf)</option>
             <option value="pdf-stage2-intermediate">📗 Stage 2 - நடுத்தர நிலை (Stage2_Intermediate.pdf)</option>
             <option value="pdf-stage2-complex">📘 Stage 2 - உயர் நிலை (Stage2_Complex.pdf)</option>
             <option value="pdf-stage2-assign3">📙 Stage 2 - ஒப்படைப்பு 3 (Stage 2-Assignment 3.pdf)</option>
             <option value="pdf-stage2-activity">📓 Stage 2 - செயல்பாட்டுப் பகுதி (Stage2_Activity part.pdf)</option>
           </select>
-        </div>
-
-        <!-- Fast 1-click PDF Selection Pills -->
-        <div class="rc-pdf-pills-bar" id="rc-pdf-pills-bar">
-          <button type="button" class="rc-pdf-pill active" data-pdf="all-graded">🌟 அனைத்து பாடங்கள்</button>
-          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-simple">📕 Stage 2 எளிய நிலை</button>
-          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-intermediate">📗 Stage 2 நடுத்தர நிலை</button>
-          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-complex">📘 Stage 2 உயர் நிலை</button>
-          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-assign3">📙 Stage 2 ஒப்படைப்பு 3</button>
-          <button type="button" class="rc-pdf-pill" data-pdf="pdf-stage2-activity">📓 Stage 2 செயல்பாட்டுப் பகுதி</button>
         </div>
 
         <!-- Active PDF Unit Progress Bar (Shown when a PDF is selected) -->
@@ -549,16 +553,15 @@
         </div>
       </div>
 
-      <!-- Studio Mode Switcher Tabs -->
-      <div class="studio-mode-tabs" id="rc-studio-mode-tabs">
-        <button class="studio-tab-btn active" id="rc-tab-read-btn">
-          🎙️ குரல் வாசிப்புப் பயிற்சி (Voice Reading)
-        </button>
-        <button class="studio-tab-btn" id="rc-tab-quiz-btn">
-          ⚡ தினசரி வினாடி வினா (Daily Quick Check)
-        </button>
-      </div>
 
+
+      <div class="rc-browser compact">
+        <label for="rc-difficulty-select">Student level</label>
+        <select id="rc-difficulty-select">
+          <option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option>
+        </select>
+        <small>Read every word correctly to pass. Incomplete words need another try.</small>
+      </div>
       <!-- READ VIEW -->
       <div class="studio-view" id="rc-read-view">
         <div class="rc-browser compact" id="rc-default-browser" aria-label="Reading Club filter chooser">
@@ -621,7 +624,7 @@
               <strong>குரல் வாசிப்புப் பயிற்சி (Speak & Read Aloud):</strong> 'வாசிக்கத் தொடங்கு' பொத்தானை அழுத்தி, மேலே உள்ள தமிழ்ச் சொற்களை சத்தமாக வாசிக்கவும்! முழு மதிப்பெண் பெற பேசவும்.
             </div>
           </div>
-          
+
           <div class="rc-actions">
             <button class="listen-ta-btn" id="listen-rc-btn">🔊 கேளுங்கள்</button>
             <button class="rc-mic-btn" id="rc-mic-btn">🎙️ வாசிக்கத் தொடங்கு</button>
@@ -635,11 +638,7 @@
 
           <div class="rc-result" id="rc-result" aria-live="polite">மைக்ரோஃபோனை அழுத்தி வாசியுங்கள்.</div>
 
-          <!-- Manual typing fallback -->
-          <div class="rc-manual-box compact">
-            <input type="text" id="rc-manual-input" placeholder="தமிழில் தட்டச்சு செய்யவும்..." aria-label="Type sentence in Tamil">
-            <button id="rc-manual-submit" type="button">சரிபார் (Test)</button>
-          </div>
+
 
           <!-- Integrated Navigation inside card to stay completely visible on one screen -->
           <div class="studio-card-nav">
@@ -824,27 +823,23 @@
                     <span class="studio-tag">Nilai 1-8 · 2, 3, 4 சொல் தொடர்கள்</span>
                   </div>
                 </div>
-                <p class="studio-desc">எளிய வாக்கியங்கள் மூலம் சரளமாகத் தமிழில் வாசிக்கப் பழகவும்; தினசரி Quick Check மூலம் தேர்ச்சி பெறவும்!</p>
+                <p class="studio-desc">எளிய வாக்கியங்கள் மூலம் சரளமாகத் தமிழில் வாசிக்கப் பழகவும்!</p>
                 <div class="studio-action-row">
                   <button class="studio-btn primary" id="open-rc-topic-btn">
                     <span>🎙️</span> குரல் வாசிப்பு
                   </button>
-                  <button class="studio-btn quiz-btn" id="open-rc-quiz-btn">
-                    <span>⚡</span> Quick Check
-                  </button>
+
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="topics-section-divider">
-            <span>📖 வகுப்புத் தலைப்புகள் (Grade Translation Topics)</span>
-          </div>
+          <details id="school-topic-section" hidden><summary class="topics-section-divider">📖 School Topic</summary>
 
           <!-- Visible 2-Column Topic Grid -->
           <div class="topics-grid" id="topics-grid">
             <!-- Generated by JavaScript for complete visibility -->
-          </div>
+          </div></details>
         </main>
       </div>
     </section>
