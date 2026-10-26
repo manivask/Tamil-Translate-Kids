@@ -5,8 +5,26 @@
 
 const KidAudioFX = {
   ctx: null,
+  // Sound effects are off by default so login never plays a surprise sound.
+  enabled: (() => {
+    try { return localStorage.getItem("ttk-sound-enabled") === "true"; }
+    catch (_) { return false; }
+  })(),
+
+  setEnabled(enabled) {
+    this.enabled = Boolean(enabled);
+    try { localStorage.setItem("ttk-sound-enabled", String(this.enabled)); } catch (_) {}
+    if (!this.enabled && this.ctx && this.ctx.state === "running") {
+      // Stop any tones that are currently playing when sound is switched off.
+      try { this.ctx.suspend(); } catch (_) {}
+    } else if (this.enabled && this.ctx && this.ctx.state === "suspended") {
+      try { this.ctx.resume(); } catch (_) {}
+    }
+    return this.enabled;
+  },
 
   init() {
+    if (!this.enabled) return;
     if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       this.ctx = new AudioCtx();
@@ -18,6 +36,7 @@ const KidAudioFX = {
 
   // Play a simple synthesized chime/tone
   playTone(freq, type = "sine", duration = 0.2, delay = 0, gainVal = 0.15) {
+    if (!this.enabled) return;
     try {
       this.init();
       if (!this.ctx) return;
