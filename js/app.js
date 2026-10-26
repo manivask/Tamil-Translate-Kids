@@ -224,6 +224,7 @@ const App = {
       modalDismissBtn: document.getElementById("modal-dismiss-btn"),
       modalPrintReportBtn: document.getElementById("modal-print-report-btn"),
       logoutBtn: document.getElementById("logout-btn"),
+      loginSoundToggle: document.getElementById("login-sound-toggle"),
 
       // Student Dashboard & Sidebar Elements
       studentGreetingText: document.getElementById("student-greeting-text"),
@@ -250,6 +251,20 @@ const App = {
 
   bindEvents() {
     this.elements.roleInputs.forEach(input => input.addEventListener("change", () => this.toggleRole()));
+    if (this.elements.loginSoundToggle && window.KidAudioFX) {
+      const soundButton = this.elements.loginSoundToggle;
+      const refreshSoundButton = () => {
+        const enabled = KidAudioFX.enabled;
+        soundButton.textContent = enabled ? "🔊 Sound: On" : "🔇 Sound: Off";
+        soundButton.setAttribute("aria-pressed", String(enabled));
+        soundButton.setAttribute("aria-label", enabled ? "Disable sound effects" : "Enable sound effects");
+      };
+      refreshSoundButton();
+      soundButton.addEventListener("click", () => {
+        KidAudioFX.setEnabled(!KidAudioFX.enabled);
+        refreshSoundButton();
+      });
+    }
     if (this.elements.studentGrade) {
       this.elements.studentGrade.addEventListener("change", () => this.populateStudentNames());
     }
