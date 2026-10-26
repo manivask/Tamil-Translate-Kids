@@ -1,0 +1,43 @@
+name: Validate application
+
+on:
+  push:
+    branches:
+      - main
+      - "enhancement/**"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run Python API validation tests
+        run: python -m unittest discover -s tests -p "test_*.py"
+
+      - name: Run Tamil scoring regression tests
+        run: node tests/strict-scoring.test.js
+
+      - name: Run iOS speech lifecycle regression tests
+        run: node tests/ios-speech-lifecycle.test.js
+
+      - name: Check Python syntax
+        run: python -m py_compile server.py
