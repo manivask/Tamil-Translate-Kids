@@ -1637,6 +1637,16 @@ const App = {
       }
 
       const rows = await this.parseReadingFile(file);
+
+      // Stop obvious text corruption before the user can publish the imported material.
+      const importedText = rows.map(row => [row.tamil, row.english, row.translit].filter(Boolean).join(" ")).join("\n");
+      const hasCorruptText = /\uFFFD|[\uE000-\uF8FF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|[\uDC00-\uDFFF]/u.test(importedText);
+      if (hasCorruptText) {
+        alert("இந்தக் கோப்பிலிருந்து சில எழுத்துகள் சரியாகப் படிக்கப்படவில்லை. உள்ளடக்கத்தைச் சேமிக்க வேண்டாம். PDF-ஐ Word (.docx) ஆக மாற்றி மீண்டும் முயற்சிக்கவும் அல்லது உரையைச் சரிபார்க்கவும்.");
+        if (banner) banner.style.display = "none";
+        return;
+      }
+
       if (!rows.length) {
         alert("கோப்பில் வாசிப்புத் தொடர்கள் எதுவும் கண்டறியப்படவில்லை. தயவுசெய்து சரியான தமிழ் கோப்பைப் பதிவேற்றவும்.");
         if (banner) banner.style.display = "none";
@@ -1759,7 +1769,7 @@ const App = {
       if (window.mammoth) {
         const result = await window.mammoth.extractRawText({ arrayBuffer });
         const text = result.value || "";
-        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        const lines = text.normalize("NFC").split(/\r?\n/).map(l => l.normalize("NFC").trim()).filter(Boolean);
         extractedRows.push(...processLinesWithSections(lines));
       } else {
         throw new Error("Word parser library not loaded");
@@ -1773,10 +1783,55 @@ const App = {
         for (let i = 1; i <= pdf.numPages; i++) {
           const page = await pdf.getPage(i);
           const textContent = await page.getTextContent();
-          const pageStrings = textContent.items.map(item => item.str);
-          fullText += pageStrings.join(" ") + "\n";
+          const items = (textContent.items || []).filter(item => typeof item.str === "string" && item.str.length);
+          const pageLines = [];
+          let lineText = "";
+          let previousItem = null;
+          let previousY = null;
+
+          // Reconstruct lines from PDF.js positions; avoid forcing spaces between
+          // every fragment, which can split Tamil words and combining sequences.
+          for (const item of items) {
+            const value = item.str.normalize("NFC");
+            const transform = item.transform || [];
+            const x = Number(transform[4]);
+            const y = Number(transform[5]);
+            const fontSize = Math.max(1, Math.abs(Number(transform[3]) || 10));
+
+            if (previousItem && Number.isFinite(y) && Number.isFinite(previousY) &&
+                Math.abs(y - previousY) > Math.max(2, fontSize * 0.45)) {
+              if (lineText.trim()) pageLines.push(lineText.trim());
+              lineText = "";
+              previousItem = null;
+            }
+
+            if (previousItem && Number.isFinite(x)) {
+              const previousTransform = previousItem.transform || [];
+              const previousX = Number(previousTransform[4]);
+              const previousWidth = Number(previousItem.width) || 0;
+              const gap = x - (previousX + previousWidth);
+              const spaceThreshold = Math.max(1.5, fontSize * 0.2);
+              if (Number.isFinite(gap) && gap > spaceThreshold &&
+                  lineText && !/\s$/.test(lineText) && !/^\s/.test(value)) {
+                lineText += " ";
+              }
+            }
+
+            lineText += value;
+            if (item.hasEOL) {
+              if (lineText.trim()) pageLines.push(lineText.trim());
+              lineText = "";
+              previousItem = null;
+              previousY = null;
+            } else {
+              previousItem = item;
+              previousY = y;
+            }
+          }
+          if (lineText.trim()) pageLines.push(lineText.trim());
+          fullText += pageLines.join("\n") + "\n";
         }
-        const lines = fullText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        const lines = fullText.normalize("NFC").split(/\r?\n/).map(l => l.normalize("NFC").trim()).filter(Boolean);
         extractedRows.push(...processLinesWithSections(lines));
       } else {
         throw new Error("PDF parser library not loaded");
