@@ -989,7 +989,6 @@ const App = {
     this.currentStudent = devStudent;
     this.currentGrade = grade;
     this.stopQrScanner();
-    KidAudioFX.playSuccessFanfare();
     this.triggerConfetti();
 
     this.selectGrade(this.currentGrade);
