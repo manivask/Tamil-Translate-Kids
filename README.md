@@ -152,3 +152,20 @@ WebKit's `SpeechRecognitionPermissionManager.cpp` uses `service-not-allowed`
 for both service permission denial and locale-specific service unavailability:
 https://github.com/WebKit/WebKit/blob/main/Source/WebKit/UIProcess/SpeechRecognitionPermissionManager.cpp
 Siri working therefore does not establish that Tamil browser recognition works.
+
+
+## Multi-user readiness and security
+
+The `enhancement/secure-multiuser-foundation` branch is a development hardening pass; it does not change the live `main` branch.
+
+**Do not expose the current app or its Python API to a shared network yet.** The repository currently contains student roster/enrollment JSON, the teacher/admin checks are client-side, the staff QR codes are not authentication, and the API does not yet enforce accounts or roles. These limitations must be addressed before using real student records with a group of members. See [SECURITY.md](SECURITY.md) for the findings and required milestones.
+
+The local Python server now binds to `127.0.0.1:8080` by default. Its development API validates request bodies and data ranges, but it is not a production authentication system. Do not enable LAN binding using `TBTA_ALLOW_INSECURE_LAN=1` for real student data.
+
+Run the Python validation tests with:
+
+```bash
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+The multi-user work still needs a follow-up phase for server-verified teacher/admin accounts, private roster delivery, authorization on every API route, shared progress across devices, HTTPS, and backup/restore testing. Keep this branch separate from `main` until those items and the full student/teacher workflows have been validated.
