@@ -1994,12 +1994,9 @@ const App = {
   },
 
   async deleteReadingMaterial(matId) {
-    let serverDeleteConfirmed = false;
     try {
       const response = await fetch(`/api/reading-materials?id=${encodeURIComponent(matId)}`, { method: "DELETE" });
-      if (response.ok) {
-        serverDeleteConfirmed = true;
-      } else if (response.status !== 404) {
+      if (!response.ok && response.status !== 404) {
         alert("பாடத்தை நீக்க முடியவில்லை. சேவையகத்தில் பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
         return false;
       }
@@ -2019,7 +2016,7 @@ const App = {
     if (window.ReadingClubPractice && window.ReadingClubPractice.reloadCustomMaterials) {
       await window.ReadingClubPractice.reloadCustomMaterials();
     }
-    return serverDeleteConfirmed || !serverDeleteConfirmed;
+    return true;
   },
 
   renderActiveMaterialsCards(gridId) {
