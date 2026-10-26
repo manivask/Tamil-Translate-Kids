@@ -10,4 +10,8 @@ input_voice_data/*
 !input_voice_data/README.md
 input_voice_data_bundle_*.json
 data/learning_progress.db
+data/private/
 __pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
