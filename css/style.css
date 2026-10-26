@@ -312,6 +312,31 @@ body {
   justify-content: center;
 }
 
+.login-sound-control {
+  display: flex;
+  justify-content: flex-end;
+  margin: -8px 0 12px;
+}
+.login-sound-toggle {
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 8px 13px;
+  background: #f8fafc;
+  color: #334155;
+  font: 700 .88rem var(--font-main);
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.login-sound-toggle:hover {
+  background: #ede9fe;
+  border-color: #a78bfa;
+  transform: translateY(-1px);
+}
+.login-sound-toggle:focus-visible {
+  outline: 3px solid #a78bfa;
+  outline-offset: 2px;
+}
+
 .login-mark {
   width: 58px;
   height: 58px;
