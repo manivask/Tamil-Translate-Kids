@@ -1200,16 +1200,28 @@ const App = {
     this.adminRecords = records;
     this.allRecords = records;
 
-    // Load custom materials
+    // Prefer the server's list even when it is empty, so deleted lessons do not
+    // reappear from a stale browser-local copy. Use local storage only when the
+    // server API is unavailable (for static/local-browser fallback).
     let customMaterials = [];
+    let materialsLoadedFromServer = false;
     try {
       const res = await fetch("/api/reading-materials");
-      if (res.ok) customMaterials = await res.json();
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          customMaterials = data;
+          materialsLoadedFromServer = true;
+          localStorage.setItem("tbta_custom_reading_materials", JSON.stringify(data));
+        }
+      }
     } catch (_) {}
-    if (!customMaterials || !customMaterials.length) {
+    if (!materialsLoadedFromServer) {
       try {
         customMaterials = JSON.parse(localStorage.getItem("tbta_custom_reading_materials") || "[]");
-      } catch (_) {}
+      } catch (_) {
+        customMaterials = [];
+      }
     }
     this.customMaterials = customMaterials;
 
@@ -1610,9 +1622,16 @@ const App = {
 
     if (cancelBtn) {
       cancelBtn.addEventListener("click", () => {
+        // Discard the selected PDF/Word/other source and its extracted preview.
         if (previewBox) previewBox.style.display = "none";
         if (banner) banner.style.display = "none";
+        if (tbody) tbody.innerHTML = "";
+        if (countEl) countEl.textContent = "0";
         fileInput.value = "";
+        const titleInput = document.getElementById(`${role}-upload-title`);
+        if (titleInput) titleInput.value = "";
+        this.currentUploadedFile = null;
+        this.currentExtractedRows = [];
       });
     }
 
@@ -1950,6 +1969,8 @@ const App = {
     if (banner) banner.style.display = "none";
     if (fileInput) fileInput.value = "";
     if (titleInput) titleInput.value = "";
+    this.currentUploadedFile = null;
+    this.currentExtractedRows = [];
 
     await this.refreshStaffData();
   },
@@ -1973,17 +1994,32 @@ const App = {
   },
 
   async deleteReadingMaterial(matId) {
+    let serverDeleteConfirmed = false;
     try {
-      await fetch(`/api/reading-materials?id=${encodeURIComponent(matId)}`, { method: "DELETE" });
-    } catch (_) {}
+      const response = await fetch(`/api/reading-materials?id=${encodeURIComponent(matId)}`, { method: "DELETE" });
+      if (response.ok) {
+        serverDeleteConfirmed = true;
+      } else if (response.status !== 404) {
+        alert("பாடத்தை நீக்க முடியவில்லை. சேவையகத்தில் பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.");
+        return false;
+      }
+      // A 404 usually means this is a static-hosted version without the API;
+      // in that case remove the browser-local copy as a local-only fallback.
+    } catch (_) {
+      // Static hosting or offline mode: use the browser-local fallback below.
+    }
 
-    let local = JSON.parse(localStorage.getItem("tbta_custom_reading_materials") || "[]");
+    let local = [];
+    try {
+      local = JSON.parse(localStorage.getItem("tbta_custom_reading_materials") || "[]");
+    } catch (_) {}
     local = local.filter(m => m.id !== matId);
     localStorage.setItem("tbta_custom_reading_materials", JSON.stringify(local));
 
     if (window.ReadingClubPractice && window.ReadingClubPractice.reloadCustomMaterials) {
       await window.ReadingClubPractice.reloadCustomMaterials();
     }
+    return serverDeleteConfirmed || !serverDeleteConfirmed;
   },
 
   renderActiveMaterialsCards(gridId) {
@@ -2021,9 +2057,11 @@ const App = {
   },
 
   async confirmDeleteMaterial(matId) {
-    if (confirm("இந்த வாசிப்பு பாடத்தை நிச்சயமாக நீக்க விரும்புகிறீர்களா? இது மாணவர் வாசிப்பு மன்றத்திலிருந்தும் நீக்கப்படும்.")) {
-      await this.deleteReadingMaterial(matId);
-      await this.refreshStaffData();
+    const material = (this.customMaterials || []).find(item => item.id === matId);
+    const title = material ? (material.title || material.fileName || "இந்தப் பாடம்") : "இந்தப் பாடம்";
+    if (confirm(`“${title}” பாடத்தை நீக்கவா? இது மாணவர்களின் Reading Club பட்டியலிலிருந்தும் நீக்கப்படும். அசல் PDF/Word கோப்பு சேமிக்கப்படுவதில்லை; நீக்கப்படுவது வெளியிடப்பட்ட பாட உள்ளடக்கம்.`)) {
+      const deleted = await this.deleteReadingMaterial(matId);
+      if (deleted) await this.refreshStaffData();
     }
   },
 
