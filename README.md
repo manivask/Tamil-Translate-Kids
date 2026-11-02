@@ -49,7 +49,7 @@ An interactive, voice-driven Tamil learning web application for **Grades 1–8**
    - The reusable student roster is stored at `data/students/roster.json`; it contains only first name, last name, and Nilai.
    - `server.py` stores local development records in `data/learning_progress.db`. On GitHub Pages, the same records remain in that browser's local storage until a hosted API is connected.
    - In **Student Club Enrollments**, administrators can create students, assign Nilai, school (FHS, CHS, RHS, or Online), and a club group, then open a student-specific QR badge. School and group edits and newly created student records are saved in that browser's local storage. GitHub Pages is static, so these changes are not shared across browsers or devices; the generated QR itself includes the student's login details and assigned school/group.
-   - The QR badges page can filter students by club, grade, and name. Download one student's QR as a PNG or download the currently filtered student batch as a ZIP of PNG files.
+   - The QR badges page can filter students by club, grade, and name. Download one student's complete badge (name, school, grade, ID, activity prompt, and QR) as a PNG, or download the currently filtered badge batch as a ZIP of full-card PNGs.
 
 ---
 

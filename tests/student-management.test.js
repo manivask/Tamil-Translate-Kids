@@ -84,8 +84,9 @@ const app = vm.runInContext("App", context);
         assert.match(html, new RegExp(`<input type="checkbox" value="${club}"`), `${club} has a QR filter`);
       }
       assert.match(html, /id="download-qr-batch-btn"/, "filtered QR batches can be downloaded");
-      assert.match(html, /class="badge-download-btn"/, "individual student QR codes can be downloaded");
+      assert.match(html, /class="badge-card-download-btn"/, "individual full student badges can be downloaded");
       assert.match(html, /function createZip\(files\)/, "batch download is packaged as a ZIP");
+      assert.match(html, /function getFullBadgePngBlob\(student, card\)/, "downloads render the complete student badge");
     }
   }
 
