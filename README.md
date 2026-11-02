@@ -46,6 +46,7 @@ An interactive, voice-driven Tamil learning web application for **Grades 1–8**
 
 8. **Stage 2 Week 5 Reading Club**
    - Focuses the reading space on `Reading-Stage2-Week5_Upd.pdf`, with section-by-section read-aloud practice for all seven worksheet sections.
+   - Children can jump to any section or question and skip ahead; sections 4, 6, and 7 accept close pronunciation matches.
 
 9. **Student learning records**
    - Students select their Nilai and name from the supplied roster before beginning. Their successful sentence and Thirukkural attempts are associated with that student.

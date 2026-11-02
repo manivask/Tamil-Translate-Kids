@@ -100,6 +100,7 @@
     // PDF Selector UI at the Top
     pdfSectionsWrap: document.getElementById("rc-pdf-sections-wrap"),
     pdfSectionsBar: document.getElementById("rc-pdf-sections-bar"),
+    questionSelect: document.getElementById("rc-question-select"),
     sectionsCountLbl: document.getElementById("rc-sections-count-lbl"),
     pdfViewLink: document.getElementById("rc-view-pdf-link"),
     pdfLoadError: document.getElementById("rc-pdf-load-error"),
@@ -298,6 +299,9 @@
     const controls = ui();
     if (!currentPdfModule || !pdfItems.length) return;
 
+    if (controls.completedCard) controls.completedCard.style.display = "none";
+    if (controls.mainCard) controls.mainCard.style.display = "block";
+
     if (pdfCurrentIndex >= pdfItems.length) {
       showPdfCompletion();
       return;
@@ -308,6 +312,20 @@
     getStudentDifficulty();
     const total = pdfItems.length;
     const progressPercent = Math.round(((pdfCurrentIndex + 1) / total) * 100);
+
+    if (controls.questionSelect) {
+      controls.questionSelect.replaceChildren();
+      pdfItems.forEach((question, index) => {
+        const option = document.createElement("option");
+        const prompt = question.questionTa.length > 36
+          ? `${question.questionTa.slice(0, 33)}…`
+          : question.questionTa;
+        option.value = String(index);
+        option.textContent = `வினா ${index + 1}: ${prompt}`;
+        controls.questionSelect.appendChild(option);
+      });
+      controls.questionSelect.value = String(pdfCurrentIndex);
+    }
 
     if (controls.unitPdfTitle) controls.unitPdfTitle.textContent = currentPdfModule.title.split("(")[0].trim();
     if (controls.unitStepCount) controls.unitStepCount.textContent = `வினா ${pdfCurrentIndex + 1} / ${total}`;
@@ -447,12 +465,6 @@
   function completeCurrentPdfQuestion() {
     if (!currentPdfModule || !pdfItems[pdfCurrentIndex]) return;
 
-    if (!pdfAnsweredCurrent) {
-      const controls = ui();
-      if (controls.resultBox) controls.resultBox.textContent = "Read every word correctly or select the correct answer before continuing.";
-      return;
-    }
-
     if (pdfCurrentIndex < pdfItems.length - 1) {
       pdfCurrentIndex++;
       renderCurrentPdfQuestion();
@@ -476,24 +488,30 @@
     if (controls.completedCard) controls.completedCard.style.display = "block";
 
     if (controls.completedPdfName) {
-      controls.completedPdfName.textContent = `நீங்கள் ${currentPdfModule.title} பாடத்தின் அனைத்து வினாக்களையும் வெற்றிகரமாக முடித்துவிட்டீர்கள்!`;
+      controls.completedPdfName.textContent = `${currentPdfModule.title} பகுதியில் கடைசி வினா வரை வந்துவிட்டீர்கள்!`;
     }
     if (controls.completedCount) {
-      controls.completedCount.textContent = `${pdfItems.length} / ${pdfItems.length}`;
+      const completedCount = pdfItems.filter(item =>
+        passedPdfItems.has(`${getStudentKey()}:${currentPdfModuleId}:${item.id}`)
+      ).length;
+      controls.completedCount.textContent = `${completedCount} / ${pdfItems.length}`;
     }
     if (controls.completedStars) {
       controls.completedStars.textContent = `⭐ ${pdfCompletedStats.stars}`;
     }
     if (controls.completedScore) {
-      const avg = pdfCompletedStats.count > 0 ? Math.round(pdfCompletedStats.scoreSum / pdfCompletedStats.count) : 100;
+      const avg = pdfCompletedStats.count > 0 ? Math.round(pdfCompletedStats.scoreSum / pdfCompletedStats.count) : 0;
       controls.completedScore.textContent = `${avg}%`;
     }
 
-    if (window.KidAudioFX) {
+    const completedAll = pdfItems.every(item =>
+      passedPdfItems.has(`${getStudentKey()}:${currentPdfModuleId}:${item.id}`)
+    );
+    if (completedAll && window.KidAudioFX) {
       KidAudioFX.playSuccessFanfare();
       KidAudioFX.playStarDing(3);
     }
-    if (window.App) App.triggerConfetti();
+    if (completedAll && window.App) App.triggerConfetti();
   }
 
   async function loadCustomMaterials() {
@@ -735,9 +753,11 @@
     if (currentPdfModuleId !== "all-graded" && pdfItems && pdfItems[pdfCurrentIndex]) {
       const item = pdfItems[pdfCurrentIndex];
       const target = (item.type === "reading" ? item.questionTa : item.correctAnswer || item.questionTa).trim();
-      const candidates = buildSpeechCandidates(target, "");
+      const alternateTarget = item.type === "reading" ? item.correctAnswer : item.questionTa;
+      const candidates = buildSpeechCandidates(target, alternateTarget);
 
       let rawPercent = 0;
+      let gentleMatch = false;
       if (matcher && typeof matcher.evaluate === "function") {
         const evalRes = matcher.evaluate({
           tamilPrimary: candidates[0] || target,
@@ -753,14 +773,32 @@
         }
       }
 
-      // Kid-friendly speech scoring: speaking the Tamil text yields 100% and 3 stars!
+      const gentlePronunciation = ["sec-4", "sec-6", "sec-7"].includes(item.sectionId);
+      if (matcher && typeof matcher.normalize === "function") {
+        const spokenNormalized = matcher.normalize(cleanSpoken);
+        if (candidates.some(candidate => matcher.normalize(candidate) === spokenNormalized)) {
+          rawPercent = 100;
+        } else if (gentlePronunciation && typeof matcher.charSimilarity === "function") {
+          const spokenLength = Array.from(spokenNormalized.replace(/\s/g, "")).length;
+          let closestMatch = 0;
+          candidates.forEach(candidate => {
+            const candidateLength = Array.from(matcher.normalize(candidate).replace(/\s/g, "")).length;
+            if (!candidateLength || candidateLength !== spokenLength) return;
+
+            const similarity = Math.round(matcher.charSimilarity(candidate, cleanSpoken) * 100);
+            const oneSoundThreshold = Math.max(50, Math.ceil(((candidateLength - 1) / candidateLength) * 100));
+            if (similarity >= oneSoundThreshold) closestMatch = Math.max(closestMatch, similarity);
+          });
+          gentleMatch = closestMatch > 0;
+          rawPercent = Math.max(rawPercent, closestMatch);
+        }
+      }
+
       let score = rawPercent;
       let stars = 0;
-      let passed = false;
+      const passed = rawPercent === 100 || gentleMatch;
 
-      if (rawPercent === 100) {
-        score = 100; stars = 3; passed = true;
-      }
+      if (passed) stars = rawPercent === 100 ? 3 : 1;
 
       if (controls.resultBox) {
         if (passed) {
@@ -776,7 +814,9 @@
           controls.resultBox.className = "rc-result success";
           controls.resultBox.innerHTML = `
             <div class="result-feedback-card">
-              🎉 <strong>மிக நன்று! அருமையாக வாசித்தீர்கள்!</strong><br>
+              ${score === 100
+                ? "🎉 <strong>மிக நன்று! அருமையாக வாசித்தீர்கள்!</strong>"
+                : "👍 <strong>நல்ல வாசிப்பு! சற்றே ஒத்த உச்சரிப்பும் ஏற்கப்பட்டது.</strong>"}<br>
               <span class="rc-score">மதிப்பெண்: ${score}% (${"★".repeat(stars)})</span>
             </div>
           `;
@@ -1220,6 +1260,16 @@
           if (btn) {
             const secId = btn.getAttribute("data-sec");
             selectSectionFilter(secId);
+          }
+        });
+      }
+
+      if (controls.questionSelect) {
+        controls.questionSelect.addEventListener("change", () => {
+          const selectedIndex = Number(controls.questionSelect.value);
+          if (Number.isInteger(selectedIndex) && selectedIndex >= 0 && selectedIndex < pdfItems.length) {
+            pdfCurrentIndex = selectedIndex;
+            renderCurrentPdfQuestion();
           }
         });
       }
