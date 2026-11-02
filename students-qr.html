@@ -192,6 +192,76 @@
       gap: 8px;
     }
 
+    .qr-club-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qr-club-filter-title {
+      color: #475569;
+      font-weight: 800;
+      margin-right: 4px;
+    }
+
+    .qr-club-filter {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border: 1px solid #CBD5E1;
+      border-radius: var(--radius-full);
+      background: #F8FAFC;
+      color: #334155;
+      font-size: .88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .qr-club-filter input {
+      width: 17px;
+      height: 17px;
+      accent-color: #6C5CE7;
+    }
+
+    .qr-batch-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .qr-batch-count {
+      color: #475569;
+      font-size: .88rem;
+      font-weight: 700;
+    }
+
+    .badge-download-btn {
+      margin-top: 8px;
+      padding: 7px 12px;
+      border: 1px solid #C7D2FE;
+      border-radius: var(--radius-full);
+      background: #EEF2FF;
+      color: #4338CA;
+      font: inherit;
+      font-size: .8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .badge-download-btn:hover {
+      background: #E0E7FF;
+    }
+
+    .qr-batch-status {
+      min-height: 1.2em;
+      color: #475569;
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
     .grade-tab-btn {
       padding: 8px 14px;
       border-radius: var(--radius-full);
@@ -423,7 +493,7 @@
         padding: 0 !important;
       }
 
-      .bg-bubbles, #confetti-canvas, .qr-controls-card, .qr-header-actions, .badge-quick-launch-btn {
+      .bg-bubbles, #confetti-canvas, .qr-controls-card, .qr-header-actions, .badge-quick-launch-btn, .badge-download-btn {
         display: none !important;
       }
 
@@ -502,6 +572,20 @@
         <button class="grade-tab-btn" data-grade="7">7-ஆம் வகுப்பு (Nilai 7 · 2)</button>
         <button class="grade-tab-btn" data-grade="8">8-ஆம் வகுப்பு (Nilai 8 · 7)</button>
       </div>
+
+      <div class="qr-club-filters" id="qr-club-filters" role="group" aria-label="Filter students by club">
+        <span class="qr-club-filter-title">Filter by club (any selected; none = all students):</span>
+        <label class="qr-club-filter"><input type="checkbox" value="reading"> Reading Club</label>
+        <label class="qr-club-filter"><input type="checkbox" value="thirukkural"> Thirukkural</label>
+        <label class="qr-club-filter"><input type="checkbox" value="aathichudi"> Aathichudi</label>
+        <label class="qr-club-filter"><input type="checkbox" value="school"> School Topic</label>
+      </div>
+
+      <div class="qr-batch-actions">
+        <button class="qr-btn primary" id="download-qr-batch-btn" type="button">⬇️ Download filtered batch (.zip)</button>
+        <span class="qr-batch-count" id="qr-batch-count" aria-live="polite"></span>
+        <span class="qr-batch-status" id="qr-batch-status" role="status" aria-live="polite"></span>
+      </div>
     </section>
 
     <!-- Badges Grid Container -->
@@ -568,11 +652,193 @@
       const gradeTabs = document.querySelectorAll(".grade-tab-btn");
       const gradeTabsContainer = document.getElementById("qr-grade-tabs");
       const printBtn = document.getElementById("print-badges-btn");
+      const clubFilters = document.getElementById("qr-club-filters");
+      const batchButton = document.getElementById("download-qr-batch-btn");
+      const batchCount = document.getElementById("qr-batch-count");
+      const batchStatus = document.getElementById("qr-batch-status");
 
       function escapeHtml(value) {
         return String(value == null ? "" : value).replace(/[&<>'"]/g, char => ({
           "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
         }[char]));
+      }
+
+      function getStudentKey(student) {
+        return student.id || `${student.firstName}_${student.lastName}_G${student.grade}`;
+      }
+
+      function getStudentClubs(student) {
+        const enrollment = studentEnrollments[getStudentKey(student)];
+        return enrollment && Array.isArray(enrollment.clubs)
+          ? enrollment.clubs
+          : (Array.isArray(student.clubs) ? student.clubs : []);
+      }
+
+      function getSelectedClubs() {
+        return [...clubFilters.querySelectorAll('input[type="checkbox"]:checked')].map(input => input.value);
+      }
+
+      function getVisibleStudents() {
+        const selectedClubs = getSelectedClubs();
+        return allStudents.filter(student => {
+          const matchesGrade = currentGradeFilter === "all" || String(student.grade) === String(currentGradeFilter);
+          const fullName = `${student.firstName} ${student.lastName}`.toLowerCase();
+          const matchesSearch = !currentSearchQuery || fullName.includes(currentSearchQuery);
+          const key = getStudentKey(student);
+          const matchesStudent = !currentStudentIdFilter || key === currentStudentIdFilter;
+          const matchesClubs = !selectedClubs.length || getStudentClubs(student).some(club => selectedClubs.includes(club));
+          return matchesGrade && matchesSearch && matchesStudent && matchesClubs;
+        });
+      }
+
+      function getStudentQrPayload(student) {
+        const studentId = student.id || `TBTA-G${student.grade}-${String(allStudents.indexOf(student) + 1).padStart(2, "0")}`;
+        return JSON.stringify({
+          type: "TBTA_STUDENT",
+          firstName: student.firstName,
+          lastName: student.lastName,
+          grade: student.grade,
+          school: student.school || "RHS",
+          id: studentId,
+          clubs: getStudentClubs(student)
+        });
+      }
+
+      function getQrPngBlob(card) {
+        const canvas = card.querySelector(".badge-qr-container canvas");
+        if (canvas) {
+          return new Promise((resolve, reject) => {
+            canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("Could not export QR code image.")), "image/png");
+          });
+        }
+        const image = card.querySelector(".badge-qr-container img");
+        if (image && image.src.startsWith("data:image/png")) {
+          return fetch(image.src).then(response => response.blob());
+        }
+        return Promise.reject(new Error("QR code image is not ready. Please try again."));
+      }
+
+      function downloadBlob(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+
+      function safeFileName(value) {
+        return String(value).normalize("NFKD").replace(/[^\w.-]+/g, "_").replace(/^_+|_+$/g, "") || "student";
+      }
+
+      async function downloadStudentQr(studentId) {
+        const card = [...grid.querySelectorAll(".student-badge-card[data-student-id]")]
+          .find(element => element.dataset.studentId === studentId);
+        if (!card) throw new Error("Student QR badge is not visible.");
+        const blob = await getQrPngBlob(card);
+        downloadBlob(blob, `${safeFileName(card.dataset.studentName)}_QR.png`);
+      }
+
+      function crc32(bytes) {
+        let crc = 0xFFFFFFFF;
+        for (const byte of bytes) {
+          crc ^= byte;
+          for (let bit = 0; bit < 8; bit += 1) {
+            crc = (crc >>> 1) ^ ((crc & 1) ? 0xEDB88320 : 0);
+          }
+        }
+        return (crc ^ 0xFFFFFFFF) >>> 0;
+      }
+
+      function createZip(files) {
+        const encoder = new TextEncoder();
+        const localParts = [];
+        const centralParts = [];
+        let offset = 0;
+        const now = new Date();
+        const dosTime = (now.getHours() << 11) | (now.getMinutes() << 5) | Math.floor(now.getSeconds() / 2);
+        const dosDate = ((Math.max(1980, now.getFullYear()) - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+
+        files.forEach(file => {
+          const nameBytes = encoder.encode(file.name);
+          const data = new Uint8Array(file.data);
+          const checksum = crc32(data);
+          const localHeader = new Uint8Array(30 + nameBytes.length);
+          const localView = new DataView(localHeader.buffer);
+          localView.setUint32(0, 0x04034B50, true);
+          localView.setUint16(4, 20, true);
+          localView.setUint16(6, 0x0800, true);
+          localView.setUint16(8, 0, true);
+          localView.setUint16(10, dosTime, true);
+          localView.setUint16(12, dosDate, true);
+          localView.setUint32(14, checksum, true);
+          localView.setUint32(18, data.length, true);
+          localView.setUint32(22, data.length, true);
+          localView.setUint16(26, nameBytes.length, true);
+          localHeader.set(nameBytes, 30);
+          localParts.push(localHeader, data);
+
+          const centralHeader = new Uint8Array(46 + nameBytes.length);
+          const centralView = new DataView(centralHeader.buffer);
+          centralView.setUint32(0, 0x02014B50, true);
+          centralView.setUint16(4, 20, true);
+          centralView.setUint16(6, 20, true);
+          centralView.setUint16(8, 0x0800, true);
+          centralView.setUint16(10, 0, true);
+          centralView.setUint16(12, dosTime, true);
+          centralView.setUint16(14, dosDate, true);
+          centralView.setUint32(16, checksum, true);
+          centralView.setUint32(20, data.length, true);
+          centralView.setUint32(24, data.length, true);
+          centralView.setUint16(28, nameBytes.length, true);
+          centralView.setUint32(42, offset, true);
+          centralHeader.set(nameBytes, 46);
+          centralParts.push(centralHeader);
+          offset += localHeader.length + data.length;
+        });
+
+        const centralSize = centralParts.reduce((total, part) => total + part.length, 0);
+        const endRecord = new Uint8Array(22);
+        const endView = new DataView(endRecord.buffer);
+        endView.setUint32(0, 0x06054B50, true);
+        endView.setUint16(8, files.length, true);
+        endView.setUint16(10, files.length, true);
+        endView.setUint32(12, centralSize, true);
+        endView.setUint32(16, offset, true);
+        return new Blob([...localParts, ...centralParts, endRecord], { type: "application/zip" });
+      }
+
+      async function downloadFilteredBatch() {
+        const students = getVisibleStudents();
+        if (!students.length) return;
+        batchButton.disabled = true;
+        batchStatus.textContent = "Preparing QR batch…";
+        try {
+          const files = [];
+          for (const student of students) {
+            const studentKey = getStudentKey(student);
+            const card = [...grid.querySelectorAll(".student-badge-card[data-student-id]")]
+              .find(element => element.dataset.studentId === studentKey);
+            if (!card) throw new Error(`QR badge is not ready for ${student.firstName} ${student.lastName}.`);
+            const blob = await getQrPngBlob(card);
+            files.push({
+              name: `${safeFileName(student.firstName)}_${safeFileName(student.lastName)}_G${student.grade}_${safeFileName(student.id || `Roster-${allStudents.indexOf(student) + 1}`)}_QR.png`,
+              data: await blob.arrayBuffer()
+            });
+          }
+          const zip = createZip(files);
+          const clubPart = getSelectedClubs().length ? `_${getSelectedClubs().join("-")}` : "";
+          const gradePart = currentGradeFilter === "all" ? "" : `_Grade-${currentGradeFilter}`;
+          downloadBlob(zip, `student_QR_batch${clubPart}${gradePart}.zip`);
+          batchStatus.textContent = `Downloaded ${files.length} QR codes.`;
+        } catch (error) {
+          console.error("Could not download QR batch:", error);
+          batchStatus.textContent = error.message || "Could not download the QR batch.";
+        } finally {
+          batchButton.disabled = false;
+        }
       }
 
       async function init() {
@@ -623,8 +889,12 @@
             // Show or hide grade tabs when viewing teacher or admin
             if (currentRoleTab === "teacher" || currentRoleTab === "admin") {
               gradeTabsContainer.style.display = "none";
+              clubFilters.style.display = "none";
+              batchButton.parentElement.style.display = "none";
             } else {
               gradeTabsContainer.style.display = "flex";
+              clubFilters.style.display = "flex";
+              batchButton.parentElement.style.display = "flex";
             }
 
             renderBadges();
@@ -639,6 +909,19 @@
             renderBadges();
           });
         });
+
+        clubFilters.querySelectorAll('input[type="checkbox"]').forEach(input => {
+          input.addEventListener("change", () => {
+            if (getSelectedClubs().length) {
+              const studentsTab = document.querySelector('.role-tab-btn[data-role="students"]');
+              if (studentsTab && currentRoleTab !== "students") studentsTab.click();
+            } else {
+              renderBadges();
+            }
+          });
+        });
+
+        batchButton.addEventListener("click", downloadFilteredBatch);
 
         if (printBtn) {
           printBtn.addEventListener("click", () => window.print());
@@ -672,6 +955,7 @@
       function renderBadges() {
         grid.innerHTML = "";
         let itemsToRender = [];
+        const selectedClubs = getSelectedClubs();
 
         // 1. Staff Badges
         if (currentRoleTab === "all" || currentRoleTab === "teacher" || currentRoleTab === "admin") {
@@ -701,8 +985,9 @@
             const matchesSearch = !currentSearchQuery || fullName.includes(currentSearchQuery);
             const studentKey = student.id || `${student.firstName}_${student.lastName}_G${student.grade}`;
             const matchesStudentId = !currentStudentIdFilter || studentKey === currentStudentIdFilter;
+            const matchesClubs = !selectedClubs.length || getStudentClubs(student).some(club => selectedClubs.includes(club));
 
-            if (matchesGrade && matchesSearch && matchesStudentId) {
+            if (matchesGrade && matchesSearch && matchesStudentId && matchesClubs) {
               itemsToRender.push({
                 isStaff: false,
                 student,
@@ -713,9 +998,15 @@
         }
 
         if (!itemsToRender.length) {
+          batchCount.textContent = "0 students selected";
+          batchButton.disabled = true;
           grid.innerHTML = `<div class="no-results-box"><h3>பொருத்தமான அடையாள அட்டைகள் எவையும் இல்லை (No badges found)</h3></div>`;
           return;
         }
+
+        const visibleStudentCount = itemsToRender.filter(item => !item.isStaff).length;
+        batchCount.textContent = `${visibleStudentCount} student${visibleStudentCount === 1 ? "" : "s"} in this batch`;
+        batchButton.disabled = visibleStudentCount === 0;
 
         itemsToRender.forEach((item, idx) => {
           if (item.isStaff) {
@@ -756,18 +1047,12 @@
             const studentId = student.id || `TBTA-G${student.grade}-${String(item.index + 1).padStart(2, "0")}`;
             const qrBoxId = `qr-box-student-${student.grade}-${idx}`;
 
-            const qrPayload = JSON.stringify({
-              type: "TBTA_STUDENT",
-              firstName: student.firstName,
-              lastName: student.lastName,
-              grade: student.grade,
-              school: student.school || "RHS",
-              id: studentId,
-              clubs: (studentEnrollments[student.id || `${student.firstName}_${student.lastName}_G${student.grade}`] || {}).clubs || []
-            });
+            const qrPayload = getStudentQrPayload(student);
 
             const card = document.createElement("div");
             card.className = "student-badge-card";
+            card.dataset.studentId = getStudentKey(student);
+            card.dataset.studentName = fullName;
             card.innerHTML = `
               <div class="badge-top-strip">
                 <span class="badge-school-tag">🦜 ${escapeHtml(student.school || "RHS")} · TBTA TAMIL</span>
@@ -779,6 +1064,7 @@
               <div class="badge-id-tag">ID: ${studentId}</div>
               <div class="badge-scan-hint">📸 Scan to Login</div>
               <a href="index.html#student=${encodeURIComponent(student.id || `${student.firstName}_${student.lastName}_G${student.grade}`)}&first=${encodeURIComponent(student.firstName)}&last=${encodeURIComponent(student.lastName)}&grade=${encodeURIComponent(student.grade)}&school=${encodeURIComponent(student.school || "RHS")}&clubs=${encodeURIComponent(JSON.stringify((studentEnrollments[student.id || `${student.firstName}_${student.lastName}_G${student.grade}`] || {}).clubs || []))}&screen=reading-club&pdf=pdf-stage2-assign3" class="badge-quick-launch-btn">🚀 வாசிப்பு மன்றத்தில் தொடங்கு ➜</a>
+              <button type="button" class="badge-download-btn" data-download-student="${escapeHtml(getStudentKey(student))}">⬇️ Download this QR (PNG)</button>
             `;
 
             grid.appendChild(card);
@@ -794,6 +1080,16 @@
                 correctLevel: QRCode.CorrectLevel.M
               });
             }
+            card.querySelector(".badge-download-btn").addEventListener("click", async () => {
+              batchStatus.textContent = "";
+              try {
+                await downloadStudentQr(getStudentKey(student));
+                batchStatus.textContent = `Downloaded QR for ${fullName}.`;
+              } catch (error) {
+                console.error("Could not download student QR:", error);
+                batchStatus.textContent = error.message || "Could not download this QR code.";
+              }
+            });
           }
         });
       }

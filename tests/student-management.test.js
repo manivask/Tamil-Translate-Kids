@@ -79,6 +79,14 @@ const app = vm.runInContext("App", context);
     for (const script of inlineScripts) {
       assert.doesNotThrow(() => new vm.Script(script), `${file} inline script parses`);
     }
+    if (file === "students-qr.html") {
+      for (const club of ["reading", "thirukkural", "aathichudi", "school"]) {
+        assert.match(html, new RegExp(`<input type="checkbox" value="${club}"`), `${club} has a QR filter`);
+      }
+      assert.match(html, /id="download-qr-batch-btn"/, "filtered QR batches can be downloaded");
+      assert.match(html, /class="badge-download-btn"/, "individual student QR codes can be downloaded");
+      assert.match(html, /function createZip\(files\)/, "batch download is packaged as a ZIP");
+    }
   }
 
   console.log("PASS: local student assignments, cross-device QR login, and student-page scripts");
