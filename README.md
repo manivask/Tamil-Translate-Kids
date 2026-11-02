@@ -44,7 +44,10 @@ An interactive, voice-driven Tamil learning web application for **Grades 1–8**
    - **திருக்குறள் பயிற்சி** on the home page lets children listen to selected couplets, read them aloud, and receive a friendly pronunciation score and tip.
    - Voice recognition and the saved name stay in the browser. The optional existing Tamil TTS fallback only needs network access if the device has no Tamil system voice.
 
-8. **Student learning records**
+8. **Stage 2 Week 5 Reading Club**
+   - Focuses the reading space on `Reading-Stage2-Week5_Upd.pdf`, with section-by-section read-aloud practice for all seven worksheet sections.
+
+9. **Student learning records**
    - Students select their Nilai and name from the supplied roster before beginning. Their successful sentence and Thirukkural attempts are associated with that student.
    - The reusable student roster is stored at `data/students/roster.json`; it contains only first name, last name, and Nilai.
    - `server.py` stores local development records in `data/learning_progress.db`. On GitHub Pages, the same records remain in that browser's local storage until a hosted API is connected.

@@ -9,8 +9,7 @@
   <meta name="theme-color" content="#2B1055">
 
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=20261004-tts-v5">
-
+  <link rel="stylesheet" href="css/style.css?v=20261101-week5-v1">
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦜</text></svg>">
 </head>
@@ -507,8 +506,8 @@
           <div class="rc-pdf-label-group">
             <span class="rc-pdf-icon">📑</span>
             <div>
-              <label for="rc-pdf-select" class="rc-pdf-title">பயில வேண்டிய PDF பாடம் (Select PDF / Lesson to Study):</label>
-              <div class="rc-pdf-sub-text">நீங்கள் படிக்க விரும்பும் PDF பாடத்தைத் தேர்ந்தெடுக்கவும்</div>
+              <span class="rc-pdf-title">இந்த வார வாசிப்பு (This Week's Reading)</span>
+              <div class="rc-pdf-sub-text">Stage 2 · Week 5 · 7 வாசிப்புப் பிரிவுகள்</div>
             </div>
           </div>
           <div class="rc-pdf-actions-wrap">
@@ -518,26 +517,17 @@
           </div>
         </div>
 
-        <div class="rc-pdf-dropdown-row">
-          <select id="rc-pdf-select" class="rc-pdf-select-field">
-
-            <option value="pdf-stage2-simple">📕 Stage 2 - எளிய நிலை (Stage2_Simple.pdf)</option>
-            <option value="pdf-stage2-intermediate">📗 Stage 2 - நடுத்தர நிலை (Stage2_Intermediate.pdf)</option>
-            <option value="pdf-stage2-complex">📘 Stage 2 - உயர் நிலை (Stage2_Complex.pdf)</option>
-            <option value="pdf-stage2-assign3">📙 Stage 2 - ஒப்படைப்பு 3 (Stage 2-Assignment 3.pdf)</option>
-            <option value="pdf-stage2-activity">📓 Stage 2 - செயல்பாட்டுப் பகுதி (Stage2_Activity part.pdf)</option>
-          </select>
-        </div>
+        <div id="rc-pdf-load-error" role="alert" hidden></div>
 
         <!-- Active PDF Unit Progress Bar (Shown when a PDF is selected) -->
         <div class="rc-unit-progress-container" id="rc-unit-progress-bar-wrap" style="display: none;">
           <div class="rc-unit-progress-header">
-            <span class="rc-unit-title" id="rc-unit-pdf-title">Stage2_Simple.pdf</span>
-            <span class="rc-unit-step-label" id="rc-unit-step-count">வினா 1 / 14</span>
+            <span class="rc-unit-title" id="rc-unit-pdf-title">Reading-Stage2-Week5_Upd.pdf</span>
+            <span class="rc-unit-step-label" id="rc-unit-step-count">வினா 1 / 67</span>
             <span class="rc-unit-score-badge" id="rc-unit-score-badge">⭐ 0 நட்சத்திரங்கள்</span>
           </div>
           <div class="rc-unit-track">
-            <div class="rc-unit-bar" id="rc-unit-progress-bar" style="width: 7%;"></div>
+            <div class="rc-unit-bar" id="rc-unit-progress-bar" style="width: 1%;"></div>
           </div>
         </div>
 
@@ -654,7 +644,7 @@
           <p class="completed-sub" id="rc-completed-pdf-name">நீங்கள் இந்த PDF பாடத்தின் அனைத்து வினாக்களையும் வெற்றிகரமாக முடித்துவிட்டீர்கள்!</p>
           <div class="completed-stats-row">
             <div class="completed-stat-box">
-              <span class="stat-big-val" id="rc-completed-count">14 / 14</span>
+              <span class="stat-big-val" id="rc-completed-count">0 / 67</span>
               <span class="stat-small-lbl">முடித்த வினாக்கள்</span>
             </div>
             <div class="completed-stat-box">
@@ -1515,7 +1505,7 @@
   <script src="js/speech.js?v=20261004-qr-v2"></script>
   <script src="js/thirukkural.js?v=20261004-qr-v2"></script>
   <script src="js/aathichudi.js?v=20261004-qr-v2"></script>
-  <script src="js/reading-club.js?v=20261004-qr-v2"></script>
+  <script src="js/reading-club.js?v=20261101-week5-v2"></script>
   <script src="js/chat-agent.js?v=20261004-qr-v2"></script>
   <script src="js/app.js?v=20261004-qr-v2"></script>
 </body>

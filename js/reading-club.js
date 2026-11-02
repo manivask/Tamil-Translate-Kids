@@ -2,8 +2,8 @@
  * Tamil-Translate-Kids - Reading Club (வாசிப்பு மன்றம்) Engine
  * Multi-level graded reading practice (2-word, 3-word, 4-word sentences)
  * Live Speech-to-Text, Voice synthesis, Adaptive Quick Check, & Progress tracking.
- * PDF Study Packages (Stage 2 Simple, Intermediate, Complex, Assign 3, Activity, Teacher Uploads)
- * 1-by-1 Question Walkthrough with Stories, Comprehension Choices, and Speech Scoring.
+ * Stage 2 Week 5 PDF study with section-by-section reading and speech scoring.
+ * 1-by-1 question walkthrough with story passages and adaptive reading checks.
  */
 
 (function () {
@@ -81,7 +81,7 @@
 
   // PDF Modules State
   let pdfModules = [];
-  let currentPdfModuleId = "all-graded";
+  let currentPdfModuleId = "pdf-stage2-week5";
   let currentPdfModule = null;
   let currentSectionFilter = "all";
   let pdfCurrentIndex = 0;
@@ -98,12 +98,11 @@
 
   const ui = () => ({
     // PDF Selector UI at the Top
-    pdfSelect: document.getElementById("rc-pdf-select"),
-    pdfPillsBar: document.getElementById("rc-pdf-pills-bar"),
     pdfSectionsWrap: document.getElementById("rc-pdf-sections-wrap"),
     pdfSectionsBar: document.getElementById("rc-pdf-sections-bar"),
     sectionsCountLbl: document.getElementById("rc-sections-count-lbl"),
     pdfViewLink: document.getElementById("rc-view-pdf-link"),
+    pdfLoadError: document.getElementById("rc-pdf-load-error"),
     unitProgressWrap: document.getElementById("rc-unit-progress-bar-wrap"),
     unitPdfTitle: document.getElementById("rc-unit-pdf-title"),
     unitStepCount: document.getElementById("rc-unit-step-count"),
@@ -178,83 +177,31 @@
   });
 
   async function loadPdfLessons() {
-    let loaded = [];
-    try {
-      const res = await fetch("data/reading_club/pdf_lessons.json");
-      if (res.ok) {
-        loaded = await res.json();
-      }
-    } catch (_) {}
-
-    // Check teacher uploaded materials from server or localStorage
-    let teacherMaterials = [];
-    try {
-      const r = await fetch("/api/reading-materials");
-      if (r.ok) teacherMaterials = await r.json();
-    } catch (_) {}
-
-    if (!teacherMaterials || !teacherMaterials.length) {
-      try {
-        teacherMaterials = JSON.parse(localStorage.getItem("tbta_custom_reading_materials") || "[]");
-      } catch (_) {}
-    }
-
-    if (Array.isArray(teacherMaterials)) {
-      teacherMaterials.forEach(mat => {
-        const sentences = mat.sentences || [];
-        if (sentences.length > 0) {
-          loaded.push({
-            id: `teacher-${mat.id || Date.now()}`,
-            title: `👩‍🏫 ${mat.title || mat.fileName || "ஆசிரியர் பாடம்"}`,
-            subtitle: `ஆசிரியர் பதிவேற்றிய பாடம் (${sentences.length} தொடர்கள்)`,
-            badge: "👩‍🏫 ஆசிரியர் பாடம்",
-            badgeClass: "badge-teacher",
-            grade: Number(mat.grade || 1),
-            sections: mat.sections || null,
-            pdfFile: mat.fileName && mat.fileName.endsWith(".pdf") ? `data/Reading Club/${mat.fileName}` : null,
-            items: sentences.map((s, idx) => ({
-              id: s.id || `t-item-${idx + 1}`,
-              sectionId: s.sectionId || null,
-              sectionTitle: s.sectionTitle || null,
-              type: s.type || "reading",
-              category: s.category || mat.title || "ஆசிரியர் தொடர்",
-              questionTa: (s.tamil || s.sentenceTa || "").trim(),
-              meaningEn: (s.english || s.meaningEn || "").trim(),
-              translit: (s.translit || "").trim(),
-              options: s.options || [],
-              correctAnswer: (s.correctAnswer || s.tamil || s.sentenceTa || "").trim(),
-              explanation: s.explanation || s.english || ""
-            }))
-          });
-        }
-      });
-    }
-
-    pdfModules = loaded;
-    if (!pdfModules.some(mod => mod.id === currentPdfModuleId) && pdfModules.length) currentPdfModuleId = pdfModules[0].id;
-    populatePdfSelector();
-    selectPdfModule(currentPdfModuleId);
-  }
-
-  function populatePdfSelector() {
     const controls = ui();
-    if (!controls.pdfSelect) return;
+    try {
+      const res = await fetch("data/reading_club/reading_stage2_week5.json");
+      if (!res.ok) throw new Error(`Lesson data request failed: ${res.status}`);
 
-    let optionsHtml = "";
-    let pillsHtml = `<button type="button" class="rc-pdf-pill ${currentPdfModuleId === 'all-graded' ? 'active' : ''}" data-pdf="all-graded">🌟 அனைத்து பாடங்கள்</button>`;
+      const lessons = await res.json();
+      const lesson = Array.isArray(lessons) && lessons.find(item => item.id === currentPdfModuleId);
+      if (!lesson || !Array.isArray(lesson.sections) || !lesson.sections.length ||
+          !Array.isArray(lesson.items) || !lesson.items.length) {
+        throw new Error("The Stage 2 Week 5 lesson is missing sections or reading items.");
+      }
 
-    pdfModules.forEach(mod => {
-      const isSelected = mod.id === currentPdfModuleId;
-      optionsHtml += `<option value="${mod.id}" ${isSelected ? 'selected' : ''}>${mod.title}</option>`;
-      const shortTitle = mod.title.split("(")[0].trim();
-      pillsHtml += `<button type="button" class="rc-pdf-pill ${isSelected ? 'active' : ''}" data-pdf="${mod.id}">${shortTitle}</button>`;
-    });
-
-    controls.pdfSelect.innerHTML = optionsHtml;
-    controls.pdfSelect.value = currentPdfModuleId;
-
-    if (controls.pdfPillsBar) {
-      controls.pdfPillsBar.innerHTML = pillsHtml;
+      pdfModules = [lesson];
+      selectPdfModule(lesson.id);
+      if (controls.pdfLoadError) {
+        controls.pdfLoadError.hidden = true;
+        controls.pdfLoadError.textContent = "";
+      }
+    } catch (error) {
+      pdfModules = [];
+      console.error("Unable to load the Stage 2 Week 5 Reading Club lesson.", error);
+      if (controls.pdfLoadError) {
+        controls.pdfLoadError.textContent = "இந்த வார வாசிப்பை ஏற்ற முடியவில்லை. பக்கத்தை மீண்டும் திறக்கவும்.";
+        controls.pdfLoadError.hidden = false;
+      }
     }
   }
 
@@ -262,14 +209,6 @@
     currentPdfModuleId = moduleId;
     currentSectionFilter = "all";
     const controls = ui();
-
-    if (controls.pdfSelect) controls.pdfSelect.value = moduleId;
-    if (controls.pdfPillsBar) {
-      const pills = controls.pdfPillsBar.querySelectorAll(".rc-pdf-pill");
-      pills.forEach(p => {
-        p.classList.toggle("active", p.getAttribute("data-pdf") === moduleId);
-      });
-    }
 
     if (moduleId === "all-graded") {
       currentPdfModule = null;
@@ -283,6 +222,7 @@
       if (controls.optionsContainer) controls.optionsContainer.style.display = "none";
       if (controls.completedCard) controls.completedCard.style.display = "none";
       if (controls.mainCard) controls.mainCard.style.display = "block";
+      if (controls.nextPdfBtn) controls.nextPdfBtn.style.display = pdfModules.length > 1 ? "" : "none";
       updateFiltered();
       return;
     }
@@ -1274,23 +1214,6 @@
       loadData();
       const controls = ui();
 
-      // PDF selection events
-      if (controls.pdfSelect) {
-        controls.pdfSelect.addEventListener("change", (e) => {
-          selectPdfModule(e.target.value);
-        });
-      }
-
-      if (controls.pdfPillsBar) {
-        controls.pdfPillsBar.addEventListener("click", (e) => {
-          const btn = e.target.closest(".rc-pdf-pill");
-          if (btn) {
-            const moduleId = btn.getAttribute("data-pdf");
-            selectPdfModule(moduleId);
-          }
-        });
-      }
-
       if (controls.pdfSectionsBar) {
         controls.pdfSectionsBar.addEventListener("click", (e) => {
           const btn = e.target.closest(".rc-section-pill");
@@ -1385,4 +1308,3 @@
     document.addEventListener("DOMContentLoaded", () => ReadingClub.init());
   }
 })();
-

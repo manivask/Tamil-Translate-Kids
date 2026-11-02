@@ -3359,15 +3359,13 @@ body {
 }
 
 .rc-pdf-sections-bar {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 6px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: thin;
 }
 
 .rc-section-pill {
-  white-space: nowrap;
+  white-space: normal;
   padding: 5px 12px;
   border-radius: var(--radius-full);
   border: 1px solid #BFDBFE;
@@ -3380,7 +3378,10 @@ body {
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: 5px;
+  line-height: 1.35;
 }
 
 .rc-section-pill:hover {
