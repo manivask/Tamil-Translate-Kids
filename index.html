@@ -1044,26 +1044,57 @@
               </div>
             </div>
 
-            <!-- Student Roster Table -->
-            <div class="staff-table-container">
-              <table class="staff-progress-table">
-                <thead>
-                  <tr>
-                    <th>மாணவர் பெயர் (Student)</th>
-                    <th>வகுப்பு (Grade)</th>
-                    <th>வாசிப்பு மன்றம் (Reading Club)</th>
-                    <th>சராசரி துல்லியம் (Avg Score)</th>
-                    <th>வினாடி வினா (Quiz)</th>
-                    <th>நட்சத்திரங்கள் (Stars)</th>
-                    <th>கடைசி செயல்பாடு (Last Active)</th>
-                    <th>முழு விவரம் (Details)</th>
-                  </tr>
-                </thead>
-                <tbody id="teacher-students-tbody">
-                  <!-- Populated by renderStudentProgressTable -->
-                </tbody>
-              </table>
-            </div>
+              <div class="staff-view-tabs teacher-progress-tabs" id="teacher-progress-tabs">
+                <button class="staff-tab-btn active" data-tab="week5" aria-selected="true">
+                  <span>📖</span> வாசிப்பு மன்றம் · 7 பிரிவுகள்
+                </button>
+                <button class="staff-tab-btn" data-tab="other" aria-selected="false">
+                  <span>📚</span> மற்ற கற்றல் செயல்பாடுகள்
+                </button>
+              </div>
+
+              <div class="staff-tab-content active" id="teacher-progress-tab-week5">
+                <p class="card-section-subtitle">ஒவ்வொரு மாணவரின் Stage 2 Week 5 வாசிப்பு முன்னேற்றம் பிரிவு வாரியாக.</p>
+                <div class="staff-table-container">
+                  <table class="staff-progress-table teacher-section-progress-table">
+                    <thead>
+                      <tr>
+                        <th>மாணவர்</th>
+                        <th>வகுப்பு</th>
+                        <th>1 · எழுத்துகள்</th>
+                        <th>2 · சொற்கள்</th>
+                        <th>3 · வாக்கியங்கள்</th>
+                        <th>4 · சொல் பிரித்தல்</th>
+                        <th>5 · நாநெகிழ்</th>
+                        <th>6 · ஒலி வேறுபாடு</th>
+                        <th>7 · சொல் பொருள்</th>
+                        <th>விவரம்</th>
+                      </tr>
+                    </thead>
+                    <tbody id="teacher-week5-students-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="staff-tab-content" id="teacher-progress-tab-other" style="display: none;">
+                <p class="card-section-subtitle">Reading Club அல்லாத பாடங்கள் மற்றும் பயிற்சிகளின் முன்னேற்றம்.</p>
+                <div class="staff-table-container">
+                  <table class="staff-progress-table">
+                    <thead>
+                      <tr>
+                        <th>மாணவர்</th>
+                        <th>வகுப்பு</th>
+                        <th>செயல்பாடுகள்</th>
+                        <th>சராசரி மதிப்பெண்</th>
+                        <th>நட்சத்திரங்கள்</th>
+                        <th>கடைசி செயல்பாடு</th>
+                        <th>விவரம்</th>
+                      </tr>
+                    </thead>
+                    <tbody id="teacher-other-students-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
           </div>
         </div>
 
@@ -1512,6 +1543,6 @@
   <script src="js/aathichudi.js?v=20261004-qr-v2"></script>
   <script src="js/reading-club.js?v=20261101-navigation-v2"></script>
   <script src="js/chat-agent.js?v=20261004-qr-v2"></script>
-  <script src="js/app.js?v=20261004-qr-v2"></script>
+  <script src="js/app.js?v=20261101-teacher-progress-v1"></script>
 </body>
 </html>

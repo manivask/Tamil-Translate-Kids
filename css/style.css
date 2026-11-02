@@ -2461,6 +2461,14 @@ body {
   font-family: var(--font-tamil);
 }
 
+.teacher-section-progress-table {
+  min-width: 1080px;
+}
+
+.teacher-progress-tabs {
+  margin-bottom: 0;
+}
+
 .staff-progress-table thead {
   background: #F8FAFC;
   border-bottom: 2px solid #E2E8F0;

@@ -841,6 +841,10 @@
         App.saveProgress({
           sentenceId: `${currentPdfModule.id}-${item.id}`,
           category: `reading-club-pdf:${currentPdfModule.title}`,
+          lessonId: currentPdfModule.id,
+          questionId: item.id,
+          sectionId: item.sectionId,
+          sectionTitle: item.sectionTitle,
           score,
           stars: passed ? stars : 0,
           passed

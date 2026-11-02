@@ -375,6 +375,7 @@ const App = {
 
     // Initialize Staff tabs, upload dropzones, filters & modals
     this.setupStaffTabs("teacher-view-tabs", "teacher");
+    this.setupStaffTabs("teacher-progress-tabs", "teacher-progress");
     this.setupStaffTabs("admin-view-tabs", "admin");
     this.setupUploadZone("teacher");
     this.setupUploadZone("admin");
@@ -1329,7 +1330,8 @@ const App = {
     if (adminRcEl) adminRcEl.textContent = rcCount;
 
     // Render Student Progress in Teacher & Admin tables
-    this.renderStudentProgressTable("teacher-students-tbody", this.teacherFilterGrade || "all", this.teacherSearchQuery || "");
+    this.renderStudentProgressTable("teacher-week5-students-tbody", this.teacherFilterGrade || "all", this.teacherSearchQuery || "");
+    this.renderStudentProgressTable("teacher-other-students-tbody", this.teacherFilterGrade || "all", this.teacherSearchQuery || "");
     this.renderStudentProgressTable("admin-students-tbody", this.adminFilterGrade || "all", this.adminSearchQuery || "");
 
     // Render published materials cards
@@ -1405,8 +1407,12 @@ const App = {
     const tabs = container.querySelectorAll(".staff-tab-btn");
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("active"));
+        tabs.forEach(t => {
+          t.classList.remove("active");
+          t.setAttribute("aria-selected", "false");
+        });
         tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
         const tabKey = tab.getAttribute("data-tab");
 
         const allContents = document.querySelectorAll(`[id^="${prefix}-tab-"]`);
@@ -1427,7 +1433,13 @@ const App = {
         const val = e.target.value.trim();
         if (role === "teacher") this.teacherSearchQuery = val;
         else this.adminSearchQuery = val;
-        this.renderStudentProgressTable(`${role}-students-tbody`, role === "teacher" ? (this.teacherFilterGrade || "all") : (this.adminFilterGrade || "all"), val);
+        const grade = role === "teacher" ? (this.teacherFilterGrade || "all") : (this.adminFilterGrade || "all");
+        if (role === "teacher") {
+          this.renderStudentProgressTable("teacher-week5-students-tbody", grade, val);
+          this.renderStudentProgressTable("teacher-other-students-tbody", grade, val);
+        } else {
+          this.renderStudentProgressTable("admin-students-tbody", grade, val);
+        }
       });
     }
 
@@ -1440,10 +1452,28 @@ const App = {
           const grade = pill.getAttribute("data-grade");
           if (role === "teacher") this.teacherFilterGrade = grade;
           else this.adminFilterGrade = grade;
-          this.renderStudentProgressTable(`${role}-students-tbody`, grade, role === "teacher" ? (this.teacherSearchQuery || "") : (this.adminSearchQuery || ""));
+          const query = role === "teacher" ? (this.teacherSearchQuery || "") : (this.adminSearchQuery || "");
+          if (role === "teacher") {
+            this.renderStudentProgressTable("teacher-week5-students-tbody", grade, query);
+            this.renderStudentProgressTable("teacher-other-students-tbody", grade, query);
+          } else {
+            this.renderStudentProgressTable("admin-students-tbody", grade, query);
+          }
         });
       });
     }
+  },
+
+  getWeek5SectionId(record) {
+    if (/^sec-[1-7]$/.test(record.sectionId || "")) return record.sectionId;
+    const match = (record.sentenceId || "").match(/week5-(sec-[1-7])-q\d+$/i);
+    return match ? match[1].toLowerCase() : "";
+  },
+
+  isReadingClubRecord(record) {
+    const category = (record.category || "").toLowerCase();
+    return category.includes("reading-club") || category.startsWith("rc-") ||
+      category.includes("வாசிப்பு") || category.includes("ஆசிரியர்");
   },
 
   renderStudentProgressTable(tbodyId, filterGrade = "all", searchQuery = "") {
@@ -1451,7 +1481,9 @@ const App = {
     if (!tbody) return;
 
     if (!this.students || !this.students.length) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 20px;">மாணவர் பட்டியலை ஏற்றுகிறது...</td></tr>`;
+      const columns = tbodyId === "teacher-week5-students-tbody" ? 10 :
+        (tbodyId === "teacher-other-students-tbody" ? 7 : 8);
+      tbody.innerHTML = `<tr><td colspan="${columns}" style="text-align: center; padding: 20px;">மாணவர் பட்டியலை ஏற்றுகிறது...</td></tr>`;
       return;
     }
 
@@ -1470,7 +1502,9 @@ const App = {
     if (badgeEl) badgeEl.textContent = `காட்டுவது: ${filtered.length} மாணவர்கள்`;
 
     if (!filtered.length) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 24px; color: #64748B;">பொருத்தமான மாணவர்கள் எவரும் இல்லை.</td></tr>`;
+      const columns = tbodyId === "teacher-week5-students-tbody" ? 10 :
+        (tbodyId === "teacher-other-students-tbody" ? 7 : 8);
+      tbody.innerHTML = `<tr><td colspan="${columns}" style="text-align: center; padding: 24px; color: #64748B;">பொருத்தமான மாணவர்கள் எவரும் இல்லை.</td></tr>`;
       return;
     }
 
@@ -1482,6 +1516,76 @@ const App = {
         r.student.firstName.toLowerCase() === student.firstName.toLowerCase() &&
         r.student.lastName.toLowerCase() === student.lastName.toLowerCase()
       );
+
+      const studentIdx = this.students.indexOf(student);
+      const detailButton = `<button type="button" class="btn-view-child-detail" onclick="App.openChildModalByIndex(${studentIdx})"><span>🔎</span> விவரம்</button>`;
+
+      if (tbodyId === "teacher-week5-students-tbody") {
+        const sectionCounts = [1, 20, 10, 10, 3, 18, 5];
+        const sectionProgress = new Map();
+        studentRecords.forEach(record => {
+          const sectionId = this.getWeek5SectionId(record);
+          if (!sectionId) return;
+          if (!sectionProgress.has(sectionId)) sectionProgress.set(sectionId, new Map());
+
+          const questions = sectionProgress.get(sectionId);
+          const questionId = record.sentenceId || `${sectionId}-${record.recordedAt || questions.size}`;
+          const previous = questions.get(questionId);
+          questions.set(questionId, {
+            score: Math.max(previous ? previous.score : 0, Number(record.score) || 0),
+            passed: Boolean((previous && previous.passed) || record.passed)
+          });
+        });
+
+        const sectionCells = sectionCounts.map((total, index) => {
+          const questions = sectionProgress.get(`sec-${index + 1}`);
+          if (!questions || !questions.size) return `<td><span style="color:#94a3b8;">—</span></td>`;
+
+          const completed = [...questions.values()].filter(question => question.passed).length;
+          const average = Math.round([...questions.values()].reduce((sum, question) => sum + question.score, 0) / questions.size);
+          return `<td><strong>${completed}/${total}</strong><br><small>${average}% சராசரி</small></td>`;
+        }).join("");
+
+        return `
+          <tr>
+            <td><div class="student-name-cell"><div class="student-avatar-circle">${(student.firstName[0] || "👤").toUpperCase()}</div><div class="student-full-name">${fullName}</div></div></td>
+            <td><span class="nilai-pill">Nilai ${student.grade}</span></td>
+            ${sectionCells}
+            <td>${detailButton}</td>
+          </tr>
+        `;
+      }
+
+      if (tbodyId === "teacher-other-students-tbody") {
+        const otherRecords = studentRecords.filter(record => !this.isReadingClubRecord(record));
+        const average = otherRecords.length
+          ? Math.round(otherRecords.reduce((sum, record) => sum + (Number(record.score) || 0), 0) / otherRecords.length)
+          : 0;
+        const stars = otherRecords.reduce((sum, record) => sum + (Number(record.stars) || 0), 0);
+        const categories = [...new Set(otherRecords.map(record => record.category).filter(Boolean))];
+        const latest = otherRecords.reduce((timestamp, record) => {
+          const recordedAt = record.recordedAt ? new Date(record.recordedAt).getTime() : 0;
+          return Math.max(timestamp, Number.isFinite(recordedAt) ? recordedAt : 0);
+        }, 0);
+        const lastActive = latest
+          ? new Date(latest).toLocaleDateString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })
+          : "இல்லை";
+        const categoryList = categories.length
+          ? categories.map(category => `<div>${category}</div>`).join("")
+          : `<span style="color:#94a3b8;">இன்னும் தொடங்கவில்லை</span>`;
+
+        return `
+          <tr>
+            <td><div class="student-name-cell"><div class="student-avatar-circle">${(student.firstName[0] || "👤").toUpperCase()}</div><div class="student-full-name">${fullName}</div></div></td>
+            <td><span class="nilai-pill">Nilai ${student.grade}</span></td>
+            <td><strong>${otherRecords.length}</strong><br><small>${categoryList}</small></td>
+            <td>${otherRecords.length ? `${average}%` : "—"}</td>
+            <td><strong style="color:#EAB308;">⭐ ${stars}</strong></td>
+            <td style="color:#64748B;font-size:0.82rem;">${lastActive}</td>
+            <td>${detailButton}</td>
+          </tr>
+        `;
+      }
 
       let stars = 0;
       let rcAttempts = 0;
@@ -1513,7 +1617,6 @@ const App = {
       const scoreBadgeText = rcAttempts === 0 ? "தொடங்கவில்லை" : `${avgScore}%`;
 
       const lastActiveText = lastActiveTime ? new Date(lastActiveTime).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : "இல்லை";
-      const studentIdx = this.students.indexOf(student);
 
       return `
         <tr>
@@ -1541,9 +1644,7 @@ const App = {
           </td>
           <td style="color: #64748B; font-size: 0.82rem;">${lastActiveText}</td>
           <td>
-            <button type="button" class="btn-view-child-detail" onclick="App.openChildModalByIndex(${studentIdx})">
-              <span>🔎</span> விவரம்
-            </button>
+            ${detailButton}
           </td>
         </tr>
       `;
