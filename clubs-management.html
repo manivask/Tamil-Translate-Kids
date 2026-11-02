@@ -270,6 +270,17 @@
     .club-pill-tag.reading { background: #EDE9FE; color: #5B21B6; }
     .club-pill-tag.none { background: #F1F5F9; color: #94A3B8; }
 
+    .student-create-card { background: #FFFFFF; color: #1E293B; border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 20px; box-shadow: var(--glass-shadow); }
+    .student-create-card h2 { font-size: 1.05rem; margin: 0 0 12px; color: #1E1B4B; }
+    .student-create-form { display: grid; grid-template-columns: 1fr 1fr 120px 140px 1.2fr auto; gap: 10px; align-items: end; }
+    .student-create-form label { display: grid; gap: 4px; font-size: .78rem; font-weight: 700; color: #475569; }
+    .student-create-form input, .student-create-form select { width: 100%; padding: 9px 10px; border: 1px solid #CBD5E1; border-radius: 8px; font: inherit; color: #1E293B; background: #FFF; }
+    .school-select { padding: 7px 8px; border: 1px solid #CBD5E1; border-radius: 7px; font: inherit; font-weight: 700; color: #1E293B; background: #FFF; }
+    .qr-student-btn { background: #EEF2FF; color: #4338CA; border: 1px solid #C7D2FE; padding: 7px 10px; border-radius: 999px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    .student-create-result { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; color: #475569; font-size: .88rem; }
+    .student-create-result:empty { display: none; }
+    @media (max-width: 900px) { .student-create-form { grid-template-columns: 1fr 1fr; } }
+
     .toast-msg {
       position: fixed;
       bottom: 24px;
@@ -315,6 +326,19 @@
       </div>
     </header>
 
+    <section class="student-create-card" aria-label="Create student">
+      <h2>➕ புதிய மாணவரைச் சேர்க்கவும் (Create Student)</h2>
+      <form class="student-create-form" id="student-create-form">
+        <label>முதல் பெயர் (First name)<input id="new-student-first" required maxlength="60"></label>
+        <label>கடைசி பெயர் (Last name)<input id="new-student-last" required maxlength="60"></label>
+        <label>வகுப்பு (Grade)<select id="new-student-grade" required><option value="1">Nilai 1</option><option value="2">Nilai 2</option><option value="3">Nilai 3</option><option value="4">Nilai 4</option><option value="5">Nilai 5</option><option value="6">Nilai 6</option><option value="7">Nilai 7</option><option value="8">Nilai 8</option></select></label>
+        <label>பள்ளி (School)<select id="new-student-school" required><option>FHS</option><option>CHS</option><option selected>RHS</option><option>Online</option></select></label>
+        <label>குழு (Group)<select id="new-student-group"><option value="thirukkural">திருக்குறள்</option><option value="aathichudi">ஆத்திசூடி</option><option value="reading" selected>வாசிப்பு மன்றம்</option><option value="school">School Topic</option><option value="">No group yet</option></select></label>
+        <button class="clubs-btn primary" type="submit">➕ மாணவரை உருவாக்கு</button>
+      </form>
+      <div class="student-create-result" id="student-create-result" role="status" aria-live="polite"></div>
+    </section>
+
     <!-- Controls -->
     <section class="clubs-controls-card">
       <div class="clubs-search-row">
@@ -349,15 +373,16 @@
             <th>#</th>
             <th>வகுப்பு</th>
             <th>மாணவர் பெயர் (Student Name)</th>
+            <th>பள்ளி (School)</th>
             <th style="text-align: center;">📜 திருக்குறள்</th>
             <th style="text-align: center;">🪶 ஆத்திசூடி</th>
             <th style="text-align: center;">📖 வாசிப்பு மன்றம்</th>
-            <th>School Topic</th>
             <th>சேர்க்கை சுருக்கம் (Enrolled Clubs)</th>
+            <th>QR உள்நுழைவு</th>
           </tr>
         </thead>
         <tbody id="clubs-table-body">
-          <tr><td colspan="8" style="text-align: center; padding: 30px;">மாணவர் பட்டியல் ஏற்றப்படுகிறது...</td></tr>
+          <tr><td colspan="9" style="text-align: center; padding: 30px;">மாணவர் பட்டியல் ஏற்றப்படுகிறது...</td></tr>
         </tbody>
       </table>
     </main>
@@ -368,6 +393,8 @@
   <script>
     (function () {
       const STORAGE_KEY = "tbta_student_club_enrollments";
+      const CUSTOM_STUDENTS_KEY = "tbta_custom_students";
+      const SCHOOLS = ["FHS", "CHS", "RHS", "Online"];
       let allStudents = [];
       let enrollments = {};
       let currentGradeFilter = "all";
@@ -379,6 +406,7 @@
       const saveBtn = document.getElementById("save-clubs-btn");
       const exportBtn = document.getElementById("export-json-btn");
       const toast = document.getElementById("toast-msg");
+      const createForm = document.getElementById("student-create-form");
 
       async function init() {
         try {
@@ -387,12 +415,19 @@
             fetch("data/students/club_enrollments.json").then(r => r.json()).catch(() => ({}))
           ]);
 
-          allStudents = rosterRes.students || [];
-
           // Load local storage or default file
           let local = {};
           try { local = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) {}
           enrollments = Object.keys(local).length ? local : (enrollRes || {});
+          const customStudents = readCustomStudents();
+          allStudents = [...(rosterRes.students || []), ...customStudents].map(student => {
+            const key = getStudentKey(student);
+            const savedSchool = enrollments[key] && enrollments[key].school;
+            return {
+              ...student,
+              school: SCHOOLS.includes(savedSchool) ? savedSchool : (SCHOOLS.includes(student.school) ? student.school : "RHS")
+            };
+          });
 
           // Ensure every student has an enrollment entry
           allStudents.forEach(s => {
@@ -410,7 +445,7 @@
           renderTable();
         } catch (err) {
           console.error("Failed to load data:", err);
-          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">தரவுகளை ஏற்ற முடியவில்லை.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: red;">தரவுகளை ஏற்ற முடியவில்லை.</td></tr>`;
         }
 
         searchInput.addEventListener("input", (e) => {
@@ -429,6 +464,7 @@
 
         if (saveBtn) saveBtn.addEventListener("click", () => saveEnrollments(true));
         if (exportBtn) exportBtn.addEventListener("click", exportJSON);
+        if (createForm) createForm.addEventListener("submit", createStudent);
 
         // Bulk buttons
         document.getElementById("bulk-kural-all").addEventListener("click", () => bulkToggle("thirukkural", true));
@@ -439,7 +475,63 @@
       }
 
       function getStudentKey(s) {
-        return `${s.firstName}_${s.lastName}_G${s.grade}`;
+        return s.id || `${s.firstName}_${s.lastName}_G${s.grade}`;
+      }
+
+      function readCustomStudents() {
+        try { const stored = JSON.parse(localStorage.getItem(CUSTOM_STUDENTS_KEY) || "[]"); return Array.isArray(stored) ? stored : []; } catch (_) { return []; }
+      }
+
+      function escapeHtml(value) {
+        return String(value || "").replace(/[&<>'\"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
+      }
+
+      function createStudent(event) {
+        event.preventDefault();
+        const firstName = document.getElementById("new-student-first").value.trim();
+        const lastName = document.getElementById("new-student-last").value.trim();
+        const grade = Number(document.getElementById("new-student-grade").value);
+        const school = document.getElementById("new-student-school").value;
+        const group = document.getElementById("new-student-group").value;
+        if (!firstName || !lastName || !Number.isInteger(grade) || grade < 1 || grade > 8 || !SCHOOLS.includes(school)) return;
+        const id = `TBTA-${window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID().toUpperCase() : `${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`}`;
+        const student = { id, firstName, lastName, grade, school };
+        const customStudents = readCustomStudents();
+        customStudents.push(student);
+        const nextEnrollments = {
+          ...enrollments,
+          [id]: { id, firstName, lastName, grade, school, clubs: group ? [group] : [] }
+        };
+        const previousStudents = localStorage.getItem(CUSTOM_STUDENTS_KEY);
+        const previousEnrollments = localStorage.getItem(STORAGE_KEY);
+        try {
+          localStorage.setItem(CUSTOM_STUDENTS_KEY, JSON.stringify(customStudents));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(nextEnrollments));
+        } catch (error) {
+          console.error("Could not save student:", error);
+          try {
+            if (previousStudents === null) localStorage.removeItem(CUSTOM_STUDENTS_KEY);
+            else localStorage.setItem(CUSTOM_STUDENTS_KEY, previousStudents);
+            if (previousEnrollments === null) localStorage.removeItem(STORAGE_KEY);
+            else localStorage.setItem(STORAGE_KEY, previousEnrollments);
+          } catch (rollbackError) {
+            console.error("Could not restore student data after a failed save:", rollbackError);
+          }
+          document.getElementById("student-create-result").textContent = "Could not save the student in this browser. Check available storage and try again.";
+          return;
+        }
+        enrollments = nextEnrollments;
+        allStudents.push(student);
+        createForm.reset();
+        const result = document.getElementById("student-create-result");
+        result.textContent = `${firstName} ${lastName} was created.`;
+        const qrLink = document.createElement("a");
+        qrLink.className = "clubs-btn secondary";
+        qrLink.href = `students-qr.html#student=${encodeURIComponent(id)}`;
+        qrLink.textContent = "🪪 Create student login QR";
+        result.appendChild(qrLink);
+        renderTable();
+        showToast(`✅ ${firstName} உருவாக்கப்பட்டார். QR உள்நுழைவு தயாராக உள்ளது!`);
       }
 
       function renderTable() {
@@ -451,7 +543,7 @@
         });
 
         if (!filtered.length) {
-          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 24px; color: #64748B;">பொருத்தமான மாணவர்கள் எவரும் இல்லை.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 24px; color: #64748B;">பொருத்தமான மாணவர்கள் எவரும் இல்லை.</td></tr>`;
           return;
         }
 
@@ -476,9 +568,10 @@
             <td>${idx + 1}</td>
             <td><strong>Nilai ${student.grade}</strong></td>
             <td>
-              <strong>${student.firstName} ${student.lastName}</strong>
+              <strong>${escapeHtml(student.firstName)} ${escapeHtml(student.lastName)}</strong>
               ${isAaradhana ? ' <span style="background: #10B981; color: #FFF; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Featured Student ⭐</span>' : ''}
             </td>
+            <td><select class="school-select" data-school-key="${escapeHtml(key)}" aria-label="School for ${escapeHtml(student.firstName)}">${SCHOOLS.map(school => `<option ${student.school === school ? "selected" : ""}>${school}</option>`).join("")}</select></td>
             <td style="text-align: center;">
               <label class="club-checkbox-label">
                 <input type="checkbox" data-key="${key}" data-club="thirukkural" ${hasKural ? 'checked' : ''}>
@@ -494,7 +587,6 @@
                 <input type="checkbox" data-key="${key}" data-club="reading" ${hasReading ? 'checked' : ''}>
               </label>
             </td>
-            <td><label class="club-checkbox-label"><input type="checkbox" data-key="${key}" data-club="school" ${hasSchool ? 'checked' : ''}> School Topic</label></td>
             <td>
               ${hasSchool ? '<span class="club-pill-tag reading">School Topic</span>' : ''}
               ${hasKural ? '<span class="club-pill-tag kural">📜 திருக்குறள்</span>' : ''}
@@ -502,6 +594,7 @@
               ${hasReading ? '<span class="club-pill-tag reading">📖 வாசிப்பு மன்றம்</span>' : ''}
               ${(!hasKural && !hasAathichudi && !hasReading && !hasSchool) ? '<span class="club-pill-tag none">பதிவு இல்லை (None)</span>' : ''}
             </td>
+            <td><button type="button" class="qr-student-btn" data-qr-key="${key}">🪪 QR உருவாக்கு</button></td>
           `;
 
           tbody.appendChild(tr);
@@ -528,6 +621,20 @@
             renderTable();
           });
         });
+        tbody.querySelectorAll(".school-select").forEach(select => select.addEventListener("change", (event) => {
+          const key = event.target.dataset.schoolKey;
+          const student = allStudents.find(s => getStudentKey(s) === key);
+          if (!student) return;
+          student.school = event.target.value;
+          const customStudents = readCustomStudents();
+          const saved = customStudents.find(s => getStudentKey(s) === key);
+          if (saved) { saved.school = student.school; localStorage.setItem(CUSTOM_STUDENTS_KEY, JSON.stringify(customStudents)); }
+          if (enrollments[key]) enrollments[key].school = student.school;
+          saveEnrollments(true);
+        }));
+        tbody.querySelectorAll("[data-qr-key]").forEach(button => button.addEventListener("click", () => {
+          window.open(`students-qr.html#student=${encodeURIComponent(button.dataset.qrKey)}`, "_blank", "noopener");
+        }));
       }
 
       function bulkToggle(club, state) {
@@ -565,12 +672,18 @@
         }).map(getStudentKey);
       }
 
-      function saveEnrollments(showToast = true) {
+      function saveEnrollments(shouldShowToast = true) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(enrollments));
-        if (showToast && toast) {
-          toast.style.display = "block";
-          setTimeout(() => { toast.style.display = "none"; }, 2500);
+        if (shouldShowToast && toast) {
+          showToast("✅ மன்றப் பதிவுகள் வெற்றிகரமாகச் சேமிக்கப்பட்டன!");
         }
+      }
+
+      function showToast(message) {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 2500);
       }
 
       function exportJSON() {

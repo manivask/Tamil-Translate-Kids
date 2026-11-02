@@ -53,28 +53,43 @@ const App = {
 
     const hash = (window.location.hash || "").toLowerCase();
     if (hash.includes("student=")) {
-      const match = window.location.hash.match(/student=([^&]+)/);
-      if (match && match[1]) {
-        const raw = decodeURIComponent(match[1]);
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      const raw = params.get("student") || "";
+      if (raw) {
         const parts = raw.split("|");
-        const firstName = (parts[0] || "").trim().toLowerCase();
-        const lastName = (parts[1] || "").trim().toLowerCase();
-        const grade = Number(parts[2]) || null;
+        const studentId = parts.length === 1 ? raw : "";
+        const firstName = (params.get("first") || parts[0] || "").trim();
+        const lastName = (params.get("last") || parts[1] || "").trim();
+        const grade = Number(params.get("grade") || parts[2]) || null;
         const targetScreen = (hash.includes("reading-club") || hash.includes("screen=reading-club")) ? "reading-club" : null;
-        const pdfMatch = window.location.hash.match(/pdf=([^&]+)/);
-        const targetPdf = pdfMatch ? pdfMatch[1] : null;
+        const targetPdf = params.get("pdf");
+        const studentSchool = params.get("school") || "RHS";
+        let studentClubs = [];
+        try {
+          const parsedClubs = JSON.parse(params.get("clubs") || "[]");
+          studentClubs = Array.isArray(parsedClubs) ? parsedClubs : [];
+        } catch (_) {}
 
         setTimeout(async () => {
           await this.loadStudents();
-          const student = this.students.find(s => {
-            const sf = (s.firstName || "").toLowerCase();
-            const sl = (s.lastName || "").toLowerCase();
-            const nameMatch = sf === firstName || sf.startsWith(firstName) || firstName.startsWith(sf) ||
-                              (firstName.includes("aaradh") && sf.includes("aaradh"));
-            const lastMatch = !lastName || sl === lastName || sl.startsWith(lastName) || lastName.startsWith(sl);
-            const gradeMatch = !grade || Number(s.grade) === grade;
-            return nameMatch && lastMatch && gradeMatch;
-          });
+          let student = studentId && this.students.find(s => s.id && s.id.toLowerCase() === studentId.toLowerCase());
+          if (!student && !studentId && firstName && grade) {
+            student = this.students.find(s =>
+              s.firstName.toLowerCase() === firstName.toLowerCase() &&
+              s.lastName.toLowerCase() === lastName.toLowerCase() &&
+              Number(s.grade) === grade
+            );
+          }
+          if (!student && firstName && lastName && grade >= 1 && grade <= 8) {
+            student = {
+              id: studentId || undefined,
+              firstName,
+              lastName,
+              grade,
+              school: studentSchool,
+              clubs: studentClubs
+            };
+          }
           if (student) {
             this.authenticateStudentDirectly(student, targetScreen, targetPdf);
           } else {
@@ -645,7 +660,31 @@ const App = {
     try {
       const response = await fetch("data/students/roster.json");
       const data = await response.json();
-      this.students = data.students || [];
+      let customStudents = [];
+      try {
+        const savedStudents = JSON.parse(localStorage.getItem("tbta_custom_students") || "[]");
+        if (Array.isArray(savedStudents)) customStudents = savedStudents;
+      } catch (err) {
+        console.warn("Could not load locally created students:", err);
+      }
+      let localEnrollments = {};
+      try {
+        const savedEnrollments = JSON.parse(localStorage.getItem("tbta_student_club_enrollments") || "{}");
+        if (savedEnrollments && typeof savedEnrollments === "object" && !Array.isArray(savedEnrollments)) {
+          localEnrollments = savedEnrollments;
+        }
+      } catch (err) {
+        console.warn("Could not load locally saved student groups:", err);
+      }
+      this.students = [...(Array.isArray(data.students) ? data.students : []), ...customStudents].map(student => {
+        const key = student.id || `${student.firstName}_${student.lastName}_G${student.grade}`;
+        const saved = localEnrollments[key];
+        return {
+          ...student,
+          school: saved && saved.school || student.school || "RHS",
+          clubs: saved && Array.isArray(saved.clubs) ? saved.clubs : student.clubs
+        };
+      });
       if (this.elements.studentGrade && this.elements.studentGrade.value) {
         this.populateStudentNames();
       }
@@ -675,7 +714,7 @@ const App = {
 
   getStudentClubs(student) {
     if (!student) return ["thirukkural", "aathichudi", "reading"];
-    const key = `${student.firstName}_${student.lastName}_G${student.grade}`;
+    const key = student.id || `${student.firstName}_${student.lastName}_G${student.grade}`;
     
     // Check localStorage first in case user recently edited clubs-management
     try {
@@ -691,6 +730,7 @@ const App = {
     if (this.clubEnrollments && this.clubEnrollments[key] && Array.isArray(this.clubEnrollments[key].clubs)) {
       return this.clubEnrollments[key].clubs;
     }
+    if (Array.isArray(student.clubs)) return student.clubs;
     return ["thirukkural", "aathichudi", "reading"];
   },
 
@@ -860,9 +900,29 @@ const App = {
         return true;
       }
 
-      if (parsed.firstName && parsed.grade) {
+      if (parsed.type === "TBTA_STUDENT" && parsed.firstName && parsed.lastName && parsed.grade) {
+        matchedStudent = parsed.id && this.students.find(s => s.id && s.id.toLowerCase() === String(parsed.id).toLowerCase());
+        if (!matchedStudent && !parsed.id) {
+          matchedStudent = this.students.find(s =>
+            s.firstName.toLowerCase() === parsed.firstName.toLowerCase() &&
+            s.lastName.toLowerCase() === parsed.lastName.toLowerCase() &&
+            Number(s.grade) === Number(parsed.grade)
+          );
+        }
+        if (!matchedStudent && Number(parsed.grade) >= 1 && Number(parsed.grade) <= 8) {
+          matchedStudent = {
+            id: parsed.id,
+            firstName: parsed.firstName,
+            lastName: parsed.lastName,
+            grade: Number(parsed.grade),
+            school: parsed.school || "RHS",
+            clubs: Array.isArray(parsed.clubs) ? parsed.clubs : []
+          };
+        }
+      } else if (parsed.firstName && parsed.grade) {
         matchedStudent = this.students.find(s =>
           s.firstName.toLowerCase() === parsed.firstName.toLowerCase() &&
+          (!parsed.lastName || s.lastName.toLowerCase() === parsed.lastName.toLowerCase()) &&
           Number(s.grade) === Number(parsed.grade)
         );
       } else if (parsed.name && parsed.grade) {
