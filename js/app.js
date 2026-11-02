@@ -72,6 +72,11 @@ const App = {
 
         setTimeout(async () => {
           await this.loadStudents();
+          const studentKey = studentId || `${firstName}_${lastName}_G${grade}`;
+          if (this.isStudentRemoved(studentKey)) {
+            this.showScreen("login");
+            return;
+          }
           let student = studentId && this.students.find(s => s.id && s.id.toLowerCase() === studentId.toLowerCase());
           if (!student && !studentId && firstName && grade) {
             student = this.students.find(s =>
@@ -676,7 +681,16 @@ const App = {
       } catch (err) {
         console.warn("Could not load locally saved student groups:", err);
       }
-      this.students = [...(Array.isArray(data.students) ? data.students : []), ...customStudents].map(student => {
+      let removedStudents = new Set();
+      try {
+        const savedRemovedStudents = JSON.parse(localStorage.getItem("tbta_removed_students") || "[]");
+        if (Array.isArray(savedRemovedStudents)) removedStudents = new Set(savedRemovedStudents.map(String));
+      } catch (err) {
+        console.warn("Could not load removed-student records:", err);
+      }
+      this.students = [...(Array.isArray(data.students) ? data.students : []), ...customStudents]
+        .filter(student => !removedStudents.has(student.id || `${student.firstName}_${student.lastName}_G${student.grade}`))
+        .map(student => {
         const key = student.id || `${student.firstName}_${student.lastName}_G${student.grade}`;
         const saved = localEnrollments[key];
         return {
@@ -732,6 +746,16 @@ const App = {
     }
     if (Array.isArray(student.clubs)) return student.clubs;
     return ["thirukkural", "aathichudi", "reading"];
+  },
+
+  isStudentRemoved(studentKey) {
+    try {
+      const removed = JSON.parse(localStorage.getItem("tbta_removed_students") || "[]");
+      return Array.isArray(removed) && removed.includes(String(studentKey));
+    } catch (err) {
+      console.warn("Could not verify removed-student records:", err);
+      return false;
+    }
   },
 
   toggleRole() {
@@ -898,6 +922,16 @@ const App = {
         }
         setTimeout(() => this.openAdmin(), 500);
         return true;
+      }
+
+      if (parsed.type === "TBTA_STUDENT" && parsed.firstName && parsed.lastName && parsed.grade) {
+        const studentKey = parsed.id || `${parsed.firstName}_${parsed.lastName}_G${parsed.grade}`;
+        if (this.isStudentRemoved(studentKey) || this.isStudentRemoved(`${parsed.firstName}_${parsed.lastName}_G${parsed.grade}`)) {
+          if (this.elements.qrScanStatus) {
+            this.elements.qrScanStatus.textContent = "⚠️ This student was removed. Please ask the administrator for an updated badge.";
+          }
+          return false;
+        }
       }
 
       if (parsed.type === "TBTA_STUDENT" && parsed.firstName && parsed.lastName && parsed.grade) {

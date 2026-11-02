@@ -279,6 +279,10 @@
     .qr-student-btn { background: #EEF2FF; color: #4338CA; border: 1px solid #C7D2FE; padding: 7px 10px; border-radius: 999px; font-weight: 700; cursor: pointer; white-space: nowrap; }
     .student-create-result { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; color: #475569; font-size: .88rem; }
     .student-create-result:empty { display: none; }
+    .student-create-result.warning { color: #B45309; font-weight: 800; }
+    .student-create-result.error { color: #B91C1C; font-weight: 800; }
+    .student-remove-btn { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; padding: 7px 10px; border-radius: 999px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    .student-remove-btn:hover { background: #FEE2E2; }
     @media (max-width: 900px) { .student-create-form { grid-template-columns: 1fr 1fr; } }
 
     .toast-msg {
@@ -378,7 +382,7 @@
             <th style="text-align: center;">🪶 ஆத்திசூடி</th>
             <th style="text-align: center;">📖 வாசிப்பு மன்றம்</th>
             <th>சேர்க்கை சுருக்கம் (Enrolled Clubs)</th>
-            <th>QR உள்நுழைவு</th>
+            <th>செயல்கள் (Actions)</th>
           </tr>
         </thead>
         <tbody id="clubs-table-body">
@@ -394,6 +398,7 @@
     (function () {
       const STORAGE_KEY = "tbta_student_club_enrollments";
       const CUSTOM_STUDENTS_KEY = "tbta_custom_students";
+      const REMOVED_STUDENTS_KEY = "tbta_removed_students";
       const SCHOOLS = ["FHS", "CHS", "RHS", "Online"];
       let allStudents = [];
       let enrollments = {};
@@ -420,7 +425,8 @@
           try { local = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (_) {}
           enrollments = Object.keys(local).length ? local : (enrollRes || {});
           const customStudents = readCustomStudents();
-          allStudents = [...(rosterRes.students || []), ...customStudents].map(student => {
+          const removedKeys = readRemovedStudents();
+          allStudents = [...(rosterRes.students || []), ...customStudents].filter(student => !removedKeys.has(getStudentKey(student))).map(student => {
             const key = getStudentKey(student);
             const savedSchool = enrollments[key] && enrollments[key].school;
             return {
@@ -482,6 +488,26 @@
         try { const stored = JSON.parse(localStorage.getItem(CUSTOM_STUDENTS_KEY) || "[]"); return Array.isArray(stored) ? stored : []; } catch (_) { return []; }
       }
 
+      function readRemovedStudents() {
+        try {
+          const stored = JSON.parse(localStorage.getItem(REMOVED_STUDENTS_KEY) || "[]");
+          return new Set(Array.isArray(stored) ? stored.map(String) : []);
+        } catch (error) {
+          console.error("Could not read removed-student records:", error);
+          return new Set();
+        }
+      }
+
+      function normalizeName(value) {
+        return String(value || "").normalize("NFKC").trim().replace(/\s+/g, " ").toLocaleLowerCase();
+      }
+
+      function setCreateMessage(message, type = "") {
+        const result = document.getElementById("student-create-result");
+        result.replaceChildren(document.createTextNode(message));
+        result.className = `student-create-result${type ? ` ${type}` : ""}`;
+      }
+
       function escapeHtml(value) {
         return String(value || "").replace(/[&<>'\"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
       }
@@ -494,6 +520,19 @@
         const school = document.getElementById("new-student-school").value;
         const group = document.getElementById("new-student-group").value;
         if (!firstName || !lastName || !Number.isInteger(grade) || grade < 1 || grade > 8 || !SCHOOLS.includes(school)) return;
+        const normalizedFirstName = normalizeName(firstName);
+        const normalizedLastName = normalizeName(lastName);
+        const duplicate = allStudents.find(student =>
+          normalizeName(student.firstName) === normalizedFirstName &&
+          normalizeName(student.lastName) === normalizedLastName
+        );
+        if (duplicate) {
+          setCreateMessage(
+            `${firstName} ${lastName} already exists (Nilai ${duplicate.grade}, ${duplicate.school || "RHS"}). Student was not added.`,
+            "warning"
+          );
+          return;
+        }
         const id = `TBTA-${window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID().toUpperCase() : `${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`}`;
         const student = { id, firstName, lastName, grade, school };
         const customStudents = readCustomStudents();
@@ -517,14 +556,15 @@
           } catch (rollbackError) {
             console.error("Could not restore student data after a failed save:", rollbackError);
           }
-          document.getElementById("student-create-result").textContent = "Could not save the student in this browser. Check available storage and try again.";
+          setCreateMessage("Could not save the student in this browser. Check available storage and try again.", "error");
           return;
         }
         enrollments = nextEnrollments;
         allStudents.push(student);
         createForm.reset();
         const result = document.getElementById("student-create-result");
-        result.textContent = `${firstName} ${lastName} was created.`;
+        result.replaceChildren(document.createTextNode(`${firstName} ${lastName} was created.`));
+        result.className = "student-create-result";
         const qrLink = document.createElement("a");
         qrLink.className = "clubs-btn secondary";
         qrLink.href = `students-qr.html#student=${encodeURIComponent(id)}`;
@@ -594,7 +634,10 @@
               ${hasReading ? '<span class="club-pill-tag reading">📖 வாசிப்பு மன்றம்</span>' : ''}
               ${(!hasKural && !hasAathichudi && !hasReading && !hasSchool) ? '<span class="club-pill-tag none">பதிவு இல்லை (None)</span>' : ''}
             </td>
-            <td><button type="button" class="qr-student-btn" data-qr-key="${key}">🪪 QR உருவாக்கு</button></td>
+            <td>
+              <button type="button" class="qr-student-btn" data-qr-key="${escapeHtml(key)}">🪪 QR உருவாக்கு</button>
+              <button type="button" class="student-remove-btn" data-remove-key="${escapeHtml(key)}">🗑️ Remove</button>
+            </td>
           `;
 
           tbody.appendChild(tr);
@@ -635,6 +678,51 @@
         tbody.querySelectorAll("[data-qr-key]").forEach(button => button.addEventListener("click", () => {
           window.open(`students-qr.html#student=${encodeURIComponent(button.dataset.qrKey)}`, "_blank", "noopener");
         }));
+        tbody.querySelectorAll("[data-remove-key]").forEach(button => button.addEventListener("click", () => {
+          const student = allStudents.find(item => getStudentKey(item) === button.dataset.removeKey);
+          if (student) removeStudent(student);
+        }));
+      }
+
+      function removeStudent(student) {
+        const key = getStudentKey(student);
+        const fullName = `${student.firstName} ${student.lastName}`;
+        if (!window.confirm(`Remove ${fullName} (Nilai ${student.grade}) from this app? Their club assignments will also be removed in this browser.`)) return;
+
+        const customStudents = readCustomStudents();
+        const nextStudents = customStudents.filter(item => getStudentKey(item) !== key);
+        const removedKeys = readRemovedStudents();
+        removedKeys.add(key);
+        const nextEnrollments = { ...enrollments };
+        delete nextEnrollments[key];
+        const previousStudents = localStorage.getItem(CUSTOM_STUDENTS_KEY);
+        const previousRemoved = localStorage.getItem(REMOVED_STUDENTS_KEY);
+        const previousEnrollments = localStorage.getItem(STORAGE_KEY);
+
+        try {
+          localStorage.setItem(CUSTOM_STUDENTS_KEY, JSON.stringify(nextStudents));
+          localStorage.setItem(REMOVED_STUDENTS_KEY, JSON.stringify([...removedKeys]));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(nextEnrollments));
+        } catch (error) {
+          console.error("Could not remove student:", error);
+          try {
+            if (previousStudents === null) localStorage.removeItem(CUSTOM_STUDENTS_KEY);
+            else localStorage.setItem(CUSTOM_STUDENTS_KEY, previousStudents);
+            if (previousRemoved === null) localStorage.removeItem(REMOVED_STUDENTS_KEY);
+            else localStorage.setItem(REMOVED_STUDENTS_KEY, previousRemoved);
+            if (previousEnrollments === null) localStorage.removeItem(STORAGE_KEY);
+            else localStorage.setItem(STORAGE_KEY, previousEnrollments);
+          } catch (rollbackError) {
+            console.error("Could not restore student data after a failed removal:", rollbackError);
+          }
+          setCreateMessage(`Could not remove ${fullName}. Check available browser storage and try again.`, "error");
+          return;
+        }
+
+        enrollments = nextEnrollments;
+        allStudents = allStudents.filter(item => getStudentKey(item) !== key);
+        renderTable();
+        showToast(`🗑️ ${fullName} removed from this browser.`);
       }
 
       function bulkToggle(club, state) {

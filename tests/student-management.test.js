@@ -19,7 +19,8 @@ const stored = new Map([
       school: "Online",
       clubs: ["reading"]
     }
-  })]
+  })],
+  ["tbta_removed_students", JSON.stringify(["Mira_Shah_G4"])]
 ]);
 
 const context = {
@@ -29,7 +30,10 @@ const context = {
   document: { getElementById: () => null, addEventListener() {} },
   fetch: async () => ({
     json: async () => ({
-      students: [{ firstName: "Mira", lastName: "Shah", grade: 4 }]
+      students: [
+        { firstName: "Mira", lastName: "Shah", grade: 4 },
+        { firstName: "Nila", lastName: "Rao", grade: 2 }
+      ]
     })
   }),
   localStorage: {
@@ -47,6 +51,7 @@ const app = vm.runInContext("App", context);
 (async () => {
   await app.loadStudents();
   assert.equal(app.students.length, 2, "locally created students are included with the supplied roster");
+  assert.equal(app.students.some(student => student.firstName === "Mira" && student.lastName === "Shah"), false, "locally removed roster students are hidden");
   assert.equal(app.students.find(student => student.id === "TBTA-CUSTOM-1").school, "Online", "saved school assignment is applied");
   assert.deepEqual(Array.from(app.getStudentClubs(app.students.find(student => student.id === "TBTA-CUSTOM-1"))), ["reading"], "saved group assignment is keyed by student ID");
 
@@ -70,6 +75,16 @@ const app = vm.runInContext("App", context);
   assert.equal(app.currentStudent.school, "CHS", "QR login carries the student's school");
   assert.deepEqual(Array.from(app.getStudentClubs(app.currentStudent)), ["aathichudi"], "QR login carries the assigned group");
 
+  stored.set("tbta_removed_students", JSON.stringify(["TBTA-REMOVED-1"]));
+  assert.equal(app.handleScannedQr(JSON.stringify({
+    type: "TBTA_STUDENT",
+    id: "TBTA-REMOVED-1",
+    firstName: "Removed",
+    lastName: "Student",
+    grade: 4
+  })), false, "a removed student's previous QR is rejected");
+  assert.match(app.elements.qrScanStatus.textContent, /removed/i, "removed QR gives a clear status");
+
   for (const file of ["clubs-management.html", "students-qr.html"]) {
     const html = fs.readFileSync(path.join(appDirectory, file), "utf8");
     const inlineScripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
@@ -78,6 +93,11 @@ const app = vm.runInContext("App", context);
     assert.ok(inlineScripts.length, `${file} contains inline scripts`);
     for (const script of inlineScripts) {
       assert.doesNotThrow(() => new vm.Script(script), `${file} inline script parses`);
+    }
+    if (file === "clubs-management.html") {
+      assert.match(html, /function normalizeName\(value\)/, "student names are normalized before duplicate checks");
+      assert.match(html, /already exists .*Student was not added/, "duplicate names display a warning");
+      assert.match(html, /data-remove-key=/, "admin can remove students");
     }
     if (file === "students-qr.html") {
       for (const club of ["reading", "thirukkural", "aathichudi", "school"]) {

@@ -938,6 +938,13 @@
           const data = await res.json();
           let customStudents = [];
           try { customStudents = JSON.parse(localStorage.getItem(CUSTOM_STUDENTS_KEY) || "[]"); } catch (_) {}
+          let removedStudents = new Set();
+          try {
+            const storedRemovedStudents = JSON.parse(localStorage.getItem("tbta_removed_students") || "[]");
+            if (Array.isArray(storedRemovedStudents)) removedStudents = new Set(storedRemovedStudents.map(String));
+          } catch (error) {
+            console.error("Could not load removed-student records:", error);
+          }
           let enrollments = {};
           try {
             const localEnrollments = localStorage.getItem("tbta_student_club_enrollments");
@@ -946,7 +953,9 @@
             enrollments = enrollmentRes && enrollmentRes.ok ? await enrollmentRes.json() : {};
           }
           studentEnrollments = enrollments;
-          allStudents = [...(Array.isArray(data.students) ? data.students : []), ...(Array.isArray(customStudents) ? customStudents : [])].map(student => {
+          allStudents = [...(Array.isArray(data.students) ? data.students : []), ...(Array.isArray(customStudents) ? customStudents : [])]
+            .filter(student => !removedStudents.has(getStudentKey(student)))
+            .map(student => {
             const key = student.id || `${student.firstName}_${student.lastName}_G${student.grade}`;
             const assignedSchool = enrollments[key] && enrollments[key].school;
             return {
