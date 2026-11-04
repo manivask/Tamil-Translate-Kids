@@ -295,6 +295,15 @@
       "stars": 1,
       "passed": true,
       "recordedAt": "2026-10-20T19:43:26.997Z"
+    },
+    {
+      "recordId": "108727c0-bed2-49b5-a7b4-2a2919e75bea",
+      "sentenceId": "pdf-stage2-assign3-s2-as3-s3-q10",
+      "category": "reading-club-pdf:Stage 2 - ஒப்படைப்பு 3 (Stage 2-Assignment 3.pdf)",
+      "score": 80,
+      "stars": 1,
+      "passed": true,
+      "recordedAt": "2026-10-20T19:43:27.189Z"
     }
   ]
 }
