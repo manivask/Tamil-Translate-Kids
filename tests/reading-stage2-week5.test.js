@@ -7,7 +7,7 @@ const test = require("node:test");
 
 const lessonPath = path.join("data", "reading_club", "reading_stage2_week5.json");
 const lesson = JSON.parse(fs.readFileSync(lessonPath, "utf8"))[0];
-const expectedSectionCounts = [1, 20, 10, 10, 3, 18, 5];
+const expectedSectionCounts = [4, 20, 10, 10, 3, 18, 5];
 
 test("Stage 2 Week 5 lesson contains all seven worksheet sections", () => {
   assert.equal(lesson.id, "pdf-stage2-week5");
@@ -32,6 +32,10 @@ test("every section has its complete set of uniquely identified reading prompts"
     assert.equal(items.length, expectedSectionCounts[index], section.title);
     assert.ok(items.every(item => item.questionTa && item.correctAnswer), section.title);
   });
+  assert.deepEqual(
+    lesson.items.filter(item => item.sectionId === "sec-1").map(item => item.category),
+    ["அ வரிசை உயிர்மெய் எழுத்துகள்", "ஆ வரிசை உயிர்மெய் எழுத்துகள்", "இ வரிசை உயிர்மெய் எழுத்துகள்", "ஈ வரிசை உயிர்மெய் எழுத்துகள்"]
+  );
   assert.ok(
     lesson.items.filter(item => item.sectionId === "sec-4").every(item => item.correctAnswer.includes("+")),
     "compound-word prompts accept the PDF's split reading"

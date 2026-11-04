@@ -21,12 +21,48 @@
         "sectionId": "sec-1",
         "sectionTitle": "பிரிவு 1: உயிர்மெய்யெழுத்து வாசிப்பு",
         "type": "reading",
-        "category": "உயிர்மெய்யெழுத்து வாசிப்பு",
-        "questionTa": "அ, ஆ, இ, ஈ வரிசை உயிர்மெய்யெழுத்துக்களைக் கூறவும்.",
-        "meaningEn": "அ, ஆ, இ, ஈ வரிசை உயிர்மெய் எழுத்துகளைச் சொல்லிப் பயிற்சி செய்யுங்கள்.",
+        "category": "அ வரிசை உயிர்மெய் எழுத்துகள்",
+        "questionTa": "க ங ச ஞ ட ண த ந ப ம ய ர ல வ ழ ள ற ன",
+        "meaningEn": "Uyirmei letters with the அ vowel sound",
         "options": [],
-        "correctAnswer": "அ, ஆ, இ, ஈ வரிசை உயிர்மெய்யெழுத்துக்களைக் கூறவும்.",
-        "explanation": "இந்த உயிரெழுத்து வரிசையில் வரும் உயிர்மெய் எழுத்துகளைச் சத்தமாகச் சொல்லுங்கள்."
+        "correctAnswer": "க ங ச ஞ ட ண த ந ப ம ய ர ல வ ழ ள ற ன",
+        "explanation": "அ வரிசை உயிர்மெய் எழுத்துகளைச் சத்தமாக வாசியுங்கள்."
+      },
+      {
+        "id": "week5-sec1-q2",
+        "sectionId": "sec-1",
+        "sectionTitle": "பிரிவு 1: உயிர்மெய்யெழுத்து வாசிப்பு",
+        "type": "reading",
+        "category": "ஆ வரிசை உயிர்மெய் எழுத்துகள்",
+        "questionTa": "கா ஙா சா ஞா டா ணா தா நா பா மா யா ரா லா வா ழா ளா றா னா",
+        "meaningEn": "Uyirmei letters with the ஆ vowel sound",
+        "options": [],
+        "correctAnswer": "கா ஙா சா ஞா டா ணா தா நா பா மா யா ரா லா வா ழா ளா றா னா",
+        "explanation": "ஆ வரிசை உயிர்மெய் எழுத்துகளைச் சத்தமாக வாசியுங்கள்."
+      },
+      {
+        "id": "week5-sec1-q3",
+        "sectionId": "sec-1",
+        "sectionTitle": "பிரிவு 1: உயிர்மெய்யெழுத்து வாசிப்பு",
+        "type": "reading",
+        "category": "இ வரிசை உயிர்மெய் எழுத்துகள்",
+        "questionTa": "கி ஙி சி ஞி டி ணி தி நி பி மி யி ரி லி வி ழி ளி றி னி",
+        "meaningEn": "Uyirmei letters with the இ vowel sound",
+        "options": [],
+        "correctAnswer": "கி ஙி சி ஞி டி ணி தி நி பி மி யி ரி லி வி ழி ளி றி னி",
+        "explanation": "இ வரிசை உயிர்மெய் எழுத்துகளைச் சத்தமாக வாசியுங்கள்."
+      },
+      {
+        "id": "week5-sec1-q4",
+        "sectionId": "sec-1",
+        "sectionTitle": "பிரிவு 1: உயிர்மெய்யெழுத்து வாசிப்பு",
+        "type": "reading",
+        "category": "ஈ வரிசை உயிர்மெய் எழுத்துகள்",
+        "questionTa": "கீ ஙீ சீ ஞீ டீ ணீ தீ நீ பீ மீ யீ ரீ லீ வீ ழீ ளீ றீ னீ",
+        "meaningEn": "Uyirmei letters with the ஈ vowel sound",
+        "options": [],
+        "correctAnswer": "கீ ஙீ சீ ஞீ டீ ணீ தீ நீ பீ மீ யீ ரீ லீ வீ ழீ ளீ றீ னீ",
+        "explanation": "ஈ வரிசை உயிர்மெய் எழுத்துகளைச் சத்தமாக வாசியுங்கள்."
       },
       {
         "id": "week5-sec2-q1",
