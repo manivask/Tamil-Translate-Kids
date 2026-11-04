@@ -1177,17 +1177,126 @@ const App = {
   async saveSession() {
     localStorage.setItem("tamilKidsStudent", JSON.stringify(this.currentStudent));
     try { await fetch("/api/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(this.currentStudent) }); } catch (_) { /* GitHub Pages uses local browser storage. */ }
+    if (window.TAMIL_KIDS_PROGRESS_API_URL) {
+      try {
+        const unsyncedRecordIds = await this.syncPendingProgress();
+        const sharedRecords = await this.fetchSharedProgress();
+        this.allRecords = this.mergeProgressRecords(
+          JSON.parse(localStorage.getItem("tamilKidsProgress") || "[]"),
+          sharedRecords
+        );
+        this.updateStudentDashboard();
+        if (unsyncedRecordIds.length && this.elements.studentStatusText) {
+          this.elements.studentStatusText.textContent = `⚠️ ${unsyncedRecordIds.length} older record(s) could not sync; shared progress is still loaded.`;
+        }
+      } catch (error) {
+        console.error("Could not sync saved student progress:", error);
+        if (this.elements.studentStatusText) {
+          this.elements.studentStatusText.textContent = "⚠️ Progress is saved on this device, but shared sync is temporarily unavailable.";
+        }
+      }
+    }
+  },
+
+  getProgressEndpoint() {
+    const baseUrl = (window.TAMIL_KIDS_PROGRESS_API_URL || "").trim().replace(/\/+$/, "");
+    return `${baseUrl}/api/progress`;
+  },
+
+  getProgressStudentId(student) {
+    if (student && student.id) return String(student.id);
+    if (!student) return "";
+    const name = `${student.firstName || ""}_${student.lastName || ""}`
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toUpperCase()
+      .replace(/[^A-Z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+    return `G${Number(student.grade)}_${name}`;
+  },
+
+  mergeProgressRecords(localRecords, sharedRecords) {
+    const recordsById = new Map();
+    [...localRecords, ...sharedRecords].forEach((record, index) => {
+      const key = record.recordId || `${record.studentId || this.getProgressStudentId(record.student)}:${record.recordedAt || ""}:${record.sentenceId || ""}:${index}`;
+      recordsById.set(key, record);
+    });
+    return Array.from(recordsById.values());
+  },
+
+  async fetchSharedProgress() {
+    const response = await fetch(this.getProgressEndpoint());
+    if (!response.ok) throw new Error(`Progress API returned HTTP ${response.status}`);
+    const records = await response.json();
+    if (!Array.isArray(records)) throw new Error("Progress API returned an invalid response");
+    return records;
+  },
+
+  async syncPendingProgress() {
+    const key = "tamilKidsProgress";
+    const records = JSON.parse(localStorage.getItem(key) || "[]");
+    const unsyncedRecordIds = [];
+    let updated = false;
+    for (const record of records) {
+      if (!record.recordId) {
+        record.recordId = window.crypto && window.crypto.randomUUID
+          ? window.crypto.randomUUID()
+          : `record-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        updated = true;
+      }
+      if (!record.studentId && record.student) {
+        record.studentId = this.getProgressStudentId(record.student);
+        updated = true;
+      }
+    }
+    if (updated) localStorage.setItem(key, JSON.stringify(records));
+
+    for (const record of records) {
+      try {
+        const response = await fetch(this.getProgressEndpoint(), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(record)
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      } catch (error) {
+        console.error(`Could not sync progress record ${record.recordId}:`, error);
+        unsyncedRecordIds.push(record.recordId);
+      }
+    }
+    return unsyncedRecordIds;
   },
 
   async saveProgress(record) {
     if (!this.currentStudent) return;
-    const entry = { ...record, student: this.currentStudent, recordedAt: new Date().toISOString() };
+    const entry = {
+      ...record,
+      student: this.currentStudent,
+      studentId: this.getProgressStudentId(this.currentStudent),
+      recordId: window.crypto && window.crypto.randomUUID
+        ? window.crypto.randomUUID()
+        : `record-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      recordedAt: new Date().toISOString()
+    };
     const key = "tamilKidsProgress";
     const saved = JSON.parse(localStorage.getItem(key) || "[]");
     saved.push(entry);
     localStorage.setItem(key, JSON.stringify(saved));
+    this.allRecords = this.mergeProgressRecords(this.allRecords || [], [entry]);
     this.updateStudentDashboard();
-    try { await fetch("/api/progress", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(entry) }); } catch (_) { /* Local fallback remains available. */ }
+    try {
+      const response = await fetch(this.getProgressEndpoint(), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entry)
+      });
+      if (!response.ok) throw new Error(`Progress API returned HTTP ${response.status}`);
+    } catch (error) {
+      console.error("Could not sync student progress; the local copy was kept:", error);
+      if (this.elements.studentStatusText) {
+        this.elements.studentStatusText.textContent = "⚠️ Progress is saved on this device, but shared sync is temporarily unavailable.";
+      }
+    }
   },
 
   updateStudentDashboard() {
@@ -1203,12 +1312,12 @@ const App = {
       this.elements.studentGradeBadge.textContent = `🌟 Nilai ${this.currentStudent.grade} (${this.currentStudent.grade}-ஆம் வகுப்பு)`;
     }
 
-    const key = "tamilKidsProgress";
-    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    const saved = this.allRecords || JSON.parse(localStorage.getItem("tamilKidsProgress") || "[]");
     const studentRecords = saved.filter(r =>
-      r.student &&
-      r.student.firstName === this.currentStudent.firstName &&
-      r.student.lastName === this.currentStudent.lastName
+      r.studentId === this.getProgressStudentId(this.currentStudent) ||
+      (r.student &&
+        r.student.firstName === this.currentStudent.firstName &&
+        r.student.lastName === this.currentStudent.lastName)
     );
 
     let stars = 0;
@@ -1289,9 +1398,10 @@ const App = {
   async refreshStaffData() {
     let records = JSON.parse(localStorage.getItem("tamilKidsProgress") || "[]");
     try {
-      const response = await fetch("/api/progress");
-      if (response.ok) records = await response.json();
-    } catch (_) { /* Browser fallback */ }
+      records = this.mergeProgressRecords(records, await this.fetchSharedProgress());
+    } catch (error) {
+      console.error("Could not load shared student progress; showing this browser's saved records:", error);
+    }
     this.adminRecords = records;
     this.allRecords = records;
 

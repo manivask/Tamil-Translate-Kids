@@ -51,9 +51,25 @@ An interactive, voice-driven Tamil learning web application for **Grades 1–8**
 9. **Student learning records**
    - Students select their Nilai and name from the supplied roster before beginning. Their successful sentence and Thirukkural attempts are associated with that student.
    - The reusable student roster is stored at `data/students/roster.json`; it contains only first name, last name, and Nilai.
-   - `server.py` stores local development records in `data/learning_progress.db`. On GitHub Pages, the same records remain in that browser's local storage until a hosted API is connected.
+   - `server.py` stores local development records in `data/learning_progress.db`. For GitHub Pages, the Cloudflare Worker in `worker/` stores shared records as one JSON file per student under `data/progress/`. The public files include each student's name, Nilai, activity, score, stars, and timestamp.
+   - Deploy the Worker once and set its URL in `js/progress-config.js` to enable cross-device sync. A GitHub token is stored only as a Worker secret, never in the browser. The Worker accepts completions only for students in `data/students/roster.json`, and retries duplicate or simultaneous submissions safely.
+   - On student login, the app uploads progress still available in that browser's local storage and loads shared records for the student dashboard and teacher/admin views. Progress that existed only on another device cannot be recovered until that device opens the updated app and syncs.
+   - **Public-data notice:** progress files are committed to this public repository and visible to anyone. This temporary setup is not private or authenticated; the Worker URL and CORS restrictions do not prevent someone from submitting fake progress for a registered student. Move to the planned Linx backend before storing sensitive information.
    - In **Student Club Enrollments**, administrators can create students, assign Nilai, school (FHS, CHS, RHS, or Online), and a club group, then open a student-specific QR badge. Duplicate first/last names are warned and blocked, and admins can remove students. New students, school/group edits, and removals are saved in that browser's local storage. GitHub Pages is static, so these changes are not shared across browsers or devices; the generated QR itself includes the student's login details and assigned school/group.
    - The QR badges page can filter students by club, grade, and name. Download one student's complete badge (name, school, grade, ID, activity prompt, and QR) as a PNG, or download the currently filtered badge batch as a ZIP of full-card PNGs.
+
+### Shared-progress Worker setup
+
+1. Create a GitHub fine-grained personal access token limited to this repository with **Contents: Read and write** permission. Do not put it in JavaScript, HTML, or any public file.
+2. From `Tamil-Translate-Kids/worker`, install Wrangler if needed and deploy:
+   ```bash
+   npx wrangler login
+   npx wrangler deploy
+   npx wrangler secret put GITHUB_TOKEN
+   ```
+   After the first deployment, paste the token when prompted. The Worker repository owner, repository, branch, progress folder, and allowed website origins are set in `worker/wrangler.toml`.
+3. Copy the deployed `*.workers.dev` URL into `window.TAMIL_KIDS_PROGRESS_API_URL` in `js/progress-config.js` (without a trailing slash), then publish the app changes to GitHub Pages.
+4. After the site deploys, make one test completion and check that `data/progress/<student-id>.json` appears in the repository. Open the teacher/admin progress page from another device to confirm it loads.
 
 ---
 
@@ -63,6 +79,9 @@ An interactive, voice-driven Tamil learning web application for **Grades 1–8**
 Tamil-Translate-Kids/
 ├── index.html            # Main web application entrypoint
 ├── sample_sentences      # Master text repository of sentences & Tamil variations
+├── data/
+│   ├── progress/         # Public per-student JSON records written by the Worker
+│   └── students/         # Registered student roster
 ├── css/
 │   └── style.css         # Kid-friendly design system & responsive styling
 ├── js/
@@ -70,7 +89,11 @@ Tamil-Translate-Kids/
 │   ├── matcher.js        # Multi-variant Tamil matching & similarity engine
 │   ├── speech.js         # Selectable Speech Recognition input & Tamil TTS playback
 │   ├── audio.js          # Web Audio API celebratory synthesizer sound FX
+│   ├── progress-config.js # Public Worker URL setting (no secrets)
 │   └── app.js            # Main application UI controller & state management
+├── worker/
+│   ├── src/index.mjs     # GitHub-backed shared-progress API
+│   └── wrangler.toml     # Cloudflare Worker deployment settings
 └── README.md             # Documentation
 ```
 

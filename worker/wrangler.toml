@@ -1,0 +1,10 @@
+name = "tamil-kids-progress"
+main = "src/index.mjs"
+compatibility_date = "2026-11-04"
+
+[vars]
+GITHUB_OWNER = "manivask"
+GITHUB_REPO = "Tamil-Translate-Kids"
+GITHUB_BRANCH = "main"
+GITHUB_PROGRESS_PATH = "data/progress"
+ALLOWED_ORIGINS = "https://manivask.github.io,http://localhost:8080"

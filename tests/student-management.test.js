@@ -37,7 +37,8 @@ const context = {
     })
   }),
   localStorage: {
-    getItem: key => stored.get(key) || null
+    getItem: key => stored.get(key) || null,
+    setItem: (key, value) => stored.set(key, value)
   },
   KidAudioFX: { playSuccessFanfare() {} },
   setTimeout() { return 1; }
@@ -54,6 +55,31 @@ const app = vm.runInContext("App", context);
   assert.equal(app.students.some(student => student.firstName === "Mira" && student.lastName === "Shah"), false, "locally removed roster students are hidden");
   assert.equal(app.students.find(student => student.id === "TBTA-CUSTOM-1").school, "Online", "saved school assignment is applied");
   assert.deepEqual(Array.from(app.getStudentClubs(app.students.find(student => student.id === "TBTA-CUSTOM-1"))), ["reading"], "saved group assignment is keyed by student ID");
+  assert.equal(app.getProgressStudentId({ firstName: "Rithanya", lastName: "Elumalai", grade: 1 }), "G1_RITHANYA_ELUMALAI", "roster students get a stable progress ID");
+  assert.equal(app.getProgressStudentId({ id: "TBTA-CUSTOM-1", firstName: "Mira", lastName: "Rao", grade: 4 }), "TBTA-CUSTOM-1", "assigned student IDs are preserved");
+  assert.equal(app.getProgressEndpoint(), "/api/progress", "local server endpoint remains the default");
+
+  const requests = [];
+  context.window.TAMIL_KIDS_PROGRESS_API_URL = "https://progress.example.workers.dev/";
+  context.fetch = async (url, options) => {
+    requests.push({ url, options });
+    return { ok: true, status: 201, json: async () => ({ ok: true }) };
+  };
+  app.currentStudent = { firstName: "Rithanya", lastName: "Elumalai", grade: 1 };
+  app.elements = {};
+  app.updateStudentDashboard = () => {};
+  await app.saveProgress({
+    sentenceId: "rc-week5-1",
+    category: "reading-club",
+    score: 100,
+    stars: 3,
+    passed: true
+  });
+  assert.equal(requests[0].url, "https://progress.example.workers.dev/api/progress", "configured Worker endpoint is used");
+  const savedProgress = JSON.parse(requests[0].options.body);
+  assert.equal(savedProgress.studentId, "G1_RITHANYA_ELUMALAI");
+  assert.equal(savedProgress.student.firstName, "Rithanya");
+  assert.ok(savedProgress.recordId, "saved records have a retry-safe ID");
 
   app.elements = { qrScanStatus: { textContent: "" } };
   app.stopQrScanner = () => {};
