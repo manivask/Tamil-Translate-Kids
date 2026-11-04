@@ -367,6 +367,15 @@
       "stars": 0,
       "passed": false,
       "recordedAt": "2026-10-23T23:54:02.376Z"
+    },
+    {
+      "recordId": "e45149ef-67d6-4c52-a1ca-9c1a8aa2142a",
+      "sentenceId": "pdf-stage2-simple-s2-sim-q1",
+      "category": "reading-club-pdf:Stage 2 - எளிய நிலை (Stage2_Simple.pdf)",
+      "score": 100,
+      "stars": 3,
+      "passed": true,
+      "recordedAt": "2026-10-23T23:54:09.780Z"
     }
   ]
 }
